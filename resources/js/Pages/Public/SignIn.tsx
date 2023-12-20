@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import {
   Anchor,
   Box,
@@ -22,6 +22,7 @@ export default function SignIn() {
           'url(https://images.unsplash.com/photo-1484242857719-4b9144542727?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1280&q=80)',
       }}
     >
+      <Head title="Sign In" />
       <Paper radius={0} p={120} maw={600} mih={900}>
         <img src={logoLarge} />
         <TextInput label="Username" size="md" mt="md" />
