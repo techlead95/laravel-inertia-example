@@ -1,15 +1,9 @@
 import HeaderIconButton from '@/Components/HeaderIconButton';
-import { Anchor, Box, Container, Group } from '@mantine/core';
+import { Box, Container, Group } from '@mantine/core';
 import { PropsWithChildren, ReactNode } from 'react';
-import {
-  FaBell,
-  FaCog,
-  FaQuestionCircle,
-  FaSignOutAlt,
-  FaUser,
-} from 'react-icons/fa';
+import { FaBell, FaQuestionCircle, FaSignOutAlt, FaUser } from 'react-icons/fa';
 
-import logo from '../../images/logo.png';
+import safeVisionImage from '../../images/safe-vision.png';
 
 interface Props {
   headerButtons: ReactNode;
@@ -25,7 +19,7 @@ export default function Layout({
     <div>
       <Container size="xl">
         <Group justify="space-between" align="center" py="xs">
-          <img src={logo} />
+          <img src={safeVisionImage} />
           <Group gap={4}>
             {headerButtons}
             <HeaderIconButton icon={<FaBell size={24} />} label="Alerts" />

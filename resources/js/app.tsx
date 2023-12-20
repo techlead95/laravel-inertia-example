@@ -9,6 +9,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 
+import '../css/app.css';
 import AdminLayout from './Layouts/AdminLayout';
 import UserLayout from './Layouts/UserLayout';
 import './bootstrap';
