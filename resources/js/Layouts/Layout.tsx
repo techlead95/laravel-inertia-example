@@ -22,7 +22,11 @@ export default function Layout({
           <img src={safeVisionImage} />
           <Group gap={4}>
             {headerButtons}
-            <HeaderIconButton icon={<FaBell size={24} />} label="Alerts" />
+            <HeaderIconButton
+              icon={<FaBell size={24} />}
+              label="Alerts"
+              href="/alerts"
+            />
             <HeaderIconButton
               icon={<FaQuestionCircle size={24} />}
               label="Help"
@@ -43,7 +47,7 @@ export default function Layout({
         </Container>
       </Box>
       <Container size="xl">
-        <Box py="lg">{children}</Box>
+        <Box py={64}>{children}</Box>
       </Container>
     </div>
   );

@@ -35,6 +35,18 @@ const theme = createTheme({
   colors: {
     blue,
   },
+  components: {
+    Text: {
+      defaultProps: {
+        c: 'gray'
+      }
+    },
+    Title: {
+      defaultProps: {
+        c: 'gray'
+      }
+    },
+  }
 });
 
 createInertiaApp({

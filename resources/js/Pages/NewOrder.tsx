@@ -1,9 +1,9 @@
 import PageTitle from '@/Components/PageTitle';
 
-export default function Home() {
+export default function NewOrder() {
   return (
     <>
-      <PageTitle title="Home" />
+      <PageTitle title="New Order" />
     </>
   );
 }

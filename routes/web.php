@@ -20,6 +20,10 @@ Route::get('/', function () {
     return Inertia::render('Home');
 });
 
+Route::get('/alerts', function () {
+    return Inertia::render('Alerts/Alerts');
+});
+
 Route::get('/admin', function () {
     return Inertia::render('Admin/AdminHome');
 });
