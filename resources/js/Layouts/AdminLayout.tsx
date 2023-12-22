@@ -1,5 +1,5 @@
 import HeaderIconButton from '@/Components/HeaderIconButton';
-import { Anchor } from '@mantine/core';
+import MenuLink from '@/Components/MenuLink';
 import { PropsWithChildren } from 'react';
 import { FaCog } from 'react-icons/fa';
 
@@ -15,11 +15,7 @@ export default function AdminLayout({ children }: PropsWithChildren) {
           href="/"
         />
       }
-      menuItems={
-        <Anchor component="button" c="white" fw="bold">
-          Admin Home
-        </Anchor>
-      }
+      menuLinks={<MenuLink href="/admin">Admin Home</MenuLink>}
     >
       {children}
     </Layout>

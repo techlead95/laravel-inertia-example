@@ -32,4 +32,36 @@ Route::get('/sign-in', function () {
     return Inertia::render('Public/SignIn');
 });
 
+Route::get('/customers', function () {
+    return Inertia::render('Customers');
+});
+
+Route::get('/help', function () {
+    return Inertia::render('Help');
+});
+
+Route::get('/my-account', function () {
+    return Inertia::render('MyAccount');
+});
+
+Route::get('/my-links', function () {
+    return Inertia::render('MyLinks');
+});
+
+Route::get('/new-order', function () {
+    return Inertia::render('NewOrder');
+});
+
+Route::get('/orders', function () {
+    return Inertia::render('Orders');
+});
+
+Route::get('/product-back-orders', function () {
+    return Inertia::render('ProductBackOrders');
+});
+
+Route::get('/products', function () {
+    return Inertia::render('Products');
+});
+
 require __DIR__.'/auth.php';

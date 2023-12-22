@@ -7,12 +7,12 @@ import safeVisionImage from '../../images/safe-vision.png';
 
 interface Props {
   headerButtons: ReactNode;
-  menuItems: ReactNode;
+  menuLinks: ReactNode;
 }
 
 export default function Layout({
   headerButtons,
-  menuItems,
+  menuLinks,
   children,
 }: PropsWithChildren<Props>) {
   return (
@@ -30,8 +30,9 @@ export default function Layout({
             <HeaderIconButton
               icon={<FaQuestionCircle size={24} />}
               label="Help"
+              href="/help"
             />
-            <HeaderIconButton icon={<FaUser size={24} />} label="My Account" />
+            <HeaderIconButton icon={<FaUser size={24} />} label="My Account" href="/my-account" />
             <HeaderIconButton
               icon={<FaSignOutAlt size={24} />}
               label="Log Out"
@@ -43,7 +44,7 @@ export default function Layout({
       </Container>
       <Box bg="blue" py="lg">
         <Container size="xl">
-          <Group gap="xl">{menuItems}</Group>
+          <Group gap="xl">{menuLinks}</Group>
         </Container>
       </Box>
       <Container size="xl">

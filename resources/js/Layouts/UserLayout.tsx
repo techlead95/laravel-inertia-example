@@ -1,4 +1,5 @@
 import HeaderIconButton from '@/Components/HeaderIconButton';
+import MenuLink from '@/Components/MenuLink';
 import { Anchor } from '@mantine/core';
 import { PropsWithChildren } from 'react';
 import { FaCog } from 'react-icons/fa';
@@ -15,29 +16,15 @@ export default function UserLayout({ children }: PropsWithChildren) {
           href="/admin"
         />
       }
-      menuItems={
+      menuLinks={
         <>
-          <Anchor component="button" c="white" fw="bold">
-            Home
-          </Anchor>
-          <Anchor component="button" c="white" fw="bold">
-            Orders
-          </Anchor>
-          <Anchor component="button" c="white" fw="bold">
-            New Order
-          </Anchor>
-          <Anchor component="button" c="white" fw="bold">
-            Customers
-          </Anchor>
-          <Anchor component="button" c="white" fw="bold">
-            Products
-          </Anchor>
-          <Anchor component="button" c="white" fw="bold">
-            My Links
-          </Anchor>
-          <Anchor component="button" c="white" fw="bold">
-            Product Back Orders
-          </Anchor>
+          <MenuLink href="/">Home</MenuLink>
+          <MenuLink href="/orders">Orders</MenuLink>
+          <MenuLink href="/new-order">New Order</MenuLink>
+          <MenuLink href="/customers">Customers</MenuLink>
+          <MenuLink href="/products">Products</MenuLink>
+          <MenuLink href="/my-links">My Links</MenuLink>
+          <MenuLink href="/product-back-orders">Product Back Orders</MenuLink>
         </>
       }
     >

@@ -1,10 +1,10 @@
 import PageTitle from '@/Components/PageTitle';
 import UnderConstruction from '@/Components/UnderConstruction';
 
-export default function AdminHome() {
+export default function Help() {
   return (
     <>
-      <PageTitle title="Admin Home" />
+      <PageTitle title="Help" />
       <UnderConstruction />
     </>
   );
