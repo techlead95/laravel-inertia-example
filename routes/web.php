@@ -24,8 +24,43 @@ Route::get('/alerts', function () {
     return Inertia::render('Alerts/Alerts');
 });
 
-Route::get('/admin', function () {
-    return Inertia::render('Admin/AdminHome');
+Route::prefix('admin')->group(function () {
+    Route::get('/', function () {
+        return Inertia::render('Admin/AdminHome', [
+            'users' => [
+                [
+                    'id' => 1,
+                    'email' => 'vgislason@yahoo.com',
+                    'stAccount' => '621347',
+                    'stName' => 'Ship to 1'
+                ],
+                [
+                    'id' => 2,
+                    'email' => 'josianne.mckenzie@schroeder.biz',
+                    'stAccount' => '621438',
+                    'stName' => 'Ship to 2'
+                ],
+                [
+                    'id' => 3,
+                    'email' => 'vgislason@yahoo.com',
+                    'stAccount' => '625887',
+                    'stName' => 'Ship to Blue'
+                ],
+                [
+                    'id' => 4,
+                    'email' => 'vgislason@yahoo.com',
+                    'stAccount' => '151121',
+                    'stName' => 'Schneider'
+                ],
+                [
+                    'id' => 5,
+                    'email' => 'vgislason@yahoo.com',
+                    'stAccount' => '554744',
+                    'stName' => 'Ana'
+                ],
+            ]
+        ]);
+    });
 });
 
 Route::get('/sign-in', function () {

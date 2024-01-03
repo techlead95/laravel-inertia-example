@@ -9,9 +9,7 @@ export default function PageTitle({ title }: Props) {
   return (
     <>
       <Head title={title} />
-      <Title order={1}>
-        {title}
-      </Title>
+      <Title order={1}>{title}</Title>
     </>
   );
 }

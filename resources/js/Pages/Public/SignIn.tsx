@@ -21,7 +21,7 @@ export default function SignIn() {
   return (
     <Flex h="100%">
       <Head title="Sign In" />
-      <Flex w="50%" justify="center" py={200}>
+      <Flex style={{ flex: 1 }} justify="center" py={200}>
         <Paper>
           <Image src={safeVisionOpticHubImage} w="fit-content" />
           <TextInput label="Username" size="md" mt="md" />

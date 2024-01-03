@@ -6,6 +6,7 @@ import {
 } from '@mantine/core';
 import '@mantine/core/styles.css';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import 'mantine-datatable/styles.layer.css';
 import { ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 
@@ -32,21 +33,10 @@ const blue: MantineColorsTuple = [
 const theme = createTheme({
   primaryColor: 'blue',
   primaryShade: 8,
+  black: '#333333',
   colors: {
     blue,
   },
-  components: {
-    Text: {
-      defaultProps: {
-        c: 'gray'
-      }
-    },
-    Title: {
-      defaultProps: {
-        c: 'gray'
-      }
-    },
-  }
 });
 
 createInertiaApp({

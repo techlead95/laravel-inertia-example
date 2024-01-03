@@ -1,5 +1,5 @@
 import HeaderIconButton from '@/Components/HeaderIconButton';
-import { Box, Container, Group } from '@mantine/core';
+import { Box, Container, Flex, Group } from '@mantine/core';
 import { PropsWithChildren, ReactNode } from 'react';
 import { FaBell, FaQuestionCircle, FaSignOutAlt, FaUser } from 'react-icons/fa';
 
@@ -16,40 +16,52 @@ export default function Layout({
   children,
 }: PropsWithChildren<Props>) {
   return (
-    <div>
-      <Container size="xl">
-        <Group justify="space-between" align="center" py="xs">
-          <img src={safeVisionImage} />
-          <Group gap={4}>
-            {headerButtons}
-            <HeaderIconButton
-              icon={<FaBell size={24} />}
-              label="Alerts"
-              href="/alerts"
-            />
-            <HeaderIconButton
-              icon={<FaQuestionCircle size={24} />}
-              label="Help"
-              href="/help"
-            />
-            <HeaderIconButton icon={<FaUser size={24} />} label="My Account" href="/my-account" />
-            <HeaderIconButton
-              icon={<FaSignOutAlt size={24} />}
-              label="Log Out"
-              href="/sign-in"
-            />
+    <Flex h="100%" direction="column">
+      <Box>
+        <Container size="xl">
+          <Group justify="space-between" align="center" py="xs">
+            <img src={safeVisionImage} />
+            <Group gap={4}>
+              {headerButtons}
+              <HeaderIconButton
+                icon={<FaBell size={24} />}
+                label="Alerts"
+                href="/alerts"
+              />
+              <HeaderIconButton
+                icon={<FaQuestionCircle size={24} />}
+                label="Help"
+                href="/help"
+              />
+              <HeaderIconButton
+                icon={<FaUser size={24} />}
+                label="My Account"
+                href="/my-account"
+              />
+              <HeaderIconButton
+                icon={<FaSignOutAlt size={24} />}
+                label="Log Out"
+                href="/sign-in"
+              />
+            </Group>
           </Group>
-        </Group>
-        <Group></Group>
-      </Container>
+          <Group></Group>
+        </Container>
+      </Box>
+
       <Box bg="blue" py="lg">
         <Container size="xl">
           <Group gap="xl">{menuLinks}</Group>
         </Container>
       </Box>
-      <Container size="xl">
-        <Box py={64}>{children}</Box>
-      </Container>
-    </div>
+
+      <Box style={{ flex: 1 }}>
+        <Container size="xl" h="100%">
+          <Flex py="xl" direction="column" h="100%">
+            {children}
+          </Flex>
+        </Container>
+      </Box>
+    </Flex>
   );
 }
