@@ -1,15 +1,28 @@
-import { Head } from '@inertiajs/react';
-import { Title } from '@mantine/core';
+import { Head, Link } from '@inertiajs/react';
+import { ActionIcon, Group, Title, useMantineTheme } from '@mantine/core';
+import { FaChevronLeft } from 'react-icons/fa';
 
 interface Props {
   title: string;
+  backUrl?: string;
 }
 
-export default function PageTitle({ title }: Props) {
+export default function PageTitle({ title, backUrl }: Props) {
+  const theme = useMantineTheme();
+
   return (
     <>
       <Head title={title} />
-      <Title order={1}>{title}</Title>
+      <Group>
+        {backUrl && (
+          <Link href={backUrl}>
+            <ActionIcon variant="transparent" color={theme.black}>
+              <FaChevronLeft />
+            </ActionIcon>
+          </Link>
+        )}
+        <Title order={1}>{title}</Title>
+      </Group>
     </>
   );
 }

@@ -61,6 +61,42 @@ Route::prefix('admin')->group(function () {
             ]
         ]);
     });
+
+    Route::get('/ship-to-account-maintenance', function () {
+        return Inertia::render('Admin/ShipToAccountMaintenance', [
+            'shipTos' => [
+                [
+                    'id' => 1,
+                    'shipToNumber' => 621437,
+                    'shipToName' => 'Black Behavioral Health Center'
+                ],
+                [
+                    'id' => 2,
+                    'shipToNumber' => 624277,
+                    'shipToName' => 'Sugra Shack Bakery'
+                ],
+                [
+                    'id' => 3,
+                    'shipToNumber' => 638411,
+                    'shipToName' => 'Scott Seafood'
+                ],
+                [
+                    'id' => 4,
+                    'shipToNumber' => 621247,
+                    'shipToName' => 'Shannons Crown Industries'
+                ],
+                [
+                    'id' => 5,
+                    'shipToNumber' => 621437,
+                    'shipToName' => 'Bloated Toads'
+                ],
+            ]
+        ]);
+    });
+
+    Route::get('/modules', function () {
+        return Inertia::render('Admin/Modules');
+    });
 });
 
 Route::get('/sign-in', function () {
