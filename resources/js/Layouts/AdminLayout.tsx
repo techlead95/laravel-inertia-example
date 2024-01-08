@@ -15,7 +15,12 @@ export default function AdminLayout({ children }: PropsWithChildren) {
           href="/"
         />
       }
-      menuLinks={<MenuLink href="/admin">Admin Home</MenuLink>}
+      menuLinks={
+        <>
+          <MenuLink href="/admin">Admin Home</MenuLink>
+          <MenuLink href="/admin/frame">Frame</MenuLink>
+        </>
+      }
     >
       {children}
     </Layout>
