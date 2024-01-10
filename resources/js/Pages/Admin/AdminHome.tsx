@@ -1,9 +1,9 @@
 import { inputHorizontalStyles } from '@/utils';
 import { Head, Link } from '@inertiajs/react';
 import { Button, Group, Stack, Switch, TextInput } from '@mantine/core';
+import { Search } from '@mui/icons-material';
 import { DataTable } from 'mantine-datatable';
 import { useEffect, useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
 
 interface User {
   id: number;
@@ -32,7 +32,7 @@ export default function AdminHome({ users }: Props) {
         <Stack style={{ flex: 3 }} h="100%">
           <Group>
             <TextInput placeholder="Search by Account Number" w={280} />
-            <Button variant="outline" leftSection={<FaSearch />}>
+            <Button variant="outline" leftSection={<Search />}>
               Search
             </Button>
           </Group>

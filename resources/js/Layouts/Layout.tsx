@@ -1,7 +1,7 @@
 import HeaderIconButton from '@/Components/HeaderIconButton';
 import { Box, Container, Flex, Group } from '@mantine/core';
+import { Help, Logout, Notifications, Person } from '@mui/icons-material';
 import { PropsWithChildren, ReactNode } from 'react';
-import { FaBell, FaQuestionCircle, FaSignOutAlt, FaUser } from 'react-icons/fa';
 
 import safeVisionImage from '../../images/safe-vision.png';
 
@@ -24,22 +24,18 @@ export default function Layout({
             <Group gap={4}>
               {headerButtons}
               <HeaderIconButton
-                icon={<FaBell size={24} />}
+                icon={<Notifications />}
                 label="Alerts"
                 href="/alerts"
               />
+              <HeaderIconButton icon={<Help />} label="Help" href="/help" />
               <HeaderIconButton
-                icon={<FaQuestionCircle size={24} />}
-                label="Help"
-                href="/help"
-              />
-              <HeaderIconButton
-                icon={<FaUser size={24} />}
+                icon={<Person />}
                 label="My Account"
                 href="/my-account"
               />
               <HeaderIconButton
-                icon={<FaSignOutAlt size={24} />}
+                icon={<Logout />}
                 label="Log Out"
                 href="/sign-in"
               />

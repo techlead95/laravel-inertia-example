@@ -101,6 +101,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/frame', function () {
         return Inertia::render('Admin/Frame');
     });
+
+    Route::get('/frame/catalog', function () {
+        return Inertia::render('Admin/FrameCatalog');
+    });
 });
 
 Route::get('/sign-in', function () {

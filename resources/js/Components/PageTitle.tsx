@@ -1,6 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
 import { ActionIcon, Group, Title, useMantineTheme } from '@mantine/core';
-import { FaChevronLeft } from 'react-icons/fa';
+import { ChevronLeft } from '@mui/icons-material';
 
 interface Props {
   title: string;
@@ -17,7 +17,7 @@ export default function PageTitle({ title, backUrl }: Props) {
         {backUrl && (
           <Link href={backUrl}>
             <ActionIcon variant="transparent" color={theme.black}>
-              <FaChevronLeft />
+              <ChevronLeft />
             </ActionIcon>
           </Link>
         )}

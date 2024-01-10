@@ -1,7 +1,7 @@
 import HeaderIconButton from '@/Components/HeaderIconButton';
 import MenuLink from '@/Components/MenuLink';
+import { Settings } from '@mui/icons-material';
 import { PropsWithChildren } from 'react';
-import { FaCog } from 'react-icons/fa';
 
 import Layout from './Layout';
 
@@ -10,7 +10,7 @@ export default function AdminLayout({ children }: PropsWithChildren) {
     <Layout
       headerButtons={
         <HeaderIconButton
-          icon={<FaCog size={24} />}
+          icon={<Settings />}
           label="Back to Optic 2"
           href="/"
         />

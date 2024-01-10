@@ -13,7 +13,7 @@ import {
   PasswordInput,
   TextInput,
 } from '@mantine/core';
-import { FaPhone, FaPhoneAlt, FaQuestionCircle } from 'react-icons/fa';
+import { Help, Phone } from '@mui/icons-material';
 
 import safeVisionOpticHubImage from '../../../images/safe-vision-optic-hub.png';
 
@@ -46,10 +46,10 @@ export default function SignIn() {
         <Flex justify="flex-end" pt="sm" pr="lg">
           <Group gap={0}>
             <Button variant="subtle" w={56} h={56} p={0}>
-              <FaPhoneAlt size={24} />
+              <Phone />
             </Button>
             <Button variant="subtle" w={56} h={56} p={0}>
-              <FaQuestionCircle size={24} />
+              <Help />
             </Button>
           </Group>
         </Flex>

@@ -1,8 +1,7 @@
 import HeaderIconButton from '@/Components/HeaderIconButton';
 import MenuLink from '@/Components/MenuLink';
-import { Anchor } from '@mantine/core';
+import { Settings } from '@mui/icons-material';
 import { PropsWithChildren } from 'react';
-import { FaCog } from 'react-icons/fa';
 
 import Layout from './Layout';
 
@@ -10,11 +9,7 @@ export default function UserLayout({ children }: PropsWithChildren) {
   return (
     <Layout
       headerButtons={
-        <HeaderIconButton
-          icon={<FaCog size={24} />}
-          label="Admin"
-          href="/admin"
-        />
+        <HeaderIconButton icon={<Settings />} label="Admin" href="/admin" />
       }
       menuLinks={
         <>

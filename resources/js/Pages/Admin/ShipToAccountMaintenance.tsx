@@ -1,8 +1,8 @@
 import PageTitle from '@/Components/PageTitle';
 import { inputHorizontalStyles } from '@/utils';
 import { Button, Group, Stack, TextInput } from '@mantine/core';
+import { Search } from '@mui/icons-material';
 import { DataTable } from 'mantine-datatable';
-import { FaSearch } from 'react-icons/fa';
 
 interface ShipTo {
   id: number;
@@ -22,7 +22,7 @@ export default function ShipToAccountMaintenance({ shipTos }: Props) {
         <Stack h="100%" style={{ flex: 1 }}>
           <Group>
             <TextInput placeholder="Search by Ship to #" w={280} />
-            <Button miw={120} variant="outline" leftSection={<FaSearch />}>
+            <Button miw={120} variant="outline" leftSection={<Search />}>
               Search
             </Button>
           </Group>
