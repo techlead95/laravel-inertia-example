@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import { ActionIcon, Group, Title, useMantineTheme } from '@mantine/core';
 import { ChevronLeft } from '@mui/icons-material';
 
@@ -15,11 +15,13 @@ export default function PageTitle({ title, backUrl }: Props) {
       <Head title={title} />
       <Group>
         {backUrl && (
-          <Link href={backUrl}>
-            <ActionIcon variant="transparent" color={theme.black}>
-              <ChevronLeft />
-            </ActionIcon>
-          </Link>
+          <ActionIcon
+            variant="transparent"
+            color={theme.black}
+            onClick={() => router.visit(backUrl)}
+          >
+            <ChevronLeft />
+          </ActionIcon>
         )}
         <Title order={1}>{title}</Title>
       </Group>
