@@ -109,6 +109,14 @@ Route::prefix('admin')->group(function () {
     Route::get('/lens', function () {
         return Inertia::render('Admin/Lens');
     });
+
+    Route::get('/lens/catalog', function () {
+        return Inertia::render('Admin/LensCatalog');
+    });
+
+    Route::get('/coating', function () {
+        return Inertia::render('Admin/Coating');
+    });
 });
 
 Route::get('/sign-in', function () {
