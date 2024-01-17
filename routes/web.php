@@ -117,6 +117,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/coating', function () {
         return Inertia::render('Admin/Coating');
     });
+
+    Route::get('/tint', function () {
+        return Inertia::render('Admin/Tint');
+    });
 });
 
 Route::get('/sign-in', function () {

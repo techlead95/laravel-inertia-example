@@ -1,6 +1,7 @@
 import { inputHorizontalStyles } from '@/utils';
 import { Head } from '@inertiajs/react';
 import { Button, Group, Stack, Switch, Text, TextInput } from '@mantine/core';
+import { DataTable } from 'mantine-datatable';
 
 export default function Coating() {
   return (
@@ -53,8 +54,37 @@ export default function Coating() {
           </Stack>
         </Stack>
       </Group>
-      <Stack mt="xl">
-        <Switch label="Tin Table" />
+      <Stack mt="xl" gap="xl">
+        <Switch label="Tint Table" defaultChecked />
+        <DataTable
+          withTableBorder
+          columns={[
+            { accessor: 'coating', title: 'Coating' },
+            { accessor: 'coatingGroup', title: 'Coating Group' },
+            { accessor: 'opticTranslation', title: 'Optic Translation' },
+            { accessor: 'dviTranslation', title: 'Dvi Translation' },
+            { accessor: 'optic2CoatAddCode', title: 'Optic 2 Coat Add Code' },
+            { accessor: 'legacyCoatAddCode', title: 'Legacy Coat Add Code' },
+          ]}
+          records={[
+            {
+              coating: 'Clarity Shield',
+              coatingGroup: 'Hard Coat',
+              opticTranslation: 'CL',
+              dviTranslation: 'HCS',
+              optic2CoatAddCode: '',
+              legacyCoatAddCode: '10',
+            },
+            {
+              coating: 'Clear Away EZ Clean',
+              coatingGroup: 'Hard Coat',
+              opticTranslation: 'SG',
+              dviTranslation: 'SG',
+              optic2CoatAddCode: '',
+              legacyCoatAddCode: '10',
+            },
+          ]}
+        />
       </Stack>
     </>
   );

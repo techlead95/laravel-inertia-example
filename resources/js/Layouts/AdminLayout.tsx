@@ -21,6 +21,7 @@ export default function AdminLayout({ children }: PropsWithChildren) {
           <MenuLink href="/admin/frame">Frame</MenuLink>
           <MenuLink href="/admin/lens">Lens</MenuLink>
           <MenuLink href="/admin/coating">Coating</MenuLink>
+          <MenuLink href="/admin/tint">Tint</MenuLink>
         </>
       }
     >
