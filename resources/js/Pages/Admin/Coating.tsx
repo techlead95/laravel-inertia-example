@@ -68,6 +68,7 @@ export default function Coating() {
           ]}
           records={[
             {
+              id: 1,
               coating: 'Clarity Shield',
               coatingGroup: 'Hard Coat',
               opticTranslation: 'CL',
@@ -76,6 +77,7 @@ export default function Coating() {
               legacyCoatAddCode: '10',
             },
             {
+              id: 2,
               coating: 'Clear Away EZ Clean',
               coatingGroup: 'Hard Coat',
               opticTranslation: 'SG',

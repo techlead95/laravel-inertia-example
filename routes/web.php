@@ -121,6 +121,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/tint', function () {
         return Inertia::render('Admin/Tint');
     });
+
+    Route::get('/misc', function () {
+        return Inertia::render('Admin/Misc');
+    });
 });
 
 Route::get('/sign-in', function () {

@@ -27,31 +27,37 @@ export default function LensCatalog() {
           ]}
           records={[
             {
+              id: 1,
               style: 'Single Vision',
               material: 'Polycarbonate',
               color: 'Clear',
             },
             {
+              id: 2,
               style: 'Single Vision',
               material: 'Polycarbonate',
               color: 'Grey',
             },
             {
+              id: 3,
               style: 'Single Vision',
               material: 'Trivex\\Phoenix',
               color: 'Clear',
             },
             {
+              id: 4,
               style: 'Single Vision',
               material: 'Trivex\\Phoenix',
               color: 'Grey',
             },
             {
+              id: 5,
               style: 'Single Vision',
               material: 'Plastic',
               color: 'Clear',
             },
             {
+              id: 6,
               style: 'Single Vision',
               material: 'Hi Index',
               color: 'Clear',

@@ -87,6 +87,7 @@ export default function Frame() {
                 ]}
                 records={[
                   {
+                    id: 1,
                     eye: '1',
                     bridge: '2',
                     templteType: '3',

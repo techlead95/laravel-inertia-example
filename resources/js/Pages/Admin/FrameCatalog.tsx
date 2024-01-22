@@ -24,16 +24,16 @@ export default function FrameCatalog() {
             { accessor: 'style', title: 'Style' },
           ]}
           records={[
-            { brand: 'HSD', style: '650 Brown Marble' },
-            { brand: 'HSD', style: '650 Gray Marble' },
-            { brand: 'HSD', style: 'A2000' },
-            { brand: 'HSD', style: 'A2000 Pink Lo' },
-            { brand: 'HSD', style: 'A2500' },
-            { brand: 'HSD', style: 'Alpha Brown' },
-            { brand: 'HSD', style: 'Alpha Gunmetal' },
-            { brand: 'HSD', style: 'Alpha Olive Lo' },
-            { brand: 'HSD', style: 'Attitude 3 Burg' },
-            { brand: 'HSD', style: 'Attitude 3 Moss' },
+            { id: 1, brand: 'HSD', style: '650 Brown Marble' },
+            { id: 2, brand: 'HSD', style: '650 Gray Marble' },
+            { id: 3, brand: 'HSD', style: 'A2000' },
+            { id: 4, brand: 'HSD', style: 'A2000 Pink Lo' },
+            { id: 5, brand: 'HSD', style: 'A2500' },
+            { id: 6, brand: 'HSD', style: 'Alpha Brown' },
+            { id: 7, brand: 'HSD', style: 'Alpha Gunmetal' },
+            { id: 8, brand: 'HSD', style: 'Alpha Olive Lo' },
+            { id: 9, brand: 'HSD', style: 'Attitude 3 Burg' },
+            { id: 10, brand: 'HSD', style: 'Attitude 3 Moss' },
           ]}
         />
       </Stack>
