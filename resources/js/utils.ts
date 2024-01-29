@@ -5,3 +5,6 @@ export const inputHorizontalStyles: Record<string, CSSProperties> = {
   label: { width: 150, fontWeight: 'bold', textAlign: 'right', paddingTop: 7 },
   wrapper: { flex: 1 },
 };
+
+export const includesIgnoreCase = (str: string, search: string) =>
+  str.toLowerCase().includes(search.toLowerCase());

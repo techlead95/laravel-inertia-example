@@ -1,4 +1,4 @@
-import { inputHorizontalStyles } from '@/utils';
+import { includesIgnoreCase, inputHorizontalStyles } from '@/utils';
 import { Head, Link } from '@inertiajs/react';
 import { Button, Group, Stack, Switch, TextInput } from '@mantine/core';
 import { Search } from '@mui/icons-material';
@@ -18,6 +18,7 @@ interface Props {
 
 export default function AdminHome({ users }: Props) {
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+  const [accountNumberFilter, setAccountNumberFilter] = useState('');
 
   useEffect(() => {
     if (users.length) {
@@ -31,7 +32,12 @@ export default function AdminHome({ users }: Props) {
       <Group style={{ flex: 1 }} gap="xl" align="flex-start">
         <Stack style={{ flex: 3 }} h="100%">
           <Group>
-            <TextInput placeholder="Search by Account Number" w={280} />
+            <TextInput
+              placeholder="Search by Account Number"
+              w={280}
+              value={accountNumberFilter}
+              onChange={(e) => setAccountNumberFilter(e.target.value)}
+            />
             <Button variant="outline" leftSection={<Search />}>
               Search
             </Button>
@@ -47,7 +53,9 @@ export default function AdminHome({ users }: Props) {
               { accessor: 'stAccount', title: 'ST Account' },
               { accessor: 'stName', title: 'ST Name' },
             ]}
-            records={users}
+            records={users.filter((user) =>
+              includesIgnoreCase(user.stName, accountNumberFilter),
+            )}
             selectedRecords={selectedUsers}
             onRowClick={({ record }) => setSelectedUsers([record])}
             onSelectedRecordsChange={setSelectedUsers}

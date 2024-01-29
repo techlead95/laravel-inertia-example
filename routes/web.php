@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
+use App\Models\User;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -161,6 +162,27 @@ Route::get('/product-back-orders', function () {
 
 Route::get('/products', function () {
     return Inertia::render('Products');
+});
+
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('azure')->redirect();
+});
+
+Route::get('/auth/callback', function () {
+    $azureUser = Socialite::driver('azure')->user();
+
+    $user = User::updateOrCreate([
+        'azure_id' => $azureUser->id
+    ], [
+        'name' => $azureUser->name,
+        'email' => $azureUser->email,
+        'github_token' => $azureUser->token,
+        'github_refresh_token' => $azureUser->refreshToken
+    ]);
+
+    Auth::login($user);
+
+    return redirect('/');
 });
 
 require __DIR__.'/auth.php';
