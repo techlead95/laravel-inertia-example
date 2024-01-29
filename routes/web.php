@@ -169,20 +169,20 @@ Route::get('/auth/redirect', function () {
 });
 
 Route::get('/auth/callback', function () {
-    $azureUser = Socialite::driver('azure')->user();
+    // $azureUser = Socialite::driver('azure')->user();
 
-    $user = User::updateOrCreate([
-        'azure_id' => $azureUser->id
-    ], [
-        'name' => $azureUser->name,
-        'email' => $azureUser->email,
-        'github_token' => $azureUser->token,
-        'github_refresh_token' => $azureUser->refreshToken
-    ]);
+    // $user = User::updateOrCreate([
+    //     'azure_id' => $azureUser->id
+    // ], [
+    //     'name' => $azureUser->name,
+    //     'email' => $azureUser->email,
+    //     'github_token' => $azureUser->token,
+    //     'github_refresh_token' => $azureUser->refreshToken
+    // ]);
 
-    Auth::login($user);
+    // Auth::login($user);
 
-    return redirect('/');
+    // return redirect('/');
 });
 
 require __DIR__.'/auth.php';
