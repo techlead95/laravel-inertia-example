@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\ProfileController;
@@ -164,25 +165,34 @@ Route::get('/products', function () {
     return Inertia::render('Products');
 });
 
-Route::get('/auth/redirect', function () {
+Route::get('/auth/redirect/azure', function () {
     return Socialite::driver('azure')->redirect();
 });
 
-Route::get('/auth/callback', function () {
-    // $azureUser = Socialite::driver('azure')->user();
+Route::get('/auth/callback/azure', function () {
+    $user = Socialite::driver('azure')->user();
 
-    // $user = User::updateOrCreate([
-    //     'azure_id' => $azureUser->id
-    // ], [
-    //     'name' => $azureUser->name,
-    //     'email' => $azureUser->email,
-    //     'github_token' => $azureUser->token,
-    //     'github_refresh_token' => $azureUser->refreshToken
-    // ]);
-
-    // Auth::login($user);
-
-    // return redirect('/');
+    dd($user);
 });
+
+Route::get('/auth/logout/azure', function () {
+    $logoutUrl = Socialite::driver('azure')->getLogoutUrl(url('/'));
+    return redirect($logoutUrl);
+});
+
+// Route::get('/auth/redirect/salesforce', function () {
+//     return Socialite::driver('salesforce')->redirect();
+// });
+
+// Route::get('/auth/callback/salesforce', function () {
+//     $user = Socialite::driver('salesforce')->user();
+
+//     dd($user);
+// });
+
+// Route::get('/auth/logout/salesforce', function () {
+//     $logoutUrl = Socialite::driver('salesforce')->getLogoutUrl(url('/'));
+//     return redirect($logoutUrl);
+// });
 
 require __DIR__.'/auth.php';
