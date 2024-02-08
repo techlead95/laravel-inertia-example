@@ -5,6 +5,7 @@ import {
   createTheme,
 } from '@mantine/core';
 import '@mantine/core/styles.css';
+import { ModalsProvider } from '@mantine/modals';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import 'mantine-datatable/styles.layer.css';
 import { ReactNode } from 'react';
@@ -64,7 +65,9 @@ createInertiaApp({
 
     root.render(
       <MantineProvider theme={theme}>
-        <App {...props} />
+        <ModalsProvider>
+          <App {...props} />
+        </ModalsProvider>
       </MantineProvider>,
     );
   },
