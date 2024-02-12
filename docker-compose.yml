@@ -1,11 +1,45 @@
-version: '3.3'
+version: '3.8'
 
 services:
-  mssql:
-    container_name: sql-server
-    image: mcr.microsoft.com/azure-sql-edge
+  # Nginx Service
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_for_laravel
     ports:
-      - '1433:1433'
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php-fpm
+    networks:
+      - laravel_net
+
+  # PHP-FPM Service
+  php-fpm:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel_php_fpm
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - mssql
+    networks:
+      - laravel_net
+
+  # MSSQL Service
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: mssql_for_laravel
     environment:
-      SA_PASSWORD: 'saPassword1@#'
-      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: "saPassword1@#"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    networks:
+      - laravel_net
+
+networks:
+  laravel_net:
+    driver: bridge
