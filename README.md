@@ -10,3 +10,4 @@
 
 - Spin up containers if you haven't. `docker-compose up`
 - Run vite development server. `npm run dev`
+test
