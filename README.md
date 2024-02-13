@@ -3,7 +3,7 @@
 - Install Node.js, WSL, and Docker.
 - Spin up containers. `docker-compose up`
 - Generate an encryption key for Laravel. `docker-compose exec php-fpm php artisan key:generate`
-- Run migrations and seeds for the database. `docker-compose exec php-fpm php artisan migrat:refresh --seed`
+- Run migrations and seeds for the database. `docker-compose exec php-fpm php artisan migrate:refresh --seed`
 - Install Frontend dependencies. `npm install`
 
 ## Run Project Locally
