@@ -1,27 +1,17 @@
+import SearchForm from '@/Components/SearchForm';
 import { User } from '@/types';
-import { includesIgnoreCase } from '@/utils';
 import { Head, Link, router } from '@inertiajs/react';
-import {
-  ActionIcon,
-  Button,
-  Group,
-  Stack,
-  Switch,
-  TextInput,
-} from '@mantine/core';
+import { ActionIcon, Button, Group, Stack, Switch } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { Search } from '@mui/icons-material';
 import { Delete, Edit } from '@mui/icons-material';
 import { DataTable } from 'mantine-datatable';
-import { useState } from 'react';
 
 interface Props {
   users: User[];
+  currentSearch: string;
 }
 
-export default function AdminHome({ users }: Props) {
-  const [filter, setFilter] = useState('');
-
+export default function AdminHome({ users, currentSearch }: Props) {
   const handleDelete = (user: User) => {
     modals.openConfirmModal({
       title: 'Are you sure to delete this user?',
@@ -39,12 +29,11 @@ export default function AdminHome({ users }: Props) {
       <Head title="Admin Home" />
       <Group style={{ flex: 1 }} gap="xl" align="flex-start">
         <Stack style={{ flex: 3 }} h="100%">
-          <TextInput
-            placeholder="Search"
-            w={280}
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            rightSection={<Search />}
+          <SearchForm
+            initialValue={currentSearch}
+            onSearch={(search) => {
+              router.replace(route('admin.users.index', { search }));
+            }}
           />
           <DataTable
             style={{ flex: 1 }}
@@ -80,9 +69,7 @@ export default function AdminHome({ users }: Props) {
                 },
               },
             ]}
-            records={users.filter((user) =>
-              includesIgnoreCase(user.name, filter),
-            )}
+            records={users}
           />
         </Stack>
         <Stack style={{ flex: 1 }} gap="xs" mt={52}>
