@@ -1,7 +1,7 @@
 FROM php:8.2-fpm
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y gnupg2 curl unixodbc-dev
+RUN apt-get update && apt-get install -y gnupg2 curl unixodbc-dev zip unzip
 
 # Add Microsoft repository for Debian 10 (Buster) or Debian 11 (Bullseye) as per your base image
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
@@ -10,7 +10,7 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
 # Update apt cache and install the ODBC driver and SQL Server Command-Line Tools
 RUN apt-get update \
     && ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools
-
+ENV COMPOSER_ALLOW_SUPERUSER 1
 # Install additional PHP extensions
 RUN pecl install pdo_sqlsrv sqlsrv && docker-php-ext-enable pdo_sqlsrv sqlsrv
 
