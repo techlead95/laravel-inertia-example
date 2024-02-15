@@ -1,10 +1,10 @@
+import BaseDataTable from '@/Components/BaseDataTable';
 import SearchForm from '@/Components/SearchForm';
 import { User } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
 import { ActionIcon, Button, Group, Stack, Switch } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { Delete, Edit } from '@mui/icons-material';
-import { DataTable } from 'mantine-datatable';
 
 interface Props {
   users: User[];
@@ -35,7 +35,7 @@ export default function AdminHome({ users, currentSearch }: Props) {
               router.replace(route('admin.users.index', { search }));
             }}
           />
-          <DataTable
+          <BaseDataTable
             style={{ flex: 1 }}
             striped
             withTableBorder
