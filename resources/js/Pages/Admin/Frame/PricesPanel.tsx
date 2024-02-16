@@ -1,8 +1,8 @@
-import { DataTable } from 'mantine-datatable';
+import BaseDataTable from '@/Components/BaseDataTable';
 
 export default function PricesPanel() {
   return (
-    <DataTable
+    <BaseDataTable
       columns={[
         { accessor: 'eye', title: 'Eye' },
         { accessor: 'bridge', title: 'Bridge' },
@@ -13,19 +13,7 @@ export default function PricesPanel() {
         { accessor: 'retail', title: 'Retail' },
         { accessor: 'offloadCost', title: 'Offload Cost' },
       ]}
-      records={[
-        {
-          id: 1,
-          eye: '1',
-          bridge: '2',
-          templeType: '3',
-          templeSize: '4',
-          color: '5',
-          cost: '6',
-          retail: '7',
-          offloadCost: '8',
-        },
-      ]}
+      records={[]}
     />
   );
 }

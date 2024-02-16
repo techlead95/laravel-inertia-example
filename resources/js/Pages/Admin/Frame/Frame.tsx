@@ -4,7 +4,10 @@ import { Button, Group, Stack, Tabs, TextInput } from '@mantine/core';
 import AddOnsPanel from './AddOnsPanel';
 import FramePanel from './FramePanel';
 import FrameTabsPanel from './FrameTabsPanel';
+import InventoryPanel from './InventoryPanel';
+import LimitationsPanel from './LimitationsPanel';
 import PricesPanel from './PricesPanel';
+import TranslationsPanel from './TranslationsPanel';
 
 export default function Frame() {
   return (
@@ -56,7 +59,6 @@ export default function Frame() {
             <Tabs.Tab value="limitations">Limitations</Tabs.Tab>
             <Tabs.Tab value="inventory">Inventory</Tabs.Tab>
             <Tabs.Tab value="translations">Translations</Tabs.Tab>
-            <Tabs.Tab value="future">Future</Tabs.Tab>
           </Tabs.List>
 
           <FrameTabsPanel value="frame">
@@ -69,6 +71,18 @@ export default function Frame() {
 
           <FrameTabsPanel value="addOns">
             <AddOnsPanel />
+          </FrameTabsPanel>
+
+          <FrameTabsPanel value="limitations">
+            <LimitationsPanel />
+          </FrameTabsPanel>
+
+          <FrameTabsPanel value="inventory">
+            <InventoryPanel />
+          </FrameTabsPanel>
+
+          <FrameTabsPanel value="translations">
+            <TranslationsPanel />
           </FrameTabsPanel>
         </Tabs>
       </Stack>
