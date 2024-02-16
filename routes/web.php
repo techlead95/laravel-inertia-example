@@ -71,7 +71,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
     Route::get('/frame', function () {
-        return Inertia::render('Admin/Frame');
+        return Inertia::render('Admin/Frame/Frame');
     });
 
     Route::get('/frame/catalog', function () {
