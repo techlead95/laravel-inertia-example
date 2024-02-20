@@ -1,49 +1,58 @@
+import { Frame, FrameEdge, FrameMaterial } from '@/types';
 import { inputHorizontalStyles } from '@/utils';
-import { Group, Stack, Switch, TextInput, Textarea } from '@mantine/core';
+import {
+  Group,
+  Select,
+  Stack,
+  Switch,
+  TextInput,
+  Textarea,
+} from '@mantine/core';
 import { DataTable } from 'mantine-datatable';
 
-export default function FramePanel() {
+interface Props {
+  frames: Frame[];
+  edges: FrameEdge[];
+  materials: FrameMaterial[];
+}
+
+export default function FramePanel({ frames, edges, materials }: Props) {
   return (
     <>
       <DataTable
         columns={[
-          { accessor: 'eye', title: 'Eye' },
-          { accessor: 'bridge', title: 'Bridge' },
-          { accessor: 'templeType', title: 'Temple Type' },
-          { accessor: 'color', title: 'Color' },
-          { accessor: 'a', title: 'A' },
-          { accessor: 'b', title: 'B' },
-          { accessor: 'ed', title: 'ED' },
-          { accessor: 'dbl', title: 'DBL' },
+          { accessor: 'fr_eyesize', title: 'Eye' },
+          { accessor: 'fr_bridge', title: 'Bridge' },
+          { accessor: 'fr_temple_type', title: 'Temple Type' },
+          { accessor: 'fr_temple_size', title: 'Temple Size' },
+          { accessor: 'fr_frame_color', title: 'Color' },
+          { accessor: 'fr_A', title: 'A' },
+          { accessor: 'fr_B', title: 'B' },
+          { accessor: 'fr_ED', title: 'ED' },
+          { accessor: 'fr_DBL', title: 'DBL' },
           {
-            accessor: 'nonDigitalDefaultSeg',
+            accessor: 'fr_non_dig_default_seg',
             title: 'Non Digital Default Seg',
           },
           {
-            accessor: 'digitalDefaultSeg',
+            accessor: 'fr_dig_default_seg',
             title: 'Digital Default Seg',
           },
         ]}
-        records={[
-          {
-            id: 1,
-            eye: '1',
-            bridge: '2',
-            templteType: '3',
-            color: '4',
-            a: '5',
-            b: '6',
-            ed: '7',
-            dbl: '8',
-            nonDigitalDefaultSeg: '9',
-            digitalDefaultSeg: '10',
-          },
-        ]}
+        records={frames}
       />
       <Group component="form" align="flex-start">
         <Stack gap="xs">
-          <TextInput label="Edge" styles={inputHorizontalStyles} />
-          <TextInput label="Material" styles={inputHorizontalStyles} />
+          <Select
+            label="Edge"
+            styles={inputHorizontalStyles}
+            data={edges.map((edge) => edge.fe_edge)}
+          />
+          <Select
+            label="Material"
+            styles={inputHorizontalStyles}
+            data={materials.map((material) => material.fm_material)}
+          />
           <TextInput label="Min Edge" styles={inputHorizontalStyles} />
           <TextInput label="Base Curve Min" styles={inputHorizontalStyles} />
           <TextInput label="Base Curve Max" styles={inputHorizontalStyles} />

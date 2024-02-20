@@ -3,6 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
+use App\Models\Frame;
+use App\Models\FrameEdge;
+use App\Models\FrameMaterial;
 use Illuminate\Database\Seeder;
 use Database\Seeders\UserSeeder;
 
@@ -13,12 +17,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(UserSeeder::class);
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        User::factory()->count(10)->create();
+        FrameEdge::factory()->count(5)->create();
+        FrameMaterial::factory()->count(5)->create();
+        Frame::factory()->count(3)->create();
     }
 }

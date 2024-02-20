@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('frame_edge', function (Blueprint $table) {
             $table->string('fe_edge');
-
         });
     }
 

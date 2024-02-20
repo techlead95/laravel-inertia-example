@@ -5,8 +5,9 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
-use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\FrameController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
     Route::resource('users', UserController::class);
+
+    Route::resource('frame', FrameController::class);
 
     Route::get('/ship-to-account-maintenance', function () {
         return Inertia::render('Admin/ShipToAccountMaintenance', [
@@ -68,10 +71,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/modules', function () {
         return Inertia::render('Admin/Modules');
-    });
-
-    Route::get('/frame', function () {
-        return Inertia::render('Admin/Frame/Frame');
     });
 
     Route::get('/frame/catalog', function () {

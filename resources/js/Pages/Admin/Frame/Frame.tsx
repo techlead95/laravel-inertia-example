@@ -1,3 +1,4 @@
+import { FrameEdge, FrameMaterial, FrameType } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { Button, Group, Stack, Tabs, TextInput } from '@mantine/core';
 
@@ -9,7 +10,13 @@ import LimitationsPanel from './LimitationsPanel';
 import PricesPanel from './PricesPanel';
 import TranslationsPanel from './TranslationsPanel';
 
-export default function Frame() {
+interface Props {
+  frames: FrameType[];
+  edges: FrameEdge[];
+  materials: FrameMaterial[];
+}
+
+export default function Frame({ frames, edges, materials }: Props) {
   return (
     <>
       <Head title="Frame" />
@@ -62,7 +69,7 @@ export default function Frame() {
           </Tabs.List>
 
           <FrameTabsPanel value="frame">
-            <FramePanel />
+            <FramePanel frames={frames} edges={edges} materials={materials} />
           </FrameTabsPanel>
 
           <FrameTabsPanel value="prices">

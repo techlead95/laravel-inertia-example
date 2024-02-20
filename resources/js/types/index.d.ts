@@ -1,3 +1,11 @@
+export type PageProps<
+  T extends Record<string, unknown> = Record<string, unknown>,
+> = T & {
+  auth: {
+    user: User;
+  };
+};
+
 export interface User {
   id: number;
   name: string;
@@ -18,10 +26,26 @@ export interface User {
   deleted_at: string | null;
 }
 
-export type PageProps<
-  T extends Record<string, unknown> = Record<string, unknown>,
-> = T & {
-  auth: {
-    user: User;
-  };
-};
+export interface FrameEdge {
+  fe_edge: string;
+}
+
+export interface FrameMaterial {
+  fm_material: string;
+}
+
+export interface Frame {
+  fr_frame_name: string;
+  fr_eyesize: number | null;
+  fr_temple_type: string | null;
+  fr_temple_size: number | null;
+  fr_frame_color: string | null;
+  fr_A: number | null;
+  fr_B: number | null;
+  fr_ED: number | null;
+  fr_DBL: number | null;
+  fr_non_dig_default_seg: string | null;
+  fr_dig_default_seg: number | null;
+}
+
+export type FrameType = Frame;
