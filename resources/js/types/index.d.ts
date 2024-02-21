@@ -35,6 +35,7 @@ export interface FrameMaterial {
 }
 
 export interface Frame {
+  id: number;
   fr_frame_name: string;
   fr_eyesize: number | null;
   fr_temple_type: string | null;
@@ -49,3 +50,13 @@ export interface Frame {
 }
 
 export type FrameType = Frame;
+
+export interface LensStyle {
+  id: number;
+  ls_lenstyl_lens_style: string;
+}
+
+export interface LensMaterial {
+  id: number;
+  lm_lens_material: string;
+}

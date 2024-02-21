@@ -42,7 +42,7 @@ export default function Frame({ frames, edges, materials }: Props) {
               <Button variant="outline" miw={120}>
                 Add New
               </Button>
-              <Link href="/admin/frame/catalog">
+              <Link href={route('admin.frame.catalog')}>
                 <Button variant="outline" miw={120}>
                   Catalogue
                 </Button>

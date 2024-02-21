@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('lens_styles', function (Blueprint $table) {
             $table->id();
-            $table->string('ls_lenstyl_std_seq');
-            $table->string('ls_lenstyl_base_seq');
+            $table->string('ls_lenstyl_std_seq')->nullable();
+            $table->string('ls_lenstyl_base_seq')->nullable();
             $table->string('ls_lenstyl_lens_style');
-            $table->string('ls_lenstyl_type');
-            $table->string('ls_lenstyl_vision');
-            $table->string('ls_lenstyl_seg');
-            $table->string('ls_lenstyl_base_desc');
-            $table->string('ls_lenstyl_style_desc');
-            $table->string('ls_lenstyl_std_desc');
+            $table->string('ls_lenstyl_type')->nullable();
+            $table->string('ls_lenstyl_vision')->nullable();
+            $table->string('ls_lenstyl_seg')->nullable();
+            $table->string('ls_lenstyl_base_desc')->nullable();
+            $table->string('ls_lenstyl_style_desc')->nullable();
+            $table->string('ls_lenstyl_std_desc')->nullable();
 
             $table->timestamps();
         });

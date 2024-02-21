@@ -1,26 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use Inertia\Inertia;
-use App\Models\Frame;
-use App\Models\FrameEdge;
+use App\Models\LensStyle;
+use App\Models\LensMaterial;
 use Illuminate\Http\Request;
-use App\Models\FrameMaterial;
-use App\Http\Controllers\Controller;
 
-class FrameController extends Controller
+class LensController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $edges = FrameEdge::all();
-        $materials = FrameMaterial::all();
-        $frames = Frame::all();
-        
-        return Inertia::render('Admin/Frame/Frame', compact('edges', 'materials', 'frames'));
+        $styles = LensStyle::all();
+        $materials = LensMaterial::all();
+
+        return Inertia::render('Admin/Lens/Lens', compact('styles', 'materials'));
     }
 
     /**
@@ -73,6 +70,6 @@ class FrameController extends Controller
 
     public function catalog()
     {
-        return Inertia::render('Admin/Frame/FrameCatalog');
+        return Inertia::render('Admin/Lens/LensCatalog');
     }
 }

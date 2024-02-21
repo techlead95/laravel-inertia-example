@@ -5,6 +5,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\LensController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\FrameController;
@@ -35,7 +36,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('users', UserController::class);
 
-    Route::resource('frame', FrameController::class);
+    Route::prefix('frame')->name('frame.')->group(function () {
+        Route::get('/catalog', [FrameController::class, 'catalog'])->name('catalog');
+
+        Route::resource('/', FrameController::class);
+    });
+
+    Route::prefix('lens')->name('lens.')->group(function () {
+        Route::get('/catalog', [LensController::class, 'catalog'])->name('catalog');
+
+        Route::resource('/', LensController::class);
+    });
 
     Route::get('/ship-to-account-maintenance', function () {
         return Inertia::render('Admin/ShipToAccountMaintenance', [
@@ -71,18 +82,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/modules', function () {
         return Inertia::render('Admin/Modules');
-    });
-
-    Route::get('/frame/catalog', function () {
-        return Inertia::render('Admin/FrameCatalog');
-    });
-
-    Route::get('/lens', function () {
-        return Inertia::render('Admin/Lens');
-    });
-
-    Route::get('/lens/catalog', function () {
-        return Inertia::render('Admin/LensCatalog');
     });
 
     Route::get('/coating', function () {

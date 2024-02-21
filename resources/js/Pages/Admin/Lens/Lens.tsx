@@ -1,3 +1,4 @@
+import { LensMaterial, LensStyle } from '@/types';
 import { inputHorizontalStyles } from '@/utils';
 import { Head, Link } from '@inertiajs/react';
 import {
@@ -5,29 +6,43 @@ import {
   Button,
   Flex,
   Group,
+  Select,
   Stack,
   Switch,
   Text,
   TextInput,
 } from '@mantine/core';
 
-export default function Lens() {
+interface Props {
+  styles: LensStyle[];
+  materials: LensMaterial[];
+}
+
+export default function Lens({ styles, materials }: Props) {
   return (
     <>
       <Head title="Lens" />
       <Stack>
         <Group justify="space-between" align="flex-start">
           <Group>
-            <TextInput label="Lens Style" w={240} />
-            <TextInput label="Material" w={240} />
-            <TextInput label="Color" w={240} />
+            <Select
+              label="Lens Style"
+              w={240}
+              data={styles.map((style) => style.ls_lenstyl_lens_style)}
+            />
+            <Select
+              label="Lens Material"
+              w={240}
+              data={materials.map((material) => material.lm_lens_material)}
+            />
+            <Select label="Color" w={240} data={['Green', 'Blue', 'Red']} />
           </Group>
           <Stack>
             <Group mt={24}>
               <Button variant="outline" miw={120}>
                 Add New
               </Button>
-              <Link href="/admin/lens/catalog">
+              <Link href={route('admin.lens.catalog')}>
                 <Button variant="outline" miw={120}>
                   Catalogue
                 </Button>

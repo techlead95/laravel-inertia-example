@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('lens_materials', function (Blueprint $table) {
             $table->id();
-            $table->string('lm_lens_style');
+            $table->string('lm_lens_style')->nullable();
             $table->string('lm_lens_material');
-            $table->string('lm_lens_color');
-            $table->string('lm_lens_precoat');
-            $table->string('lm_material_desc');
-            $table->string('lm_color_desc');
-            $table->string('lm_precoat_desc');
-            $table->string('lm_single_matl_rec');
+            $table->string('lm_lens_color')->nullable();
+            $table->string('lm_lens_precoat')->nullable();
+            $table->string('lm_material_desc')->nullable();
+            $table->string('lm_color_desc')->nullable();
+            $table->string('lm_precoat_desc')->nullable();
+            $table->string('lm_single_matl_rec')->nullable();
 
             $table->timestamps();
         });

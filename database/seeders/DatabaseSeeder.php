@@ -6,6 +6,8 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Frame;
 use App\Models\FrameEdge;
+use App\Models\LensStyle;
+use App\Models\LensMaterial;
 use App\Models\FrameMaterial;
 use Illuminate\Database\Seeder;
 use Database\Seeders\UserSeeder;
@@ -21,5 +23,7 @@ class DatabaseSeeder extends Seeder
         FrameEdge::factory()->count(5)->create();
         FrameMaterial::factory()->count(5)->create();
         Frame::factory()->count(3)->create();
+        LensStyle::factory()->count(5)->create();
+        LensMaterial::factory()->count(5)->create();
     }
 }
