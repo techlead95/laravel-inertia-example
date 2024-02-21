@@ -225,7 +225,7 @@ export default function NewOrder() {
       </Group>
       <Space h="md" />
       <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">Notes</Text></Center>
-      <Textarea w="1034" minRows={5} />
+      <Textarea w="1034" resize="vertical" />
       <Space h="md" />
 
     </Container>
