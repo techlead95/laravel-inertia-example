@@ -1,14 +1,11 @@
 <?php
 
-use App\Models\User;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
 use App\Http\Controllers\LensController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\FrameController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,6 +94,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 });
 
+Route::resource('orders', OrderController::class);
+
 Route::get('/sign-in', function () {
     return Inertia::render('Public/SignIn');
 });
@@ -117,14 +116,6 @@ Route::get('/my-links', function () {
     return Inertia::render('MyLinks');
 });
 
-Route::get('/new-order', function () {
-    return Inertia::render('NewOrder');
-});
-
-Route::get('/orders', function () {
-    return Inertia::render('Orders');
-});
-
 Route::get('/product-back-orders', function () {
     return Inertia::render('ProductBackOrders');
 });
@@ -133,20 +124,20 @@ Route::get('/products', function () {
     return Inertia::render('Products');
 });
 
-Route::get('/auth/redirect/azure', function () {
-    return Socialite::driver('azure')->redirect();
-});
+// Route::get('/auth/redirect/azure', function () {
+//     return Socialite::driver('azure')->redirect();
+// });
 
-Route::get('/auth/callback/azure', function () {
-    $user = Socialite::driver('azure')->user();
+// Route::get('/auth/callback/azure', function () {
+//     $user = Socialite::driver('azure')->user();
 
-    dd($user);
-});
+//     dd($user);
+// });
 
-Route::get('/auth/logout/azure', function () {
-    $logoutUrl = Socialite::driver('azure')->getLogoutUrl(url('/'));
-    return redirect($logoutUrl);
-});
+// Route::get('/auth/logout/azure', function () {
+//     $logoutUrl = Socialite::driver('azure')->getLogoutUrl(url('/'));
+//     return redirect($logoutUrl);
+// });
 
 // Route::get('/auth/redirect/salesforce', function () {
 //     return Socialite::driver('salesforce')->redirect();
@@ -163,4 +154,4 @@ Route::get('/auth/logout/azure', function () {
 //     return redirect($logoutUrl);
 // });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

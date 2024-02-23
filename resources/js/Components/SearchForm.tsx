@@ -5,9 +5,16 @@ import { useState } from 'react';
 interface Props {
   initialValue: string;
   onSearch: (newVal: string) => void;
+  inputWidth?: number;
+  hideClear?: boolean;
 }
 
-export default function SearchForm({ initialValue, onSearch }: Props) {
+export default function SearchForm({
+  initialValue,
+  onSearch,
+  inputWidth = 280,
+  hideClear,
+}: Props) {
   const [value, setValue] = useState(initialValue);
 
   return (
@@ -21,7 +28,7 @@ export default function SearchForm({ initialValue, onSearch }: Props) {
     >
       <TextInput
         placeholder="Search"
-        w={280}
+        w={inputWidth}
         value={value}
         onChange={(e) => setValue(e.target.value)}
         rightSection={<Search />}
@@ -29,9 +36,11 @@ export default function SearchForm({ initialValue, onSearch }: Props) {
       <Button type="submit" miw={120} disabled={value === initialValue}>
         Search
       </Button>
-      <Button miw={120} variant="default" disabled={!value}>
-        Clear
-      </Button>
+      {!hideClear && (
+        <Button miw={120} variant="default" disabled={!value}>
+          Clear
+        </Button>
+      )}
     </Group>
   );
 }

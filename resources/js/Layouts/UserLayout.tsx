@@ -14,8 +14,8 @@ export default function UserLayout({ children }: PropsWithChildren) {
       menuLinks={
         <>
           <MenuLink href="/">Home</MenuLink>
-          <MenuLink href="/orders">Orders</MenuLink>
-          <MenuLink href="/new-order">New Order</MenuLink>
+          <MenuLink href={route('orders.index')}>Orders</MenuLink>
+          <MenuLink href={route('orders.create')}>New Order</MenuLink>
           <MenuLink href="/customers">Customers</MenuLink>
           <MenuLink href="/products">Products</MenuLink>
           <MenuLink href="/my-links">My Links</MenuLink>
