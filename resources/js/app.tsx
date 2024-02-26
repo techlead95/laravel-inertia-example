@@ -5,6 +5,7 @@ import {
   createTheme,
 } from '@mantine/core';
 import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
 import { ModalsProvider } from '@mantine/modals';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import 'mantine-datatable/styles.layer.css';
@@ -37,6 +38,18 @@ const theme = createTheme({
   black: '#333333',
   colors: {
     blue,
+  },
+  components: {
+    Button: {
+      defaultProps: {
+        miw: 120,
+      },
+    },
+    DateInput: {
+      defaultProps: {
+        valueFormat: 'MM/DD/YYYY',
+      },
+    },
   },
 });
 
