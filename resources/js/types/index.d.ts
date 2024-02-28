@@ -1,8 +1,9 @@
-export type PageProps<
-  T extends Record<string, unknown> = Record<string, unknown>,
-> = T & {
+export type PageProps<T> = T & {
   auth: {
     user: User;
+  };
+  flash: {
+    success?: string;
   };
 };
 
@@ -26,6 +27,11 @@ export interface User {
   deleted_at: string | null;
 }
 
+export interface Timestamps {
+  created_at: string;
+  updated_at: string;
+}
+
 export interface FrameEdge {
   fe_edge: string;
 }
@@ -34,19 +40,34 @@ export interface FrameMaterial {
   fm_material: string;
 }
 
-export interface Frame {
+export interface FrameBrand {
+  fb_brand: string;
+}
+
+export interface FrameCollection {
+  fc_collection: string;
+}
+
+export interface FrameDefaultGroup {
+  fd_group: string;
+}
+
+export interface Frame extends Timestamps {
   id: number;
   fr_frame_name: string;
-  fr_eyesize: number | null;
-  fr_temple_type: string | null;
-  fr_temple_size: number | null;
-  fr_frame_color: string | null;
-  fr_A: number | null;
-  fr_B: number | null;
-  fr_ED: number | null;
-  fr_DBL: number | null;
-  fr_non_dig_default_seg: string | null;
-  fr_dig_default_seg: number | null;
+  fr_brand: string | null;
+  fr_collection: string | null;
+  fr_frame_group: string | null;
+  fr_eyesize?: number;
+  fr_temple_type?: string;
+  fr_temple_size?: number;
+  fr_frame_color?: string;
+  fr_A?: number;
+  fr_B?: number;
+  fr_ED?: number;
+  fr_DBL?: number;
+  fr_non_dig_default_seg?: string;
+  fr_dig_default_seg?: number;
 }
 
 export type FrameType = Frame;

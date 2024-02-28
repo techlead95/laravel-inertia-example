@@ -17,7 +17,7 @@ class LensStyleFactory extends Factory
     public function definition(): array
     {
         return [
-            'ls_lenstyl_lens_style' => 'Style ' . fake()->word(),
+            'ls_lenstyl_lens_style' => 'Style ' . fake()->unique()->word(),
         ];
     }
 }

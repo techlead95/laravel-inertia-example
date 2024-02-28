@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FrameBrand>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FrameDefaultGroup>
  */
-class FrameBrandFactory extends Factory
+class FrameDefaultGroupFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,7 @@ class FrameBrandFactory extends Factory
     public function definition(): array
     {
         return [
-            'fb_brand' => 'Brand ' . fake()->unique()->word(),
+            'fd_group' => 'Group ' . fake()->unique()->word(),
         ];
     }
 }

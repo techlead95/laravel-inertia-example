@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('frame_default_group', function (Blueprint $table) {
-            $table->string('fd_group');
+        Schema::table('frames', function (Blueprint $table) {
+            $table->string('fr_brand');
+            $table->string('fr_collection');
         });
     }
 
@@ -21,6 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('frame_default_group');
+        Schema::table('frames', function (Blueprint $table) {
+            $table->dropColumn('fr_brand');
+            $table->dropColumn('fr_collection');
+        });
     }
 };

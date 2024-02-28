@@ -52,7 +52,7 @@ export default function Orders() {
           data={Object.values(OrderStatus)}
         />
         <SearchForm
-          initialValue="Smith"
+          initialValue=""
           onSearch={() => {}}
           inputWidth={220}
           hideClear

@@ -17,7 +17,7 @@ class FrameCollectionFactory extends Factory
     public function definition(): array
     {
         return [
-            'fc_collection' => 'Collection ' . faker()->word(),
+            'fc_collection' => 'Collection ' . fake()->unique()->word(),
         ];
     }
 }

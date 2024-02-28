@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\FrameBrand;
+use App\Models\FrameCollection;
+use App\Models\FrameDefaultGroup;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +19,15 @@ class FrameFactory extends Factory
      */
     public function definition(): array
     {
+        $frameBrands = FrameBrand::pluck('fb_brand')->toArray();
+        $frameCollections = FrameCollection::pluck('fc_collection')->toArray();
+        $frameDefaultGroups = FrameDefaultGroup::pluck('fd_group')->toArray();
+
         return [
-            'fr_frame_name' => fake()->word(),
+            'fr_frame_name' => 'Frame ' . fake()->unique()->word(),
+            'fr_brand' => fake()->randomElement($frameBrands),
+            'fr_collection' => fake()->randomElement($frameCollections),
+            'fr_frame_group' => fake()->randomElement($frameDefaultGroups),
             'fr_eyesize' => fake()->numberBetween(20, 60),
             'fr_temple_type' => fake()->word(),
             'fr_temple_size' => fake()->numberBetween(100, 200),

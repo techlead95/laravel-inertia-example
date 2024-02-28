@@ -17,7 +17,7 @@ class LensMaterialFactory extends Factory
     public function definition(): array
     {
         return [
-            'lm_lens_material' => 'Material ' . fake()->word(),
+            'lm_lens_material' => 'Material ' . fake()->unique()->word(),
         ];
     }
 }

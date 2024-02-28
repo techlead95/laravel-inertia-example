@@ -17,7 +17,7 @@ class FrameMaterialFactory extends Factory
     public function definition(): array
     {
         return [
-            'fm_material' => 'Material ' . fake()->word()
+            'fm_material' => 'Material ' . fake()->unique()->word()
         ];
     }
 }

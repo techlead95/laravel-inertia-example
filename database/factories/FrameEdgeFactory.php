@@ -17,7 +17,7 @@ class FrameEdgeFactory extends Factory
     public function definition(): array
     {
         return [
-            'fe_edge' => 'Edge ' . fake()->word()
+            'fe_edge' => 'Edge ' . fake()->unique()->word()
         ];
     }
 }

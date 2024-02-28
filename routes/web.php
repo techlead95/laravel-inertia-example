@@ -33,17 +33,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('users', UserController::class);
 
-    Route::prefix('frame')->name('frame.')->group(function () {
-        Route::get('/catalog', [FrameController::class, 'catalog'])->name('catalog');
+    Route::get('/frame/catalog', [FrameController::class, 'catalog'])->name('frame.catalog');
+    Route::resource('frame', FrameController::class);
 
-        Route::resource('/', FrameController::class);
-    });
-
-    Route::prefix('lens')->name('lens.')->group(function () {
-        Route::get('/catalog', [LensController::class, 'catalog'])->name('catalog');
-
-        Route::resource('/', LensController::class);
-    });
+    Route::get('/lens/catalog', [LensController::class, 'catalog'])->name('lens.catalog');
+    Route::resource('lens', LensController::class);
 
     Route::get('/ship-to-account-maintenance', function () {
         return Inertia::render('Admin/ShipToAccountMaintenance', [
