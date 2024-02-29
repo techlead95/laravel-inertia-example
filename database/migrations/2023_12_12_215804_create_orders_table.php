@@ -92,7 +92,7 @@ $table->string('or_notes')->nullable();
             $table->string('or_rx_number')->nullable();
             $table->string('or_special_instr')->nullable();
             $table->string('or_cc_emp_copay_token')->nullable();
-            $table->string('or_cc_emp_copay_token')->nullable();
+            $table->string('or_cc_company_copay_token')->nullable();
             $table->string('or_cc_emp_card_type')->nullable();
             $table->string('or_cc_emp_card_exp_date')->nullable();
             $table->string('or_cc_company_card_type')->nullable();

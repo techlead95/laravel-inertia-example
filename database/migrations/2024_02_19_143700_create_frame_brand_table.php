@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('frame_brand', function (Blueprint $table) {
+            $table->id();
             $table->string('fb_brand');
+            $table->timestamps();
 
         });
     }

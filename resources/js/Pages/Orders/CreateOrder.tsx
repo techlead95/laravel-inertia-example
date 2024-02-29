@@ -2,8 +2,14 @@ import PageTitle from '@/Components/PageTitle';
 import { includesIgnoreCase, inputHorizontalStyles, inputBlueLabel, inputBlueLabelCentered, inputNoMargin } from '@/utils';
 import { Head, Link} from '@inertiajs/react';
 import { Button, Group, Stack, Switch, TextInput, ComboboxItem,  Select, Radio, Container, Box, Center, Text, Space, Textarea, Table } from '@mantine/core';
-
+import {
+  Frame,
+} from '@/types';
 import useExtendedForm from '@/Hooks/useExtendedForm';
+
+interface Props {
+  frames: Frame[];
+}
 
 export default function NewOrder() {
   
