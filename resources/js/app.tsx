@@ -16,6 +16,7 @@ import '../css/app.css';
 import AdminLayout from './Layouts/AdminLayout';
 import UserLayout from './Layouts/UserLayout';
 import './bootstrap';
+import { DATE_DISPLAY_FORMAT } from './utils';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -47,7 +48,7 @@ const theme = createTheme({
     },
     DateInput: {
       defaultProps: {
-        valueFormat: 'MM/DD/YYYY',
+        valueFormat: DATE_DISPLAY_FORMAT,
       },
     },
   },

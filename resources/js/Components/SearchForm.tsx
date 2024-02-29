@@ -3,8 +3,8 @@ import { Search } from '@mui/icons-material';
 import { useState } from 'react';
 
 interface Props {
-  initialValue: string;
-  onSearch: (newVal: string) => void;
+  initialValue?: string | null;
+  onSearch: (newVal: string | null) => void;
   inputWidth?: number;
   hideClear?: boolean;
 }
@@ -15,7 +15,7 @@ export default function SearchForm({
   inputWidth = 280,
   hideClear,
 }: Props) {
-  const [value, setValue] = useState(initialValue);
+  const [value, setValue] = useState(initialValue ?? '');
 
   return (
     <Group
@@ -23,7 +23,7 @@ export default function SearchForm({
       component="form"
       onSubmit={(e) => {
         e.preventDefault();
-        onSearch(value);
+        onSearch(value ? value : null);
       }}
     >
       <TextInput
@@ -33,11 +33,16 @@ export default function SearchForm({
         onChange={(e) => setValue(e.target.value)}
         rightSection={<Search />}
       />
-      <Button type="submit" miw={120} disabled={value === initialValue}>
+      <Button type="submit" miw={120} disabled={value === (initialValue ?? '')}>
         Search
       </Button>
       {!hideClear && (
-        <Button miw={120} variant="default" disabled={!value}>
+        <Button
+          miw={120}
+          variant="default"
+          disabled={!value}
+          onClick={() => onSearch('')}
+        >
           Clear
         </Button>
       )}

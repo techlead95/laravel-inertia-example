@@ -11,17 +11,15 @@ import {
 } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import {
-  Alert,
   Autocomplete,
   Button,
   Group,
   Select,
   Stack,
   Tabs,
-  TextInput,
 } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import AddOnsPanel from './AddOnsPanel';
 import FramePanel from './FramePanel';
@@ -49,7 +47,7 @@ export default function Frame({
   frames,
   flash,
 }: PageProps<Props>) {
-  const { getFieldProps, data, setData, put, post } =
+  const { getFieldProps, data, setData, clearErrors, put, post } =
     useExtendedForm<Partial<FrameType>>();
 
   const selectedFrame = useMemo(() => {
@@ -57,6 +55,8 @@ export default function Frame({
   }, [frames, data.fr_frame_name]);
 
   useEffect(() => {
+    clearErrors();
+
     if (selectedFrame) {
       setData(selectedFrame);
     } else {
@@ -73,7 +73,9 @@ export default function Frame({
     <>
       <Head title="Frame" />
       <Stack>
-        {flash.success && <BaseAlert title={flash.success} />}
+        {flash.success && (
+          <BaseAlert title={flash.success} timestamp={flash.timestamp} />
+        )}
         <Group
           justify="space-between"
           align="flex-start"
@@ -89,7 +91,7 @@ export default function Frame({
           }}
         >
           <Stack>
-            <Group>
+            <Group align="flex-start">
               <Select
                 label="Brand"
                 data={brands.map((brand) => brand.fb_brand)}
@@ -103,7 +105,7 @@ export default function Frame({
                 {...getFieldProps('fr_frame_name')}
               />
             </Group>
-            <Group>
+            <Group align="flex-start">
               <Select
                 label="Collection"
                 w={200}

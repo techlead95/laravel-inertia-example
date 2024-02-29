@@ -4,6 +4,7 @@ export type PageProps<T> = T & {
   };
   flash: {
     success?: string;
+    timestamp: number;
   };
 };
 

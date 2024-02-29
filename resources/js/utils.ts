@@ -7,16 +7,20 @@ export const inputHorizontalStyles: Record<string, CSSProperties> = {
 };
 
 export const inputBlueLabel: Record<string, CSSProperties> = {
-  label: { fontWeight: 'bold', color: "rgba(0, 84, 194, 1)" },
+  label: { fontWeight: 'bold', color: 'rgba(0, 84, 194, 1)' },
 };
 
 export const inputBlueLabelCentered: Record<string, CSSProperties> = {
-  root: {margin:-10, display: 'flex'},
-  label: { fontWeight: 'bold', color: "rgba(0, 84, 194, 1)", textAlign: 'right'},
+  root: { margin: -10, display: 'flex' },
+  label: {
+    fontWeight: 'bold',
+    color: 'rgba(0, 84, 194, 1)',
+    textAlign: 'right',
+  },
 };
 
 export const inputNoMargin: Record<string, CSSProperties> = {
-  root: {margin:-10,},
+  root: { margin: -10 },
 };
 
 export const includesIgnoreCase = (str: string, search: string) =>
@@ -36,3 +40,5 @@ export const getFieldProps = <T>(
     error: errors[key],
   };
 };
+
+export const DATE_DISPLAY_FORMAT = 'MM/DD/YYYY';

@@ -20,6 +20,8 @@ export default function useExtendedForm<TForm extends object>(
       onChange: (
         e: React.ChangeEvent<HTMLInputElement> | string | Date | null,
       ) => {
+        form.setError(key, '');
+
         if (e === null) {
           form.setData(key, '' as TForm[keyof TForm]);
           return;

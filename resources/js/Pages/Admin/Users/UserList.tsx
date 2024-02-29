@@ -8,10 +8,10 @@ import { Delete, Edit } from '@mui/icons-material';
 
 interface Props {
   users: User[];
-  currentSearch: string;
+  search: string;
 }
 
-export default function AdminHome({ users, currentSearch }: Props) {
+export default function AdminHome({ users, search }: Props) {
   const handleDelete = (user: User) => {
     modals.openConfirmModal({
       title: 'Are you sure to delete this user?',
@@ -30,9 +30,9 @@ export default function AdminHome({ users, currentSearch }: Props) {
       <Group style={{ flex: 1 }} gap="xl" align="flex-start">
         <Stack style={{ flex: 3 }} h="100%">
           <SearchForm
-            initialValue={currentSearch}
-            onSearch={(search) => {
-              router.replace(route('admin.users.index', { search }));
+            initialValue={search}
+            onSearch={(newSearch) => {
+              router.get(route('admin.users.index', { search: newSearch }));
             }}
           />
           <BaseDataTable

@@ -11,7 +11,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return inertia()->render('Orders/OrderList');
+        $search = request()->search;
+        $startDate = request()->startDate;
+        $endDate = request()->endDate;
+
+        return inertia()->render('Orders/OrderList', compact('search', 'startDate', 'endDate'));
     }
 
     /**

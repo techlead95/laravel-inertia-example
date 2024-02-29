@@ -15,14 +15,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::when(request()->search, function ($query, $search) {
+        $search = request()->search;
+        $users = User::when($search, function ($query, $search) {
             return $query->where('name', 'like', '%' . $search . '%');
         })->get();
 
-        return Inertia::render('Admin/Users/UserList', [
-            'users' => $users,
-            'currentSearch' => request()->search
-        ]);
+        return Inertia::render('Admin/Users/UserList', compact('users', 'search'));
     }
 
     /**

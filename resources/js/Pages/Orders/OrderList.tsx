@@ -2,6 +2,7 @@ import BaseDataTable from '@/Components/BaseDataTable';
 import DateRangeFilterForm from '@/Components/DateRangeFilterForm';
 import PageTitle from '@/Components/PageTitle';
 import SearchForm from '@/Components/SearchForm';
+import { router } from '@inertiajs/react';
 import { Group, SegmentedControl } from '@mantine/core';
 import { useMemo, useState } from 'react';
 
@@ -11,7 +12,13 @@ enum OrderStatus {
   Problem = 'Problem Orders',
 }
 
-export default function Orders() {
+interface Props {
+  search: string | null;
+  startDate: string | null;
+  endDate: string | null;
+}
+
+export default function Orders({ search, startDate, endDate }: Props) {
   const [status, setStatus] = useState(OrderStatus.Active);
 
   const columns = useMemo(() => {
@@ -52,13 +59,28 @@ export default function Orders() {
           data={Object.values(OrderStatus)}
         />
         <SearchForm
-          initialValue=""
-          onSearch={() => {}}
+          initialValue={search}
+          onSearch={(newSearch) => {
+            router.get(route('orders.index', { search: newSearch }));
+          }}
           inputWidth={220}
           hideClear
         />
       </Group>
-      <DateRangeFilterForm mt="lg" label="Filter by date created" />
+      <DateRangeFilterForm
+        mt="lg"
+        label="Filter by date created"
+        initialStartDate={startDate}
+        initialEndDate={endDate}
+        onApply={(newStartDate, newEndDate) => {
+          router.get(
+            route('orders.index', {
+              startDate: newStartDate,
+              endDate: newEndDate,
+            }),
+          );
+        }}
+      />
       <BaseDataTable
         mt="xl"
         withTableBorder

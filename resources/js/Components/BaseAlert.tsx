@@ -4,15 +4,20 @@ import { useEffect, useState } from 'react';
 
 interface Props extends AlertProps {
   status?: 'success';
+  timestamp?: number;
 }
 
-export default function BaseAlert({ status = 'success', ...props }: Props) {
+export default function BaseAlert({
+  status = 'success',
+  timestamp,
+  ...props
+}: Props) {
   const icon = <Info />;
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     setVisible(true);
-  }, [props.title]);
+  }, [timestamp]);
 
   if (!visible) {
     return null;
