@@ -112,7 +112,7 @@ or_manual_ship_addr_3: '',
     <Group style={{ flex: 4 }} h="100%">
       <Stack>
         <Select  {...getFieldProps('or_ship_to')} label="Ship To Account" styles={inputBlueLabel} data={['test1', 'test2', 'test3']} />
-        <TextInput {...getFieldProps('or_emp_name_last')} label="Patient First Name" styles={inputBlueLabel}/>
+        <TextInput {...getFieldProps('or_emp_name_first')} label="Patient First Name" styles={inputBlueLabel}/>
         <TextInput {...getFieldProps('or_emp_phone')} label="Patient Phone" styles={inputBlueLabel}  />
         <TextInput {...getFieldProps('or_po_no')} label="Purchase Order" styles={inputBlueLabel} />
         <TextInput {...getFieldProps('or_emp_no')} label="Employee Number" styles={inputBlueLabel} />
