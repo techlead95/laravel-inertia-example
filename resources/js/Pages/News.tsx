@@ -1,10 +1,10 @@
 import PageTitle from '@/Components/PageTitle';
 import UnderConstruction from '@/Components/UnderConstruction';
 
-export default function MyLinks() {
+export default function News() {
   return (
     <>
-      <PageTitle title="My Links" />
+      <PageTitle title="News" />
       <UnderConstruction />
     </>
   );

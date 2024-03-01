@@ -106,46 +106,20 @@ Route::get('/my-account', function () {
     return Inertia::render('MyAccount');
 });
 
-Route::get('/my-links', function () {
-    return Inertia::render('MyLinks');
+Route::get('/technical-documents', function () {
+    return Inertia::render('TechnicalDocuments');
 });
 
-Route::get('/product-back-orders', function () {
-    return Inertia::render('ProductBackOrders');
+Route::get('/news', function () {
+    return Inertia::render('News');
 });
 
-Route::get('/products', function () {
-    return Inertia::render('Products');
+Route::get('/my-hoya-links', function () {
+    return Inertia::render('MyHoyaLinks');
 });
 
-// Route::get('/auth/redirect/azure', function () {
-//     return Socialite::driver('azure')->redirect();
-// });
-
-// Route::get('/auth/callback/azure', function () {
-//     $user = Socialite::driver('azure')->user();
-
-//     dd($user);
-// });
-
-// Route::get('/auth/logout/azure', function () {
-//     $logoutUrl = Socialite::driver('azure')->getLogoutUrl(url('/'));
-//     return redirect($logoutUrl);
-// });
-
-// Route::get('/auth/redirect/salesforce', function () {
-//     return Socialite::driver('salesforce')->redirect();
-// });
-
-// Route::get('/auth/callback/salesforce', function () {
-//     $user = Socialite::driver('salesforce')->user();
-
-//     dd($user);
-// });
-
-// Route::get('/auth/logout/salesforce', function () {
-//     $logoutUrl = Socialite::driver('salesforce')->getLogoutUrl(url('/'));
-//     return redirect($logoutUrl);
-// });
+Route::get('/frame-availability', function () {
+    return Inertia::render('FrameAvailability');
+});
 
 require __DIR__ . '/auth.php';

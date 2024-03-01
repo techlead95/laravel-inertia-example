@@ -1,10 +1,10 @@
 import PageTitle from '@/Components/PageTitle';
 import UnderConstruction from '@/Components/UnderConstruction';
 
-export default function Products() {
+export default function MyHoyaLinks() {
   return (
     <>
-      <PageTitle title="Products" />
+      <PageTitle title="My Hoya Links" />
       <UnderConstruction />
     </>
   );

@@ -1,10 +1,10 @@
 import PageTitle from '@/Components/PageTitle';
 import UnderConstruction from '@/Components/UnderConstruction';
 
-export default function ProductBackOrders() {
+export default function TechnicalDocuments() {
   return (
     <>
-      <PageTitle title="Product Back Orders" />
+      <PageTitle title="Technical Documents" />
       <UnderConstruction />
     </>
   );

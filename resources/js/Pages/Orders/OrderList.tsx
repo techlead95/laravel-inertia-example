@@ -2,8 +2,12 @@ import BaseDataTable from '@/Components/BaseDataTable';
 import DateRangeFilterForm from '@/Components/DateRangeFilterForm';
 import PageTitle from '@/Components/PageTitle';
 import SearchForm from '@/Components/SearchForm';
+import { Order } from '@/types';
+import { DATE_DISPLAY_FORMAT } from '@/utils';
 import { router } from '@inertiajs/react';
 import { Group, SegmentedControl } from '@mantine/core';
+import dayjs from 'dayjs';
+import { DataTableColumn } from 'mantine-datatable';
 import { useMemo, useState } from 'react';
 
 enum OrderStatus {
@@ -16,15 +20,20 @@ interface Props {
   search: string | null;
   startDate: string | null;
   endDate: string | null;
+  orders: Order[];
 }
 
-export default function Orders({ search, startDate, endDate }: Props) {
+export default function Orders({ search, startDate, endDate, orders }: Props) {
   const [status, setStatus] = useState(OrderStatus.Active);
 
   const columns = useMemo(() => {
-    const result = [
-      { accessor: 'dateCreated', title: 'Date Created' },
-      { accessor: 'rxNumber', title: 'RX Number' },
+    const result: DataTableColumn<Order>[] = [
+      {
+        accessor: 'created_at',
+        title: 'Date Created',
+        render: (order) => dayjs(order.created_at).format(DATE_DISPLAY_FORMAT),
+      },
+      { accessor: 'or_rx_number', title: 'RX Number' },
       { accessor: 'orderBy', title: 'Order By' },
       { accessor: 'orderByName', title: 'Order By Name' },
       { accessor: 'patientName', title: 'Patient Name' },
@@ -86,7 +95,7 @@ export default function Orders({ search, startDate, endDate }: Props) {
         withTableBorder
         withColumnBorders
         columns={columns}
-        records={[]}
+        records={orders}
       />
     </>
   );

@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use App\Models\Frame;
+use App\Models\Order;
 use App\Models\FrameEdge;
 use App\Models\LensStyle;
 use App\Models\FrameBrand;
 use App\Models\LensMaterial;
 use App\Models\FrameMaterial;
 use App\Models\FrameCollection;
-use App\Models\FrameDefaultGroup;
 use Illuminate\Database\Seeder;
 use Database\Seeders\UserSeeder;
+use App\Models\FrameDefaultGroup;
 
 class DatabaseSeeder extends Seeder
 {
@@ -33,5 +33,7 @@ class DatabaseSeeder extends Seeder
 
         LensStyle::factory()->count(5)->create();
         LensMaterial::factory()->count(5)->create();
+
+        Order::factory()->count(6)->create();
     }
 }

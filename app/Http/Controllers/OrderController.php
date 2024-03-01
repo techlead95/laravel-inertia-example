@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -14,8 +15,15 @@ class OrderController extends Controller
         $search = request()->search;
         $startDate = request()->startDate;
         $endDate = request()->endDate;
+        $orders = Order::when($search, function ($query, $search) {
+            return $query->where('or_rx_number', 'like', '%' . $search . '%');
+        })->when($startDate, function ($query, $startDate) {
+            return $query->where('created_at', '>=', $startDate);
+        })->when($endDate, function ($query, $endDate) {
+            return $query->where('created_at', '<=', $endDate);
+        })->get();
 
-        return inertia()->render('Orders/OrderList', compact('search', 'startDate', 'endDate'));
+        return inertia()->render('Orders/OrderList', compact('search', 'startDate', 'endDate', 'orders'));
     }
 
     /**
