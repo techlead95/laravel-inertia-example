@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
+            $table->id();
             $table->integer('or_portal_order_number')->nullable();
             $table->integer('or_legacy_order_number')->nullable();
             $table->string('or_ship_to')->nullable();
@@ -62,27 +63,27 @@ return new class extends Migration
             $table->string('or_opt_center_right')->nullable();
             $table->string('or_opt_center_left')->nullable();
             $table->string('or_add_right')->nullable();
-$table->string('or_add_left')->nullable();
-$table->string('or_upper_add_right')->nullable();
-$table->string('or_upper_add_left')->nullable();
-$table->string('or_seg_height_right')->nullable();
-$table->string('or_set_height_left')->nullable();
-$table->string('or_tint_color')->nullable();
-$table->string('or_tint_percent')->nullable();
-$table->string('or_mirror')->nullable();
-$table->string('or_coating')->nullable();
-$table->string('or_frame_info')->nullable();
-$table->string('or_frame_manufacturer')->nullable();
-$table->string('or_frame_style')->nullable();
-$table->string('or_frame_color')->nullable();
-$table->string('or_frame_size')->nullable();
-$table->string('or_frame_side_shield')->nullable();
-$table->string('or_extra_ss')->nullable();
-$table->string('or_frame_case')->nullable();
-$table->string('or_add_on_1')->nullable();
-$table->string('or_add_on_2')->nullable();
-$table->string('or_add_on_3')->nullable();
-$table->string('or_notes')->nullable();
+            $table->string('or_add_left')->nullable();
+            $table->string('or_upper_add_right')->nullable();
+            $table->string('or_upper_add_left')->nullable();
+            $table->string('or_seg_height_right')->nullable();
+            $table->string('or_set_height_left')->nullable();
+            $table->string('or_tint_color')->nullable();
+            $table->string('or_tint_percent')->nullable();
+            $table->string('or_mirror')->nullable();
+            $table->string('or_coating')->nullable();
+            $table->string('or_frame_info')->nullable();
+            $table->string('or_frame_manufacturer')->nullable();
+            $table->string('or_frame_style')->nullable();
+            $table->string('or_frame_color')->nullable();
+            $table->string('or_frame_size')->nullable();
+            $table->string('or_frame_side_shield')->nullable();
+            $table->string('or_extra_ss')->nullable();
+            $table->string('or_frame_case')->nullable();
+            $table->string('or_add_on_1')->nullable();
+            $table->string('or_add_on_2')->nullable();
+            $table->string('or_add_on_3')->nullable();
+            $table->string('or_notes')->nullable();
             $table->string('or_frame_style_comma')->nullable();
             $table->string('or_ss_type_dash')->nullable();
             $table->string('or_ss_extra_dash')->nullable();

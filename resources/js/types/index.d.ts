@@ -84,5 +84,6 @@ export interface LensMaterial {
 }
 
 export interface Order extends Timestamps {
+  id: number;
   or_rx_number: string;
 }

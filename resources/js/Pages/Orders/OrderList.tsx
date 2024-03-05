@@ -92,10 +92,14 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
       />
       <BaseDataTable
         mt="xl"
+        highlightOnHover
         withTableBorder
         withColumnBorders
         columns={columns}
         records={orders}
+        onRowClick={(row) => {
+          router.get(route('orders.show', { id: row.record.id }));
+        }}
       />
     </>
   );
