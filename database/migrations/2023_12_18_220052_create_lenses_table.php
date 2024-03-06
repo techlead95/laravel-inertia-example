@@ -39,6 +39,18 @@ return new class extends Migration
             $table->string('le_lens_digital_style');
             $table->string('le_lens_filler');
             $table->integer('le_lens_sbdge_date');
+            $table->string('le_optic_translation');
+$table->string('le_dvi_lens_style');
+$table->string('le_dvi_mat');
+$table->string('le_dvi_color');
+$table->string('le_o2_lens_style_add_code');
+$table->string('le_o2_material_add_code');
+$table->string('le_o2_color_add_code');
+$table->string('le_o1_lens_add_code');
+$table->string('le_o1_material_add_code');
+$table->string('le_o1_color_add_code');
+$table->string('le_minimun_seg');
+
 
             $table->timestamps();
         });
