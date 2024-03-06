@@ -1,9 +1,10 @@
 import PageTitle from '@/Components/PageTitle';
 import { includesIgnoreCase, inputHorizontalStyles, inputBlueLabel, inputBlueLabelCentered, inputNoMargin } from '@/utils';
 import { Head, Link} from '@inertiajs/react';
-import { Button, Group, Stack, Switch, TextInput, ComboboxItem,  Select, Radio, Container, Box, Center, Text, Space, Textarea, Table } from '@mantine/core';
+import { Button, Group, Stack, Switch, TextInput, ComboboxItem,  Select, Radio, Container, Box, Center, Text, Space, Textarea, Table, Autocomplete } from '@mantine/core';
 import {
   Frame,
+  PageProps,
 } from '@/types';
 import useExtendedForm from '@/Hooks/useExtendedForm';
 
@@ -11,9 +12,9 @@ interface Props {
   frames: Frame[];
 }
 
-export default function NewOrder() {
+export default function NewOrder({frames}: PageProps<Props>) {
   
-const {  getFieldProps, data, setData, put, processing, errors } = useExtendedForm({
+const {  getFieldProps, data, setData, post, processing, errors } = useExtendedForm({
   or_ship_to: '',
 or_ordby_billto_dash: '',
 or_po_no: '',
@@ -111,8 +112,8 @@ or_manual_ship_addr_3: '',
     <form
         onSubmit={(e) => {
           e.preventDefault();
-          console.log(data);
-          //post(route('orders.store'));
+          //console.log(data);
+          post(route('orders.store'));
         }}
     >
     <Group style={{ flex: 4 }} h="100%">
@@ -296,18 +297,25 @@ or_manual_ship_addr_3: '',
         </Stack>
         <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">Frame Style</Text></Center>
-          <TextInput {...getFieldProps('or_frame_style')} styles={inputNoMargin} w="451" />
+          <Autocomplete {...getFieldProps('or_frame_style')} styles={inputNoMargin} w="451" 
+            //data={frames.map((frame) => frame.fr_frame_style)}
+            data={['Visa', 'MasterCard', 'Discover','American Express']}
+          />
         </Stack>
       </Group>
       <Space h="md" />
       <Group>
         <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">Color</Text></Center>
-          <Select {...getFieldProps('or_frame_color')} placeholder="Select Frame Color" styles={inputNoMargin} w="220" data={['Visa', 'MasterCard', 'Discover','American Express']}/>
+          <Select {...getFieldProps('or_frame_color')} placeholder="Select Frame Color" styles={inputNoMargin} w="220" 
+            data={frames.map((frame) => frame.fr_frame_color)}
+          />
         </Stack>
         <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">Size </Text></Center>
-          <Select {...getFieldProps('or_frame_size')} placeholder="Select Size" styles={inputNoMargin} w="170" data={['Visa', 'MasterCard', 'Discover','American Express']}/>
+          <Select {...getFieldProps('or_frame_size')} placeholder="Select Size" styles={inputNoMargin} w="170" 
+            data={frames.map((frame) => frame.fr_eyesize)}
+            />
         </Stack>
         <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">SideShield</Text></Center>
