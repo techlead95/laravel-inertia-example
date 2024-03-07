@@ -18,7 +18,12 @@ export default function useBaseForm<TForm extends object>(
         return form.data[key] as any;
       })(),
       onChange: (
-        e: React.ChangeEvent<HTMLInputElement> | string | Date | null,
+        e:
+          | React.ChangeEvent<HTMLInputElement>
+          | React.ChangeEvent<HTMLTextAreaElement>
+          | string
+          | Date
+          | null,
       ) => {
         form.setError(key, '');
 

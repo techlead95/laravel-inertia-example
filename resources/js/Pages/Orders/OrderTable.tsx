@@ -1,17 +1,24 @@
-import { Box, Group, Stack, Table, Text } from '@mantine/core';
+import { Box, Group, GroupProps, Stack, Table, Text } from '@mantine/core';
 import { ReactNode } from 'react';
 
-interface Props {
+interface Props extends GroupProps {
   headers: string[];
   hasRL?: boolean;
+  hasEditable?: boolean;
   children?: ReactNode;
 }
 
-export default function OrderTable({ headers, hasRL, children }: Props) {
+export default function OrderTable({
+  headers,
+  hasRL,
+  hasEditable,
+  children,
+  ...props
+}: Props) {
   return (
-    <Group align="flex-end">
+    <Group align="flex-end" {...props}>
       {hasRL && (
-        <Stack mb={4}>
+        <Stack mb={hasEditable ? 12 : 4} gap={hasEditable ? 28 : undefined}>
           <Text fw="bold" c="blue">
             R
           </Text>

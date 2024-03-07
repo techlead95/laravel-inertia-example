@@ -1,3 +1,4 @@
+import useGetFieldStyles from '@/Hooks/useFieldStyles';
 import useFieldStyles from '@/Hooks/useFieldStyles';
 import { Frame, FrameEdge, FrameMaterial } from '@/types';
 import {
@@ -17,7 +18,7 @@ interface Props {
 }
 
 export default function FramePanel({ frames, edges, materials }: Props) {
-  const fieldStyles = useFieldStyles({ horizontal: true });
+  const getFieldStyles = useGetFieldStyles();
 
   return (
     <>
@@ -47,24 +48,44 @@ export default function FramePanel({ frames, edges, materials }: Props) {
         <Stack gap="xs">
           <Select
             label="Edge"
-            styles={fieldStyles}
+            styles={getFieldStyles({ horizontal: true })}
             data={edges.map((edge) => edge.fe_edge)}
           />
           <Select
             label="Material"
-            styles={fieldStyles}
+            styles={getFieldStyles({ horizontal: true })}
             data={materials.map((material) => material.fm_material)}
           />
-          <TextInput label="Min Edge" styles={fieldStyles} />
-          <TextInput label="Base Curve Min" styles={fieldStyles} />
-          <TextInput label="Base Curve Max" styles={fieldStyles} />
-          <TextInput label="Minimum Near PD" styles={fieldStyles} />
-          <TextInput label="Edge" styles={fieldStyles} />
+          <TextInput
+            label="Min Edge"
+            styles={getFieldStyles({ horizontal: true })}
+          />
+          <TextInput
+            label="Base Curve Min"
+            styles={getFieldStyles({ horizontal: true })}
+          />
+          <TextInput
+            label="Base Curve Max"
+            styles={getFieldStyles({ horizontal: true })}
+          />
+          <TextInput
+            label="Minimum Near PD"
+            styles={getFieldStyles({ horizontal: true })}
+          />
+          <TextInput
+            label="Edge"
+            styles={getFieldStyles({ horizontal: true })}
+          />
           <Switch defaultChecked label="Non-Conductive" ml={166} />
           <Switch defaultChecked label="Tight Fit" ml={166} />
           <Switch defaultChecked label="Wrap" ml={166} />
         </Stack>
-        <Textarea label="Notes" styles={fieldStyles} rows={4} miw={580} />
+        <Textarea
+          label="Notes"
+          styles={getFieldStyles({ horizontal: true })}
+          rows={4}
+          miw={580}
+        />
       </Group>
     </>
   );

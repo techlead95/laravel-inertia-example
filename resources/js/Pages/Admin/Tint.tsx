@@ -1,10 +1,11 @@
+import useGetFieldStyles from '@/Hooks/useFieldStyles';
 import useFieldStyles from '@/Hooks/useFieldStyles';
 import { Head } from '@inertiajs/react';
 import { Box, Button, Group, Stack, Text, TextInput } from '@mantine/core';
 import { DataTable } from 'mantine-datatable';
 
 export default function Tint() {
-  const fieldStyles = useFieldStyles({ horizontal: true });
+  const getFieldStyles = useGetFieldStyles();
 
   return (
     <>
@@ -34,22 +35,49 @@ export default function Tint() {
       </Group>
       <Group mt="xl" align="flex-start">
         <Stack>
-          <TextInput label="Tint Group" styles={fieldStyles} />
-          <TextInput label="Tint Lower Range" styles={fieldStyles} />
-          <TextInput label="Tint Upper Range" styles={fieldStyles} />
-          <TextInput label="Default %" styles={fieldStyles} />
-          <TextInput label="Optic Translation" styles={fieldStyles} />
-          <TextInput label="Dvi Tint Drop" styles={fieldStyles} />
-          <TextInput label="Dvi Tint Color" styles={fieldStyles} />
+          <TextInput
+            label="Tint Group"
+            styles={getFieldStyles({ horizontal: true })}
+          />
+          <TextInput
+            label="Tint Lower Range"
+            styles={getFieldStyles({ horizontal: true })}
+          />
+          <TextInput
+            label="Tint Upper Range"
+            styles={getFieldStyles({ horizontal: true })}
+          />
+          <TextInput
+            label="Default %"
+            styles={getFieldStyles({ horizontal: true })}
+          />
+          <TextInput
+            label="Optic Translation"
+            styles={getFieldStyles({ horizontal: true })}
+          />
+          <TextInput
+            label="Dvi Tint Drop"
+            styles={getFieldStyles({ horizontal: true })}
+          />
+          <TextInput
+            label="Dvi Tint Color"
+            styles={getFieldStyles({ horizontal: true })}
+          />
         </Stack>
         <Stack>
           <Stack gap={8} align="center">
             <Text fw="bold">Optic 2 Add Code</Text>
-            <TextInput label="Coating Add Code" styles={fieldStyles} />
+            <TextInput
+              label="Coating Add Code"
+              styles={getFieldStyles({ horizontal: true })}
+            />
           </Stack>
           <Stack gap={8} align="center">
             <Text fw="bold">Legacy Optic Add Code</Text>
-            <TextInput label="Coating Add Code" styles={fieldStyles} />
+            <TextInput
+              label="Coating Add Code"
+              styles={getFieldStyles({ horizontal: true })}
+            />
           </Stack>
         </Stack>
       </Group>

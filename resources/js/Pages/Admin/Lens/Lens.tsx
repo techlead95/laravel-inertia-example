@@ -1,4 +1,4 @@
-import useFieldStyles from '@/Hooks/useFieldStyles';
+import useGetFieldStyles from '@/Hooks/useFieldStyles';
 import { LensMaterial, LensStyle } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import {
@@ -19,7 +19,7 @@ interface Props {
 }
 
 export default function Lens({ styles, materials }: Props) {
-  const fieldStyles = useFieldStyles({ horizontal: true });
+  const getFieldStyles = useGetFieldStyles();
 
   return (
     <>
@@ -85,24 +85,54 @@ export default function Lens({ styles, materials }: Props) {
           </Stack>
           <Stack>
             <Box h={24} />
-            <TextInput label="Optic Translation" styles={fieldStyles} />
-            <TextInput label="Dvi Lens Style" styles={fieldStyles} />
-            <TextInput label="Dvi Mat" styles={fieldStyles} />
-            <TextInput label="Dvi Color" styles={fieldStyles} />
+            <TextInput
+              label="Optic Translation"
+              styles={getFieldStyles({ horizontal: true })}
+            />
+            <TextInput
+              label="Dvi Lens Style"
+              styles={getFieldStyles({ horizontal: true })}
+            />
+            <TextInput
+              label="Dvi Mat"
+              styles={getFieldStyles({ horizontal: true })}
+            />
+            <TextInput
+              label="Dvi Color"
+              styles={getFieldStyles({ horizontal: true })}
+            />
 
             <Flex justify="center">
               <Text fw="bold">Optic 2 Add Code</Text>
             </Flex>
-            <TextInput label="Lens Style Add Code" styles={fieldStyles} />
-            <TextInput label="Material Add Code" styles={fieldStyles} />
-            <TextInput label="Color Add Code" styles={fieldStyles} />
+            <TextInput
+              label="Lens Style Add Code"
+              styles={getFieldStyles({ horizontal: true })}
+            />
+            <TextInput
+              label="Material Add Code"
+              styles={getFieldStyles({ horizontal: true })}
+            />
+            <TextInput
+              label="Color Add Code"
+              styles={getFieldStyles({ horizontal: true })}
+            />
 
             <Flex justify="center">
               <Text fw="bold">Legacy Optic Add Code</Text>
             </Flex>
-            <TextInput label="Lens Add Code" styles={fieldStyles} />
-            <TextInput label="Material Add Code" styles={fieldStyles} />
-            <TextInput label="Color Add Code" styles={fieldStyles} />
+            <TextInput
+              label="Lens Add Code"
+              styles={getFieldStyles({ horizontal: true })}
+            />
+            <TextInput
+              label="Material Add Code"
+              styles={getFieldStyles({ horizontal: true })}
+            />
+            <TextInput
+              label="Color Add Code"
+              styles={getFieldStyles({ horizontal: true })}
+            />
           </Stack>
         </Group>
       </Stack>

@@ -1,10 +1,10 @@
-import useFieldStyles from '@/Hooks/useFieldStyles';
+import useGetFieldStyles from '@/Hooks/useFieldStyles';
 import { Head } from '@inertiajs/react';
 import { Button, Group, Stack, Switch, Text, TextInput } from '@mantine/core';
 import { DataTable } from 'mantine-datatable';
 
 export default function Coating() {
-  const fieldStyles = useFieldStyles({ horizontal: true });
+  const getFieldStyles = useGetFieldStyles();
 
   return (
     <>
@@ -34,19 +34,37 @@ export default function Coating() {
       </Group>
       <Group mt="xl" align="flex-start">
         <Stack>
-          <TextInput label="Coating Group" styles={fieldStyles} />
-          <TextInput label="Optic Translation" styles={fieldStyles} />
-          <TextInput label="Dvi Translation" styles={fieldStyles} />
-          <TextInput label="Cost" styles={fieldStyles} />
+          <TextInput
+            label="Coating Group"
+            styles={getFieldStyles({ horizontal: true })}
+          />
+          <TextInput
+            label="Optic Translation"
+            styles={getFieldStyles({ horizontal: true })}
+          />
+          <TextInput
+            label="Dvi Translation"
+            styles={getFieldStyles({ horizontal: true })}
+          />
+          <TextInput
+            label="Cost"
+            styles={getFieldStyles({ horizontal: true })}
+          />
         </Stack>
         <Stack>
           <Stack gap={8} align="center">
             <Text fw="bold">Optic 2 Add Code</Text>
-            <TextInput label="Coating Add Code" styles={fieldStyles} />
+            <TextInput
+              label="Coating Add Code"
+              styles={getFieldStyles({ horizontal: true })}
+            />
           </Stack>
           <Stack gap={8} align="center">
             <Text fw="bold">Legacy Optic Add Code</Text>
-            <TextInput label="Coating Add Code" styles={fieldStyles} />
+            <TextInput
+              label="Coating Add Code"
+              styles={getFieldStyles({ horizontal: true })}
+            />
           </Stack>
         </Stack>
       </Group>
