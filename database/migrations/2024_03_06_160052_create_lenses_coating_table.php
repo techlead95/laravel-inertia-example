@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('lens_coatings', function (Blueprint $table) {
             $table->id();
-            $table->string('lg_lens_coating');
-$table->string('lg_coating_group');
-$table->string('lg_o1_translation');
-$table->string('lg_dvi_translation');
-$table->integer('lg_cost');
-$table->string('lg_o2_add_code');
-$table->string('lg_o1_add_code');
+            $table->string('lc_lens_coating');
+$table->string('lc_coating_group');
+$table->string('lc_o1_translation');
+$table->string('lc_dvi_translation');
+$table->integer('lc_cost');
+$table->string('lc_o2_add_code');
+$table->string('lc_o1_add_code');
 $table->string('lc_lens_color');
 $table->string('lc_lens_clarity_shield');
 $table->string('lc_ez_clean');

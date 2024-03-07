@@ -112,7 +112,7 @@ or_manual_ship_addr_3: '',
     <form
         onSubmit={(e) => {
           e.preventDefault();
-          //console.log(data);
+          //console.log(frames);
           post(route('orders.store'));
         }}
     >
@@ -298,8 +298,8 @@ or_manual_ship_addr_3: '',
         <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">Frame Style</Text></Center>
           <Autocomplete {...getFieldProps('or_frame_style')} styles={inputNoMargin} w="451" 
-            //data={frames.map((frame) => frame.fr_frame_style)}
-            data={['Visa', 'MasterCard', 'Discover','American Express']}
+            data={frames.map((frame) => frame.fr_frame_style)}
+            //data={['Visa', 'MasterCard', 'Discover','American Express']}
           />
         </Stack>
       </Group>
