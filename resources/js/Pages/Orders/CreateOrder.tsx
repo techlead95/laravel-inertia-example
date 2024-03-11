@@ -1,12 +1,11 @@
-import PageTitle from '@/Components/PageTitle';
-import { includesIgnoreCase, inputHorizontalStyles, inputBlueLabel, inputBlueLabelCentered, inputNoMargin } from '@/utils';
-import { Head, Link} from '@inertiajs/react';
-import { Button, Group, Stack, Switch, TextInput, ComboboxItem,  Select, Radio, Container, Box, Center, Text, Space, Textarea, Table, Autocomplete } from '@mantine/core';
+import { Head } from '@inertiajs/react';
+import { Button, Group, Stack, TextInput, Select, Radio, Container, Center, Text, Space, Textarea, Autocomplete, Grid, Checkbox } from '@mantine/core';
 import {
   Frame,
   PageProps,
 } from '@/types';
-import useExtendedForm from '@/Hooks/useExtendedForm';
+import useBaseForm from '@/Hooks/useBaseForm';
+import useGetFieldStyles from '@/Hooks/useFieldStyles';
 
 interface Props {
   frames: Frame[];
@@ -14,7 +13,7 @@ interface Props {
 
 export default function NewOrder({frames}: PageProps<Props>) {
   
-const {  getFieldProps, data, setData, post, processing, errors } = useExtendedForm({
+const {  getFieldProps, data, setData, post, processing, errors } = useBaseForm({
   or_ship_to: '',
 or_ordby_billto_dash: '',
 or_po_no: '',
@@ -106,7 +105,7 @@ or_manual_ship_addr_3: '',
 
 
 export default function CreateOrder() {
-  const fieldStyles = useFieldStyles({ blueLabel: true });
+  const getFieldStyles = useGetFieldStyles();
 
   return (
     <>
@@ -120,15 +119,15 @@ export default function CreateOrder() {
     >
     <Group style={{ flex: 4 }} h="100%">
       <Stack>
-        <Select  {...getFieldProps('or_ship_to')} label="Ship To Account" styles={inputBlueLabel} data={['test1', 'test2', 'test3']} />
-        <TextInput {...getFieldProps('or_emp_name_first')} label="Patient First Name" styles={inputBlueLabel}/>
-        <TextInput {...getFieldProps('or_emp_phone')} label="Patient Phone" styles={inputBlueLabel}  />
-        <TextInput {...getFieldProps('or_po_no')} label="Purchase Order" styles={inputBlueLabel} />
-        <TextInput {...getFieldProps('or_emp_no')} label="Employee Number" styles={inputBlueLabel} />
-        <TextInput {...getFieldProps('or_cc_emp_copay_token')} label="Employee Copay Secure Token" styles={inputBlueLabel}  />
+        <Select  {...getFieldProps('or_ship_to')} label="Ship To Account" styles={getFieldStyles({ horizontal: true })} data={['test1', 'test2', 'test3']} />
+        <TextInput {...getFieldProps('or_emp_name_first')} label="Patient First Name" styles={getFieldStyles({ horizontal: true })}/>
+        <TextInput {...getFieldProps('or_emp_phone')} label="Patient Phone" styles={getFieldStyles({ horizontal: true })}  />
+        <TextInput {...getFieldProps('or_po_no')} label="Purchase Order" styles={getFieldStyles({ horizontal: true })} />
+        <TextInput {...getFieldProps('or_emp_no')} label="Employee Number" styles={getFieldStyles({ horizontal: true })} />
+        <TextInput {...getFieldProps('or_cc_emp_copay_token')} label="Employee Copay Secure Token" styles={getFieldStyles({ horizontal: true })}  />
         <Group>
-          <Select {...getFieldProps('or_cc_emp_card_type')} label="Card Type"  placeholder="Type" styles={inputBlueLabel} data={['Visa', 'MasterCard', 'Discover', 'American Express']} />
-          <TextInput {...getFieldProps('or_cc_emp_card_exp_date')} label="Card Exp Date" styles={inputBlueLabel} placeholder="MMYY"  />
+          <Select {...getFieldProps('or_cc_emp_card_type')} label="Card Type"  placeholder="Type" styles={getFieldStyles({ horizontal: true })} data={['Visa', 'MasterCard', 'Discover', 'American Express']} />
+          <TextInput {...getFieldProps('or_cc_emp_card_exp_date')} label="Card Exp Date" styles={getFieldStyles({ horizontal: true })} placeholder="MMYY"  />
         </Group>
       
       </Stack>
@@ -136,44 +135,44 @@ export default function CreateOrder() {
         <Button variant="filled" mt="350">Get A Token</Button>
       </Stack>
       <Stack>
-        <TextInput {...getFieldProps('or_ordby_billto_dash')} label="Ordered By Account Number" styles={inputBlueLabel}  />
-        <TextInput {...getFieldProps('or_emp_name_last')} label="Patient Last Name" styles={inputBlueLabel} />
-        <TextInput {...getFieldProps('or_emp_email')} label="Patient Email"  styles={inputBlueLabel} />
-        <TextInput {...getFieldProps('or_req')} label="Requisition Number" styles={inputBlueLabel} />
-        <TextInput {...getFieldProps('or_dept')} label="Employee Department" styles={inputBlueLabel} />
-        <TextInput {...getFieldProps('or_cc_company_card_token')} label="Company Card Secure Token" styles={inputBlueLabel} />
+        <TextInput {...getFieldProps('or_ordby_billto_dash')} label="Ordered By Account Number" styles={getFieldStyles({ horizontal: true })}  />
+        <TextInput {...getFieldProps('or_emp_name_last')} label="Patient Last Name" styles={getFieldStyles({ horizontal: true })} />
+        <TextInput {...getFieldProps('or_emp_email')} label="Patient Email"  styles={getFieldStyles({ horizontal: true })} />
+        <TextInput {...getFieldProps('or_req')} label="Requisition Number" styles={getFieldStyles({ horizontal: true })} />
+        <TextInput {...getFieldProps('or_dept')} label="Employee Department" styles={getFieldStyles({ horizontal: true })} />
+        <TextInput {...getFieldProps('or_cc_company_card_token')} label="Company Card Secure Token" styles={getFieldStyles({ horizontal: true })} />
         <Group>
-          <Select {...getFieldProps('or_cc_company_card_type')} label="Card Type" placeholder="Type" styles={inputBlueLabel} data={['Visa', 'MasterCard', 'Discover','American Express']} />
-          <TextInput {...getFieldProps('or_cc_company_card_exp_date')} label="Card Exp Date" styles={inputBlueLabel} placeholder="MMYY"/>
+          <Select {...getFieldProps('or_cc_company_card_type')} label="Card Type" placeholder="Type" styles={getFieldStyles({ horizontal: true })} data={['Visa', 'MasterCard', 'Discover','American Express']} />
+          <TextInput {...getFieldProps('or_cc_company_card_exp_date')} label="Card Exp Date" styles={getFieldStyles({ horizontal: true })} placeholder="MMYY"/>
         </Group>
       </Stack>
       <Stack>
         <Radio.Group
           name="jobtype"
-          label="Job Type"  styles={inputBlueLabel}
+          label="Job Type"  styles={getFieldStyles({ horizontal: true })}
         >
           <Stack mt="xs">
             <Radio value="new" label="New Job" />
             <Radio value="remake" label="Remake / Warranty" />
           </Stack>
-        </Grid.Col>
+        </Radio.Group>
         <Grid.Col span={2}>
           <Stack>
-            <TextInput label="Ordered By Account Number" styles={fieldStyles} />
-            <TextInput label="Patient Last Name" styles={fieldStyles} />
-            <TextInput label="Patient Email" styles={fieldStyles} />
-            <TextInput label="Requisition Number" styles={fieldStyles} />
-            <TextInput label="Employee Department" styles={fieldStyles} />
+            <TextInput label="Ordered By Account Number" styles={getFieldStyles({ horizontal: true })} />
+            <TextInput label="Patient Last Name" styles={getFieldStyles({ horizontal: true })} />
+            <TextInput label="Patient Email" styles={getFieldStyles({ horizontal: true })} />
+            <TextInput label="Requisition Number" styles={getFieldStyles({ horizontal: true })} />
+            <TextInput label="Employee Department" styles={getFieldStyles({ horizontal: true })} />
             <Group gap="xl">
               <TextInput
                 label="Company Card Secure Token"
-                styles={fieldStyles}
+                styles={getFieldStyles({ horizontal: true })}
                 flex={1}
               />
             </Group>
             <Group gap="xl">
-              <TextInput label="Card Type" flex={1} styles={fieldStyles} />
-              <TextInput label="Card Exp Date" flex={1} styles={fieldStyles} />
+              <TextInput label="Card Type" flex={1} styles={getFieldStyles({ horizontal: true })} />
+              <TextInput label="Card Exp Date" flex={1} styles={getFieldStyles({ horizontal: true })} />
             </Group>
           </Stack>
         </Grid.Col>
@@ -196,18 +195,18 @@ export default function CreateOrder() {
               <Checkbox label="Left" />
               <Checkbox label="Right" />
             </Stack>
-          </Group>
         </Stack>
+          </Group>
         <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">Prism (U/D) </Text></Center>
           <Group>
             <Stack>
-              <Select {...getFieldProps('or_prism_up_right')} styles={inputNoMargin} w="83" data={['*', 'UP', 'DOWN']}/>
-              <Select {...getFieldProps('or_prism_up_left')} styles={inputNoMargin} w="83" data={['*', 'UP', 'DOWN']}/>
+              <Select {...getFieldProps('or_prism_up_right')} styles={getFieldStyles({ noMargin: true })} w="83" data={['*', 'UP', 'DOWN']}/>
+              <Select {...getFieldProps('or_prism_up_left')} styles={getFieldStyles({ noMargin: true })} w="83" data={['*', 'UP', 'DOWN']}/>
             </Stack>
             <Stack>
-              <TextInput {...getFieldProps('or_prism_up_right_value')} styles={inputNoMargin} w="94" />
-              <TextInput {...getFieldProps('or_prism_up_left_value')} styles={inputNoMargin} w="94" />
+              <TextInput {...getFieldProps('or_prism_up_right_value')} styles={getFieldStyles({ noMargin: true })} w="94" />
+              <TextInput {...getFieldProps('or_prism_up_left_value')} styles={getFieldStyles({ noMargin: true })} w="94" />
             </Stack>
           </Group>
         </Stack>
@@ -216,49 +215,49 @@ export default function CreateOrder() {
       <Group>
         <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">Add </Text></Center>
-          <TextInput {...getFieldProps('or_add_right')}  label="R" styles={inputBlueLabelCentered} w="107" />
-          <TextInput {...getFieldProps('or_add_left')} value={data.or_add_left} onChange={e => setData('or_add_left', e.target.value)} label="L" styles={inputBlueLabelCentered} w="107" />
+          <TextInput {...getFieldProps('or_add_right')}  label="R" styles={getFieldStyles({ horizontal: true })Centered} w="107" />
+          <TextInput {...getFieldProps('or_add_left')} value={data.or_add_left} onChange={e => setData('or_add_left', e.target.value)} label="L" styles={getFieldStyles({ horizontal: true })Centered} w="107" />
         </Stack>
         <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">Upper Add </Text></Center>
-          <TextInput {...getFieldProps('or_upper_add_right')}  styles={inputNoMargin} w="120" />
-          <TextInput {...getFieldProps('or_upper_add_left')}  styles={inputNoMargin} w="120" />
+          <TextInput {...getFieldProps('or_upper_add_right')}  styles={getFieldStyles({ noMargin: true })} w="120" />
+          <TextInput {...getFieldProps('or_upper_add_left')}  styles={getFieldStyles({ noMargin: true })} w="120" />
         </Stack>
         <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">Seg Hieght </Text></Center>
-          <TextInput {...getFieldProps('or_seg_height_right')}  styles={inputNoMargin} w="144" />
-          <TextInput {...getFieldProps('or_seg_height_left')}  styles={inputNoMargin} w="144" />
+          <TextInput {...getFieldProps('or_seg_height_right')}  styles={getFieldStyles({ noMargin: true })} w="144" />
+          <TextInput {...getFieldProps('or_seg_height_left')}  styles={getFieldStyles({ noMargin: true })} w="144" />
         </Stack>
         <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">Tint Color </Text></Center>
-          <Select {...getFieldProps('or_tint_color')}  placeholder="Select Tint" styles={inputNoMargin} w="143" data={['Visa', 'MasterCard', 'Discover','American Express']}/>
+          <Select {...getFieldProps('or_tint_color')}  placeholder="Select Tint" styles={getFieldStyles({ noMargin: true })} w="143" data={['Visa', 'MasterCard', 'Discover','American Express']}/>
         </Stack>
         <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">Tint % </Text></Center>
-          <TextInput {...getFieldProps('or_tint_percent')}  styles={inputNoMargin} w="84" />
+          <TextInput {...getFieldProps('or_tint_percent')}  styles={getFieldStyles({ noMargin: true })} w="84" />
         </Stack>
         <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">Mirror </Text></Center>
-          <Select {...getFieldProps('or_mirror')} placeholder="Select Miroor" styles={inputNoMargin} w="197" data={['Visa', 'MasterCard', 'Discover','American Express']}/>
+          <Select {...getFieldProps('or_mirror')} placeholder="Select Miroor" styles={getFieldStyles({ noMargin: true })} w="197" data={['Visa', 'MasterCard', 'Discover','American Express']}/>
         </Stack>
         <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">Coating </Text></Center>
-          <Select {...getFieldProps('or_coating')} placeholder="Select Coating" styles={inputNoMargin} w="242" data={['Visa', 'MasterCard', 'Discover','American Express']}/>
+          <Select {...getFieldProps('or_coating')} placeholder="Select Coating" styles={getFieldStyles({ noMargin: true })} w="242" data={['Visa', 'MasterCard', 'Discover','American Express']}/>
         </Stack>
       </Group>
       <Space h="md" />
       <Group>
         <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">Frame Information</Text></Center>
-          <Select {...getFieldProps('or_frame_info')} placeholder="Frame Supplied" styles={inputNoMargin} w="243" data={['Frame Supplied', 'Frame To Come']}/>
+          <Select {...getFieldProps('or_frame_info')} placeholder="Frame Supplied" styles={getFieldStyles({ noMargin: true })} w="243" data={['Frame Supplied', 'Frame To Come']}/>
         </Stack>
         <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">Frame Manufacturer </Text></Center>
-          <Select {...getFieldProps('or_frame_manufacturer')} styles={inputNoMargin} w="243" data={['Visa', 'MasterCard', 'Discover','American Express']}/>
+          <Select {...getFieldProps('or_frame_manufacturer')} styles={getFieldStyles({ noMargin: true })} w="243" data={['Visa', 'MasterCard', 'Discover','American Express']}/>
         </Stack>
         <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">Frame Style</Text></Center>
-          <Autocomplete {...getFieldProps('or_frame_style')} styles={inputNoMargin} w="451" 
+          <Autocomplete {...getFieldProps('or_frame_style')} styles={getFieldStyles({ noMargin: true })} w="451" 
             data={frames.map((frame) => frame.fr_frame_style)}
             //data={['Visa', 'MasterCard', 'Discover','American Express']}
           />
@@ -268,36 +267,36 @@ export default function CreateOrder() {
       <Group>
         <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">Color</Text></Center>
-          <Select {...getFieldProps('or_frame_color')} placeholder="Select Frame Color" styles={inputNoMargin} w="220" 
+          <Select {...getFieldProps('or_frame_color')} placeholder="Select Frame Color" styles={getFieldStyles({ noMargin: true })} w="220" 
             data={frames.map((frame) => frame.fr_frame_color)}
           />
         </Stack>
         <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">Size </Text></Center>
-          <Select {...getFieldProps('or_frame_size')} placeholder="Select Size" styles={inputNoMargin} w="170" 
+          <Select {...getFieldProps('or_frame_size')} placeholder="Select Size" styles={getFieldStyles({ noMargin: true })} w="170" 
             data={frames.map((frame) => frame.fr_eyesize)}
             />
         </Stack>
         <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">SideShield</Text></Center>
-          <Select {...getFieldProps('or_frame_side_shield')} placeholder="Select Side Shield" styles={inputNoMargin} w="185" data={['Visa', 'MasterCard', 'Discover','American Express']}/>
+          <Select {...getFieldProps('or_frame_side_shield')} placeholder="Select Side Shield" styles={getFieldStyles({ noMargin: true })} w="185" data={['Visa', 'MasterCard', 'Discover','American Express']}/>
         </Stack>
         <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">Extra SS </Text></Center>
-          <Select {...getFieldProps('or_extra_ss')} styles={inputNoMargin} w="87" data={['Visa', 'MasterCard', 'Discover','American Express']}/>
+          <Select {...getFieldProps('or_extra_ss')} styles={getFieldStyles({ noMargin: true })} w="87" data={['Visa', 'MasterCard', 'Discover','American Express']}/>
         </Stack>
         <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">Case</Text></Center>
-          <TextInput {...getFieldProps('or_frame_case')} placeholder="Select Case" styles={inputNoMargin} w="275" />
+          <TextInput {...getFieldProps('or_frame_case')} placeholder="Select Case" styles={getFieldStyles({ noMargin: true })} w="275" />
         </Stack>
       </Group>
       <Space h="md" />
       <Group>
       <Stack>
           <Center> <Text c="rgba(0, 84, 194, 1)"td="underline">Special</Text></Center>
-          <Select {...getFieldProps('or_add_on_1')} placeholder="Select Special Add on" styles={inputNoMargin} w="322" data={['Visa', 'MasterCard', 'Discover','American Express']}/>
-          <Select {...getFieldProps('or_add_on_2')} placeholder="Select Special Add on" styles={inputNoMargin} w="322" data={['Visa', 'MasterCard', 'Discover','American Express']}/>
-          <Select {...getFieldProps('or_add_on_3')} placeholder="Select Special Add on" styles={inputNoMargin} w="322" data={['Visa', 'MasterCard', 'Discover','American Express']}/>
+          <Select {...getFieldProps('or_add_on_1')} placeholder="Select Special Add on" styles={getFieldStyles({ noMargin: true })} w="322" data={['Visa', 'MasterCard', 'Discover','American Express']}/>
+          <Select {...getFieldProps('or_add_on_2')} placeholder="Select Special Add on" styles={getFieldStyles({ noMargin: true })} w="322" data={['Visa', 'MasterCard', 'Discover','American Express']}/>
+          <Select {...getFieldProps('or_add_on_3')} placeholder="Select Special Add on" styles={getFieldStyles({ noMargin: true })} w="322" data={['Visa', 'MasterCard', 'Discover','American Express']}/>
         </Stack>
       </Group>
       <Space h="md" />

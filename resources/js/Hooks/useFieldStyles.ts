@@ -2,36 +2,54 @@ import { useMantineTheme } from '@mantine/core';
 import { merge } from 'lodash';
 import { CSSProperties } from 'react';
 
-interface Props {
+interface Params {
   horizontal?: boolean;
   blueLabel?: boolean;
+  centered?: boolean;
+  noMargin?: boolean;
 }
 
-export default function useFieldStyles({ horizontal, blueLabel }: Props) {
+export default function useGetFieldStyles() {
   const theme = useMantineTheme();
-  const styles: Record<string, CSSProperties> = {};
 
-  if (horizontal) {
-    merge(styles, {
-      root: { display: 'flex', gap: 16 },
-      label: {
-        width: 150,
-        fontWeight: 'bold',
-        textAlign: 'right',
-        paddingTop: 7,
-      },
-      wrapper: { flex: 1 },
-    });
-  }
+  return ({ horizontal, blueLabel, centered, noMargin }: Params) => {
+    const styles: Record<string, CSSProperties> = {};
 
-  if (blueLabel) {
-    merge(styles, {
-      label: {
-        fontWeight: 'bold',
-        color: theme.colors.blue[theme.primaryShade as number],
-      },
-    });
-  }
+    if (horizontal) {
+      merge(styles, {
+        root: { display: 'flex', gap: 16 },
+        label: {
+          width: 150,
+          fontWeight: 'bold',
+          textAlign: 'right',
+          paddingTop: 7,
+        },
+        wrapper: { flex: 1 },
+      });
+    }
 
-  return styles;
+    if (blueLabel) {
+      merge(styles, {
+        label: {
+          fontWeight: 'bold',
+          color: theme.colors.blue[theme.primaryShade as number],
+        },
+      });
+    }
+
+    if (centered) {
+      merge(styles, {
+        root: { margin: -10, display: 'flex' },
+        label: { textAlign: 'right' },
+      });
+    }
+
+    if (noMargin) {
+      merge(styles, {
+        root: { margin: -10 },
+      });
+    }
+
+    return styles;
+  };
 }
