@@ -32,8 +32,10 @@
         "@mantine/hooks": "^7.6.1",
         "@mantine/modals": "^7.6.1",
         "@mui/icons-material": "^5.15.4",
+        "@types/lodash": "^4.14.202",
         "clsx": "^2.0.0",
         "dayjs": "^1.11.10",
+        "lodash": "^4.17.21",
         "luxon": "^3.4.4",
         "mantine-datatable": "^7.6.0"
     }

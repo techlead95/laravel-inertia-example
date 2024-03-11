@@ -1,5 +1,5 @@
+import useFieldStyles from '@/Hooks/useFieldStyles';
 import { Frame, FrameEdge, FrameMaterial } from '@/types';
-import { inputHorizontalStyles } from '@/utils';
 import {
   Group,
   Select,
@@ -17,6 +17,8 @@ interface Props {
 }
 
 export default function FramePanel({ frames, edges, materials }: Props) {
+  const fieldStyles = useFieldStyles({ horizontal: true });
+
   return (
     <>
       <DataTable
@@ -45,29 +47,24 @@ export default function FramePanel({ frames, edges, materials }: Props) {
         <Stack gap="xs">
           <Select
             label="Edge"
-            styles={inputHorizontalStyles}
+            styles={fieldStyles}
             data={edges.map((edge) => edge.fe_edge)}
           />
           <Select
             label="Material"
-            styles={inputHorizontalStyles}
+            styles={fieldStyles}
             data={materials.map((material) => material.fm_material)}
           />
-          <TextInput label="Min Edge" styles={inputHorizontalStyles} />
-          <TextInput label="Base Curve Min" styles={inputHorizontalStyles} />
-          <TextInput label="Base Curve Max" styles={inputHorizontalStyles} />
-          <TextInput label="Minimum Near PD" styles={inputHorizontalStyles} />
-          <TextInput label="Edge" styles={inputHorizontalStyles} />
+          <TextInput label="Min Edge" styles={fieldStyles} />
+          <TextInput label="Base Curve Min" styles={fieldStyles} />
+          <TextInput label="Base Curve Max" styles={fieldStyles} />
+          <TextInput label="Minimum Near PD" styles={fieldStyles} />
+          <TextInput label="Edge" styles={fieldStyles} />
           <Switch defaultChecked label="Non-Conductive" ml={166} />
           <Switch defaultChecked label="Tight Fit" ml={166} />
           <Switch defaultChecked label="Wrap" ml={166} />
         </Stack>
-        <Textarea
-          label="Notes"
-          styles={inputHorizontalStyles}
-          rows={4}
-          miw={580}
-        />
+        <Textarea label="Notes" styles={fieldStyles} rows={4} miw={580} />
       </Group>
     </>
   );

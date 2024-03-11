@@ -16,7 +16,7 @@ import '../css/app.css';
 import AdminLayout from './Layouts/AdminLayout';
 import UserLayout from './Layouts/UserLayout';
 import './bootstrap';
-import { DATE_DISPLAY_FORMAT } from './utils';
+import { DATE_DISPLAY_FORMAT } from './constants';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 

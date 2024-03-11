@@ -1,5 +1,5 @@
 import PageTitle from '@/Components/PageTitle';
-import useExtendedForm from '@/Hooks/useExtendedForm';
+import useBaseForm from '@/Hooks/useBaseForm';
 import { User } from '@/types';
 import { Button, Grid, Group, TextInput } from '@mantine/core';
 
@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function UserEdit({ user }: Props) {
-  const { getFieldProps, put } = useExtendedForm(user);
+  const { getFieldProps, put } = useBaseForm(user);
 
   return (
     <>

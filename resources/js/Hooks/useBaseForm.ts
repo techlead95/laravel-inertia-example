@@ -1,6 +1,6 @@
 import { useForm } from '@inertiajs/react';
 
-export default function useExtendedForm<TForm extends object>(
+export default function useBaseForm<TForm extends object>(
   initialValues?: TForm,
 ) {
   const form = useForm(initialValues);

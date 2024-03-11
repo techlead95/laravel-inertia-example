@@ -1,5 +1,5 @@
+import useFieldStyles from '@/Hooks/useFieldStyles';
 import { LensMaterial, LensStyle } from '@/types';
-import { inputHorizontalStyles } from '@/utils';
 import { Head, Link } from '@inertiajs/react';
 import {
   Box,
@@ -19,6 +19,8 @@ interface Props {
 }
 
 export default function Lens({ styles, materials }: Props) {
+  const fieldStyles = useFieldStyles({ horizontal: true });
+
   return (
     <>
       <Head title="Lens" />
@@ -83,36 +85,24 @@ export default function Lens({ styles, materials }: Props) {
           </Stack>
           <Stack>
             <Box h={24} />
-            <TextInput
-              label="Optic Translation"
-              styles={inputHorizontalStyles}
-            />
-            <TextInput label="Dvi Lens Style" styles={inputHorizontalStyles} />
-            <TextInput label="Dvi Mat" styles={inputHorizontalStyles} />
-            <TextInput label="Dvi Color" styles={inputHorizontalStyles} />
+            <TextInput label="Optic Translation" styles={fieldStyles} />
+            <TextInput label="Dvi Lens Style" styles={fieldStyles} />
+            <TextInput label="Dvi Mat" styles={fieldStyles} />
+            <TextInput label="Dvi Color" styles={fieldStyles} />
 
             <Flex justify="center">
               <Text fw="bold">Optic 2 Add Code</Text>
             </Flex>
-            <TextInput
-              label="Lens Style Add Code"
-              styles={inputHorizontalStyles}
-            />
-            <TextInput
-              label="Material Add Code"
-              styles={inputHorizontalStyles}
-            />
-            <TextInput label="Color Add Code" styles={inputHorizontalStyles} />
+            <TextInput label="Lens Style Add Code" styles={fieldStyles} />
+            <TextInput label="Material Add Code" styles={fieldStyles} />
+            <TextInput label="Color Add Code" styles={fieldStyles} />
 
             <Flex justify="center">
               <Text fw="bold">Legacy Optic Add Code</Text>
             </Flex>
-            <TextInput label="Lens Add Code" styles={inputHorizontalStyles} />
-            <TextInput
-              label="Material Add Code"
-              styles={inputHorizontalStyles}
-            />
-            <TextInput label="Color Add Code" styles={inputHorizontalStyles} />
+            <TextInput label="Lens Add Code" styles={fieldStyles} />
+            <TextInput label="Material Add Code" styles={fieldStyles} />
+            <TextInput label="Color Add Code" styles={fieldStyles} />
           </Stack>
         </Group>
       </Stack>

@@ -1,9 +1,11 @@
-import { inputHorizontalStyles } from '@/utils';
+import useFieldStyles from '@/Hooks/useFieldStyles';
 import { Head } from '@inertiajs/react';
 import { Box, Button, Group, Stack, Text, TextInput } from '@mantine/core';
 import { DataTable } from 'mantine-datatable';
 
 export default function Tint() {
+  const fieldStyles = useFieldStyles({ horizontal: true });
+
   return (
     <>
       <Head title="Tint" />
@@ -32,28 +34,22 @@ export default function Tint() {
       </Group>
       <Group mt="xl" align="flex-start">
         <Stack>
-          <TextInput label="Tint Group" styles={inputHorizontalStyles} />
-          <TextInput label="Tint Lower Range" styles={inputHorizontalStyles} />
-          <TextInput label="Tint Upper Range" styles={inputHorizontalStyles} />
-          <TextInput label="Default %" styles={inputHorizontalStyles} />
-          <TextInput label="Optic Translation" styles={inputHorizontalStyles} />
-          <TextInput label="Dvi Tint Drop" styles={inputHorizontalStyles} />
-          <TextInput label="Dvi Tint Color" styles={inputHorizontalStyles} />
+          <TextInput label="Tint Group" styles={fieldStyles} />
+          <TextInput label="Tint Lower Range" styles={fieldStyles} />
+          <TextInput label="Tint Upper Range" styles={fieldStyles} />
+          <TextInput label="Default %" styles={fieldStyles} />
+          <TextInput label="Optic Translation" styles={fieldStyles} />
+          <TextInput label="Dvi Tint Drop" styles={fieldStyles} />
+          <TextInput label="Dvi Tint Color" styles={fieldStyles} />
         </Stack>
         <Stack>
           <Stack gap={8} align="center">
             <Text fw="bold">Optic 2 Add Code</Text>
-            <TextInput
-              label="Coating Add Code"
-              styles={inputHorizontalStyles}
-            />
+            <TextInput label="Coating Add Code" styles={fieldStyles} />
           </Stack>
           <Stack gap={8} align="center">
             <Text fw="bold">Legacy Optic Add Code</Text>
-            <TextInput
-              label="Coating Add Code"
-              styles={inputHorizontalStyles}
-            />
+            <TextInput label="Coating Add Code" styles={fieldStyles} />
           </Stack>
         </Stack>
       </Group>

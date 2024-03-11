@@ -1,9 +1,11 @@
-import { inputHorizontalStyles } from '@/utils';
+import useFieldStyles from '@/Hooks/useFieldStyles';
 import { Head } from '@inertiajs/react';
 import { Button, Group, Stack, Switch, Text, TextInput } from '@mantine/core';
 import { DataTable } from 'mantine-datatable';
 
 export default function Coating() {
+  const fieldStyles = useFieldStyles({ horizontal: true });
+
   return (
     <>
       <Head title="Coating" />
@@ -32,25 +34,19 @@ export default function Coating() {
       </Group>
       <Group mt="xl" align="flex-start">
         <Stack>
-          <TextInput label="Coating Group" styles={inputHorizontalStyles} />
-          <TextInput label="Optic Translation" styles={inputHorizontalStyles} />
-          <TextInput label="Dvi Translation" styles={inputHorizontalStyles} />
-          <TextInput label="Cost" styles={inputHorizontalStyles} />
+          <TextInput label="Coating Group" styles={fieldStyles} />
+          <TextInput label="Optic Translation" styles={fieldStyles} />
+          <TextInput label="Dvi Translation" styles={fieldStyles} />
+          <TextInput label="Cost" styles={fieldStyles} />
         </Stack>
         <Stack>
           <Stack gap={8} align="center">
             <Text fw="bold">Optic 2 Add Code</Text>
-            <TextInput
-              label="Coating Add Code"
-              styles={inputHorizontalStyles}
-            />
+            <TextInput label="Coating Add Code" styles={fieldStyles} />
           </Stack>
           <Stack gap={8} align="center">
             <Text fw="bold">Legacy Optic Add Code</Text>
-            <TextInput
-              label="Coating Add Code"
-              styles={inputHorizontalStyles}
-            />
+            <TextInput label="Coating Add Code" styles={fieldStyles} />
           </Stack>
         </Stack>
       </Group>

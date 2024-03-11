@@ -1,5 +1,5 @@
 import BaseAlert from '@/Components/BaseAlert';
-import useExtendedForm from '@/Hooks/useExtendedForm';
+import useBaseForm from '@/Hooks/useBaseForm';
 import {
   FrameBrand,
   FrameCollection,
@@ -48,7 +48,7 @@ export default function Frame({
   flash,
 }: PageProps<Props>) {
   const { getFieldProps, data, setData, clearErrors, put, post } =
-    useExtendedForm<Partial<FrameType>>();
+    useBaseForm<Partial<FrameType>>();
 
   const selectedFrame = useMemo(() => {
     return frames.find((frame) => frame.fr_frame_name === data.fr_frame_name);

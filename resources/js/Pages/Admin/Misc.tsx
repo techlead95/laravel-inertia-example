@@ -1,8 +1,10 @@
-import { inputHorizontalStyles } from '@/utils';
+import useFieldStyles from '@/Hooks/useFieldStyles';
 import { Head } from '@inertiajs/react';
 import { Button, Group, Stack, TextInput } from '@mantine/core';
 
 export default function Misc() {
+  const fieldStyles = useFieldStyles({ horizontal: true });
+
   return (
     <>
       <Head title="Misc" />
@@ -28,12 +30,12 @@ export default function Misc() {
       </Group>
       <Group mt="xl">
         <Stack>
-          <TextInput label="Optic Translation" styles={inputHorizontalStyles} />
-          <TextInput label="DVI Translation" styles={inputHorizontalStyles} />
+          <TextInput label="Optic Translation" styles={fieldStyles} />
+          <TextInput label="DVI Translation" styles={fieldStyles} />
         </Stack>
         <Stack>
-          <TextInput label="O2 Add Code" styles={inputHorizontalStyles} />
-          <TextInput label="Legacy Add Code" styles={inputHorizontalStyles} />
+          <TextInput label="O2 Add Code" styles={fieldStyles} />
+          <TextInput label="Legacy Add Code" styles={fieldStyles} />
         </Stack>
       </Group>
     </>
