@@ -18,16 +18,6 @@ return new class extends Migration
             $table->string('fr_fl_type_code1')->nullable();
             $table->string('fr_fl_front')->nullable();
             $table->string('fr_frame_style')->nullable();
-            $table->string('fr_eyesize')->nullable();
-            $table->string('fr_frame_color')->nullable();
-            $table->string('fr_temple_type')->nullable();
-            $table->string('fr_temple_size')->nullable();
-            $table->string('fr_A')->nullable();
-            $table->string('fr_B')->nullable();
-            $table->string('fr_ED')->nullable();
-            $table->string('fr_DBL')->nullable();
-            $table->string('fr_non_dig_default_seg')->nullable();
-            $table->string('fr_dig_default_seg')->nullable();
             $table->string('fr_edge')->nullable();
             $table->string('fr_material')->nullable();
             $table->string('fr_min_edge')->nullable();

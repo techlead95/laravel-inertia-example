@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('order_trackings', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->integer('ot_legacy_order_number');
             $table->integer('ot_portal_order_number');
             $table->string('ot_station_description');
@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('ot_status');
             $table->integer('ot_track_date');
             $table->integer('ot_track_time');
+            $table->timestamps();
         });
     }
 

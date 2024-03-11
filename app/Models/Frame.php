@@ -16,7 +16,8 @@ class Frame extends Model
         'fr_frame_name',
         'fr_brand',
         'fr_collection',
-        'fr_frame_group'
+        'fr_frame_group',
+        'fr_frame_style'
     ];
 
     public function brand()
