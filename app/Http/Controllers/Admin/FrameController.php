@@ -11,6 +11,7 @@ use App\Models\FrameMaterial;
 use App\Http\Controllers\Controller;
 use App\Models\FrameCollection;
 use App\Models\FrameDefaultGroup;
+use Illuminate\Support\Facades\Session;
 
 class FrameController extends Controller
 {
@@ -50,7 +51,7 @@ class FrameController extends Controller
 
         Frame::create($validated);
 
-        $request->session()->flash('success', 'Frame created successfully');
+        Session::flash('success', 'Frame created successfully');
 
         return to_route('admin.frame.index');
     }
@@ -85,7 +86,7 @@ class FrameController extends Controller
 
         Frame::find($id)->update($validated);
 
-        $request->session()->flash('success', 'Frame updated successfully');
+        Session::flash('success', 'Frame updated successfully')
 
         return to_route('admin.frame.index');
     }
