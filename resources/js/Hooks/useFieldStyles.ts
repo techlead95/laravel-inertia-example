@@ -37,19 +37,6 @@ export default function useGetFieldStyles() {
       });
     }
 
-    if (centered) {
-      merge(styles, {
-        root: { margin: -10, display: 'flex' },
-        label: { textAlign: 'right' },
-      });
-    }
-
-    if (noMargin) {
-      merge(styles, {
-        root: { margin: -10 },
-      });
-    }
-
     return styles;
   };
 }
