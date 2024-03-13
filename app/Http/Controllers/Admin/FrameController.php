@@ -86,7 +86,7 @@ class FrameController extends Controller
 
         Frame::find($id)->update($validated);
 
-        Session::flash('success', 'Frame updated successfully')
+        Session::flash('success', 'Frame updated successfully');
 
         return to_route('admin.frame.index');
     }
