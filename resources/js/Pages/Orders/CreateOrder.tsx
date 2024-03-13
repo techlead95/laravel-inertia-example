@@ -1,5 +1,6 @@
 import useBaseForm from '@/Hooks/useBaseForm';
 import useGetFieldStyles from '@/Hooks/useFieldStyles';
+import { useState, useEffect } from 'react';
 import { Frame, Order } from '@/types';
 import { Head } from '@inertiajs/react';
 import { router } from '@inertiajs/react';
@@ -26,6 +27,7 @@ interface Props {
 
 export default function CreateOrder({ frames }: Props) {
   const getFieldStyles = useGetFieldStyles();
+  const [filteredFrames, setFilteredFrames] = useState(frames);
   const { getFieldProps, data, setData, post, processing, errors } =
     useBaseForm<Partial<Order>>({
       or_ship_to: '',
@@ -47,8 +49,8 @@ export default function CreateOrder({ frames }: Props) {
       or_lens_color_left: '',
       or_ocht_right: '',
       or_ocht_left: '',
-      or_measurement_right: '',
-      or_measurement_left: '',
+      or_measurement_right: 'Above Frame',
+      or_measurement_left: 'Above Frame',
       or_sphere_right: '',
       or_sphere_left: '',
       or_cyl_right: '',
@@ -113,6 +115,21 @@ export default function CreateOrder({ frames }: Props) {
       or_manual_ship_addr_2: '',
       or_manual_ship_addr_3: '',
     });
+  useEffect(() => {
+    if (data.or_frame_style) {
+      const filtered = frames.filter(frame => frame.fr_frame_style?.includes(data.or_frame_style ?? ''));
+      setFilteredFrames(filtered);
+    } else {
+      setFilteredFrames(frames);
+    }
+
+  }, [data.or_frame_style]);
+
+  const handleFilter = (event) => {
+    const value = event.target.value;
+    const filtered = frames.filter(frame => frame.fr_frame_style?.includes(value));
+    setFilteredFrames(filtered);
+  };
 
   return (
     <Stack>
@@ -170,6 +187,7 @@ export default function CreateOrder({ frames }: Props) {
               <TextInput
                 {...getFieldProps('or_cc_emp_card_exp_date')}
                 label="Card Exp Date"
+                placeholder="MMYY"
                 flex={1}
                 styles={getFieldStyles({ blueLabel: true })}
               />
@@ -212,15 +230,17 @@ export default function CreateOrder({ frames }: Props) {
               />
             </Group>
             <Group gap="xl">
-              <TextInput
+              <Select
                 {...getFieldProps('or_cc_company_card_type')}
                 label="Card Type"
-                flex={1}
+                placeholder="Type"
                 styles={getFieldStyles({ blueLabel: true })}
+                data={['Visa', 'MasterCard', 'Discover', 'American Express']}
               />
               <TextInput
                 {...getFieldProps('or_cc_company_card_exp_date')}
                 label="Card Exp Date"
+                placeholder="MMYY"
                 flex={1}
                 styles={getFieldStyles({ blueLabel: true })}
               />
@@ -261,6 +281,157 @@ export default function CreateOrder({ frames }: Props) {
         <Text ta="center" fw="bold" fz="lg">
           Complete RX
         </Text>
+
+        <OrderTable
+          headers={[
+            'Material',
+            'Style',
+            'Color',
+            'Ocht',
+            'Measurement',
+          ]}
+          hasRL
+          hasEditable
+        >
+          <Table.Tr>
+            <Table.Td>
+              <Select
+                {...getFieldProps('or_material_right')}
+                placeholder="Select Material"
+                data={['test', 'test2', 'test3', 'test4']}
+              />
+            </Table.Td>
+            <Table.Td>
+              <Select
+                {...getFieldProps('or_lens_style_right')}
+                placeholder="Select Lens Style"
+                data={['test', 'test2', 'test3', 'test4']}
+              />
+            </Table.Td>
+            <Table.Td>
+              <Select
+                {...getFieldProps('or_lens_color_right')}
+                placeholder="Select Lens Color"
+                data={['test', 'test2', 'test3', 'test4']}
+              />
+            </Table.Td>
+            <Table.Td>
+              <TextInput {...getFieldProps('or_ocht_right')} />
+            </Table.Td>
+            <Table.Td>
+              <Select
+                {...getFieldProps('or_measurement_right')}
+                data={['Above Frame', 'Below Frame']}
+              />
+            </Table.Td>
+          </Table.Tr>
+          <Table.Tr>
+            <Table.Td>
+              <Select
+                {...getFieldProps('or_material_left')}
+                placeholder="Select Material"
+                data={['test', 'test2', 'test3', 'test4']}
+              />
+            </Table.Td>
+            <Table.Td>
+              <Select
+                {...getFieldProps('or_lens_style_left')}
+                placeholder="Select Lens Style"
+                data={['test', 'test2', 'test3', 'test4']}
+              />
+            </Table.Td>
+            <Table.Td>
+              <Select
+                {...getFieldProps('or_lens_color_left')}
+                placeholder="Select Lens Color"
+                data={['test', 'test2', 'test3', 'test4']}
+              />
+            </Table.Td>
+            <Table.Td>
+              <TextInput {...getFieldProps('or_ocht_left')} />
+            </Table.Td>
+            <Table.Td>
+              <Select
+                {...getFieldProps('or_measurement_left')}
+                data={['Above Frame', 'Below Frame']}
+              />
+            </Table.Td>
+          </Table.Tr>
+        </OrderTable>
+        <OrderTable
+          headers={[
+            'Sphere',
+            'Cly',
+            'Axis',
+            'Dist PD',
+            'Near PD',
+            'Prism (I/O)',
+            'Prism (U/D)',
+          ]}
+          hasRL
+          hasEditable
+        >
+          <Table.Tr>
+            <Table.Td>
+              <TextInput {...getFieldProps('or_sphere_right')} />
+            </Table.Td>
+            <Table.Td>
+              <TextInput {...getFieldProps('or_cyl_right')} />
+            </Table.Td>
+            <Table.Td>
+              <TextInput {...getFieldProps('or_axis_right')} />
+            </Table.Td>
+            <Table.Td>
+              <TextInput {...getFieldProps('or_pd_dist_right')} />
+            </Table.Td>
+            <Table.Td>
+              <TextInput {...getFieldProps('or_pd_near_right')} />
+            </Table.Td>
+            <Table.Td w="200">
+              <Group>
+                <Select mr="-10" w="83"  {...getFieldProps('or_prism_in_right')}
+                  data={['*', 'IN', 'OUT']} />
+                <TextInput ml="-10" w="94" {...getFieldProps('or_prism_in_right_value')} />
+              </Group>
+            </Table.Td>
+            <Table.Td w="200">
+              <Group>
+                <Select mr="-10" w="83"  {...getFieldProps('or_prism_up_right')}
+                  data={['*', 'UP', 'DOWN']} />
+                <TextInput ml="-10" w="94" {...getFieldProps('or_prism_up_right_value')} />
+              </Group>
+            </Table.Td>
+          </Table.Tr>
+          <Table.Tr>
+            <Table.Td>
+              <TextInput {...getFieldProps('or_sphere_left')} />
+            </Table.Td>
+            <Table.Td>
+              <TextInput {...getFieldProps('or_cyl_left')} />
+            </Table.Td>
+            <Table.Td>
+              <TextInput {...getFieldProps('or_axis_left')} />
+            </Table.Td>
+            <Table.Td>
+              <TextInput {...getFieldProps('or_pd_dist_left')} />
+            </Table.Td>
+            <Table.Td>
+              <TextInput {...getFieldProps('or_pd_near_left')} />
+            </Table.Td>
+            <Table.Td>
+              <Group>
+                <Select mr="-10" w="83"  {...getFieldProps('or_prism_in_left')}
+                  data={['*', 'IN', 'OUT']} /><TextInput ml="-10" w="94" {...getFieldProps('or_prism_in_left_value')} />
+              </Group>
+            </Table.Td>
+            <Table.Td>
+              <Group>
+                <Select mr="-10" w="83"  {...getFieldProps('or_prism_up_left')} data={['*', 'UP', 'DOWN']} />
+                <TextInput ml="-10" w="94" {...getFieldProps('or_prism_up_left_value')} />
+              </Group>
+            </Table.Td>
+          </Table.Tr>
+        </OrderTable>
         <OrderTable
           headers={[
             'Add',
@@ -285,16 +456,22 @@ export default function CreateOrder({ frames }: Props) {
               <TextInput {...getFieldProps('or_seg_height_right')} />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_tint_color')} />
+              <Select {...getFieldProps('or_tint_color')}
+                placeholder="Select Tint"
+              />
             </Table.Td>
             <Table.Td>
               <TextInput {...getFieldProps('or_tint_percent')} />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_mirror')} />
+              <Select {...getFieldProps('or_mirror')}
+                placeholder="Select Mirror"
+              />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_coating')} />
+              <Select {...getFieldProps('or_coating')}
+                placeholder="Select Coating"
+              />
             </Table.Td>
           </Table.Tr>
           <Table.Tr>
@@ -334,7 +511,10 @@ export default function CreateOrder({ frames }: Props) {
             <Table.Td>
               <Select
                 {...getFieldProps('or_frame_style')}
-                data={frames.map((frame) => frame.fr_frame_style ?? '')}
+                placeholder="Start typing frame name"
+                data={filteredFrames.map((frame) => frame.fr_frame_style ?? '')}
+                searchable
+                allowDeselect
               />
             </Table.Td>
           </Table.Tr>
