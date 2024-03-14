@@ -116,20 +116,38 @@ export default function CreateOrder({ frames }: Props) {
       or_manual_ship_addr_3: '',
     });
   useEffect(() => {
-    if (data.or_frame_style) {
-      const filtered = frames.filter(frame => frame.fr_frame_style?.includes(data.or_frame_style ?? ''));
-      setFilteredFrames(filtered);
+    if (data.or_frame_style || data.or_frame_color || data.or_frame_size) {
+      var filtered = [];
+      if (data.or_frame_style) {
+        filtered = frames.filter(frame => frame.fr_frame_style?.includes(data.or_frame_style ?? ''));
+      } else {
+        filtered = frames;
+      }
+      var filtered2 = [];
+      if (data.or_frame_color) {
+        filtered2 = filtered.filter(frame => frame.fr_frame_color?.includes(data.or_frame_color ?? ''));
+      } else {
+        filtered2 = filtered;
+      }
+
+      var filtered3 = [];
+      if (data.or_frame_size) {
+        filtered3 = filtered2.filter(frame => frame.fr_eyesize?.includes(data.or_frame_size ?? ''));
+      } else {
+        filtered3 = filtered2;
+      }
+
+      //const filtered = frames.filter(frame => frame.fr_frame_style?.includes(data.or_frame_style ?? ''));
+      setFilteredFrames(filtered3);
+
+      console.log(filtered3);
     } else {
       setFilteredFrames(frames);
     }
+    console.log(data.or_frame_style, data.or_frame_color, data.or_frame_size)
 
-  }, [data.or_frame_style]);
+  }, [data.or_frame_style, data.or_frame_color, data.or_frame_size]);
 
-  const handleFilter = (event) => {
-    const value = event.target.value;
-    const filtered = frames.filter(frame => frame.fr_frame_style?.includes(value));
-    setFilteredFrames(filtered);
-  };
 
   return (
     <Stack>
@@ -526,10 +544,14 @@ export default function CreateOrder({ frames }: Props) {
         >
           <Table.Tr>
             <Table.Td>
-              <Select {...getFieldProps('or_frame_color')} data={[]} />
+              <Select {...getFieldProps('or_frame_color')}
+                data={filteredFrames.map((frame) => frame.fr_frame_color ?? '')}
+              />
             </Table.Td>
             <Table.Td>
-              <Select {...getFieldProps('or_frame_color')} data={[]} />
+              <Select {...getFieldProps('or_frame_size')}
+                data={filteredFrames.map((frame) => frame.fr_eyesize ?? '')}
+              />
             </Table.Td>
             <Table.Td>
               <Select {...getFieldProps('or_frame_side_shield')} data={[]} />
