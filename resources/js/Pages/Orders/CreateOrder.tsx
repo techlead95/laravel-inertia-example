@@ -1,7 +1,7 @@
 import useBaseForm from '@/Hooks/useBaseForm';
 import useGetFieldStyles from '@/Hooks/useFieldStyles';
 import { useState, useEffect } from 'react';
-import { Frame, Order } from '@/types';
+import { Frame, Order, Lens } from '@/types';
 import { Head } from '@inertiajs/react';
 import { router } from '@inertiajs/react';
 import {
@@ -23,9 +23,10 @@ import OrderTable from './OrderTable';
 
 interface Props {
   frames: Frame[];
+  lenses: Lens[];
 }
 
-export default function CreateOrder({ frames }: Props) {
+export default function CreateOrder({ frames, lenses, }: Props) {
   const getFieldStyles = useGetFieldStyles();
   const [filteredFrames, setFilteredFrames] = useState(frames);
   const { getFieldProps, data, setData, post, processing, errors } =
@@ -115,7 +116,7 @@ export default function CreateOrder({ frames }: Props) {
       or_manual_ship_addr_2: '',
       or_manual_ship_addr_3: '',
     });
-  useEffect(() => {
+  /*useEffect(() => {
     if (data.or_frame_style || data.or_frame_color || data.or_frame_size) {
       var filtered = [];
       if (data.or_frame_style) {
@@ -129,24 +130,19 @@ export default function CreateOrder({ frames }: Props) {
       } else {
         filtered2 = filtered;
       }
-
       var filtered3 = [];
       if (data.or_frame_size) {
         filtered3 = filtered2.filter(frame => frame.fr_eyesize?.includes(data.or_frame_size ?? ''));
       } else {
         filtered3 = filtered2;
       }
-
-      //const filtered = frames.filter(frame => frame.fr_frame_style?.includes(data.or_frame_style ?? ''));
       setFilteredFrames(filtered3);
-
-      console.log(filtered3);
     } else {
       setFilteredFrames(frames);
     }
     console.log(data.or_frame_style, data.or_frame_color, data.or_frame_size)
-
   }, [data.or_frame_style, data.or_frame_color, data.or_frame_size]);
+  */
 
 
   return (
@@ -316,7 +312,8 @@ export default function CreateOrder({ frames }: Props) {
               <Select
                 {...getFieldProps('or_material_right')}
                 placeholder="Select Material"
-                data={['test', 'test2', 'test3', 'test4']}
+                //data={[]}
+                data={lenses.map((lens) => lens.le_dvi_mat ?? '')}
               />
             </Table.Td>
             <Table.Td>
@@ -530,7 +527,8 @@ export default function CreateOrder({ frames }: Props) {
               <Select
                 {...getFieldProps('or_frame_style')}
                 placeholder="Start typing frame name"
-                data={filteredFrames.map((frame) => frame.fr_frame_style ?? '')}
+                //data={filteredFrames.map((frame) => frame.fr_frame_style ?? '')}
+                data={frames.map((frame) => frame.fr_frame_style ?? '')}
                 searchable
                 allowDeselect
               />
@@ -545,12 +543,14 @@ export default function CreateOrder({ frames }: Props) {
           <Table.Tr>
             <Table.Td>
               <Select {...getFieldProps('or_frame_color')}
-                data={filteredFrames.map((frame) => frame.fr_frame_color ?? '')}
+                //data={filteredFrames.map((frame) => frame.fr_frame_color ?? '')}
+                data={[]}
               />
             </Table.Td>
             <Table.Td>
               <Select {...getFieldProps('or_frame_size')}
-                data={filteredFrames.map((frame) => frame.fr_eyesize ?? '')}
+                //data={filteredFrames.map((frame) => frame.fr_eyesize ?? '')}
+                data={[]}
               />
             </Table.Td>
             <Table.Td>
