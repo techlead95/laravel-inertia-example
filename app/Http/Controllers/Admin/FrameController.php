@@ -25,7 +25,7 @@ class FrameController extends Controller
         $brands = FrameBrand::all();
         $collections = FrameCollection::all();
         $groups = FrameDefaultGroup::all();
-        $frames = Frame::all();
+        $frames = Frame::with('variations')->get();
 
         return Inertia::render('Admin/Frame/Frame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'frames'));
     }

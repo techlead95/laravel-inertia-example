@@ -12,8 +12,8 @@ use App\Models\LensMaterial;
 use App\Models\FrameMaterial;
 use App\Models\FrameCollection;
 use Illuminate\Database\Seeder;
-use Database\Seeders\UserSeeder;
 use App\Models\FrameDefaultGroup;
+use App\Models\FrameVariation;
 
 class DatabaseSeeder extends Seeder
 {
@@ -29,7 +29,9 @@ class DatabaseSeeder extends Seeder
         FrameBrand::factory()->count(3)->create();
         FrameCollection::factory()->count(5)->create();
         FrameDefaultGroup::factory()->count(3)->create();
-        Frame::factory()->count(3)->create();
+        Frame::factory()->count(2)->create()->each(function ($frame) {
+            $frame->variations()->saveMany(FrameVariation::factory()->count(3)->create());
+        });
 
         LensStyle::factory()->count(5)->create();
         LensMaterial::factory()->count(5)->create();

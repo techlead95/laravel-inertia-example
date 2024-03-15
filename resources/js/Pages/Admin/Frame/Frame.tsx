@@ -47,8 +47,8 @@ export default function Frame({
   frames,
   flash,
 }: PageProps<Props>) {
-  const { getFieldProps, data, setData, clearErrors, put, post } =
-    useBaseForm<Partial<FrameType>>();
+  const form = useBaseForm<Partial<FrameType>>();
+  const { getFieldProps, data, setData, clearErrors, put, post } = form;
 
   const selectedFrame = useMemo(() => {
     return frames.find((frame) => frame.fr_frame_name === data.fr_frame_name);
@@ -72,14 +72,13 @@ export default function Frame({
   return (
     <>
       <Head title="Frame" />
-      <Stack>
+      <Stack component="form">
         {flash.success && (
           <BaseAlert title={flash.success} timestamp={flash.timestamp} />
         )}
         <Group
           justify="space-between"
           align="flex-start"
-          component="form"
           onSubmit={(e) => {
             e.preventDefault();
 
@@ -156,7 +155,12 @@ export default function Frame({
           </Tabs.List>
 
           <FrameTabsPanel value="frame">
-            <FramePanel frames={frames} edges={edges} materials={materials} />
+            <FramePanel
+              frameVariations={selectedFrame?.variations ?? []}
+              edges={edges}
+              materials={materials}
+              form={form}
+            />
           </FrameTabsPanel>
 
           <FrameTabsPanel value="prices">

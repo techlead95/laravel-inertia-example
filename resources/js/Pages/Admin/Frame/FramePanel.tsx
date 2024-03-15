@@ -1,6 +1,14 @@
+import BaseDataTable from '@/Components/BaseDataTable';
+import useBaseForm from '@/Hooks/useBaseForm';
 import useGetFieldStyles from '@/Hooks/useFieldStyles';
 import useFieldStyles from '@/Hooks/useFieldStyles';
-import { Frame, FrameEdge, FrameMaterial } from '@/types';
+import {
+  Frame,
+  FrameEdge,
+  FrameMaterial,
+  FrameType,
+  FrameVariation,
+} from '@/types';
 import {
   Group,
   Select,
@@ -12,73 +20,102 @@ import {
 import { DataTable } from 'mantine-datatable';
 
 interface Props {
-  frames: Frame[];
+  frameVariations: FrameVariation[];
   edges: FrameEdge[];
   materials: FrameMaterial[];
+  form: ReturnType<typeof useBaseForm<Partial<FrameType>>>;
 }
 
-export default function FramePanel({ frames, edges, materials }: Props) {
+export default function FramePanel({
+  frameVariations,
+  edges,
+  materials,
+  form,
+}: Props) {
   const getFieldStyles = useGetFieldStyles();
+  const { getFieldProps } = form;
 
   return (
     <>
-      <DataTable
+      <BaseDataTable
         columns={[
-          { accessor: 'fr_eyesize', title: 'Eye' },
-          { accessor: 'fr_bridge', title: 'Bridge' },
-          { accessor: 'fr_temple_type', title: 'Temple Type' },
-          { accessor: 'fr_temple_size', title: 'Temple Size' },
-          { accessor: 'fr_frame_color', title: 'Color' },
-          { accessor: 'fr_A', title: 'A' },
-          { accessor: 'fr_B', title: 'B' },
-          { accessor: 'fr_ED', title: 'ED' },
-          { accessor: 'fr_DBL', title: 'DBL' },
+          { accessor: 'fv_eyesize', title: 'Eye' },
+          { accessor: 'fv_bridge', title: 'Bridge' },
+          { accessor: 'fv_temple_type', title: 'Temple Type' },
+          { accessor: 'fv_temple_size', title: 'Temple Size' },
+          { accessor: 'fv_frame_color', title: 'Color' },
+          { accessor: 'fv_A', title: 'A' },
+          { accessor: 'fv_B', title: 'B' },
+          { accessor: 'fv_ED', title: 'ED' },
+          { accessor: 'fv_DBL', title: 'DBL' },
           {
-            accessor: 'fr_non_dig_default_seg',
+            accessor: 'fv_non_dig_default_seg',
             title: 'Non Digital Default Seg',
           },
           {
-            accessor: 'fr_dig_default_seg',
+            accessor: 'fv_dig_default_seg',
             title: 'Digital Default Seg',
           },
         ]}
-        records={frames}
+        records={frameVariations}
       />
-      <Group component="form" align="flex-start">
+      <Group align="flex-start">
         <Stack gap="xs">
           <Select
             label="Edge"
             styles={getFieldStyles({ horizontal: true })}
             data={edges.map((edge) => edge.fe_edge)}
+            {...getFieldProps('fr_edge')}
           />
           <Select
             label="Material"
             styles={getFieldStyles({ horizontal: true })}
             data={materials.map((material) => material.fm_material)}
+            {...getFieldProps('fr_material')}
           />
           <TextInput
             label="Min Edge"
             styles={getFieldStyles({ horizontal: true })}
+            {...getFieldProps('fr_min_edge')}
           />
           <TextInput
             label="Base Curve Min"
             styles={getFieldStyles({ horizontal: true })}
+            {...getFieldProps('fr_base_curve_min')}
           />
           <TextInput
             label="Base Curve Max"
             styles={getFieldStyles({ horizontal: true })}
+            {...getFieldProps('fr_base_curve_max')}
           />
           <TextInput
             label="Minimum Near PD"
             styles={getFieldStyles({ horizontal: true })}
+            {...getFieldProps('fr_min_near_pd')}
           />
           <TextInput
             label="Edge"
             styles={getFieldStyles({ horizontal: true })}
+            {...getFieldProps('fr_edge')}
           />
-          <Switch defaultChecked label="Non-Conductive" ml={166} />
-          <Switch defaultChecked label="Tight Fit" ml={166} />
-          <Switch defaultChecked label="Wrap" ml={166} />
+          <Switch
+            defaultChecked
+            label="Non-Conductive"
+            ml={166}
+            {...getFieldProps('fr_non_conductive')}
+          />
+          <Switch
+            defaultChecked
+            label="Tight Fit"
+            ml={166}
+            {...getFieldProps('fr_tight_fit')}
+          />
+          <Switch
+            defaultChecked
+            label="Wrap"
+            ml={166}
+            {...getFieldProps('fr_wrap')}
+          />
         </Stack>
         <Textarea
           label="Notes"

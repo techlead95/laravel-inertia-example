@@ -40,6 +40,8 @@ return new class extends Migration
             $table->string('fr_front_prod_code_2')->nullable();
             $table->string('fr_filler')->nullable();
             $table->integer('fr_fl_sbdge_date')->nullable();
+            $table->string('fr_brand')->nullable();
+            $table->string('fr_collection')->nullable();
 
             $table->timestamps();
         });

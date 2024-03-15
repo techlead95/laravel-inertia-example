@@ -56,14 +56,49 @@ export interface FrameDefaultGroup {
 export interface Frame extends Timestamps {
   id: number;
   fr_frame_name: string;
-  fr_brand: string | null;
-  fr_collection: string | null;
-  fr_frame_group: string | null;
-  fr_eyesize?: number;
-  fr_temple_type?: string;
-  fr_temple_size?: number;
-  fr_frame_color?: string;
-  fr_frame_style?: string;
+  fr_frame_delete_bytes?: string | null;
+  fr_fl_type_code1?: string | null;
+  fr_fl_front?: string | null;
+  fr_frame_style?: string | null;
+  fr_edge?: string | null;
+  fr_material?: string | null;
+  fr_min_edge?: string | null;
+  fr_base_curve_min?: string | null;
+  fr_base_curve_max?: string | null;
+  fr_min_near_pd?: string | null;
+  fr_notes?: string | null;
+  fr_non_conductive?: string | null;
+  fr_tight_fit?: string | null;
+  fr_wrap?: string | null;
+  fr_t1_eyesize?: string | null;
+  fr_front_bridge?: string | null;
+  fr_frame_ss_type?: string | null;
+  fr_front_prod_code?: number | null;
+  fr_front_addon1?: number | null;
+  fr_front_addon2?: number | null;
+  fr_color_desc?: string | null;
+  fr_frame_group?: string | null;
+  fr_frame_vendor?: string | null;
+  fr_front_prod_code_2?: string | null;
+  fr_filler?: string | null;
+  fr_fl_sbdge_date?: number | null;
+  fr_brand?: string | null;
+  fr_collection?: string | null;
+  variations?: FrameVariation[];
+}
+
+export interface FrameVariation extends Timestamps {
+  fv_eyesize?: string;
+  fv_front_bridge?: string;
+  fv_frame_color?: string;
+  fv_temple_type?: string;
+  fv_temple_size?: string;
+  fv_A?: string;
+  fv_B?: string;
+  fv_ED?: string;
+  fv_DBL?: string;
+  fv_non_dig_default_seg?: string;
+  fv_dig_default_seg?: string;
 }
 
 export type FrameType = Frame;

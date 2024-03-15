@@ -34,4 +34,9 @@ class Frame extends Model
     {
         return $this->belongsTo(FrameDefaultGroup::class, 'fr_frame_group', 'fd_group');
     }
+
+    public function variations()
+    {
+        return $this->hasMany(FrameVariation::class, 'fv_frame_id', 'id');
+    }
 }
