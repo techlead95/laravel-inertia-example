@@ -29,6 +29,8 @@ interface Props {
 export default function CreateOrder({ frames, lenses, }: Props) {
   const getFieldStyles = useGetFieldStyles();
   const [filteredFrames, setFilteredFrames] = useState(frames);
+  const [filteredRightLenses, setFilteredRightLenses] = useState(lenses);
+  const [filteredLeftLenses, setFilteredLeftLenses] = useState(lenses);
   const { getFieldProps, data, setData, post, processing, errors } =
     useBaseForm<Partial<Order>>({
       or_ship_to: '',
@@ -143,7 +145,57 @@ export default function CreateOrder({ frames, lenses, }: Props) {
     console.log(data.or_frame_style, data.or_frame_color, data.or_frame_size)
   }, [data.or_frame_style, data.or_frame_color, data.or_frame_size]);
   */
+  useEffect(() => {
+    if (data.or_material_right || data.or_lens_style_right || data.or_lens_color_right) {
+      var filtered = [];
+      if (data.or_material_right) {
+        filtered = lenses.filter(lens => lens.le_dvi_mat?.includes(data.or_material_right ?? ''));
+      } else {
+        filtered = lenses;
+      }
+      var filtered2 = [];
+      if (data.or_lens_style_right) {
+        filtered2 = filtered.filter(lens => lens.le_dvi_lens_style?.includes(data.or_lens_style_right ?? ''));
+      } else {
+        filtered2 = filtered;
+      }
+      var filtered3 = [];
+      if (data.or_lens_color_right) {
+        filtered3 = filtered2.filter(lens => lens.le_dvi_color?.includes(data.or_lens_color_right ?? ''));
+      } else {
+        filtered3 = filtered2;
+      }
+      setFilteredRightLenses(filtered3);
+    } else {
+      setFilteredRightLenses(lenses);
+    }
+  }, [data.or_material_right, data.or_lens_style_right, data.or_lens_color_right]);
 
+  useEffect(() => {
+    if (data.or_material_left || data.or_lens_style_left || data.or_lens_color_left) {
+      var filtered = [];
+      if (data.or_material_left) {
+        filtered = lenses.filter(lens => lens.le_dvi_mat?.includes(data.or_material_left ?? ''));
+      } else {
+        filtered = lenses;
+      }
+      var filtered2 = [];
+      if (data.or_lens_style_left) {
+        filtered2 = filtered.filter(lens => lens.le_dvi_lens_style?.includes(data.or_lens_style_left ?? ''));
+      } else {
+        filtered2 = filtered;
+      }
+      var filtered3 = [];
+      if (data.or_lens_color_left) {
+        filtered3 = filtered2.filter(lens => lens.le_dvi_color?.includes(data.or_lens_color_left ?? ''));
+      } else {
+        filtered3 = filtered2;
+      }
+      setFilteredLeftLenses(filtered3);
+    } else {
+      setFilteredLeftLenses(lenses);
+    }
+  }, [data.or_material_left, data.or_lens_style_left, data.or_lens_color_left]);
 
   return (
     <Stack>
@@ -313,21 +365,23 @@ export default function CreateOrder({ frames, lenses, }: Props) {
                 {...getFieldProps('or_material_right')}
                 placeholder="Select Material"
                 //data={[]}
-                data={lenses.map((lens) => lens.le_dvi_mat ?? '')}
+                data={filteredRightLenses.map((lens) => lens.le_dvi_mat ?? '')}
               />
             </Table.Td>
             <Table.Td>
               <Select
                 {...getFieldProps('or_lens_style_right')}
                 placeholder="Select Lens Style"
-                data={['test', 'test2', 'test3', 'test4']}
+                data={filteredRightLenses.map((lens) => lens.le_dvi_lens_style ?? '')}
+              //data={['test', 'test2', 'test3', 'test4']}
               />
             </Table.Td>
             <Table.Td>
               <Select
                 {...getFieldProps('or_lens_color_right')}
                 placeholder="Select Lens Color"
-                data={['test', 'test2', 'test3', 'test4']}
+                data={filteredRightLenses.map((lens) => lens.le_dvi_color ?? '')}
+              //data={['test', 'test2', 'test3', 'test4']}
               />
             </Table.Td>
             <Table.Td>
@@ -345,21 +399,24 @@ export default function CreateOrder({ frames, lenses, }: Props) {
               <Select
                 {...getFieldProps('or_material_left')}
                 placeholder="Select Material"
-                data={['test', 'test2', 'test3', 'test4']}
+                data={filteredLeftLenses.map((lens) => lens.le_dvi_mat ?? '')}
+              //data={['test', 'test2', 'test3', 'test4']}
               />
             </Table.Td>
             <Table.Td>
               <Select
                 {...getFieldProps('or_lens_style_left')}
                 placeholder="Select Lens Style"
-                data={['test', 'test2', 'test3', 'test4']}
+                data={filteredLeftLenses.map((lens) => lens.le_dvi_lens_style ?? '')}
+              //data={['test', 'test2', 'test3', 'test4']}
               />
             </Table.Td>
             <Table.Td>
               <Select
                 {...getFieldProps('or_lens_color_left')}
                 placeholder="Select Lens Color"
-                data={['test', 'test2', 'test3', 'test4']}
+                data={filteredLeftLenses.map((lens) => lens.le_dvi_color ?? '')}
+              //data={['test', 'test2', 'test3', 'test4']}
               />
             </Table.Td>
             <Table.Td>

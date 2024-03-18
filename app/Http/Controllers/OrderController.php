@@ -34,7 +34,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $frames = Frame::all();
+        $frames = Frame::with('variations')->get();
         $lenses = Lens::all();
         return inertia()->render('Orders/CreateOrder', compact('frames', 'lenses'));
     }
