@@ -17,7 +17,16 @@ class Frame extends Model
         'fr_brand',
         'fr_collection',
         'fr_frame_group',
-        'fr_frame_style'
+        'fr_edge',
+        'fr_material',
+        'fr_min_edge',
+        'fr_base_curve_min',
+        'fr_base_curve_max',
+        'fr_min_near_pd',
+        'fr_non_conductive',
+        'fr_tight_fit',
+        'fr_wrap',
+        'fr_notes',
     ];
 
     public function brand()

@@ -85,6 +85,8 @@ export interface Frame extends Timestamps {
   fr_brand?: string | null;
   fr_collection?: string | null;
   variations?: FrameVariation[];
+  fr_frame_color?: string | null;
+  fr_eyesize?: string | null;
 }
 
 export interface FrameVariation extends Timestamps {

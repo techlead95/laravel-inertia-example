@@ -1,14 +1,7 @@
 import BaseDataTable from '@/Components/BaseDataTable';
 import useBaseForm from '@/Hooks/useBaseForm';
 import useGetFieldStyles from '@/Hooks/useFieldStyles';
-import useFieldStyles from '@/Hooks/useFieldStyles';
-import {
-  Frame,
-  FrameEdge,
-  FrameMaterial,
-  FrameType,
-  FrameVariation,
-} from '@/types';
+import { FrameEdge, FrameMaterial, FrameType, FrameVariation } from '@/types';
 import {
   Group,
   Select,
@@ -17,7 +10,6 @@ import {
   TextInput,
   Textarea,
 } from '@mantine/core';
-import { DataTable } from 'mantine-datatable';
 
 interface Props {
   frameVariations: FrameVariation[];
@@ -93,28 +85,20 @@ export default function FramePanel({
             styles={getFieldStyles({ horizontal: true })}
             {...getFieldProps('fr_min_near_pd')}
           />
-          <TextInput
-            label="Edge"
-            styles={getFieldStyles({ horizontal: true })}
-            {...getFieldProps('fr_edge')}
-          />
           <Switch
-            defaultChecked
             label="Non-Conductive"
             ml={166}
-            {...getFieldProps('fr_non_conductive')}
+            {...getFieldProps('fr_non_conductive', { type: 'checkbox' })}
           />
           <Switch
-            defaultChecked
             label="Tight Fit"
             ml={166}
-            {...getFieldProps('fr_tight_fit')}
+            {...getFieldProps('fr_tight_fit', { type: 'checkbox' })}
           />
           <Switch
-            defaultChecked
             label="Wrap"
             ml={166}
-            {...getFieldProps('fr_wrap')}
+            {...getFieldProps('fr_wrap', { type: 'checkbox' })}
           />
         </Stack>
         <Textarea
@@ -122,6 +106,7 @@ export default function FramePanel({
           styles={getFieldStyles({ horizontal: true })}
           rows={4}
           miw={580}
+          {...getFieldProps('fr_notes')}
         />
       </Group>
     </>

@@ -47,6 +47,16 @@ class FrameController extends Controller
             'fr_brand' => 'required',
             'fr_collection' => 'required',
             'fr_frame_group' => 'required',
+            'fr_edge' => 'nullable',
+            'fr_material' => 'nullable',
+            'fr_min_edge' => 'nullable',
+            'fr_base_curve_min' => 'nullable',
+            'fr_base_curve_max' => 'nullable',
+            'fr_min_near_pd' => 'nullable',
+            'fr_non_conductive' => 'nullable',
+            'fr_tight_fit' => 'nullable',
+            'fr_wrap' => 'nullable',
+            'fr_notes' => 'nullable',
         ]);
 
         Frame::create($validated);
@@ -82,6 +92,16 @@ class FrameController extends Controller
             'fr_brand' => 'required',
             'fr_collection' => 'required',
             'fr_frame_group' => 'required',
+            'fr_edge' => 'nullable',
+            'fr_material' => 'nullable',
+            'fr_min_edge' => 'nullable',
+            'fr_base_curve_min' => 'nullable',
+            'fr_base_curve_max' => 'nullable',
+            'fr_min_near_pd' => 'nullable',
+            'fr_non_conductive' => 'nullable',
+            'fr_tight_fit' => 'nullable',
+            'fr_wrap' => 'nullable',
+            'fr_notes' => 'nullable',
         ]);
 
         Frame::find($id)->update($validated);
