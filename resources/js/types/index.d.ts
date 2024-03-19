@@ -115,6 +115,47 @@ export interface LensMaterial {
   lm_lens_material: string;
 }
 
+export interface Lens extends Timestamps {
+  id: number;
+  le_lens_delete_code?: string;
+  le_lens_locator_record?: string;
+  le_lens_locator_key?: string;
+  le_lens_ltype?: string;
+  le_lens_vtype?: string;
+  le_lens_dseg?: number;
+  le_lens_dsegx?: string;
+  le_lens_mat?: string;
+  le_lens_col?: string;
+  le_lens_precoat?: string;
+  le_lens_addon1?: number;
+  le_lens_addon2?: number;
+  le_lens_addon3?: number;
+  le_lens_dtab?: string;
+  le_lens_diam_1?: string;
+  le_lens_chrt1_1?: string;
+  le_lens_diam_2?: string;
+  le_lens_chrt1_2?: string;
+  le_lens_diam_3?: string;
+  le_lens_chrt1_3?: string;
+  le_lens_diam_4?: string;
+  le_lens_chrt1_4?: string;
+  le_lens_recomd_seg_hgt?: string;
+  le_lens_street_wear?: string;
+  le_lens_digital_style?: string;
+  le_lens_filler?: string;
+  le_lens_sbdge_date?: number;
+  le_optic_translation?: string;
+  le_dvi_lens_style?: string;
+  le_dvi_mat?: string;
+  le_dvi_color?: string;
+  le_o2_lens_style_add_code?: string;
+  le_o2_material_add_code?: string;
+  le_o2_color_add_code?: string;
+  le_o1_lens_add_code?: string;
+  le_o1_material_add_code?: string;
+  le_o1_color_add_code?: string;
+  le_minimun_seg?: string;
+}
 export interface Order extends Timestamps {
   id: number;
   or_rx_number: string;
