@@ -38,6 +38,23 @@ interface Props {
   frames: FrameType[];
 }
 
+const EMPTY_FRAME: Partial<FrameType> = {
+  fr_frame_name: '',
+  fr_brand: null,
+  fr_collection: null,
+  fr_frame_group: null,
+  fr_edge: null,
+  fr_material: null,
+  fr_min_edge: '',
+  fr_base_curve_min: '',
+  fr_base_curve_max: '',
+  fr_min_near_pd: '',
+  fr_non_conductive: null,
+  fr_tight_fit: null,
+  fr_wrap: null,
+  fr_notes: '',
+};
+
 export default function Frame({
   edges,
   materials,
@@ -47,7 +64,7 @@ export default function Frame({
   frames,
   flash,
 }: PageProps<Props>) {
-  const form = useBaseForm<Partial<FrameType>>();
+  const form = useBaseForm<Partial<FrameType>>(EMPTY_FRAME);
   const { getFieldProps, data, setData, clearErrors, put, post } = form;
 
   const selectedFrame = useMemo(() => {
@@ -58,13 +75,19 @@ export default function Frame({
     clearErrors();
 
     if (selectedFrame) {
-      setData(selectedFrame);
+      setData({
+        ...selectedFrame,
+        fr_frame_name: selectedFrame.fr_frame_name ?? '',
+        fr_min_edge: selectedFrame.fr_min_edge ?? '',
+        fr_base_curve_min: selectedFrame.fr_base_curve_min ?? '',
+        fr_base_curve_max: selectedFrame.fr_base_curve_max ?? '',
+        fr_min_near_pd: selectedFrame.fr_min_near_pd ?? '',
+        fr_notes: selectedFrame.fr_notes ?? '',
+      });
     } else {
       setData({
-        fr_frame_name: data.fr_frame_name,
-        fr_brand: null,
-        fr_collection: null,
-        fr_frame_group: null,
+        ...EMPTY_FRAME,
+        fr_frame_name: data.fr_frame_name ?? '',
       });
     }
   }, [selectedFrame]);
@@ -72,23 +95,22 @@ export default function Frame({
   return (
     <>
       <Head title="Frame" />
-      <Stack component="form">
+      <Stack
+        component="form"
+        onSubmit={(e) => {
+          e.preventDefault();
+
+          if (selectedFrame) {
+            put(route('admin.frame.update', { id: selectedFrame.id }));
+          } else {
+            post(route('admin.frame.store'));
+          }
+        }}
+      >
         {flash.success && (
           <BaseAlert title={flash.success} timestamp={flash.timestamp} />
         )}
-        <Group
-          justify="space-between"
-          align="flex-start"
-          onSubmit={(e) => {
-            e.preventDefault();
-
-            if (selectedFrame) {
-              put(route('admin.frame.update', { id: selectedFrame.id }));
-            } else {
-              post(route('admin.frame.store'));
-            }
-          }}
-        >
+        <Group justify="space-between" align="flex-start">
           <Stack>
             <Group align="flex-start">
               <Select

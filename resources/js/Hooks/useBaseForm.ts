@@ -8,15 +8,23 @@ export default function useBaseForm<TForm extends object>(
   return {
     getFieldProps: <K extends keyof TForm>(
       key: K,
-      options?: { type?: 'date' },
+      options?: { type?: 'date' | 'checkbox' },
     ) => ({
       value: (() => {
         if (options?.type === 'date') {
           return form.data[key] ? new Date(form.data[key] as string) : null;
         }
 
+        if (options?.type === 'checkbox') {
+          return undefined;
+        }
+
         return form.data[key] as any;
       })(),
+      checked:
+        options?.type === 'checkbox' && form.data[key] && form.data[key] !== '0'
+          ? true
+          : false,
       onChange: (
         e:
           | React.ChangeEvent<HTMLInputElement>
@@ -39,6 +47,13 @@ export default function useBaseForm<TForm extends object>(
 
         if (e instanceof Date) {
           form.setData(key, e.toISOString() as TForm[keyof TForm]);
+          return;
+        }
+
+        if (options?.type === 'checkbox') {
+          e = e as React.ChangeEvent<HTMLInputElement>;
+
+          form.setData(key, e.target.checked as TForm[keyof TForm]);
           return;
         }
 
