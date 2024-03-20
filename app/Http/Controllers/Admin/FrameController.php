@@ -11,6 +11,8 @@ use App\Models\FrameMaterial;
 use App\Http\Controllers\Controller;
 use App\Models\FrameCollection;
 use App\Models\FrameDefaultGroup;
+use App\Models\Shield;
+use App\Models\ShieldColor;
 use Illuminate\Support\Facades\Session;
 
 class FrameController extends Controller
@@ -26,8 +28,10 @@ class FrameController extends Controller
         $collections = FrameCollection::all();
         $groups = FrameDefaultGroup::all();
         $frames = Frame::with('variations')->get();
+        $shields = Shield::all();
+        $shield_colors = ShieldColor::all();
 
-        return Inertia::render('Admin/Frame/Frame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'frames'));
+        return Inertia::render('Admin/Frame/Frame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'frames', 'shields', 'shield_colors'));
     }
 
     /**

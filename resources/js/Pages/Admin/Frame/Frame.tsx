@@ -8,6 +8,8 @@ import {
   FrameMaterial,
   FrameType,
   PageProps,
+  Shield,
+  ShieldColor,
 } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import {
@@ -36,6 +38,8 @@ interface Props {
   collections: FrameCollection[];
   groups: FrameDefaultGroup[];
   frames: FrameType[];
+  shields: Shield[];
+  shieldColors: ShieldColor[];
 }
 
 const EMPTY_FRAME: Partial<FrameType> = {
@@ -63,6 +67,8 @@ export default function Frame({
   groups,
   frames,
   flash,
+  shields,
+  shieldColors,
 }: PageProps<Props>) {
   const form = useBaseForm<Partial<FrameType>>(EMPTY_FRAME);
   const { getFieldProps, data, setData, clearErrors, put, post } = form;
@@ -169,10 +175,10 @@ export default function Frame({
         <Tabs defaultValue="frame">
           <Tabs.List>
             <Tabs.Tab value="frame">Frame</Tabs.Tab>
-            <Tabs.Tab value="prices">Prices</Tabs.Tab>
+            {/* <Tabs.Tab value="prices">Prices</Tabs.Tab> */}
             <Tabs.Tab value="addOns">Add-ons</Tabs.Tab>
             <Tabs.Tab value="limitations">Limitations</Tabs.Tab>
-            <Tabs.Tab value="inventory">Inventory</Tabs.Tab>
+            {/* <Tabs.Tab value="inventory">Inventory</Tabs.Tab> */}
             <Tabs.Tab value="translations">Translations</Tabs.Tab>
           </Tabs.List>
 
@@ -190,7 +196,7 @@ export default function Frame({
           </FrameTabsPanel>
 
           <FrameTabsPanel value="addOns">
-            <AddOnsPanel />
+            <AddOnsPanel shields={shields} shieldColors={shieldColors} />
           </FrameTabsPanel>
 
           <FrameTabsPanel value="limitations">

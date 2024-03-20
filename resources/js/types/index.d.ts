@@ -244,3 +244,21 @@ export interface Order extends Timestamps {
   or_manual_ship_addr_2: string;
   or_manual_ship_addr_3: string;
 }
+
+export interface Shield extends Timestamps {
+  id: string;
+  sh_frame_style: string;
+  sh_eye_size: string;
+  sh_ss_type: string;
+  sh_ss_desc: string;
+  sh_preasm_ind: string;
+  sh_ss_type2: string;
+  sh_ss_style: string;
+  sh_ss_eye: string;
+  sh_single_key: string;
+  sh_ss_hide: string;
+}
+
+export interface ShieldColor {
+  ss_color: string;
+}
