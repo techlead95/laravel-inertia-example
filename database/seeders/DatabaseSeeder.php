@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Frame;
+use App\Models\FrameAddon;
 use App\Models\Order;
 use App\Models\FrameEdge;
 use App\Models\LensStyle;
@@ -14,6 +15,8 @@ use App\Models\FrameCollection;
 use Illuminate\Database\Seeder;
 use App\Models\FrameDefaultGroup;
 use App\Models\FrameVariation;
+use App\Models\Shield;
+use App\Models\ShieldColor;
 
 class DatabaseSeeder extends Seeder
 {
@@ -32,6 +35,10 @@ class DatabaseSeeder extends Seeder
         Frame::factory()->count(2)->create()->each(function ($frame) {
             $frame->variations()->saveMany(FrameVariation::factory()->count(3)->create());
         });
+
+        Shield::factory()->count(5)->create();
+        ShieldColor::factory()->count(5)->create();
+        FrameAddon::factory()->count(3)->create();
 
         LensStyle::factory()->count(5)->create();
         LensMaterial::factory()->count(5)->create();

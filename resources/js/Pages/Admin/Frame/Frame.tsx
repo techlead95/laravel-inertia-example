@@ -1,6 +1,7 @@
 import BaseAlert from '@/Components/BaseAlert';
 import useBaseForm from '@/Hooks/useBaseForm';
 import {
+  FrameAddon,
   FrameBrand,
   FrameCollection,
   FrameDefaultGroup,
@@ -40,6 +41,7 @@ interface Props {
   frames: FrameType[];
   shields: Shield[];
   shieldColors: ShieldColor[];
+  addons: FrameAddon[];
 }
 
 const EMPTY_FRAME: Partial<FrameType> = {
@@ -69,6 +71,7 @@ export default function Frame({
   flash,
   shields,
   shieldColors,
+  addons,
 }: PageProps<Props>) {
   const form = useBaseForm<Partial<FrameType>>(EMPTY_FRAME);
   const { getFieldProps, data, setData, clearErrors, put, post } = form;
@@ -196,7 +199,11 @@ export default function Frame({
           </FrameTabsPanel>
 
           <FrameTabsPanel value="addOns">
-            <AddOnsPanel shields={shields} shieldColors={shieldColors} />
+            <AddOnsPanel
+              shields={shields}
+              shieldColors={shieldColors}
+              addons={addons}
+            />
           </FrameTabsPanel>
 
           <FrameTabsPanel value="limitations">

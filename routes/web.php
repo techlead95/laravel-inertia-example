@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LensController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\FrameController;
+use App\Http\Controllers\FrameAddonController;
 use App\Http\Controllers\OrderController;
 
 /*
@@ -38,6 +39,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/lens/catalog', [LensController::class, 'catalog'])->name('lens.catalog');
     Route::resource('lens', LensController::class);
+
+    Route::resource('frame-addon', FrameAddonController::class);
 
     Route::get('/ship-to-account-maintenance', function () {
         return Inertia::render('Admin/ShipToAccountMaintenance', [

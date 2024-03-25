@@ -10,4 +10,5 @@ class ShieldColor extends Model
     use HasFactory;
 
     protected $table = 'shield_color';
+    public $timestamps = false;
 }

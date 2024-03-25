@@ -1,34 +1,75 @@
-import { Select, Table } from '@mantine/core';
+import { FrameAddon, Shield, ShieldColor } from '@/types';
+import { Table } from '@mantine/core';
+import axios from 'axios';
+import { produce } from 'immer';
+import { useMemo, useState } from 'react';
 
-export default function AddOnsPanel() {
+import AddOnRow from './AddOnRow';
+
+interface Props {
+  shields: Shield[];
+  shieldColors: ShieldColor[];
+  addons: FrameAddon[];
+}
+
+export default function AddOnsPanel({ shields, shieldColors, addons }: Props) {
+  const shieldOptions = useMemo(() => {
+    return shields.map((shield) => ({
+      value: String(shield.id),
+      label: shield.sh_ss_desc,
+    }));
+  }, [shields]);
+
+  const shieldColorOptions = useMemo(
+    () => shieldColors.map((color) => color.ss_color),
+    [shieldColors],
+  );
+
+  const [frameAddons, setFrameAddons] = useState([...addons, {}]);
+
+  const handleDebouncedUpdate = (updatedAddOn: Partial<FrameAddon>) => {
+    if (!updatedAddOn.id) {
+      axios.post(route('admin.frame-addon.store'), updatedAddOn).then((res) => {
+        setFrameAddons([...frameAddons.slice(0, -1), res.data, {}]);
+      });
+    } else {
+      axios.put(
+        route('admin.frame-addon.update', updatedAddOn.id),
+        updatedAddOn,
+      );
+    }
+  };
+
   return (
     <Table bg="white">
       <Table.Thead>
         <Table.Tr>
-          <Table.Th>Eye</Table.Th>
-          <Table.Th>Upc</Table.Th>
+          <Table.Th>UPC</Table.Th>
           <Table.Th>Side Shield Type</Table.Th>
           <Table.Th>Side Shield Color</Table.Th>
           <Table.Th>Legacy CLC</Table.Th>
           <Table.Th>Legacy SS Code</Table.Th>
+          <Table.Th>DVI Services Code</Table.Th>
           <Table.Th>DVI Service Code</Table.Th>
         </Table.Tr>
       </Table.Thead>
       <Table.Tbody>
-        <Table.Tr>
-          <Table.Td>68</Table.Td>
-          <Table.Td />
-          <Table.Td>
-            <Select data={['Integrated', 'Detachable', 'Permanent']} />
-          </Table.Td>
-          <Table.Td>
-            <Select data={['Clear', 'Grey']} />
-          </Table.Td>
-          <Table.Td />
-          <Table.Td />
-          <Table.Td />
-          <Table.Td />
-        </Table.Tr>
+        {frameAddons.map((addon, index) => (
+          <AddOnRow
+            key={index}
+            addon={addon}
+            shieldOptions={shieldOptions}
+            shieldColorOptions={shieldColorOptions}
+            onUpdateAddon={(updatedAddon) =>
+              setFrameAddons(
+                produce((draft) => {
+                  draft[index] = updatedAddon;
+                }),
+              )
+            }
+            onDebouncedUpdate={handleDebouncedUpdate}
+          />
+        ))}
       </Table.Tbody>
     </Table>
   );

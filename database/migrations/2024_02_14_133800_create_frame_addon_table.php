@@ -13,15 +13,14 @@ return new class extends Migration
     {
         Schema::create('frame_addon', function (Blueprint $table) {
             $table->id();
-            $table->string('fa_UPC');
-            $table->string('fa_side_shield_type');
-            $table->string('fa_side_shield_color');
-            $table->string('fa_legacy_clc');
-            $table->string('fa_legacy_ss_code');
-            $table->string('fa_dvi_services_code');
-            $table->string('fa_dvi_service_code');
-            $table->string('fa_default_case');
-            
+            $table->string('fa_UPC')->nullable();
+            $table->string('fa_side_shield_type')->nullable();
+            $table->string('fa_side_shield_color')->nullable();
+            $table->string('fa_legacy_clc')->nullable();
+            $table->string('fa_legacy_ss_code')->nullable();
+            $table->string('fa_dvi_services_code')->nullable();
+            $table->string('fa_dvi_service_code')->nullable();
+            $table->string('fa_default_case')->nullable();
 
             $table->timestamps();
         });

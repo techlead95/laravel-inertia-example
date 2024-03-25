@@ -262,3 +262,15 @@ export interface Shield extends Timestamps {
 export interface ShieldColor {
   ss_color: string;
 }
+
+export interface FrameAddon {
+  id: string;
+  fa_UPC: string | null;
+  fa_side_shield_type: string | null;
+  fa_side_shield_color: string | null;
+  fa_legacy_clc: string | null;
+  fa_legacy_ss_code: string | null;
+  fa_dvi_services_code: string | null;
+  fa_dvi_service_code: string | null;
+  fa_default_case: string | null;
+}

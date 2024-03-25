@@ -9,6 +9,7 @@ use App\Models\FrameBrand;
 use Illuminate\Http\Request;
 use App\Models\FrameMaterial;
 use App\Http\Controllers\Controller;
+use App\Models\FrameAddon;
 use App\Models\FrameCollection;
 use App\Models\FrameDefaultGroup;
 use App\Models\Shield;
@@ -29,9 +30,10 @@ class FrameController extends Controller
         $groups = FrameDefaultGroup::all();
         $frames = Frame::with('variations')->get();
         $shields = Shield::all();
-        $shield_colors = ShieldColor::all();
+        $shieldColors = ShieldColor::all();
+        $addons = FrameAddon::all();
 
-        return Inertia::render('Admin/Frame/Frame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'frames', 'shields', 'shield_colors'));
+        return Inertia::render('Admin/Frame/Frame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'frames', 'shields', 'shieldColors', 'addons'));
     }
 
     /**
