@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\Frame;
+use App\Models\FrameVariation;
 use App\Models\Lens;
 use Illuminate\Support\Facades\Session;
 
@@ -34,9 +35,11 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $frames = Frame::with('variations')->get();
+
+        $frameVariations = FrameVariation::with('frame')->get();
         $lenses = Lens::all();
-        return inertia()->render('Orders/CreateOrder', compact('frames', 'lenses'));
+        return inertia()->render('Orders/CreateOrder', compact('lenses', 'frameVariations'));
+        //return inertia()->render('Orders/CreateOrder', compact('frames', 'lenses', 'frameVariations'));
     }
 
     /**
