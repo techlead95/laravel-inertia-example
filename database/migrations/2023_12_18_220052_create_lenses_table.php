@@ -40,6 +40,9 @@ return new class extends Migration
             $table->string('le_lens_filler')->nullable();
             $table->integer('le_lens_sbdge_date')->nullable();
             $table->string('le_optic_translation')->nullable();
+            $table->string('le_lens_style');
+            $table->string('le_mat');
+            $table->string('le_color');
             $table->string('le_dvi_lens_style')->nullable();
             $table->string('le_dvi_mat')->nullable();
             $table->string('le_dvi_color')->nullable();
