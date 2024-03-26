@@ -9,6 +9,7 @@ interface Props {
   shieldColorOptions: string[];
   onUpdateAddon: (addon: Partial<FrameAddon>) => void;
   onDebouncedUpdate: (addon: Partial<FrameAddon>) => void;
+  onDelete: () => void;
 }
 
 export default function AddOnRow({
@@ -17,10 +18,14 @@ export default function AddOnRow({
   shieldColorOptions,
   onUpdateAddon,
   onDebouncedUpdate,
+  onDelete,
 }: Props) {
-  const debouncedUpdate = useDebouncedCallback((updatedAddon: FrameAddon) => {
-    onDebouncedUpdate(updatedAddon);
-  }, 500);
+  const debouncedUpdate = useDebouncedCallback(
+    (updatedAddon: Partial<FrameAddon>) => {
+      onDebouncedUpdate(updatedAddon);
+    },
+    500,
+  );
 
   const handleUpdate = (field: keyof FrameAddon, value: string | null) => {
     const updatedAddon = { ...addon, [field]: value };
@@ -76,11 +81,13 @@ export default function AddOnRow({
           onChange={(e) => handleUpdate('fa_dvi_service_code', e.target.value)}
         />
       </Table.Td>
-      <Table.Td>
-        <ActionIcon variant="subtle" color="red">
-          <Delete />
-        </ActionIcon>
-      </Table.Td>
+      {addon.id && (
+        <Table.Td>
+          <ActionIcon variant="subtle" color="red" onClick={onDelete}>
+            <Delete />
+          </ActionIcon>
+        </Table.Td>
+      )}
     </Table.Tr>
   );
 }

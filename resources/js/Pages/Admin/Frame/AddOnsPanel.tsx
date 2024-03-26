@@ -1,4 +1,5 @@
 import { FrameAddon, Shield, ShieldColor } from '@/types';
+import { openDeleteConfirmModal, showErrorNotification } from '@/utils';
 import { Table } from '@mantine/core';
 import axios from 'axios';
 import { produce } from 'immer';
@@ -25,7 +26,10 @@ export default function AddOnsPanel({ shields, shieldColors, addons }: Props) {
     [shieldColors],
   );
 
-  const [frameAddons, setFrameAddons] = useState([...addons, {}]);
+  const [frameAddons, setFrameAddons] = useState<Partial<FrameAddon>[]>([
+    ...addons,
+    {},
+  ]);
 
   const handleDebouncedUpdate = (updatedAddOn: Partial<FrameAddon>) => {
     if (!updatedAddOn.id) {
@@ -38,6 +42,26 @@ export default function AddOnsPanel({ shields, shieldColors, addons }: Props) {
         updatedAddOn,
       );
     }
+  };
+
+  const handleDelete = (index: number) => {
+    const deletingId = frameAddons[index].id;
+
+    openDeleteConfirmModal({
+      title: 'Are you sure to delete this add-on?',
+      onConfirm() {
+        axios
+          .delete(route('admin.frame-addon.destroy', deletingId))
+          .then(() => {
+            setFrameAddons(
+              frameAddons.filter((addon) => addon.id !== deletingId),
+            );
+          })
+          .catch((r) => {
+            showErrorNotification(r.data.error);
+          });
+      },
+    });
   };
 
   return (
@@ -68,6 +92,9 @@ export default function AddOnsPanel({ shields, shieldColors, addons }: Props) {
               )
             }
             onDebouncedUpdate={handleDebouncedUpdate}
+            onDelete={() => {
+              handleDelete(index);
+            }}
           />
         ))}
       </Table.Tbody>

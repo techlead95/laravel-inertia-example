@@ -90,6 +90,12 @@ class FrameAddonController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $frameAddon = FrameAddon::find($id);
+
+        if (!$frameAddon) {
+            return response()->json(['error' => 'Frame add-on not found'], 404);
+        }
+
+        $frameAddon->delete();
     }
 }

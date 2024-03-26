@@ -122,7 +122,13 @@ class FrameController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $frame = Frame::find($id);
+
+        if (!$frame) {
+            return response()->json(['error' => 'Frame not found'], 404);
+        }
+
+        $frame->delete();
     }
 
     public function catalog()

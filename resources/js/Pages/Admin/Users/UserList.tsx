@@ -3,7 +3,7 @@ import SearchForm from '@/Components/SearchForm';
 import { User } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
 import { ActionIcon, Button, Group, Stack, Switch } from '@mantine/core';
-import { modals } from '@mantine/modals';
+import { modals, openConfirmModal } from '@mantine/modals';
 import { Delete, Edit } from '@mui/icons-material';
 
 interface Props {
@@ -13,11 +13,8 @@ interface Props {
 
 export default function AdminHome({ users, search }: Props) {
   const handleDelete = (user: User) => {
-    modals.openConfirmModal({
+    openConfirmModal({
       title: 'Are you sure to delete this user?',
-      labels: { confirm: 'Delete', cancel: 'Cancel' },
-      centered: true,
-      confirmProps: { color: 'red' },
       onConfirm() {
         router.delete(route('admin.users.destroy', { id: user.id }));
       },

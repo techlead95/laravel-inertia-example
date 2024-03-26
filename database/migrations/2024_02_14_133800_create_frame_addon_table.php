@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('fa_dvi_services_code')->nullable();
             $table->string('fa_dvi_service_code')->nullable();
             $table->string('fa_default_case')->nullable();
-
             $table->timestamps();
         });
     }
