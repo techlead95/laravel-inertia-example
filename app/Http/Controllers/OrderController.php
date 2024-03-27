@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Frame;
 use App\Models\FrameVariation;
 use App\Models\Lens;
+use App\Models\Tint;
+use App\Models\LensCoating;
 use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
@@ -38,7 +40,10 @@ class OrderController extends Controller
 
         $frameVariations = FrameVariation::with('frame')->get();
         $lenses = Lens::all();
-        return inertia()->render('Orders/CreateOrder', compact('lenses', 'frameVariations'));
+        $tints = Tint::all();
+        $lensCoatings = LensCoating::all();
+
+        return inertia()->render('Orders/CreateOrder', compact('lenses', 'frameVariations', 'tints', 'lensCoatings'));
         //return inertia()->render('Orders/CreateOrder', compact('frames', 'lenses', 'frameVariations'));
     }
 

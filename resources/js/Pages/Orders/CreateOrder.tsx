@@ -1,7 +1,7 @@
 import useBaseForm from '@/Hooks/useBaseForm';
 import useGetFieldStyles from '@/Hooks/useFieldStyles';
 import { useState, useEffect } from 'react';
-import { Frame, Order, Lens, FrameVariation } from '@/types';
+import { Frame, Order, Lens, FrameVariation, Tint, LensCoating } from '@/types';
 import { Head } from '@inertiajs/react';
 import { router } from '@inertiajs/react';
 import {
@@ -25,9 +25,11 @@ interface Props {
   frames: Frame[];
   lenses: Lens[];
   frameVariations: FrameVariation[];
+  tints: Tint[];
+  lensCoatings: LensCoating[];
 }
 
-export default function CreateOrder({ lenses, frameVariations, }: Props) {
+export default function CreateOrder({ lenses, frameVariations, tints, lensCoatings }: Props) {
   const getFieldStyles = useGetFieldStyles();
   //const [filteredFrames, setFilteredFrames] = useState(frames);
   //const [filteredFrameVariations, setFilteredFrameVariations] = useState(frameVariations);
@@ -583,6 +585,7 @@ export default function CreateOrder({ lenses, frameVariations, }: Props) {
             <Table.Td>
               <Select {...getFieldProps('or_tint_color')}
                 placeholder="Select Tint"
+                data={tints.map((tint) => tint.ti_color ?? '')}
               />
             </Table.Td>
             <Table.Td>
@@ -596,6 +599,7 @@ export default function CreateOrder({ lenses, frameVariations, }: Props) {
             <Table.Td>
               <Select {...getFieldProps('or_coating')}
                 placeholder="Select Coating"
+                data={lensCoatings.map((lensCoating) => lensCoating.lc_lens_coating ?? '')}
               />
             </Table.Td>
           </Table.Tr>
