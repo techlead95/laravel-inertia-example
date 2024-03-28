@@ -9,7 +9,10 @@ use App\Models\FrameVariation;
 use App\Models\Lens;
 use App\Models\Tint;
 use App\Models\LensCoating;
+use App\Http\Controllers\DB;
+use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Session;
+use PhpParser\Node\Stmt\For_;
 
 class OrderController extends Controller
 {
@@ -41,9 +44,13 @@ class OrderController extends Controller
         $frameVariations = FrameVariation::with('frame')->get();
         $lenses = Lens::all();
         $tints = Tint::all();
-        $lensCoatings = LensCoating::all();
-
-        return inertia()->render('Orders/CreateOrder', compact('lenses', 'frameVariations', 'tints', 'lensCoatings'));
+        $lensCoatingSelects = [];
+        foreach (LensCoating::select('lc_coating_group', 'lc_lens_coating as item')->get()->groupBy('lc_coating_group')->toArray() as $group => $items) {
+            $lensCoatingSelects[] = ['group' => $group, 'items' => array_map(function ($item) {
+                return $item['item'];
+            }, $items)];
+        }
+        return inertia()->render('Orders/CreateOrder', compact('lenses', 'frameVariations', 'tints', 'lensCoatingSelects'));
         //return inertia()->render('Orders/CreateOrder', compact('frames', 'lenses', 'frameVariations'));
     }
 

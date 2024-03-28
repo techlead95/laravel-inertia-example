@@ -185,6 +185,10 @@ export interface LensCoating extends Timestamps {
   lc_setup_by?: string;
   lc_last_modified_by?: string;
 }
+export interface LensCoatingSelect {
+  group: string;
+  items: string[];
+}
 
 export interface Tint extends Timestamps {
   id: number;

@@ -26,10 +26,10 @@ interface Props {
   lenses: Lens[];
   frameVariations: FrameVariation[];
   tints: Tint[];
-  lensCoatings: LensCoating[];
+  lensCoatingSelects: LensCoatingSelect[];
 }
 
-export default function CreateOrder({ lenses, frameVariations, tints, lensCoatings }: Props) {
+export default function CreateOrder({ lenses, frameVariations, tints, lensCoatingSelects }: Props) {
   const getFieldStyles = useGetFieldStyles();
   //const [filteredFrames, setFilteredFrames] = useState(frames);
   //const [filteredFrameVariations, setFilteredFrameVariations] = useState(frameVariations);
@@ -170,7 +170,7 @@ export default function CreateOrder({ lenses, frameVariations, tints, lensCoatin
     var frameColorFiltered = [...new Set(frameColor)];
     setFilteredFrameColors(frameColorFiltered);
 
-    //console.log(frameStyleFiltered, filteredFrameVariations)
+    console.log(lensCoatingSelects);
   }, [data.or_frame_style, data.or_frame_color, data.or_frame_size]);
 
   useEffect(() => {
@@ -599,7 +599,8 @@ export default function CreateOrder({ lenses, frameVariations, tints, lensCoatin
             <Table.Td>
               <Select {...getFieldProps('or_coating')}
                 placeholder="Select Coating"
-                data={lensCoatings.map((lensCoating) => lensCoating.lc_lens_coating ?? '')}
+                data={lensCoatingSelects}
+              //data={lensCoatings.map((lensCoating) => lensCoating.lc_lens_coating ?? '')}
               />
             </Table.Td>
           </Table.Tr>
