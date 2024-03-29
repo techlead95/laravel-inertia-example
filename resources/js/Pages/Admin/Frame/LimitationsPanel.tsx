@@ -1,7 +1,12 @@
 import BaseDataTable from '@/Components/BaseDataTable';
+import { FrameLimitation } from '@/types';
 import { Group, Stack, Text } from '@mantine/core';
 
-export default function LimitationsPanel() {
+interface Props {
+  limitations: FrameLimitation[];
+}
+
+export default function LimitationsPanel({ limitations }: Props) {
   return (
     <Group>
       <Stack flex={1}>
@@ -10,10 +15,10 @@ export default function LimitationsPanel() {
         </Text>
         <BaseDataTable
           columns={[
-            { accessor: 'lensMaterial', title: 'Lens Material' },
-            { accessor: 'allowed', title: 'Allowed' },
+            { accessor: 'fl_material', title: 'Lens Material' },
+            { accessor: 'fl_material_allowed', title: 'Allowed' },
           ]}
-          records={[]}
+          records={limitations}
         />
       </Stack>
 
@@ -23,11 +28,11 @@ export default function LimitationsPanel() {
         </Text>
         <BaseDataTable
           columns={[
-            { accessor: 'lensStyle', title: 'Lens Style' },
-            { accessor: 'allowed', title: 'Allowed' },
-            { accessor: 'minimumPd', title: 'Minimum PD' },
+            { accessor: 'fl_lens_style', title: 'Lens Style' },
+            { accessor: 'fl_lens_style_allowed', title: 'Allowed' },
+            { accessor: 'fl_min_pd', title: 'Minimum PD' },
           ]}
-          records={[]}
+          records={limitations}
         />
       </Stack>
 
@@ -37,11 +42,11 @@ export default function LimitationsPanel() {
         </Text>
         <BaseDataTable
           columns={[
-            { accessor: 'vendor', title: 'Vendor' },
-            { accessor: 'allowed', title: 'Allowed' },
-            { accessor: 'automaticOffload', title: 'Automatic Offload' },
+            { accessor: 'fl_vendor', title: 'Vendor' },
+            { accessor: 'fl_vendor_allowed', title: 'Allowed' },
+            { accessor: 'fl_auto_offload', title: 'Automatic Offload' },
           ]}
-          records={[]}
+          records={limitations}
         />
       </Stack>
     </Group>

@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Models\FrameAddon;
 use App\Models\FrameCollection;
 use App\Models\FrameDefaultGroup;
+use App\Models\FrameLimitation;
 use App\Models\Shield;
 use App\Models\ShieldColor;
 use Illuminate\Support\Facades\Session;
@@ -32,8 +33,9 @@ class FrameController extends Controller
         $shields = Shield::all();
         $shieldColors = ShieldColor::all();
         $addons = FrameAddon::all();
+        $limitations = FrameLimitation::all();
 
-        return Inertia::render('Admin/Frame/Frame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'frames', 'shields', 'shieldColors', 'addons'));
+        return Inertia::render('Admin/Frame/Frame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'frames', 'shields', 'shieldColors', 'addons', 'limitations'));
     }
 
     /**

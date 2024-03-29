@@ -1,4 +1,5 @@
 import BaseAlert from '@/Components/BaseAlert';
+import BaseAutocomplete from '@/Components/BaseAutocomplete';
 import useBaseForm from '@/Hooks/useBaseForm';
 import {
   FrameAddon,
@@ -6,6 +7,7 @@ import {
   FrameCollection,
   FrameDefaultGroup,
   FrameEdge,
+  FrameLimitation,
   FrameMaterial,
   FrameType,
   PageProps,
@@ -16,6 +18,8 @@ import { Head, Link } from '@inertiajs/react';
 import {
   Autocomplete,
   Button,
+  CloseButton,
+  ComboboxClearButton,
   Group,
   Select,
   Stack,
@@ -42,6 +46,7 @@ interface Props {
   shields: Shield[];
   shieldColors: ShieldColor[];
   addons: FrameAddon[];
+  limitations: FrameLimitation[];
 }
 
 const EMPTY_FRAME: Partial<FrameType> = {
@@ -72,6 +77,7 @@ export default function Frame({
   shields,
   shieldColors,
   addons,
+  limitations,
 }: PageProps<Props>) {
   const form = useBaseForm<Partial<FrameType>>(EMPTY_FRAME);
   const { getFieldProps, data, setData, clearErrors, put, post } = form;
@@ -128,7 +134,7 @@ export default function Frame({
                 w={200}
                 {...getFieldProps('fr_brand')}
               />
-              <Autocomplete
+              <BaseAutocomplete
                 label="Frame Name"
                 w={200}
                 data={frames.map((frame) => frame.fr_frame_name)}
@@ -207,7 +213,7 @@ export default function Frame({
           </FrameTabsPanel>
 
           <FrameTabsPanel value="limitations">
-            <LimitationsPanel />
+            <LimitationsPanel limitations={limitations} />
           </FrameTabsPanel>
 
           <FrameTabsPanel value="inventory">

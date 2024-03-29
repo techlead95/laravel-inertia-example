@@ -39,26 +39,14 @@ export default function Lens({ styles, materials }: Props) {
             />
             <Select label="Color" w={240} data={['Green', 'Blue', 'Red']} />
           </Group>
-          <Stack>
-            <Group mt={24}>
+          <Group mt={24}>
+            <Button miw={120}>Add New</Button>
+            <Link href={route('admin.lens.catalog')}>
               <Button variant="outline" miw={120}>
-                Add New
+                Catalogue
               </Button>
-              <Link href={route('admin.lens.catalog')}>
-                <Button variant="outline" miw={120}>
-                  Catalogue
-                </Button>
-              </Link>
-            </Group>
-            <Group>
-              <Button variant="outline" miw={120}>
-                Modify
-              </Button>
-              <Button variant="outline" miw={120}>
-                Exit
-              </Button>
-            </Group>
-          </Stack>
+            </Link>
+          </Group>
         </Group>
         <Group align="flex-start" gap="xl">
           <Stack>

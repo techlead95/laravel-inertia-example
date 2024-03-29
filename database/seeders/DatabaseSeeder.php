@@ -14,6 +14,7 @@ use App\Models\FrameMaterial;
 use App\Models\FrameCollection;
 use Illuminate\Database\Seeder;
 use App\Models\FrameDefaultGroup;
+use App\Models\FrameLimitation;
 use App\Models\FrameVariation;
 use App\Models\Shield;
 use App\Models\ShieldColor;
@@ -35,6 +36,7 @@ class DatabaseSeeder extends Seeder
         Frame::factory()->count(2)->create()->each(function ($frame) {
             $frame->variations()->saveMany(FrameVariation::factory()->count(3)->create());
         });
+        FrameLimitation::factory(6)->create();
 
         Shield::factory()->count(5)->create();
         ShieldColor::factory()->count(5)->create();

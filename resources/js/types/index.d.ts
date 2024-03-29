@@ -157,6 +157,7 @@ export interface Lens extends Timestamps {
   le_o1_color_add_code?: string;
   le_minimun_seg?: string;
 }
+
 export interface Order extends Timestamps {
   id: number;
   or_rx_number: string;
@@ -274,4 +275,16 @@ export interface FrameAddon {
   fa_dvi_services_code: string | null;
   fa_dvi_service_code: string | null;
   fa_default_case: string | null;
+}
+
+export interface FrameLimitation {
+  id: number;
+  fl_material: string;
+  fl_material_allowed: string;
+  fl_lens_style: string;
+  fl_lens_style_allowed: string;
+  fl_min_pd: string;
+  fl_vendor: string;
+  fl_vendor_allowed: string;
+  fl_auto_offload: string;
 }

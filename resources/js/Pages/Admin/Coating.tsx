@@ -18,17 +18,9 @@ export default function Coating() {
           <TextInput label="Modified By" w={140} />
         </Group>
         <Group mt={24}>
+          <Button miw={100}>Add New</Button>
           <Button variant="outline" miw={100}>
             Catalogue
-          </Button>
-          <Button variant="outline" miw={100}>
-            Add New
-          </Button>
-          <Button variant="outline" miw={100}>
-            Modify
-          </Button>
-          <Button variant="outline" miw={100}>
-            Exit
           </Button>
         </Group>
       </Group>
