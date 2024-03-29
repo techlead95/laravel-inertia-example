@@ -146,6 +146,9 @@ export interface Lens extends Timestamps {
   le_lens_filler?: string;
   le_lens_sbdge_date?: number;
   le_optic_translation?: string;
+  le_lens_style: string;
+  le_mat: string;
+  le_color: string;
   le_dvi_lens_style?: string;
   le_dvi_mat?: string;
   le_dvi_color?: string;
@@ -157,7 +160,51 @@ export interface Lens extends Timestamps {
   le_o1_color_add_code?: string;
   le_minimun_seg?: string;
 }
+export interface LensCoating extends Timestamps {
+  id: number;
+  lc_lens_coating: string;
+  lc_coating_group: string;
+  lc_o1_translation?: string;
+  lc_dvi_translation?: string;
+  lc_cost?: number;
+  lc_o2_add_code?: string;
+  lc_o1_add_code?: string;
+  lc_lens_color?: string;
+  lc_lens_clarity_shield?: string;
+  lc_ez_clean?: string;
+  lc_anti_fog?: string;
+  lc_ez_with_anti_fog?: string;
+  lc_anti_ref_with_anti_fog?: string;
+  lc_hi_vision_anti_fog?: string;
+  lc_ex3_anti_ref?: string;
+  lc_recharge_with_anti_ref?: string;
+  lc_standard_ar_par?: string;
+  lc_standard_ar_with_view_protect?: string;
+  lc_back_side_ar?: string;
+  lc_2_sided_scratch_plastic?: string;
+  lc_setup_by?: string;
+  lc_last_modified_by?: string;
+}
+export interface LensCoatingSelect {
+  group: string;
+  items: string[];
+}
 
+export interface Tint extends Timestamps {
+  id: number;
+  ti_color: string;
+  ti_group: string;
+  ti_lower_range?: string;
+  ti_upper_range?: string;
+  ti_default_percent?: string;
+  ti_o1_translation?: string;
+  ti_dvi_tint_drop?: string;
+  ti_dvi_tint_color?: string;
+  ti_o2_coating_add_code?: string;
+  ti_o1_coating_add_code?: string;
+  ti_setup_by?: string;
+  ti_modified_by?: string;
+}
 export interface Order extends Timestamps {
   id: number;
   or_rx_number: string;

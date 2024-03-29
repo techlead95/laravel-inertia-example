@@ -1,7 +1,7 @@
 import useBaseForm from '@/Hooks/useBaseForm';
 import useGetFieldStyles from '@/Hooks/useFieldStyles';
 import { useState, useEffect } from 'react';
-import { Frame, Order, Lens, FrameVariation } from '@/types';
+import { Frame, Order, Lens, FrameVariation, Tint, LensCoating } from '@/types';
 import { Head } from '@inertiajs/react';
 import { router } from '@inertiajs/react';
 import {
@@ -25,9 +25,11 @@ interface Props {
   frames: Frame[];
   lenses: Lens[];
   frameVariations: FrameVariation[];
+  tints: Tint[];
+  lensCoatingSelects: LensCoatingSelect[];
 }
 
-export default function CreateOrder({ lenses, frameVariations, }: Props) {
+export default function CreateOrder({ lenses, frameVariations, tints, lensCoatingSelects }: Props) {
   const getFieldStyles = useGetFieldStyles();
   //const [filteredFrames, setFilteredFrames] = useState(frames);
   //const [filteredFrameVariations, setFilteredFrameVariations] = useState(frameVariations);
@@ -168,7 +170,7 @@ export default function CreateOrder({ lenses, frameVariations, }: Props) {
     var frameColorFiltered = [...new Set(frameColor)];
     setFilteredFrameColors(frameColorFiltered);
 
-    //console.log(frameStyleFiltered, filteredFrameVariations)
+    console.log(lensCoatingSelects);
   }, [data.or_frame_style, data.or_frame_color, data.or_frame_size]);
 
   useEffect(() => {
@@ -176,19 +178,19 @@ export default function CreateOrder({ lenses, frameVariations, }: Props) {
     if (data.or_material_right || data.or_lens_style_right || data.or_lens_color_right) {
       var filtered = [];
       if (data.or_material_right) {
-        filtered = lenses.filter(lens => lens.le_dvi_mat?.includes(data.or_material_right ?? ''));
+        filtered = lenses.filter(lens => lens.le_mat?.includes(data.or_material_right ?? ''));
       } else {
         filtered = lenses;
       }
       var filtered2 = [];
       if (data.or_lens_style_right) {
-        filtered2 = filtered.filter(lens => lens.le_dvi_lens_style?.includes(data.or_lens_style_right ?? ''));
+        filtered2 = filtered.filter(lens => lens.le_lens_style?.includes(data.or_lens_style_right ?? ''));
       } else {
         filtered2 = filtered;
       }
       var filtered3 = [];
       if (data.or_lens_color_right) {
-        filtered3 = filtered2.filter(lens => lens.le_dvi_color?.includes(data.or_lens_color_right ?? ''));
+        filtered3 = filtered2.filter(lens => lens.le_color?.includes(data.or_lens_color_right ?? ''));
       } else {
         filtered3 = filtered2;
       }
@@ -197,15 +199,15 @@ export default function CreateOrder({ lenses, frameVariations, }: Props) {
       lensRightFinal = lenses;
     }
     var lensMaterialRight = [];
-    lensMaterialRight = lensRightFinal.map((lens) => lens.le_dvi_mat ?? '');
+    lensMaterialRight = lensRightFinal.map((lens) => lens.le_mat ?? '');
     var lensMaterialRightFiltered = [...new Set(lensMaterialRight)];
     setFilteredLensMaterialsRight(lensMaterialRightFiltered);
     var lensStyleRight = [];
-    lensStyleRight = lensRightFinal.map((lens) => lens.le_dvi_lens_style ?? '');
+    lensStyleRight = lensRightFinal.map((lens) => lens.le_lens_style ?? '');
     var lensStyleRightFiltered = [...new Set(lensStyleRight)];
     setFilteredLensStylesRight(lensStyleRightFiltered);
     var lensColorRight = [];
-    lensColorRight = lensRightFinal.map((lens) => lens.le_dvi_color ?? '');
+    lensColorRight = lensRightFinal.map((lens) => lens.le_color ?? '');
     var lensColorRightFiltered = [...new Set(lensColorRight)];
     setFilteredLensColorsRight(lensColorRightFiltered);
     //console.log(filteredRightLenses)
@@ -216,19 +218,19 @@ export default function CreateOrder({ lenses, frameVariations, }: Props) {
     if (data.or_material_left || data.or_lens_style_left || data.or_lens_color_left) {
       var filtered = [];
       if (data.or_material_left) {
-        filtered = lenses.filter(lens => lens.le_dvi_mat?.includes(data.or_material_left ?? ''));
+        filtered = lenses.filter(lens => lens.le_mat?.includes(data.or_material_left ?? ''));
       } else {
         filtered = lenses;
       }
       var filtered2 = [];
       if (data.or_lens_style_left) {
-        filtered2 = filtered.filter(lens => lens.le_dvi_lens_style?.includes(data.or_lens_style_left ?? ''));
+        filtered2 = filtered.filter(lens => lens.le_lens_style?.includes(data.or_lens_style_left ?? ''));
       } else {
         filtered2 = filtered;
       }
       var filtered3 = [];
       if (data.or_lens_color_left) {
-        filtered3 = filtered2.filter(lens => lens.le_dvi_color?.includes(data.or_lens_color_left ?? ''));
+        filtered3 = filtered2.filter(lens => lens.le_color?.includes(data.or_lens_color_left ?? ''));
       } else {
         filtered3 = filtered2;
       }
@@ -237,15 +239,15 @@ export default function CreateOrder({ lenses, frameVariations, }: Props) {
       lensLeftFinal = lenses;
     }
     var lensMaterialLeft = [];
-    lensMaterialLeft = lensLeftFinal.map((lens) => lens.le_dvi_mat ?? '');
+    lensMaterialLeft = lensLeftFinal.map((lens) => lens.le_mat ?? '');
     var lensMaterialLeftFiltered = [...new Set(lensMaterialLeft)];
     setFilteredLensMaterialsLeft(lensMaterialLeftFiltered);
     var lensStyleLeft = [];
-    lensStyleLeft = lensLeftFinal.map((lens) => lens.le_dvi_lens_style ?? '');
+    lensStyleLeft = lensLeftFinal.map((lens) => lens.le_lens_style ?? '');
     var lensStyleLeftFiltered = [...new Set(lensStyleLeft)];
     setFilteredLensStylesLeft(lensStyleLeftFiltered);
     var lensColorLeft = [];
-    lensColorLeft = lensLeftFinal.map((lens) => lens.le_dvi_color ?? '');
+    lensColorLeft = lensLeftFinal.map((lens) => lens.le_color ?? '');
     var lensColorLeftFiltered = [...new Set(lensColorLeft)];
     setFilteredLensColorsLeft(lensColorLeftFiltered);
   }, [data.or_material_left, data.or_lens_style_left, data.or_lens_color_left]);
@@ -583,6 +585,7 @@ export default function CreateOrder({ lenses, frameVariations, }: Props) {
             <Table.Td>
               <Select {...getFieldProps('or_tint_color')}
                 placeholder="Select Tint"
+                data={tints.map((tint) => tint.ti_color ?? '')}
               />
             </Table.Td>
             <Table.Td>
@@ -596,6 +599,8 @@ export default function CreateOrder({ lenses, frameVariations, }: Props) {
             <Table.Td>
               <Select {...getFieldProps('or_coating')}
                 placeholder="Select Coating"
+                data={lensCoatingSelects}
+              //data={lensCoatings.map((lensCoating) => lensCoating.lc_lens_coating ?? '')}
               />
             </Table.Td>
           </Table.Tr>
