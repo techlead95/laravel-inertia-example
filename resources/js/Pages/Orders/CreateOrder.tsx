@@ -10,6 +10,7 @@ import {
   Flex,
   Grid,
   Group,
+  Input,
   Radio,
   Select,
   Stack,
@@ -31,6 +32,8 @@ interface Props {
 
 export default function CreateOrder({ lenses, frameVariations, tints, lensCoatingSelects }: Props) {
   const getFieldStyles = useGetFieldStyles();
+
+
   //const [filteredFrames, setFilteredFrames] = useState(frames);
   //const [filteredFrameVariations, setFilteredFrameVariations] = useState(frameVariations);
   //const [filteredRightLenses, setFilteredRightLenses] = useState(lenses);
@@ -44,7 +47,9 @@ export default function CreateOrder({ lenses, frameVariations, tints, lensCoatin
   const [filteredLensColorsLeft, setFilteredLensColorsLeft] = useState([""]);
   const [filteredLensStlyesLeft, setFilteredLensStylesLeft] = useState([""]);
   const [filteredLensMaterialsLeft, setFilteredLensMaterialsLeft] = useState([""]);
+  //const { register, handleSubmit, setValue } = useForm();
   const { getFieldProps, data, setData, post, processing, errors } =
+    //const { getFieldProps, data, register, post, setValue, errors } =
     useBaseForm<Partial<Order>>({
       or_ship_to: '',
       or_ordby_billto_dash: '',
@@ -130,6 +135,7 @@ export default function CreateOrder({ lenses, frameVariations, tints, lensCoatin
       or_manual_ship_addr_1: '',
       or_manual_ship_addr_2: '',
       or_manual_ship_addr_3: '',
+      method: '',
     });
   useEffect(() => {
     var frameFinal = [];
@@ -253,7 +259,13 @@ export default function CreateOrder({ lenses, frameVariations, tints, lensCoatin
   }, [data.or_material_left, data.or_lens_style_left, data.or_lens_color_left]);
 
   return (
-    <Stack>
+    <Stack
+      component="form"
+      onSubmit={(e) => {
+        e.preventDefault();
+        post(route('orders.store'));
+      }}
+    >
       <Head title="Order Detail" />
       <Box>
         <Button onClick={() => router.get(route('orders.index'))}>
@@ -727,9 +739,10 @@ export default function CreateOrder({ lenses, frameVariations, tints, lensCoatin
       </Stack>
 
       <Group justify="space-between">
-        <Button>Save as Pending</Button>
-        <Button type="submit">Submit</Button>
       </Group>
+      <Button type="submit" name="action" value="save" onClick={() => setData('method', "save")}>Save as Pending</Button>
+      <Button type="submit" name="action" value="submit" onClick={() => setData('method', "submit")}>Submit</Button>
+
     </Stack>
   );
 }
