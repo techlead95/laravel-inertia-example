@@ -19,7 +19,7 @@ export default function useBaseForm<TForm extends object>(
           return undefined;
         }
 
-        return form.data[key] as any;
+        return (form.data[key] ?? '') as any;
       })(),
       checked:
         options?.type === 'checkbox' && form.data[key] && form.data[key] !== '0'

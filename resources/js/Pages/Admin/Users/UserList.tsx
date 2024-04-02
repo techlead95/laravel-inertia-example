@@ -1,4 +1,5 @@
 import BaseDataTable from '@/Components/BaseDataTable';
+import EditDeleteActions from '@/Components/EditDeleteActions';
 import SearchForm from '@/Components/SearchForm';
 import { User } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
@@ -12,15 +13,6 @@ interface Props {
 }
 
 export default function AdminHome({ users, search }: Props) {
-  const handleDelete = (user: User) => {
-    openConfirmModal({
-      title: 'Are you sure to delete this user?',
-      onConfirm() {
-        router.delete(route('admin.users.destroy', { id: user.id }));
-      },
-    });
-  };
-
   return (
     <>
       <Head title="Admin Home" />
@@ -48,20 +40,15 @@ export default function AdminHome({ users, search }: Props) {
                 textAlign: 'right',
                 render(user) {
                   return (
-                    <Group justify="flex-end">
-                      <Link href={route('admin.users.edit', { id: user.id })}>
-                        <ActionIcon variant="subtle">
-                          <Edit />
-                        </ActionIcon>
-                      </Link>
-                      <ActionIcon
-                        variant="subtle"
-                        color="red"
-                        onClick={() => handleDelete(user)}
-                      >
-                        <Delete />
-                      </ActionIcon>
-                    </Group>
+                    <EditDeleteActions
+                      editUrl={route('admin.users.edit', { id: user.id })}
+                      deleteConfirmMessage="Are you sure to delete this user?"
+                      onDelete={() =>
+                        router.delete(
+                          route('admin.users.destroy', { id: user.id }),
+                        )
+                      }
+                    />
                   );
                 },
               },
