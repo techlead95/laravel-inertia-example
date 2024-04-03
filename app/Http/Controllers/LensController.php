@@ -6,6 +6,8 @@ use Inertia\Inertia;
 use App\Models\LensStyle;
 use App\Models\LensMaterial;
 use Illuminate\Http\Request;
+use App\Models\Lens;
+use Illuminate\Support\Facades\Session;
 
 class LensController extends Controller
 {
@@ -33,7 +35,31 @@ class LensController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request);
+
+        $validated = $request->validate([
+            'le_lens_mat' => 'required',
+            'le_lens_col' => 'required',
+            'le_lens_digital_style' => 'required',
+            'le_optic_translation' => 'nullable',
+            'le_dvi_lens_style' => 'nullable',
+            'le_dvi_mat' => 'nullable',
+            'le_dvi_color' => 'nullable',
+            'le_o2_lens_style_add_code' => 'nullable',
+            'le_o2_material_add_code' => 'nullable',
+            'le_o2_color_add_code' => 'nullable',
+            'le_o1_lens_add_code' => 'nullable',
+            'le_o1_material_add_code' => 'nullable',
+            'le_o1_color_add_code' => 'nullable',
+            'le_minimun_seg' => 'nullable',
+
+        ]);
+
+        Lens::create($validated);
+
+        Session::flash('success', 'Lens created successfully');
+
+        return to_route('admin.lens.index');
     }
 
     /**
