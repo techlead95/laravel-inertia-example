@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('le_lens_vtype')->nullable();
             $table->integer('le_lens_dseg')->nullable();
 
-            $table->string('le_lens_mat')->nullable();
-            $table->string('le_lens_col')->nullable();
+            $table->string('le_lens_mat');
+            $table->string('le_lens_col');
             $table->string('le_lens_precoat')->nullable();
             $table->integer('le_lens_addon1')->nullable();
             $table->integer('le_lens_addon2')->nullable();
@@ -36,13 +36,10 @@ return new class extends Migration
             $table->string('le_lens_chrt1_4')->nullable();
             $table->decimal('le_lens_recomd_seg_hgt')->nullable();
             $table->string('le_lens_street_wear')->nullable();
-            $table->string('le_lens_digital_style')->nullable();
+            $table->string('le_lens_digital_style');
             $table->string('le_lens_filler')->nullable();
             $table->integer('le_lens_sbdge_date')->nullable();
             $table->string('le_optic_translation')->nullable();
-            $table->string('le_lens_style');
-            $table->string('le_mat');
-            $table->string('le_color');
             $table->string('le_dvi_lens_style')->nullable();
             $table->string('le_dvi_mat')->nullable();
             $table->string('le_dvi_color')->nullable();

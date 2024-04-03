@@ -10,6 +10,7 @@ import {
   Flex,
   Grid,
   Group,
+  Input,
   Radio,
   Select,
   Stack,
@@ -31,6 +32,8 @@ interface Props {
 
 export default function CreateOrder({ lenses, frameVariations, tints, lensCoatingSelects }: Props) {
   const getFieldStyles = useGetFieldStyles();
+
+
   //const [filteredFrames, setFilteredFrames] = useState(frames);
   //const [filteredFrameVariations, setFilteredFrameVariations] = useState(frameVariations);
   //const [filteredRightLenses, setFilteredRightLenses] = useState(lenses);
@@ -44,7 +47,9 @@ export default function CreateOrder({ lenses, frameVariations, tints, lensCoatin
   const [filteredLensColorsLeft, setFilteredLensColorsLeft] = useState([""]);
   const [filteredLensStlyesLeft, setFilteredLensStylesLeft] = useState([""]);
   const [filteredLensMaterialsLeft, setFilteredLensMaterialsLeft] = useState([""]);
+  //const { register, handleSubmit, setValue } = useForm();
   const { getFieldProps, data, setData, post, processing, errors } =
+    //const { getFieldProps, data, register, post, setValue, errors } =
     useBaseForm<Partial<Order>>({
       or_ship_to: '',
       or_ordby_billto_dash: '',
@@ -130,6 +135,7 @@ export default function CreateOrder({ lenses, frameVariations, tints, lensCoatin
       or_manual_ship_addr_1: '',
       or_manual_ship_addr_2: '',
       or_manual_ship_addr_3: '',
+      method: '',
     });
   useEffect(() => {
     var frameFinal = [];
@@ -178,19 +184,19 @@ export default function CreateOrder({ lenses, frameVariations, tints, lensCoatin
     if (data.or_material_right || data.or_lens_style_right || data.or_lens_color_right) {
       var filtered = [];
       if (data.or_material_right) {
-        filtered = lenses.filter(lens => lens.le_mat?.includes(data.or_material_right ?? ''));
+        filtered = lenses.filter(lens => lens.le_lens_mat?.includes(data.or_material_right ?? ''));
       } else {
         filtered = lenses;
       }
       var filtered2 = [];
       if (data.or_lens_style_right) {
-        filtered2 = filtered.filter(lens => lens.le_lens_style?.includes(data.or_lens_style_right ?? ''));
+        filtered2 = filtered.filter(lens => lens.le_lens_digital_style?.includes(data.or_lens_style_right ?? ''));
       } else {
         filtered2 = filtered;
       }
       var filtered3 = [];
       if (data.or_lens_color_right) {
-        filtered3 = filtered2.filter(lens => lens.le_color?.includes(data.or_lens_color_right ?? ''));
+        filtered3 = filtered2.filter(lens => lens.le_lens_col?.includes(data.or_lens_color_right ?? ''));
       } else {
         filtered3 = filtered2;
       }
@@ -199,15 +205,15 @@ export default function CreateOrder({ lenses, frameVariations, tints, lensCoatin
       lensRightFinal = lenses;
     }
     var lensMaterialRight = [];
-    lensMaterialRight = lensRightFinal.map((lens) => lens.le_mat ?? '');
+    lensMaterialRight = lensRightFinal.map((lens) => lens.le_lens_mat ?? '');
     var lensMaterialRightFiltered = [...new Set(lensMaterialRight)];
     setFilteredLensMaterialsRight(lensMaterialRightFiltered);
     var lensStyleRight = [];
-    lensStyleRight = lensRightFinal.map((lens) => lens.le_lens_style ?? '');
+    lensStyleRight = lensRightFinal.map((lens) => lens.le_lens_digital_style ?? '');
     var lensStyleRightFiltered = [...new Set(lensStyleRight)];
     setFilteredLensStylesRight(lensStyleRightFiltered);
     var lensColorRight = [];
-    lensColorRight = lensRightFinal.map((lens) => lens.le_color ?? '');
+    lensColorRight = lensRightFinal.map((lens) => lens.le_lens_col ?? '');
     var lensColorRightFiltered = [...new Set(lensColorRight)];
     setFilteredLensColorsRight(lensColorRightFiltered);
     //console.log(filteredRightLenses)
@@ -218,19 +224,19 @@ export default function CreateOrder({ lenses, frameVariations, tints, lensCoatin
     if (data.or_material_left || data.or_lens_style_left || data.or_lens_color_left) {
       var filtered = [];
       if (data.or_material_left) {
-        filtered = lenses.filter(lens => lens.le_mat?.includes(data.or_material_left ?? ''));
+        filtered = lenses.filter(lens => lens.le_lens_mat?.includes(data.or_material_left ?? ''));
       } else {
         filtered = lenses;
       }
       var filtered2 = [];
       if (data.or_lens_style_left) {
-        filtered2 = filtered.filter(lens => lens.le_lens_style?.includes(data.or_lens_style_left ?? ''));
+        filtered2 = filtered.filter(lens => lens.le_lens_digital_style?.includes(data.or_lens_style_left ?? ''));
       } else {
         filtered2 = filtered;
       }
       var filtered3 = [];
       if (data.or_lens_color_left) {
-        filtered3 = filtered2.filter(lens => lens.le_color?.includes(data.or_lens_color_left ?? ''));
+        filtered3 = filtered2.filter(lens => lens.le_lens_col?.includes(data.or_lens_color_left ?? ''));
       } else {
         filtered3 = filtered2;
       }
@@ -239,21 +245,27 @@ export default function CreateOrder({ lenses, frameVariations, tints, lensCoatin
       lensLeftFinal = lenses;
     }
     var lensMaterialLeft = [];
-    lensMaterialLeft = lensLeftFinal.map((lens) => lens.le_mat ?? '');
+    lensMaterialLeft = lensLeftFinal.map((lens) => lens.le_lens_mat ?? '');
     var lensMaterialLeftFiltered = [...new Set(lensMaterialLeft)];
     setFilteredLensMaterialsLeft(lensMaterialLeftFiltered);
     var lensStyleLeft = [];
-    lensStyleLeft = lensLeftFinal.map((lens) => lens.le_lens_style ?? '');
+    lensStyleLeft = lensLeftFinal.map((lens) => lens.le_lens_digital_style ?? '');
     var lensStyleLeftFiltered = [...new Set(lensStyleLeft)];
     setFilteredLensStylesLeft(lensStyleLeftFiltered);
     var lensColorLeft = [];
-    lensColorLeft = lensLeftFinal.map((lens) => lens.le_color ?? '');
+    lensColorLeft = lensLeftFinal.map((lens) => lens.le_lens_col ?? '');
     var lensColorLeftFiltered = [...new Set(lensColorLeft)];
     setFilteredLensColorsLeft(lensColorLeftFiltered);
   }, [data.or_material_left, data.or_lens_style_left, data.or_lens_color_left]);
 
   return (
-    <Stack>
+    <Stack
+      component="form"
+      onSubmit={(e) => {
+        e.preventDefault();
+        post(route('orders.store'));
+      }}
+    >
       <Head title="Order Detail" />
       <Box>
         <Button onClick={() => router.get(route('orders.index'))}>
@@ -727,9 +739,10 @@ export default function CreateOrder({ lenses, frameVariations, tints, lensCoatin
       </Stack>
 
       <Group justify="space-between">
-        <Button>Save as Pending</Button>
-        <Button type="submit">Submit</Button>
+        <Button type="submit" name="action" value="save" onClick={() => setData('method', "save")}>Save as Pending</Button>
+        <Button type="submit" name="action" value="submit" onClick={() => setData('method', "submit")}>Submit</Button>
       </Group>
+
     </Stack>
   );
 }

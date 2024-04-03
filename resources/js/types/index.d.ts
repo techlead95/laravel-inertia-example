@@ -292,6 +292,7 @@ export interface Order extends Timestamps {
   or_manual_ship_addr_1: string;
   or_manual_ship_addr_2: string;
   or_manual_ship_addr_3: string;
+  method: string;
 }
 
 export interface Shield extends Timestamps {
