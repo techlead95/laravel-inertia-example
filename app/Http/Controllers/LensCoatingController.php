@@ -21,7 +21,7 @@ class LensCoatingController extends Controller
      */
     public function create()
     {
-        //
+        return inertia()->render('Admin/Coating/CreateCoating');
     }
 
     /**
@@ -29,7 +29,18 @@ class LensCoatingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'lc_lens_coating' => 'required',
+            'lc_coating_group' => 'required',
+            'lc_o1_translation' => 'nullable',
+            'lc_dvi_translation' => 'nullable',
+            'lc_o2_add_code' => 'nullable',
+            'lc_o1_add_code' => 'nullable',
+        ]);
+
+        LensCoating::create($validated);
+
+        return to_route('admin.coatings.index');
     }
 
     /**
@@ -47,7 +58,7 @@ class LensCoatingController extends Controller
     {
         $coating = LensCoating::find($id);
 
-        return inertia()->render('Admin/Coating/CoatingEdit', compact('coating'));
+        return inertia()->render('Admin/Coating/EditCoating', compact('coating'));
     }
 
     /**
@@ -57,7 +68,7 @@ class LensCoatingController extends Controller
     {
         $validated = $request->validate([
             'lc_lens_coating' => 'required',
-            'lc_coating_group' => 'nullable',
+            'lc_coating_group' => 'required',
             'lc_o1_translation' => 'nullable',
             'lc_dvi_translation' => 'nullable',
             'lc_o2_add_code' => 'nullable',

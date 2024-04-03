@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\FrameController;
 use App\Http\Controllers\FrameAddonController;
 use App\Http\Controllers\LensCoatingController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\TintController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,9 +82,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('coatings', LensCoatingController::class);
 
-    Route::get('/tint', function () {
-        return Inertia::render('Admin/Tint');
-    });
+    Route::resource('tint', TintController::class);
 
     Route::get('/misc', function () {
         return Inertia::render('Admin/Misc');

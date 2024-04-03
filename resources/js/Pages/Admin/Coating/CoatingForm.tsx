@@ -6,23 +6,15 @@ import { Button, Group, Stack, Text, TextInput } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 
 interface Props {
-  coating: LensCoating;
+  form: ReturnType<typeof useBaseForm<LensCoating>>;
 }
 
-export default function CoatingEdit({ coating }: Props) {
+export default function CoatingForm({ form }: Props) {
+  const { data, getFieldProps } = form;
   const getFieldStyles = useGetFieldStyles();
-  const { data, getFieldProps, put } = useBaseForm(coating);
 
   return (
-    <Stack
-      component="form"
-      gap="xl"
-      onSubmit={(e) => {
-        e.preventDefault();
-        put(route('admin.coatings.update', { id: data.id }));
-      }}
-    >
-      <Head title="Edit Coating" />
+    <>
       <Group justify="space-between">
         <Group>
           <TextInput label="Coating" {...getFieldProps('lc_lens_coating')} />
@@ -100,6 +92,6 @@ export default function CoatingEdit({ coating }: Props) {
           Cancel
         </Button>
       </Group>
-    </Stack>
+    </>
   );
 }

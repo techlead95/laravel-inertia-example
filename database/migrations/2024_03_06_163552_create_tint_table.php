@@ -25,8 +25,6 @@ return new class extends Migration
             $table->string('ti_o1_coating_add_code')->nullable();
             $table->string('ti_setup_by')->nullable();
             $table->string('ti_modified_by')->nullable();
-
-
             $table->timestamps();
         });
     }
