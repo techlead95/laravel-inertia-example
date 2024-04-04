@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Models\LensCoating;
 
 class Lens extends Model
 {
@@ -26,4 +28,8 @@ class Lens extends Model
         'le_o1_color_add_code',
         'le_minimun_seg',
     ];
+    public function coatings(): BelongsToMany
+    {
+        return $this->belongsToMany(LensCoating::class, 'lens_coating');
+    }
 }

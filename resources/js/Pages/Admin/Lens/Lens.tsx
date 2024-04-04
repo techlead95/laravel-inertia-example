@@ -17,9 +17,10 @@ import {
 interface Props {
   styles: LensStyle[];
   materials: LensMaterial[];
+  coatings: LensCoating[];
 }
 
-export default function CreateLens({ styles, materials }: Props) {
+export default function CreateLens({ styles, materials, coatings }: Props) {
   const getFieldStyles = useGetFieldStyles();
   const { getFieldProps, data, setData, post } =
     useBaseForm<Partial<Lens>>({
@@ -37,6 +38,7 @@ export default function CreateLens({ styles, materials }: Props) {
       le_o1_material_add_code: '',
       le_o1_color_add_code: '',
       le_minimun_seg: '',
+      le_coatings: [],
     });
   return (
     <>
@@ -75,28 +77,20 @@ export default function CreateLens({ styles, materials }: Props) {
           </Group>
         </Group>
         <Group align="flex-start" gap="xl">
-          <Stack>
-            <Flex justify="center">
-              <Text fw="bold">Coatings</Text>
-            </Flex>
-            <Switch defaultChecked label="Clarity Shield" />
-            <Switch defaultChecked label="Clear Away Ez Clean" />
-            <Switch defaultChecked label="Anti-Fog" />
-            <Switch defaultChecked label="Clear Away Ez w/ Anti-Fog" />
-            <Switch defaultChecked label="Anti-Reflective w/ Anti-Fog" />
-            <Switch defaultChecked label="Hi-Vision Anti-Reflective" />
-            <Switch defaultChecked label="Ex3 Anti-Reflective" />
-            <Switch defaultChecked label="Recharge w/ Anti-Reflective" />
-            <Switch defaultChecked label="Standard Ar-Par" />
-            <Switch defaultChecked label="Standard Ar w/ View Protect Pav" />
-            <Switch defaultChecked label="Back Side Ar" />
-            <Switch defaultChecked label="2-Sided Scratch (Plastic)" />
-            <Switch defaultChecked label="Future1" />
-            <Switch defaultChecked label="Future2" />
-            <Switch defaultChecked label="Future3" />
-            <Switch defaultChecked label="Future4" />
-            <Switch defaultChecked label="Future5" />
-          </Stack>
+          <Switch.Group
+            defaultValue={data.le_coatings}
+            onChange={e => setData('le_coatings', e)}
+          //defaultValue={["1", 'Clarity Shield', "8"]}
+          >
+            <Stack>
+              <Flex justify="center">
+                <Text fw="bold">Coatings</Text>
+              </Flex>
+              {coatings.map(coating =>
+                <Switch value={coating.id.toString()} label={coating.lc_lens_coating} />
+              )}
+            </Stack>
+          </Switch.Group>
           <Stack>
             <Box h={24} />
             <TextInput

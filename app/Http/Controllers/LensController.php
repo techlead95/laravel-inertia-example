@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\LensStyle;
 use App\Models\LensMaterial;
+use App\Models\LensCoating;
 use Illuminate\Http\Request;
 use App\Models\Lens;
 use Illuminate\Support\Facades\Session;
@@ -18,8 +19,9 @@ class LensController extends Controller
     {
         $styles = LensStyle::all();
         $materials = LensMaterial::all();
+        $coatings = LensCoating::all();
 
-        return Inertia::render('Admin/Lens/Lens', compact('styles', 'materials'));
+        return Inertia::render('Admin/Lens/Lens', compact('styles', 'materials', 'coatings'));
     }
 
     /**
@@ -35,7 +37,7 @@ class LensController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
+
 
         $validated = $request->validate([
             'le_lens_mat' => 'required',
@@ -55,7 +57,15 @@ class LensController extends Controller
 
         ]);
 
-        Lens::create($validated);
+        $lens = Lens::create($validated);
+
+        $coatings = $request->input('le_coatings');
+        $coatings = array_map("intval", $coatings);
+        $lens->coatings()->attach($coatings);
+
+        //dd($request, $coatings);
+
+
 
         Session::flash('success', 'Lens created successfully');
 
