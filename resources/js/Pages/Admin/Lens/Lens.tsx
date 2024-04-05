@@ -55,7 +55,7 @@ export default function CreateLens({ styles, materials, coatings }: Props) {
               label="Lens Style"
               w={240}
               data={styles.map((style) => style.ls_lenstyl_lens_style)}
-              {...getFieldProps('le_lens_digital_style')}
+              {...getFieldProps('le_lens_style')}
             />
             <Select
               label="Lens Material"

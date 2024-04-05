@@ -36,9 +36,10 @@ return new class extends Migration
             $table->string('le_lens_chrt1_4')->nullable();
             $table->decimal('le_lens_recomd_seg_hgt')->nullable();
             $table->string('le_lens_street_wear')->nullable();
-            $table->string('le_lens_digital_style');
+            $table->string('le_lens_digital_style')->nullable();
             $table->string('le_lens_filler')->nullable();
             $table->integer('le_lens_sbdge_date')->nullable();
+            $table->string('le_lens_style');
             $table->string('le_optic_translation')->nullable();
             $table->string('le_dvi_lens_style')->nullable();
             $table->string('le_dvi_mat')->nullable();
