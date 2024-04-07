@@ -190,7 +190,7 @@ export default function CreateOrder({ lenses, frameVariations, tints, lensCoatin
       }
       var filtered2 = [];
       if (data.or_lens_style_right) {
-        filtered2 = filtered.filter(lens => lens.le_lens_digital_style?.includes(data.or_lens_style_right ?? ''));
+        filtered2 = filtered.filter(lens => lens.le_lens_style?.includes(data.or_lens_style_right ?? ''));
       } else {
         filtered2 = filtered;
       }
@@ -209,7 +209,7 @@ export default function CreateOrder({ lenses, frameVariations, tints, lensCoatin
     var lensMaterialRightFiltered = [...new Set(lensMaterialRight)];
     setFilteredLensMaterialsRight(lensMaterialRightFiltered);
     var lensStyleRight = [];
-    lensStyleRight = lensRightFinal.map((lens) => lens.le_lens_digital_style ?? '');
+    lensStyleRight = lensRightFinal.map((lens) => lens.le_lens_style ?? '');
     var lensStyleRightFiltered = [...new Set(lensStyleRight)];
     setFilteredLensStylesRight(lensStyleRightFiltered);
     var lensColorRight = [];
@@ -230,7 +230,7 @@ export default function CreateOrder({ lenses, frameVariations, tints, lensCoatin
       }
       var filtered2 = [];
       if (data.or_lens_style_left) {
-        filtered2 = filtered.filter(lens => lens.le_lens_digital_style?.includes(data.or_lens_style_left ?? ''));
+        filtered2 = filtered.filter(lens => lens.le_lens_style?.includes(data.or_lens_style_left ?? ''));
       } else {
         filtered2 = filtered;
       }
@@ -249,7 +249,7 @@ export default function CreateOrder({ lenses, frameVariations, tints, lensCoatin
     var lensMaterialLeftFiltered = [...new Set(lensMaterialLeft)];
     setFilteredLensMaterialsLeft(lensMaterialLeftFiltered);
     var lensStyleLeft = [];
-    lensStyleLeft = lensLeftFinal.map((lens) => lens.le_lens_digital_style ?? '');
+    lensStyleLeft = lensLeftFinal.map((lens) => lens.le_lens_style ?? '');
     var lensStyleLeftFiltered = [...new Set(lensStyleLeft)];
     setFilteredLensStylesLeft(lensStyleLeftFiltered);
     var lensColorLeft = [];

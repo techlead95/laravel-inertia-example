@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Models\Lens;
+
 class LensCoating extends Model
 {
     use HasFactory;
@@ -17,4 +20,9 @@ class LensCoating extends Model
         'lc_o2_add_code',
         'lc_o1_add_code'
     ];
+
+    public function lenses(): BelongsToMany
+    {
+        return $this->belongsToMany(Lens::class, 'lens_coating');
+    }
 }
