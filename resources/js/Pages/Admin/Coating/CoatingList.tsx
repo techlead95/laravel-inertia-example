@@ -14,7 +14,7 @@ export default function Coating({ coatings }: Props) {
       <Head title="Coating" />
       <Group justify="flex-end" mb="lg">
         <Link href={route('admin.coatings.create')}>
-          <Button>Add Coating</Button>
+          <Button>New Coating</Button>
         </Link>
       </Group>
       <BaseDataTable

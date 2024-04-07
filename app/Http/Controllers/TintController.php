@@ -22,7 +22,7 @@ class TintController extends Controller
      */
     public function create()
     {
-        //
+        return inertia()->render('Admin/Tint/CreateTint');
     }
 
     /**
@@ -30,7 +30,22 @@ class TintController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'ti_color' => 'required',
+            'ti_group' => 'required',
+            'ti_lower_range' => 'required',
+            'ti_upper_range' => 'required',
+            'ti_default_percent' => 'required',
+            'ti_o1_translation' => 'nullable',
+            'ti_dvi_tint_drop' => 'nullable',
+            'ti_dvi_tint_color' => 'nullable',
+            'ti_o2_coating_add_code' => 'nullable',
+            'ti_o1_coating_add_code' => 'nullable',
+        ]);
+
+        Tint::create($validated);
+
+        return to_route('admin.tint.index');
     }
 
     /**
@@ -46,7 +61,9 @@ class TintController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $tint = Tint::find($id);
+
+        return inertia()->render('Admin/Tint/EditTint', compact('tint'));
     }
 
     /**
@@ -54,7 +71,22 @@ class TintController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'ti_color' => 'required',
+            'ti_group' => 'required',
+            'ti_lower_range' => 'required',
+            'ti_upper_range' => 'required',
+            'ti_default_percent' => 'required',
+            'ti_o1_translation' => 'nullable',
+            'ti_dvi_tint_drop' => 'nullable',
+            'ti_dvi_tint_color' => 'nullable',
+            'ti_o2_coating_add_code' => 'nullable',
+            'ti_o1_coating_add_code' => 'nullable',
+        ]);
+
+        Tint::where('id', $id)->update($validated);
+
+        return to_route('admin.tint.index');
     }
 
     /**
@@ -62,6 +94,8 @@ class TintController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Tint::where('id', $id)->delete();
+
+        return to_route('admin.tint.index');
     }
 }

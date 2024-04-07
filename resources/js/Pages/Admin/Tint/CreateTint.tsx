@@ -1,12 +1,12 @@
 import PageTitle from '@/Components/PageTitle';
 import useBaseForm from '@/Hooks/useBaseForm';
-import { LensCoating } from '@/types';
+import { Tint } from '@/types';
 import { Stack } from '@mantine/core';
 
-import CoatingForm from './CoatingForm';
+import TintForm from './TintForm';
 
-export default function CreateCoating() {
-  const form = useBaseForm<LensCoating>();
+export default function CreateTint() {
+  const form = useBaseForm<Tint>();
   const { post } = form;
 
   return (
@@ -15,11 +15,11 @@ export default function CreateCoating() {
       gap="xl"
       onSubmit={(e) => {
         e.preventDefault();
-        post(route('admin.coatings.store'));
+        post(route('admin.tint.store'));
       }}
     >
-      <PageTitle title="Create Coating" />
-      <CoatingForm form={form} />
+      <PageTitle title="Create Tint" />
+      <TintForm form={form} />
     </Stack>
   );
 }
