@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('misc', function (Blueprint $table) {
             $table->id();
             $table->string('mi_item_name');
-            $table->string('mi_setup_by');
-            $table->string('mi_modified_by');
+            $table->string('mi_setup_by')->nullable();
+            $table->string('mi_modified_by')->nullable();
             $table->string('mi_o1_translation');
-            $table->string('mi_DVI_translation');
+            $table->string('mi_dvi_translation');
             $table->string('mi_o2_add_code');
             $table->string('mi_o1_add_code');
             $table->timestamps();

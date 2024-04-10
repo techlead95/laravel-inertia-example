@@ -337,3 +337,14 @@ export interface FrameLimitation {
   fl_vendor_allowed: string;
   fl_auto_offload: string;
 }
+
+export interface Misc extends Timestamps {
+  id: number;
+  mi_item_name: string;
+  mi_setup_by: string;
+  mi_modified_by: string;
+  mi_o1_translation: string;
+  mi_dvi_translation: string;
+  mi_o2_add_code: string;
+  mi_o1_add_code: string;
+}

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\FrameController;
 use App\Http\Controllers\FrameAddonController;
 use App\Http\Controllers\LensCoatingController;
+use App\Http\Controllers\MiscController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TintController;
 
@@ -84,9 +85,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('tint', TintController::class);
 
-    Route::get('/misc', function () {
-        return Inertia::render('Admin/Misc');
-    });
+    Route::resource('misc', MiscController::class);
 });
 
 Route::resource('orders', OrderController::class);
