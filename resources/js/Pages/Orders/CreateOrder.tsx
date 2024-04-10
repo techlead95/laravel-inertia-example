@@ -154,7 +154,7 @@ export default function CreateOrder({ lenses, frameVariations, tints, lensCoatin
       }
       var filtered3 = [];
       if (data.or_frame_size) {
-        filtered3 = filtered2.filter(frameVariation => frameVariation.fv_eyesize?.includes(data.or_frame_size ?? ''));
+        filtered3 = filtered2.filter(frameVariation => frameVariation.fv_size?.includes(data.or_frame_size ?? ''));
       } else {
         filtered3 = filtered2;
       }
@@ -168,7 +168,7 @@ export default function CreateOrder({ lenses, frameVariations, tints, lensCoatin
     var frameStyleFiltered = [...new Set(frameStyle)];
     setFilteredFrameStyles(frameStyleFiltered);
     var frameSize = [];
-    frameSize = frameFinal.map((frameVariation) => frameVariation.fv_eyesize ?? '');
+    frameSize = frameFinal.map((frameVariation) => frameVariation.fv_size ?? '');
     var frameSizeFiltered = [...new Set(frameSize)];
     setFilteredFrameSizes(frameSizeFiltered);
     var frameColor = [];

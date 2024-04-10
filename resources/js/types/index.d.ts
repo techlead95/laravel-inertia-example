@@ -102,6 +102,7 @@ export interface FrameVariation extends Timestamps {
   fv_non_dig_default_seg?: string;
   fv_dig_default_seg?: string;
   frame: Frame;
+  fv_size: string;
 }
 
 export type FrameType = Frame;
