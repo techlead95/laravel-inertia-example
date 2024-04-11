@@ -145,7 +145,10 @@ class LensController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+        $lens =  Lens::find($id);
+        $lens->delete();
+        return to_route('admin.lens.index');
     }
 
     public function catalog()
