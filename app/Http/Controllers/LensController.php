@@ -17,11 +17,8 @@ class LensController extends Controller
      */
     public function index()
     {
-        $styles = LensStyle::all();
-        $materials = LensMaterial::all();
-        $coatings = LensCoating::all();
-
-        return Inertia::render('Admin/Lens/Lens', compact('styles', 'materials', 'coatings'));
+        $lenses = Lens::all();
+        return inertia()->render('Admin/Lens/LensCatalog', compact('lenses'));
     }
 
     /**
@@ -29,7 +26,12 @@ class LensController extends Controller
      */
     public function create()
     {
-        //
+
+        $styles = LensStyle::all();
+        $materials = LensMaterial::all();
+        $coatings = LensCoating::all();
+
+        return Inertia::render('Admin/Lens/CreateLens', compact('styles', 'materials', 'coatings'));
     }
 
     /**
@@ -42,7 +44,7 @@ class LensController extends Controller
         $validated = $request->validate([
             'le_lens_mat' => 'required',
             'le_lens_col' => 'required',
-            'le_lens_digital_style' => 'required',
+            'le_lens_style' => 'required',
             'le_optic_translation' => 'nullable',
             'le_dvi_lens_style' => 'nullable',
             'le_dvi_mat' => 'nullable',
@@ -85,7 +87,19 @@ class LensController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $lens = Lens::find($id);
+
+        $styles = LensStyle::all();
+        $materials = LensMaterial::all();
+        $coatings = LensCoating::all();
+
+        //dd($lens->coatings());
+        //$selectCoatings = $lens->coatings()->allRelatedIds()->toArray();
+        $selectCoatings = $lens->coatings()->allRelatedIds();
+        //dd($selectCoatings);
+        //$selectCoatings = array_map("strval", $selectCoatings);
+
+        return inertia()->render('Admin/Lens/EditLens', compact('styles', 'materials', 'coatings', 'lens', 'selectCoatings'));
     }
 
     /**
@@ -93,7 +107,37 @@ class LensController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $validated = $request->validate([
+            'le_lens_mat' => 'required',
+            'le_lens_col' => 'required',
+            'le_lens_style' => 'required',
+            'le_optic_translation' => 'nullable',
+            'le_dvi_lens_style' => 'nullable',
+            'le_dvi_mat' => 'nullable',
+            'le_dvi_color' => 'nullable',
+            'le_o2_lens_style_add_code' => 'nullable',
+            'le_o2_material_add_code' => 'nullable',
+            'le_o2_color_add_code' => 'nullable',
+            'le_o1_lens_add_code' => 'nullable',
+            'le_o1_material_add_code' => 'nullable',
+            'le_o1_color_add_code' => 'nullable',
+            'le_minimun_seg' => 'nullable',
+
+        ]);
+
+        $lens =  Lens::find($id);
+        $lens->update($validated);
+
+        $coatings = $request->input('le_coatings');
+        $coatings = array_map("intval", $coatings);
+        //dd($lens);
+        $lens->coatings()->sync($coatings);
+
+
+        Session::flash('success', 'Lens updated successfully');
+
+        return to_route('admin.lens.index');
     }
 
     /**
@@ -101,7 +145,10 @@ class LensController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+        $lens =  Lens::find($id);
+        $lens->delete();
+        return to_route('admin.lens.index');
     }
 
     public function catalog()

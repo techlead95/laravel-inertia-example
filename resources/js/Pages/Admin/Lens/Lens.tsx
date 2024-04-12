@@ -14,14 +14,22 @@ import {
   TextInput,
 } from '@mantine/core';
 
+/*interface Props {
+  styles: LensStyle[];
+  materials: LensMaterial[];
+  coatings: LensCoating[];
+}*/
 interface Props {
   styles: LensStyle[];
   materials: LensMaterial[];
   coatings: LensCoating[];
+  form: ReturnType<typeof useBaseForm<Lens>>;
 }
-
-export default function CreateLens({ styles, materials, coatings }: Props) {
+//export default function CreateLens({ styles, materials, coatings }: Props) {
+export default function CreateLens({ styles, materials, coatings, form }: Props) {
   const getFieldStyles = useGetFieldStyles();
+  const { getFieldProps, data, setData, post } = form;
+  /*
   const { getFieldProps, data, setData, post } =
     useBaseForm<Partial<Lens>>({
       le_lens_mat: '',
@@ -40,6 +48,7 @@ export default function CreateLens({ styles, materials, coatings }: Props) {
       le_minimun_seg: '',
       le_coatings: [],
     });
+    */
   return (
     <>
       <Head title="Lens" />

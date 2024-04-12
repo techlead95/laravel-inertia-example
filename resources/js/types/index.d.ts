@@ -148,8 +148,6 @@ export interface Lens extends Timestamps {
   le_lens_sbdge_date?: number;
   le_optic_translation?: string;
   le_lens_style: string;
-  le_mat: string;
-  le_color: string;
   le_dvi_lens_style?: string;
   le_dvi_mat?: string;
   le_dvi_color?: string;

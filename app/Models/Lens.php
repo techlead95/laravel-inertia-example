@@ -15,7 +15,7 @@ class Lens extends Model
     protected $fillable = [
         'le_lens_mat',
         'le_lens_col',
-        'le_lens_digital_style',
+        'le_lens_style',
         'le_optic_translation',
         'le_dvi_lens_style',
         'le_dvi_mat',

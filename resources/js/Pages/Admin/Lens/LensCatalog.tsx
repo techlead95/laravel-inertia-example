@@ -1,12 +1,18 @@
 import PageTitle from '@/Components/PageTitle';
+import EditDeleteActions from '@/Components/EditDeleteActions';
 import { Button, Group, Stack, TextInput } from '@mantine/core';
 import { Search } from '@mui/icons-material';
 import { DataTable } from 'mantine-datatable';
+import { Lens } from '@/types';
 
-export default function LensCatalog() {
+interface Props {
+  lenses: Lens[];
+}
+
+export default function LensCatalog({ lenses }: Props) {
   return (
     <>
-      <PageTitle title="Lens Catalog" backUrl="/admin/lens" />
+      <PageTitle title="Lens Catalog" />
       <Stack mt="xl">
         <Group>
           <TextInput placeholder="Filter by Style" />
@@ -21,48 +27,29 @@ export default function LensCatalog() {
           withTableBorder
           borderRadius="md"
           columns={[
-            { accessor: 'style', title: 'Style' },
-            { accessor: 'material', title: 'Material' },
-            { accessor: 'color', title: 'Color' },
-          ]}
-          records={[
+            { accessor: 'le_lens_style', title: 'Style' },
+            { accessor: 'le_lens_mat', title: 'Material' },
+            { accessor: 'le_lens_col', title: 'Color' },
             {
-              id: 1,
-              style: 'Single Vision',
-              material: 'Polycarbonate',
-              color: 'Clear',
-            },
-            {
-              id: 2,
-              style: 'Single Vision',
-              material: 'Polycarbonate',
-              color: 'Grey',
-            },
-            {
-              id: 3,
-              style: 'Single Vision',
-              material: 'Trivex\\Phoenix',
-              color: 'Clear',
-            },
-            {
-              id: 4,
-              style: 'Single Vision',
-              material: 'Trivex\\Phoenix',
-              color: 'Grey',
-            },
-            {
-              id: 5,
-              style: 'Single Vision',
-              material: 'Plastic',
-              color: 'Clear',
-            },
-            {
-              id: 6,
-              style: 'Single Vision',
-              material: 'Hi Index',
-              color: 'Clear',
+              accessor: 'actions',
+              title: '',
+              textAlign: 'right',
+              render(lens) {
+                return (
+                  <EditDeleteActions
+                    editUrl={route('admin.lens.edit', { id: lens.id })}
+                    deleteConfirmMessage="Are you sure to delete this lens?"
+                    onDelete={() =>
+                      router.delete(
+                        route('admin.lens.destroy', { id: lens.id }),
+                      )
+                    }
+                  />
+                );
+              },
             },
           ]}
+          records={lenses}
         />
       </Stack>
     </>
