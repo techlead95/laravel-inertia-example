@@ -1,8 +1,6 @@
 import PageTitle from '@/Components/PageTitle';
 import useBaseForm from '@/Hooks/useBaseForm';
-import useGetFieldStyles from '@/Hooks/useFieldStyles';
 import { LensCoating } from '@/types';
-import { Head } from '@inertiajs/react';
 import { Stack } from '@mantine/core';
 
 import CoatingForm from './CoatingForm';

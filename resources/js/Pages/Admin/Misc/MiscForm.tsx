@@ -43,7 +43,7 @@ export default function MiscForm({ form }: Props) {
           value={data.mi_modified_by ?? ''}
         />
       </Group>
-      <Group mt="xl">
+      <Group>
         <Stack>
           <TextInput
             label="Optic Translation"
@@ -68,6 +68,12 @@ export default function MiscForm({ form }: Props) {
             {...getFieldProps('mi_o1_add_code')}
           />
         </Stack>
+      </Group>
+      <Group>
+        <Button type="submit">Save</Button>
+        <Button variant="outline" onClick={() => history.back()}>
+          Cancel
+        </Button>
       </Group>
     </>
   );

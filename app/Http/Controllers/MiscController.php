@@ -22,7 +22,7 @@ class MiscController extends Controller
      */
     public function create()
     {
-        //
+        return inertia()->render('Admin/Misc/CreateMisc');
     }
 
     /**
@@ -30,7 +30,17 @@ class MiscController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'mi_item_name' => 'required',
+            'mi_o1_translation' => 'required',
+            'mi_dvi_translation' => 'required',
+            'mi_o2_add_code' => 'required',
+            'mi_o1_add_code' => 'required',
+        ]);
+
+        Misc::create($validated);
+
+        return to_route('admin.misc.index');
     }
 
     /**
@@ -46,7 +56,9 @@ class MiscController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $misc = Misc::find($id);
+
+        return inertia()->render('Admin/Misc/EditMisc', compact('misc'));
     }
 
     /**
@@ -54,7 +66,17 @@ class MiscController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'mi_item_name' => 'required',
+            'mi_o1_translation' => 'required',
+            'mi_dvi_translation' => 'required',
+            'mi_o2_add_code' => 'required',
+            'mi_o1_add_code' => 'required',
+        ]);
+
+        Misc::where('id', $id)->update($validated);
+
+        return to_route('admin.misc.index');
     }
 
     /**
@@ -62,6 +84,8 @@ class MiscController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Misc::find($id)->delete();
+
+        return to_route('admin.misc.index');
     }
 }

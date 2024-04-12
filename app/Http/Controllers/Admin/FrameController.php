@@ -24,6 +24,16 @@ class FrameController extends Controller
      */
     public function index()
     {
+        $frames = Frame::all();
+
+        return inertia()->render('Admin/Frame/FrameList', compact('frames'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(Request $request)
+    {
         $edges = FrameEdge::all();
         $materials = FrameMaterial::all();
         $brands = FrameBrand::all();
@@ -36,13 +46,6 @@ class FrameController extends Controller
         $limitations = FrameLimitation::all();
 
         return Inertia::render('Admin/Frame/Frame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'frames', 'shields', 'shieldColors', 'addons', 'limitations'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Request $request)
-    {
     }
 
     /**
