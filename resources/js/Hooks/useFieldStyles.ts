@@ -24,7 +24,6 @@ export default function useGetFieldStyles() {
           textAlign: 'right',
           paddingTop: 7,
         },
-        input: { width: 'auto' },
         wrapper: { flex: 1, margin: 0 },
         error: { display: 'flex', alignItems: 'center' },
       } as Record<string, CSSProperties>);

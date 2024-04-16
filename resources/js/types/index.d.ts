@@ -90,6 +90,7 @@ export interface Frame extends Timestamps {
 }
 
 export interface FrameVariation extends Timestamps {
+  id: number;
   fv_eyesize?: string;
   fv_front_bridge?: string;
   fv_frame_color?: string;

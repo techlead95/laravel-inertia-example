@@ -45,7 +45,7 @@ class FrameController extends Controller
         $addons = FrameAddon::all();
         $limitations = FrameLimitation::all();
 
-        return Inertia::render('Admin/Frame/Frame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'frames', 'shields', 'shieldColors', 'addons', 'limitations'));
+        return Inertia::render('Admin/Frame/CreateFrame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'frames', 'shields', 'shieldColors', 'addons', 'limitations'));
     }
 
     /**
@@ -90,7 +90,19 @@ class FrameController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $edges = FrameEdge::all();
+        $materials = FrameMaterial::all();
+        $brands = FrameBrand::all();
+        $collections = FrameCollection::all();
+        $groups = FrameDefaultGroup::all();
+        $frames = Frame::with('variations')->get();
+        $shields = Shield::all();
+        $shieldColors = ShieldColor::all();
+        $addons = FrameAddon::all();
+        $limitations = FrameLimitation::all();
+        $frame = Frame::with('variations')->find($id);
+
+        return Inertia::render('Admin/Frame/EditFrame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'frames', 'shields', 'shieldColors', 'addons', 'limitations', 'frame'));
     }
 
     /**
@@ -117,8 +129,6 @@ class FrameController extends Controller
 
         Frame::find($id)->update($validated);
 
-        Session::flash('success', 'Frame updated successfully');
-
         return to_route('admin.frame.index');
     }
 
@@ -129,11 +139,12 @@ class FrameController extends Controller
     {
         $frame = Frame::find($id);
 
-        if (!$frame) {
-            return response()->json(['error' => 'Frame not found'], 404);
+        if ($frame) {
+            $frame->variations()->delete();
+            $frame->delete();
         }
 
-        $frame->delete();
+        return to_route('admin.frame.index');
     }
 
     public function catalog()

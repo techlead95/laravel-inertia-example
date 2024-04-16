@@ -6,13 +6,9 @@ import { Stack } from '@mantine/core';
 import FrameForm from './FrameForm';
 import { FramePageProps } from './FramePage';
 
-interface Props extends FramePageProps {
-  frame: Frame;
-}
-
-export default function EditFrame({ frame, ...props }: Props) {
-  const form = useBaseForm<Frame>(frame);
-  const { data, put } = form;
+export default function CreateCoating(props: FramePageProps) {
+  const form = useBaseForm<Frame>();
+  const { post } = form;
 
   return (
     <Stack
@@ -20,11 +16,11 @@ export default function EditFrame({ frame, ...props }: Props) {
       gap="xl"
       onSubmit={(e) => {
         e.preventDefault();
-        put(route('admin.frame.update', { id: data.id }));
+        post(route('admin.frame.store'));
       }}
     >
-      <PageTitle title="Edit Frame" />
-      <FrameForm form={form} frame={frame} {...props} />
+      <PageTitle title="Create Frame" />
+      <FrameForm form={form} {...props} />
     </Stack>
   );
 }

@@ -1,7 +1,6 @@
 import useBaseForm from '@/Hooks/useBaseForm';
 import useGetFieldStyles from '@/Hooks/useFieldStyles';
 import { LensCoating } from '@/types';
-import { Head, router } from '@inertiajs/react';
 import { Button, Group, Stack, Text, TextInput } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 

@@ -1,7 +1,9 @@
 import BaseDataTable from '@/Components/BaseDataTable';
+import EditDeleteActions from '@/Components/EditDeleteActions';
 import useBaseForm from '@/Hooks/useBaseForm';
 import useGetFieldStyles from '@/Hooks/useFieldStyles';
-import { FrameEdge, FrameMaterial, FrameType, FrameVariation } from '@/types';
+import { Frame, FrameEdge, FrameMaterial, FrameVariation } from '@/types';
+import { router } from '@inertiajs/react';
 import {
   Group,
   Select,
@@ -15,7 +17,7 @@ interface Props {
   frameVariations: FrameVariation[];
   edges: FrameEdge[];
   materials: FrameMaterial[];
-  form: ReturnType<typeof useBaseForm<Partial<FrameType>>>;
+  form: ReturnType<typeof useBaseForm<Frame>>;
 }
 
 export default function FramePanel({
@@ -47,6 +49,28 @@ export default function FramePanel({
           {
             accessor: 'fv_dig_default_seg',
             title: 'Digital Default Seg',
+          },
+          {
+            accessor: 'actions',
+            title: '',
+            textAlign: 'right',
+            render(variation) {
+              return (
+                <EditDeleteActions
+                  editUrl={route('admin.frame-variation.edit', {
+                    id: variation.id,
+                  })}
+                  deleteConfirmMessage="Are you sure to delete this frame variation?"
+                  onDelete={() =>
+                    router.delete(
+                      route('admin.frame-variation.destroy', {
+                        id: variation.id,
+                      }),
+                    )
+                  }
+                />
+              );
+            },
           },
         ]}
         records={frameVariations}
@@ -105,7 +129,7 @@ export default function FramePanel({
           label="Notes"
           styles={getFieldStyles({ horizontal: true })}
           rows={4}
-          miw={580}
+          w={600}
           {...getFieldProps('fr_notes')}
         />
       </Group>
