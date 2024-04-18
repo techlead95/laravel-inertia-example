@@ -6,6 +6,7 @@ use App\Http\Controllers\LensController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\FrameController;
 use App\Http\Controllers\FrameAddonController;
+use App\Http\Controllers\FrameVariationController;
 use App\Http\Controllers\LensCoatingController;
 use App\Http\Controllers\MiscController;
 use App\Http\Controllers\OrderController;
@@ -86,6 +87,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('tint', TintController::class);
 
     Route::resource('misc', MiscController::class);
+
+    Route::resource('frame-variations', FrameVariationController::class);
 });
 
 Route::resource('orders', OrderController::class);

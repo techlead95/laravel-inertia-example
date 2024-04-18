@@ -1,9 +1,6 @@
-import BaseDataTable from '@/Components/BaseDataTable';
-import EditDeleteActions from '@/Components/EditDeleteActions';
 import useBaseForm from '@/Hooks/useBaseForm';
 import useGetFieldStyles from '@/Hooks/useFieldStyles';
 import { Frame, FrameEdge, FrameMaterial, FrameVariation } from '@/types';
-import { router } from '@inertiajs/react';
 import {
   Group,
   Select,
@@ -12,6 +9,8 @@ import {
   TextInput,
   Textarea,
 } from '@mantine/core';
+
+import FrameVariationTable from './FrameVariationTable';
 
 interface Props {
   frameVariations: FrameVariation[];
@@ -31,50 +30,7 @@ export default function FramePanel({
 
   return (
     <>
-      <BaseDataTable
-        columns={[
-          { accessor: 'fv_eyesize', title: 'Eye' },
-          { accessor: 'fv_bridge', title: 'Bridge' },
-          { accessor: 'fv_temple_type', title: 'Temple Type' },
-          { accessor: 'fv_temple_size', title: 'Temple Size' },
-          { accessor: 'fv_frame_color', title: 'Color' },
-          { accessor: 'fv_A', title: 'A' },
-          { accessor: 'fv_B', title: 'B' },
-          { accessor: 'fv_ED', title: 'ED' },
-          { accessor: 'fv_DBL', title: 'DBL' },
-          {
-            accessor: 'fv_non_dig_default_seg',
-            title: 'Non Digital Default Seg',
-          },
-          {
-            accessor: 'fv_dig_default_seg',
-            title: 'Digital Default Seg',
-          },
-          {
-            accessor: 'actions',
-            title: '',
-            textAlign: 'right',
-            render(variation) {
-              return (
-                <EditDeleteActions
-                  editUrl={route('admin.frame-variation.edit', {
-                    id: variation.id,
-                  })}
-                  deleteConfirmMessage="Are you sure to delete this frame variation?"
-                  onDelete={() =>
-                    router.delete(
-                      route('admin.frame-variation.destroy', {
-                        id: variation.id,
-                      }),
-                    )
-                  }
-                />
-              );
-            },
-          },
-        ]}
-        records={frameVariations}
-      />
+      <FrameVariationTable frameVariations={frameVariations} />
       <Group align="flex-start">
         <Stack gap="xs">
           <Select

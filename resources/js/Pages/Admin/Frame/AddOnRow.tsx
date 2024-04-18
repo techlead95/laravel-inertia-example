@@ -34,7 +34,7 @@ export default function AddOnRow({
   };
 
   return (
-    <Table.Tr key={addon.id}>
+    <Table.Tr>
       <Table.Td>
         <TextInput
           value={addon.fa_UPC ?? ''}

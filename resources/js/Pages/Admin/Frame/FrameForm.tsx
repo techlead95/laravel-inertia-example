@@ -11,7 +11,7 @@ import FrameTabsPanel from './FrameTabsPanel';
 import LimitationsPanel from './LimitationsPanel';
 import TranslationsPanel from './TranslationsPanel';
 
-export interface Props extends FramePageProps {
+interface Props extends FramePageProps {
   frame?: Frame;
   form: ReturnType<typeof useBaseForm<Frame>>;
 }
