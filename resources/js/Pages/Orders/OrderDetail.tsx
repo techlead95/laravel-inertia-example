@@ -23,12 +23,12 @@ export default function OrderDetail({ order }: Props) {
         </Grid.Col>
         <Grid.Col span={1}>
           <LabelledContent label="RX Number">
-            {order.or_rx_number}
+            {order.or_portal_order_number}
           </LabelledContent>
         </Grid.Col>
         <Grid.Col span={1}>
           <LabelledContent label="Patient Name">
-            02548137 Juggunenson
+            {order.or_emp_name_last}
           </LabelledContent>
         </Grid.Col>
         <Grid.Col span={1}>
@@ -84,22 +84,22 @@ export default function OrderDetail({ order }: Props) {
               hasRL
             >
               <Table.Tr>
-                <Table.Td ta="center">+2.75</Table.Td>
-                <Table.Td ta="center">-1.25</Table.Td>
-                <Table.Td ta="center">85</Table.Td>
-                <Table.Td ta="center" />
-                <Table.Td ta="center">64</Table.Td>
-                <Table.Td ta="center" />
-                <Table.Td ta="center" />
+                <Table.Td ta="center">{order.or_sphere_right}</Table.Td>
+                <Table.Td ta="center">{order.or_cyl_right}</Table.Td>
+                <Table.Td ta="center">{order.or_axis_right}</Table.Td>
+                <Table.Td ta="center">{order.or_pd_dist_right}</Table.Td>
+                <Table.Td ta="center">{order.or_pd_near_right}</Table.Td>
+                <Table.Td ta="center">{order.or_prism_in_right}{order.or_prism_in_right_value}</Table.Td>
+                <Table.Td ta="center">{order.or_prism_up_right}{order.or_prism_up_right_value}</Table.Td>
               </Table.Tr>
               <Table.Tr>
-                <Table.Td ta="center">+1.75</Table.Td>
-                <Table.Td ta="center">-0.75</Table.Td>
-                <Table.Td ta="center">75</Table.Td>
-                <Table.Td ta="center" />
-                <Table.Td ta="center">64</Table.Td>
-                <Table.Td ta="center" />
-                <Table.Td ta="center" />
+                <Table.Td ta="center">{order.or_sphere_left}</Table.Td>
+                <Table.Td ta="center">{order.or_cyl_left}</Table.Td>
+                <Table.Td ta="center">{order.or_axis_left}</Table.Td>
+                <Table.Td ta="center">{order.or_pd_dist_left}</Table.Td>
+                <Table.Td ta="center">{order.or_pd_near_left}</Table.Td>
+                <Table.Td ta="center">{order.or_prism_in_left}{order.or_prism_in_left_value}</Table.Td>
+                <Table.Td ta="center">{order.or_prism_up_left}{order.or_prism_up_left_value}</Table.Td>
               </Table.Tr>
             </OrderTable>
             <OrderTable
@@ -115,22 +115,22 @@ export default function OrderDetail({ order }: Props) {
               hasRL
             >
               <Table.Tr>
-                <Table.Td ta="center">2.25</Table.Td>
-                <Table.Td ta="center">NA</Table.Td>
-                <Table.Td ta="center">24</Table.Td>
-                <Table.Td ta="center">Grey 3</Table.Td>
-                <Table.Td ta="center">60</Table.Td>
-                <Table.Td ta="center">None</Table.Td>
-                <Table.Td ta="center">Recharge</Table.Td>
+                <Table.Td ta="center">{order.or_add_right}</Table.Td>
+                <Table.Td ta="center">{order.or_upper_add_right}</Table.Td>
+                <Table.Td ta="center">{order.or_seg_height_right}</Table.Td>
+                <Table.Td ta="center">{order.or_tint_color}</Table.Td>
+                <Table.Td ta="center">{order.or_tint_percent}</Table.Td>
+                <Table.Td ta="center">{order.or_mirror}</Table.Td>
+                <Table.Td ta="center">{order.or_coating}</Table.Td>
               </Table.Tr>
               <Table.Tr>
-                <Table.Td ta="center">2.25</Table.Td>
-                <Table.Td ta="center">NA</Table.Td>
-                <Table.Td ta="center">24</Table.Td>
-                <Table.Td ta="center">Grey 3</Table.Td>
-                <Table.Td ta="center">60</Table.Td>
-                <Table.Td ta="center">None</Table.Td>
-                <Table.Td ta="center">Recharge</Table.Td>
+                <Table.Td ta="center">{order.or_add_left}</Table.Td>
+                <Table.Td ta="center">{order.or_upper_add_left}</Table.Td>
+                <Table.Td ta="center">{order.or_seg_height_left}</Table.Td>
+                <Table.Td ta="center">{order.or_tint_color}</Table.Td>
+                <Table.Td ta="center">{order.or_tint_percent}</Table.Td>
+                <Table.Td ta="center">{order.or_mirror}</Table.Td>
+                <Table.Td ta="center">{order.or_coating}</Table.Td>
               </Table.Tr>
             </OrderTable>
             <OrderTable
@@ -138,38 +138,38 @@ export default function OrderDetail({ order }: Props) {
               hasRL
             >
               <Table.Tr>
-                <Table.Td ta="center">Phoenix</Table.Td>
-                <Table.Td ta="center">Single Vision</Table.Td>
-                <Table.Td ta="center">Clear</Table.Td>
-                <Table.Td ta="center" />
-                <Table.Td ta="center" />
+                <Table.Td ta="center">{order.or_material_right}</Table.Td>
+                <Table.Td ta="center">{order.or_lens_style_right}</Table.Td>
+                <Table.Td ta="center">{order.or_lens_color_right}</Table.Td>
+                <Table.Td ta="center">{order.or_ocht_right}</Table.Td>
+                <Table.Td ta="center">{order.or_measurement_right}</Table.Td>
               </Table.Tr>
               <Table.Tr>
-                <Table.Td ta="center">Phoenix</Table.Td>
-                <Table.Td ta="center">Single Vision</Table.Td>
-                <Table.Td ta="center">Clear</Table.Td>
-                <Table.Td ta="center" />
-                <Table.Td ta="center" />
+                <Table.Td ta="center">{order.or_material_left}</Table.Td>
+                <Table.Td ta="center">{order.or_lens_style_left}</Table.Td>
+                <Table.Td ta="center">{order.or_lens_color_left}</Table.Td>
+                <Table.Td ta="center">{order.or_ocht_left}</Table.Td>
+                <Table.Td ta="center">{order.or_measurement_left}</Table.Td>
               </Table.Tr>
             </OrderTable>
             <Group ml={26} gap="xl" align="flex-start">
               <Stack flex={1}>
                 <OrderTable headers={['Special']}>
                   <Table.Tr>
-                    <Table.Td ta="center">Roll and Polish</Table.Td>
+                    <Table.Td ta="center">{order.or_add_on_1}</Table.Td>
                   </Table.Tr>
                   <Table.Tr>
-                    <Table.Td>&nbsp;</Table.Td>
+                    <Table.Td ta="center">{order.or_add_on_2}</Table.Td>
                   </Table.Tr>
                   <Table.Tr>
-                    <Table.Td>&nbsp;</Table.Td>
+                    <Table.Td ta="center">{order.or_add_on_3}</Table.Td>
                   </Table.Tr>
                 </OrderTable>
                 <OrderTable headers={['Notes']}>
                   <Table.Tr>
                     <Table.Td>
                       <Box mih={150}>
-                        This is a notes section that was entered in by the ECP
+                        {order.or_notes}
                       </Box>
                     </Table.Td>
                   </Table.Tr>
@@ -178,25 +178,25 @@ export default function OrderDetail({ order }: Props) {
               <Box flex={1}>
                 <OrderTable headers={['Frame Information']}>
                   <Table.Tr>
-                    <Table.Td ta="center">Supplied</Table.Td>
+                    <Table.Td ta="center">{order.or_frame_info}</Table.Td>
                   </Table.Tr>
                   <Table.Tr>
-                    <Table.Td ta="center">Frame Style: ZT200</Table.Td>
+                    <Table.Td ta="center">Frame Style: {order.or_frame_style}</Table.Td>
                   </Table.Tr>
                   <Table.Tr>
-                    <Table.Td ta="center">Frame Size 57-18-140</Table.Td>
+                    <Table.Td ta="center">Frame Size {order.or_frame_size}</Table.Td>
                   </Table.Tr>
                   <Table.Tr>
-                    <Table.Td ta="center">Color: Navy Blue</Table.Td>
+                    <Table.Td ta="center">Color: {order.or_frame_color}</Table.Td>
                   </Table.Tr>
                   <Table.Tr>
-                    <Table.Td ta="center">SideSheilds: Integrated</Table.Td>
+                    <Table.Td ta="center">SideSheilds: {order.or_frame_side_shield}</Table.Td>
                   </Table.Tr>
                   <Table.Tr>
-                    <Table.Td ta="center">SideShield Qty: NA</Table.Td>
+                    <Table.Td ta="center">SideShield Qty: {order.or_extra_ss}</Table.Td>
                   </Table.Tr>
                   <Table.Tr>
-                    <Table.Td ta="center">Case: D-Case</Table.Td>
+                    <Table.Td ta="center">Case: {order.or_frame_case}</Table.Td>
                   </Table.Tr>
                 </OrderTable>
               </Box>
