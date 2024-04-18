@@ -73,7 +73,7 @@ export default function LensForm({ styles, materials, coatings, form }: Props) {
         </Group>
         <Group mt={24}>
           <Button type="submit" miw={120}>Save</Button>
-          <Link href={route('admin.lens.catalog')}>
+          <Link href={route('admin.lens.index')}>
             <Button variant="outline" miw={120}>
               Catalogue
             </Button>

@@ -4,6 +4,7 @@ import { Button, Group, Stack, TextInput } from '@mantine/core';
 import { Search } from '@mui/icons-material';
 import { DataTable } from 'mantine-datatable';
 import { Lens } from '@/types';
+import { Link, router } from '@inertiajs/react';
 
 interface Props {
   lenses: Lens[];
@@ -13,6 +14,11 @@ export default function LensCatalog({ lenses }: Props) {
   return (
     <>
       <PageTitle title="Lens Catalog" />
+      <Group justify="flex-end" mb="lg">
+        <Link href={route('admin.lens.create')}>
+          <Button>New Lens</Button>
+        </Link>
+      </Group>
       <Stack mt="xl">
         <Group>
           <TextInput placeholder="Filter by Style" />
