@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('order_trackings', function (Blueprint $table) {
             $table->id();
-            $table->integer('ot_legacy_order_number');
-            $table->integer('ot_portal_order_number');
-            $table->string('ot_station_description');
-            $table->string('ot_description_text_1');
-            $table->string('ot_description_text_2');
-            $table->integer('ot_tracking_no');
+            $table->foreignUuid('order_id');
+            $table->integer('ot_legacy_order_number')->nullable();
+            $table->integer('ot_portal_order_number')->nullable();
+            $table->string('ot_station_description')->nullable();
+            $table->string('ot_description_text_1')->nullable();
+            $table->string('ot_description_text_2')->nullable();
+            $table->integer('ot_tracking_no')->nullable();
             $table->string('ot_status');
-            $table->integer('ot_track_date');
-            $table->integer('ot_track_time');
+            $table->integer('ot_track_date')->nullable();
+            $table->integer('ot_track_time')->nullable();
             $table->timestamps();
         });
     }
