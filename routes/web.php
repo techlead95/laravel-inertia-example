@@ -88,7 +88,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('misc', MiscController::class);
 
-    Route::resource('frame-variations', FrameVariationController::class);
+    Route::resource('frames.frame-variations', FrameVariationController::class);
 });
 
 Route::resource('orders', OrderController::class);

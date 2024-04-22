@@ -26,11 +26,14 @@ export default function FramePanel({
   form,
 }: Props) {
   const getFieldStyles = useGetFieldStyles();
-  const { getFieldProps } = form;
+  const { getFieldProps, data } = form;
 
   return (
     <>
-      <FrameVariationTable frameVariations={frameVariations} />
+      <FrameVariationTable
+        frameId={data.id}
+        frameVariations={frameVariations}
+      />
       <Group align="flex-start">
         <Stack gap="xs">
           <Select

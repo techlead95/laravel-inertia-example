@@ -1,10 +1,10 @@
-import PageTitle from '@/Components/PageTitle';
 import EditDeleteActions from '@/Components/EditDeleteActions';
+import PageTitle from '@/Components/PageTitle';
+import { Lens } from '@/types';
+import { Link, router } from '@inertiajs/react';
 import { Button, Group, Stack, TextInput } from '@mantine/core';
 import { Search } from '@mui/icons-material';
 import { DataTable } from 'mantine-datatable';
-import { Lens } from '@/types';
-import { Link, router } from '@inertiajs/react';
 
 interface Props {
   lenses: Lens[];
@@ -33,8 +33,8 @@ export default function LensCatalog({ lenses }: Props) {
           withTableBorder
           borderRadius="md"
           columns={[
-            { accessor: 'le_lens_style', title: 'Style' },
-            { accessor: 'le_lens_mat', title: 'Material' },
+            { accessor: 'style.ls_lenstyl_lens_style', title: 'Style' },
+            { accessor: 'material.lm_lens_material', title: 'Material' },
             { accessor: 'le_lens_col', title: 'Color' },
             {
               accessor: 'actions',

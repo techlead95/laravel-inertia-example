@@ -1,6 +1,6 @@
 import BaseDataTable from '@/Components/BaseDataTable';
 import EditDeleteActions from '@/Components/EditDeleteActions';
-import { Frame, LensCoating } from '@/types';
+import { Frame } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
 import { Button, Group } from '@mantine/core';
 
@@ -13,6 +13,9 @@ export default function Coating({ frames }: Props) {
     <>
       <Head title="Frame" />
       <Group justify="flex-end" mb="lg">
+        <Link href={route('admin.frame.catalog')}>
+          <Button variant="outline">Catalogue</Button>
+        </Link>
         <Link href={route('admin.frame.create')}>
           <Button>New Frame</Button>
         </Link>

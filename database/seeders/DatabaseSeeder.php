@@ -16,6 +16,7 @@ use Illuminate\Database\Seeder;
 use App\Models\FrameDefaultGroup;
 use App\Models\FrameLimitation;
 use App\Models\FrameVariation;
+use App\Models\Lens;
 use App\Models\LensCoating;
 use App\Models\Misc;
 use App\Models\Shield;
@@ -48,6 +49,7 @@ class DatabaseSeeder extends Seeder
         LensStyle::factory()->count(5)->create();
         LensMaterial::factory()->count(5)->create();
         LensCoating::factory(3)->create();
+        Lens::factory(5)->create();
         Tint::factory(5)->create();
         Misc::factory(3)->create();
 

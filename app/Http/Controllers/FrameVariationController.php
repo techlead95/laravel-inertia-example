@@ -26,9 +26,27 @@ class FrameVariationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, string $frameId)
     {
-        //
+        $validated = $request->validate([
+            'fv_eyesize' => 'nullable',
+            'fv_front_bridge' => 'nullable',
+            'fv_temple_type' => 'nullable',
+            'fv_temple_size' => 'nullable',
+            'fv_frame_color' => 'nullable',
+            'fv_A' => 'nullable',
+            'fv_B' => 'nullable',
+            'fv_ED' => 'nullable',
+            'fv_DBL' => 'nullable',
+            'fv_non_dig_default_seg' => 'nullable',
+            'fv_dig_default_seg' => 'nullable',
+        ]);
+
+        $validated['fv_frame_id'] = intval($frameId);
+
+        $frameVariation = FrameVariation::create($validated);
+
+        return response()->json($frameVariation, 201);
     }
 
     /**
@@ -50,20 +68,42 @@ class FrameVariationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $frameId, string $id)
     {
-        //
+        $validated = $request->validate([
+            'fv_eyesize' => 'nullable',
+            'fv_front_bridge' => 'nullable',
+            'fv_temple_type' => 'nullable',
+            'fv_temple_size' => 'nullable',
+            'fv_frame_color' => 'nullable',
+            'fv_A' => 'nullable',
+            'fv_B' => 'nullable',
+            'fv_ED' => 'nullable',
+            'fv_DBL' => 'nullable',
+            'fv_non_dig_default_seg' => 'nullable',
+            'fv_dig_default_seg' => 'nullable',
+        ]);
+
+        $frameVariation = FrameVariation::where('id', $id)->update($validated);
+
+        if ($frameVariation) {
+            return response()->json($frameVariation, 200);
+        } else {
+            return response()->json(['message' => 'No Frame Variation updated'], 404);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $frameId, string $id)
     {
-        $frameVariation = FrameVariation::findOrFail($id);
-        $frameId = $frameVariation->frame->id;
-        $frameVariation->delete();
+        $frameVariation = FrameVariation::find($id);
 
-        return to_route('admin.frame.edit', ['frame' => $frameId]);
+        if (!$frameVariation) {
+            return response()->json(['error' => 'Frame add-on not found'], 404);
+        }
+
+        $frameVariation->delete();
     }
 }

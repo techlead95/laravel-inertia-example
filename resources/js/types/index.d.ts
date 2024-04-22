@@ -160,6 +160,8 @@ export interface Lens extends Timestamps {
   le_o1_color_add_code?: string;
   le_minimun_seg?: string;
   le_coatings: string[];
+  style?: LensStyle;
+  material?: LensMaterial;
 }
 export interface LensCoating extends Timestamps {
   id: number;
