@@ -153,7 +153,7 @@ class OrderController extends Controller
                 ]);
 
                 $order = Order::create($validated);
-                $ot = new OrderTracking(['ot_status' => 'Pending']);
+                $ot = new OrderTracking(['ot_status' => 'Pending', 'ot_portal_order_number' => $order->or_portal_order_number]);
                 $order->order_trackings()->save($ot);
 
 
@@ -252,7 +252,7 @@ class OrderController extends Controller
                 ]);
 
                 $order = Order::create($validated);
-                $ot = new OrderTracking(['ot_status' => 'In Process']);
+                $ot = new OrderTracking(['ot_status' => 'In Process', 'ot_portal_order_number' => $order->or_portal_order_number]);
                 $order->order_trackings()->save($ot);
 
                 Session::flash('success', 'Order submitted successfully');
@@ -269,6 +269,7 @@ class OrderController extends Controller
     public function show(string $id)
     {
         $order = Order::find($id);
+        //$order = Order::with('status')->find($id);
 
         return inertia()->render('Orders/OrderDetail', compact('order'));
     }
@@ -490,7 +491,7 @@ class OrderController extends Controller
 
                 $order->update($validated);
 
-                $ot = new OrderTracking(['ot_status' => 'In Process']);
+                $ot = new OrderTracking(['ot_status' => 'In Process', 'ot_portal_order_number' => $order->or_portal_order_number]);
                 $order->order_trackings()->save($ot);
 
                 Session::flash('success', 'Order submitted successfully');

@@ -296,8 +296,20 @@ export interface Order extends Timestamps {
   or_manual_ship_addr_2: string;
   or_manual_ship_addr_3: string;
   method: string;
+  status: OrderTracking;
 }
-
+export interface OrderTracking extends Timestamps {
+  id: number;
+  ot_description_text_1: string;
+  ot_description_text_2: string;
+  ot_legacy_order_number: number;
+  ot_portal_order_number: number;
+  ot_station_description: string;
+  ot_status: string;
+  ot_track_date: number;
+  ot_track_time: number;
+  ot_tracking_no: number;
+}
 export interface Shield extends Timestamps {
   id: string;
   sh_frame_style: string;

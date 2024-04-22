@@ -12,6 +12,8 @@ interface Props {
 }
 
 export default function OrderDetail({ order }: Props) {
+
+  console.log(order)
   return (
     <>
       <Head title="Order Detail" />
@@ -32,10 +34,12 @@ export default function OrderDetail({ order }: Props) {
           </LabelledContent>
         </Grid.Col>
         <Grid.Col span={1}>
-          <LabelledContent label="Status">In Process</LabelledContent>
+          <LabelledContent label="Status">
+            {order.status.ot_status}
+          </LabelledContent>
         </Grid.Col>
         <Grid.Col span={1}>
-          <LabelledContent label="ETA">5 Days</LabelledContent>
+          <LabelledContent label="ETA"></LabelledContent>
         </Grid.Col>
         <Grid.Col span={1}>
           <LabelledContent label="Date Created">
@@ -46,7 +50,7 @@ export default function OrderDetail({ order }: Props) {
           <LabelledContent label="Hoya Lab">Ramsey</LabelledContent>
         </Grid.Col>
         <Grid.Col span={1}>
-          <LabelledContent label="Optic Job Number">02548137</LabelledContent>
+          <LabelledContent label="Tray Id">02548137</LabelledContent>
         </Grid.Col>
         <Grid.Col span={1}>
           <LabelledContent label="Location">Sureface</LabelledContent>

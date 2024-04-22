@@ -42,7 +42,7 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
     if (status === OrderStatus.Active) {
       result.push(
         { accessor: 'location', title: 'Location' },
-        { accessor: 'status', title: 'Status' },
+        { accessor: 'status.ot_status', title: 'Status' },
         { accessor: 'eta', title: 'ETA' },
       );
     }
