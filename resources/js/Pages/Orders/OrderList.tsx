@@ -33,10 +33,10 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
         title: 'Date Created',
         render: (order) => dayjs(order.created_at).format(DATE_DISPLAY_FORMAT),
       },
-      { accessor: 'or_rx_number', title: 'RX Number' },
+      { accessor: 'or_portal_order_number', title: 'RX Number' },
       { accessor: 'orderBy', title: 'Order By' },
       { accessor: 'orderByName', title: 'Order By Name' },
-      { accessor: 'patientName', title: 'Patient Name' },
+      { accessor: 'or_emp_name_last', title: 'Patient Name' },
     ];
 
     if (status === OrderStatus.Active) {

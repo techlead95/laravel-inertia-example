@@ -9,6 +9,7 @@ use App\Models\FrameVariation;
 use App\Models\Lens;
 use App\Models\Tint;
 use App\Models\LensCoating;
+use App\Models\OrderTracking;
 use App\Http\Controllers\DB;
 use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Session;
@@ -25,7 +26,7 @@ class OrderController extends Controller
         $startDate = request()->startDate;
         $endDate = request()->endDate;
         $orders = Order::when($search, function ($query, $search) {
-            return $query->where('or_rx_number', 'like', '%' . $search . '%');
+            return $query->where('or_portal_order_number', 'like', '%' . $search . '%');
         })->when($startDate, function ($query, $startDate) {
             return $query->where('created_at', '>=', $startDate);
         })->when($endDate, function ($query, $endDate) {
@@ -151,7 +152,10 @@ class OrderController extends Controller
                     'or_cc_company_card_exp_date' => 'nullable',
                 ]);
 
-                Order::create($validated);
+                $order = Order::create($validated);
+                $ot = new OrderTracking(['ot_status' => 'Pending']);
+                $order->order_trackings()->save($ot);
+
 
                 Session::flash('success', 'Order created successfully');
 
@@ -247,7 +251,9 @@ class OrderController extends Controller
                     'or_cc_company_card_exp_date' => 'nullable',
                 ]);
 
-                Order::create($validated);
+                $order = Order::create($validated);
+                $ot = new OrderTracking(['ot_status' => 'In Process']);
+                $order->order_trackings()->save($ot);
 
                 Session::flash('success', 'Order submitted successfully');
 
@@ -387,6 +393,7 @@ class OrderController extends Controller
 
                 $order->update($validated);
 
+
                 Session::flash('success', 'Order updated successfully');
 
                 return to_route('orders.index');
@@ -482,6 +489,9 @@ class OrderController extends Controller
                 ]);
 
                 $order->update($validated);
+
+                $ot = new OrderTracking(['ot_status' => 'In Process']);
+                $order->order_trackings()->save($ot);
 
                 Session::flash('success', 'Order submitted successfully');
 
