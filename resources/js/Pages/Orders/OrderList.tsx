@@ -23,8 +23,11 @@ interface Props {
   orders: Order[];
 }
 
+
 export default function Orders({ search, startDate, endDate, orders }: Props) {
-  const [status, setStatus] = useState(OrderStatus.Active);
+  const [ostatus, setOStatus] = useState(OrderStatus.Active);
+
+  const [filteredOrders, setFilteredOrders] = useState(orders);
 
   const columns = useMemo(() => {
     const result: DataTableColumn<Order>[] = [
@@ -39,20 +42,24 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
       { accessor: 'or_emp_name_last', title: 'Patient Name' },
     ];
 
-    if (status === OrderStatus.Active) {
+    if (ostatus === OrderStatus.Active) {
       result.push(
         { accessor: 'status.ot_station_description', title: 'Location' },
         { accessor: 'status.ot_status', title: 'Status' },
         //{ accessor: 'eta', title: 'ETA' },
       );
+      setFilteredOrders(orders.filter(order => order.status.ot_status.includes("In Process") || order.status.ot_status.includes("Pending")));
     }
 
-    if (status === OrderStatus.Shipped) {
+    if (ostatus === OrderStatus.Shipped) {
       result.push({ accessor: 'status.ot_tracking_no', title: 'Tracking Number' });
+      setFilteredOrders(orders.filter(order => order.status.ot_status.includes("Shipped")));
     }
 
-    if (status === OrderStatus.Problem) {
+    if (ostatus === OrderStatus.Problem) {
       result.push({ accessor: 'status.ot_station_description', title: 'Location' });
+
+      setFilteredOrders(orders.filter(order => order.status.ot_status.includes("Problem")));
     }
 
     return result;
@@ -64,7 +71,7 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
       <Group mt="xl" justify="space-between">
         <SegmentedControl
           value={status}
-          onChange={(newStatus) => setStatus(newStatus as OrderStatus)}
+          onChange={(newStatus) => setOStatus(newStatus as OrderStatus)}
           data={Object.values(OrderStatus)}
         />
         <SearchForm
@@ -91,12 +98,16 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
         }}
       />
       <BaseDataTable
+        rowBackgroundColor={({ status }) => {
+          if (status.ot_status === 'In Process') return 'green';
+          if (status.ot_status === 'Problem') return 'red';
+        }}
         mt="xl"
         highlightOnHover
         withTableBorder
         withColumnBorders
         columns={columns}
-        records={orders}
+        records={filteredOrders}
         onRowClick={(row) => {
           router.get(route('orders.show', { id: row.record.id }));
         }}
