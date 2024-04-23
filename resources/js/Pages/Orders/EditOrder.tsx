@@ -2,7 +2,7 @@ import PageTitle from '@/Components/PageTitle';
 import useBaseForm from '@/Hooks/useBaseForm';
 import { Stack } from '@mantine/core';
 
-import { Frame, Order, Lens, FrameVariation, Tint, LensCoating, LensCoatingSelect } from '@/types';
+import { Frame, Order, Lens, FrameVariation, Tint, LensCoating, LensCoatingSelect, Misc } from '@/types';
 import OrderForm from './OrderForm';
 
 
@@ -13,9 +13,10 @@ interface Props {
     tints: Tint[];
     lensCoatingSelects: LensCoatingSelect[];
     order: Partial<Order>;
+    miscs: Misc[];
 }
 
-export default function CreateOrder({ lenses, frameVariations, tints, lensCoatingSelects, order }: Props) {
+export default function CreateOrder({ lenses, frameVariations, tints, lensCoatingSelects, order, miscs }: Props) {
     const form =
         useBaseForm(order);
 
@@ -31,7 +32,7 @@ export default function CreateOrder({ lenses, frameVariations, tints, lensCoatin
             }}
         >
             <PageTitle title="Edit Order" />
-            <OrderForm lenses={lenses} frameVariations={frameVariations} tints={tints} lensCoatingSelects={lensCoatingSelects} form={form} />
+            <OrderForm lenses={lenses} frameVariations={frameVariations} tints={tints} lensCoatingSelects={lensCoatingSelects} form={form} miscs={miscs} />
         </Stack>
     );
 

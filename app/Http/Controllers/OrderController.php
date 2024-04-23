@@ -8,6 +8,7 @@ use App\Models\Frame;
 use App\Models\FrameVariation;
 use App\Models\Lens;
 use App\Models\Tint;
+use App\Models\Misc;
 use App\Models\LensCoating;
 use App\Models\OrderTracking;
 use App\Http\Controllers\DB;
@@ -45,13 +46,14 @@ class OrderController extends Controller
         $frameVariations = FrameVariation::with('frame')->get();
         $lenses = Lens::all();
         $tints = Tint::all();
+        $miscs = Misc::all();
         $lensCoatingSelects = [];
         foreach (LensCoating::select('lc_coating_group', 'lc_lens_coating as item')->get()->groupBy('lc_coating_group')->toArray() as $group => $items) {
             $lensCoatingSelects[] = ['group' => $group, 'items' => array_map(function ($item) {
                 return $item['item'];
             }, $items)];
         }
-        return inertia()->render('Orders/CreateOrder', compact('lenses', 'frameVariations', 'tints', 'lensCoatingSelects'));
+        return inertia()->render('Orders/CreateOrder', compact('lenses', 'frameVariations', 'tints', 'lensCoatingSelects', 'miscs'));
         //return inertia()->render('Orders/CreateOrder', compact('frames', 'lenses', 'frameVariations'));
     }
 
@@ -284,13 +286,14 @@ class OrderController extends Controller
         $frameVariations = FrameVariation::with('frame')->get();
         $lenses = Lens::all();
         $tints = Tint::all();
+        $miscs = Misc::all();
         $lensCoatingSelects = [];
         foreach (LensCoating::select('lc_coating_group', 'lc_lens_coating as item')->get()->groupBy('lc_coating_group')->toArray() as $group => $items) {
             $lensCoatingSelects[] = ['group' => $group, 'items' => array_map(function ($item) {
                 return $item['item'];
             }, $items)];
         }
-        return inertia()->render('Orders/EditOrder', compact('lenses', 'frameVariations', 'tints', 'lensCoatingSelects', 'order'));
+        return inertia()->render('Orders/EditOrder', compact('lenses', 'frameVariations', 'tints', 'lensCoatingSelects', 'order', 'miscs'));
     }
 
     /**

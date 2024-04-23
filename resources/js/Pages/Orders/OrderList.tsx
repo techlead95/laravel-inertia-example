@@ -41,18 +41,18 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
 
     if (status === OrderStatus.Active) {
       result.push(
-        { accessor: 'location', title: 'Location' },
+        { accessor: 'status.ot_station_description', title: 'Location' },
         { accessor: 'status.ot_status', title: 'Status' },
-        { accessor: 'eta', title: 'ETA' },
+        //{ accessor: 'eta', title: 'ETA' },
       );
     }
 
     if (status === OrderStatus.Shipped) {
-      result.push({ accessor: 'trackingNumber', title: 'Tracking Number' });
+      result.push({ accessor: 'status.ot_tracking_no', title: 'Tracking Number' });
     }
 
     if (status === OrderStatus.Problem) {
-      result.push({ accessor: 'location', title: 'Location' });
+      result.push({ accessor: 'status.ot_station_description', title: 'Location' });
     }
 
     return result;

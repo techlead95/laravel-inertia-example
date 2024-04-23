@@ -1,7 +1,7 @@
 import useBaseForm from '@/Hooks/useBaseForm';
 import useGetFieldStyles from '@/Hooks/useFieldStyles';
 import { useState, useEffect } from 'react';
-import { Frame, Order, Lens, FrameVariation, Tint, LensCoating, LensCoatingSelect } from '@/types';
+import { Frame, Order, Lens, FrameVariation, Tint, LensCoating, LensCoatingSelect, Misc } from '@/types';
 import { Head } from '@inertiajs/react';
 import { router } from '@inertiajs/react';
 import {
@@ -29,9 +29,10 @@ interface Props {
   tints: Tint[];
   lensCoatingSelects: LensCoatingSelect[];
   form: ReturnType<typeof useBaseForm<Partial<Order>>>;
+  miscs: Misc[];
 }
 
-export default function OrderForm({ lenses, frameVariations, tints, lensCoatingSelects, form }: Props) {
+export default function OrderForm({ lenses, frameVariations, tints, lensCoatingSelects, form, miscs }: Props) {
   const getFieldStyles = useGetFieldStyles();
 
 
@@ -611,7 +612,7 @@ export default function OrderForm({ lenses, frameVariations, tints, lensCoatingS
               <Select
                 {...getFieldProps('or_add_on_1')}
                 placeholder="Select Special Add on"
-                data={[]}
+                data={miscs.map((misc) => misc.mi_item_name ?? '')}
               />
             </Table.Td>
           </Table.Tr>
@@ -620,7 +621,7 @@ export default function OrderForm({ lenses, frameVariations, tints, lensCoatingS
               <Select
                 {...getFieldProps('or_add_on_2')}
                 placeholder="Select Special Add on"
-                data={[]}
+                data={miscs.map((misc) => misc.mi_item_name ?? '')}
               />
             </Table.Td>
           </Table.Tr>
@@ -629,7 +630,7 @@ export default function OrderForm({ lenses, frameVariations, tints, lensCoatingS
               <Select
                 {...getFieldProps('or_add_on_3')}
                 placeholder="Select Special Add on"
-                data={[]}
+                data={miscs.map((misc) => misc.mi_item_name ?? '')}
               />
             </Table.Td>
           </Table.Tr>

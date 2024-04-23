@@ -47,13 +47,19 @@ export default function OrderDetail({ order }: Props) {
           </LabelledContent>
         </Grid.Col>
         <Grid.Col span={1}>
-          <LabelledContent label="Hoya Lab">Ramsey</LabelledContent>
+          <LabelledContent label="Hoya Lab">
+            {order.status.ot_description_text_1}
+          </LabelledContent>
         </Grid.Col>
         <Grid.Col span={1}>
-          <LabelledContent label="Tray Id">02548137</LabelledContent>
+          <LabelledContent label="Tray Id">
+            {order.status.ot_description_text_2}
+          </LabelledContent>
         </Grid.Col>
         <Grid.Col span={1}>
-          <LabelledContent label="Location">Sureface</LabelledContent>
+          <LabelledContent label="Location">
+            {order.status.ot_station_description}
+          </LabelledContent>
         </Grid.Col>
         <Grid.Col span={1}>
           <LabelledContent label="Order By">
