@@ -48,4 +48,19 @@ class Frame extends Model
     {
         return $this->hasMany(FrameVariation::class, 'fv_frame_id', 'id');
     }
+
+    public function lensMaterialLimitations()
+    {
+        return $this->belongsToMany(LensMaterial::class)->withPivot('allowed');
+    }
+
+    public function lensStyleLimitations()
+    {
+        return $this->belongsToMany(LensStyle::class)->withPivot('allowed', 'minimum_pd');
+    }
+
+    public function offloadAvailabilities()
+    {
+        return $this->hasMany(FrameOffloadAvailability::class, 'fo_frame_id');
+    }
 }

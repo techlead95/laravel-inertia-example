@@ -1,12 +1,22 @@
 import BaseDataTable from '@/Components/BaseDataTable';
-import { FrameLimitation } from '@/types';
+import {
+  FrameOffloadAvailability,
+  LensMaterialLimitation,
+  LensStyleLimitation,
+} from '@/types';
 import { Group, Stack, Text } from '@mantine/core';
 
 interface Props {
-  limitations: FrameLimitation[];
+  lensMaterialLimitations: LensMaterialLimitation[];
+  lensStyleLimitations: LensStyleLimitation[];
+  offloadAvailabilities: FrameOffloadAvailability[];
 }
 
-export default function LimitationsPanel({ limitations }: Props) {
+export default function LimitationsPanel({
+  lensMaterialLimitations,
+  lensStyleLimitations,
+  offloadAvailabilities,
+}: Props) {
   return (
     <Group>
       <Stack flex={1}>
@@ -18,7 +28,7 @@ export default function LimitationsPanel({ limitations }: Props) {
             { accessor: 'fl_material', title: 'Lens Material' },
             { accessor: 'fl_material_allowed', title: 'Allowed' },
           ]}
-          records={limitations}
+          records={lensMaterialLimitations}
         />
       </Stack>
 
@@ -32,7 +42,7 @@ export default function LimitationsPanel({ limitations }: Props) {
             { accessor: 'fl_lens_style_allowed', title: 'Allowed' },
             { accessor: 'fl_min_pd', title: 'Minimum PD' },
           ]}
-          records={limitations}
+          records={lensStyleLimitations}
         />
       </Stack>
 
@@ -46,7 +56,7 @@ export default function LimitationsPanel({ limitations }: Props) {
             { accessor: 'fl_vendor_allowed', title: 'Allowed' },
             { accessor: 'fl_auto_offload', title: 'Automatic Offload' },
           ]}
-          records={limitations}
+          records={offloadAvailabilities}
         />
       </Stack>
     </Group>

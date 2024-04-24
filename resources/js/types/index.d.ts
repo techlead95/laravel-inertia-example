@@ -84,9 +84,12 @@ export interface Frame extends Timestamps {
   fr_fl_sbdge_date?: number | null;
   fr_brand?: string | null;
   fr_collection?: string | null;
-  variations?: FrameVariation[];
   fr_frame_color?: string | null;
   fr_eyesize?: string | null;
+  variations?: FrameVariation[];
+  lensMaterialLimitations?: LensMaterialLimitation[];
+  lensStyleLimitations?: LensStyleLimitation[];
+  offloadAvailabilities?: FrameOffloadAvailability[];
 }
 
 export interface FrameVariation extends Timestamps {
@@ -328,18 +331,6 @@ export interface FrameAddon {
   fa_default_case: string | null;
 }
 
-export interface FrameLimitation {
-  id: number;
-  fl_material: string;
-  fl_material_allowed: string;
-  fl_lens_style: string;
-  fl_lens_style_allowed: string;
-  fl_min_pd: string;
-  fl_vendor: string;
-  fl_vendor_allowed: string;
-  fl_auto_offload: string;
-}
-
 export interface Misc extends Timestamps {
   id: number;
   mi_item_name: string;
@@ -349,4 +340,21 @@ export interface Misc extends Timestamps {
   mi_dvi_translation: string;
   mi_o2_add_code: string;
   mi_o1_add_code: string;
+}
+
+export interface FrameOffloadAvailability extends Timestamps {
+  id: number;
+  fl_frame_id: number;
+  fl_vendor: string;
+  fl_vendor_allowed: string;
+  fl_auto_offload: string;
+}
+
+export interface LensMaterialLimitation extends Timestamps {
+  allowed: boolean;
+}
+
+export interface LensStyleLimitation extends Timestamps {
+  allowed: boolean;
+  minimum_pd: string;
 }

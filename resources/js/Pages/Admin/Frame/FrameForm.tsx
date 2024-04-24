@@ -26,7 +26,6 @@ export default function FrameForm({
   shields,
   shieldColors,
   addons,
-  limitations,
   frame,
   form,
 }: Props) {
@@ -112,7 +111,11 @@ export default function FrameForm({
           </FrameTabsPanel>
 
           <FrameTabsPanel value="limitations">
-            <LimitationsPanel limitations={limitations} />
+            <LimitationsPanel
+              lensMaterialLimitations={frame.lensMaterialLimitations ?? []}
+              lensStyleLimitations={frame.lensStyleLimitations ?? []}
+              offloadAvailabilities={frame.offloadAvailabilities ?? []}
+            />
           </FrameTabsPanel>
 
           <FrameTabsPanel value="translations">

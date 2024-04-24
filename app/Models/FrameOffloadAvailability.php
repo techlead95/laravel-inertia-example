@@ -5,7 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FrameLimitation extends Model
+class FrameOffloadAvailability extends Model
 {
     use HasFactory;
+
+    public function frame()
+    {
+        return $this->belongsTo(Frame::class, 'fo_frame_id');
+    }
 }
