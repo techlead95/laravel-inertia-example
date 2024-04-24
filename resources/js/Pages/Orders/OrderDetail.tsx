@@ -12,6 +12,8 @@ interface Props {
 }
 
 export default function OrderDetail({ order }: Props) {
+
+  console.log(order)
   return (
     <>
       <Head title="Order Detail" />
@@ -32,10 +34,12 @@ export default function OrderDetail({ order }: Props) {
           </LabelledContent>
         </Grid.Col>
         <Grid.Col span={1}>
-          <LabelledContent label="Status">In Process</LabelledContent>
+          <LabelledContent label="Status">
+            {order.status.ot_status}
+          </LabelledContent>
         </Grid.Col>
         <Grid.Col span={1}>
-          <LabelledContent label="ETA">5 Days</LabelledContent>
+          <LabelledContent label="ETA"></LabelledContent>
         </Grid.Col>
         <Grid.Col span={1}>
           <LabelledContent label="Date Created">
@@ -43,13 +47,19 @@ export default function OrderDetail({ order }: Props) {
           </LabelledContent>
         </Grid.Col>
         <Grid.Col span={1}>
-          <LabelledContent label="Hoya Lab">Ramsey</LabelledContent>
+          <LabelledContent label="Hoya Lab">
+            {order.status.ot_description_text_1}
+          </LabelledContent>
         </Grid.Col>
         <Grid.Col span={1}>
-          <LabelledContent label="Optic Job Number">02548137</LabelledContent>
+          <LabelledContent label="Tray Id">
+            {order.status.ot_description_text_2}
+          </LabelledContent>
         </Grid.Col>
         <Grid.Col span={1}>
-          <LabelledContent label="Location">Sureface</LabelledContent>
+          <LabelledContent label="Location">
+            {order.status.ot_station_description}
+          </LabelledContent>
         </Grid.Col>
         <Grid.Col span={1}>
           <LabelledContent label="Order By">
