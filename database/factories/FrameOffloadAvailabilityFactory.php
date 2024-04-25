@@ -17,9 +17,9 @@ class FrameOffloadAvailabilityFactory extends Factory
     public function definition(): array
     {
         return [
-            'fl_vendor' => 'Vendor ' . fake()->word(),
-            'fl_vendor_allowed' => fake()->randomElement([true, false]),
-            'fl_auto_offload' => fake()->word(),
+            'fo_vendor' => 'Vendor ' . fake()->word(),
+            'fo_vendor_allowed' => fake()->randomElement([true, false]),
+            'fo_auto_offload' => fake()->word(),
         ];
     }
 }

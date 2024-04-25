@@ -112,9 +112,9 @@ export default function FrameForm({
 
           <FrameTabsPanel value="limitations">
             <LimitationsPanel
-              lensMaterialLimitations={frame.lensMaterialLimitations ?? []}
-              lensStyleLimitations={frame.lensStyleLimitations ?? []}
-              offloadAvailabilities={frame.offloadAvailabilities ?? []}
+              lensMaterialLimitations={frame.lens_material_limitations ?? []}
+              lensStyleLimitations={frame.lens_style_limitations ?? []}
+              offloadAvailabilities={frame.offload_availabilities ?? []}
             />
           </FrameTabsPanel>
 

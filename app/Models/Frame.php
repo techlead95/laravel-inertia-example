@@ -51,12 +51,12 @@ class Frame extends Model
 
     public function lensMaterialLimitations()
     {
-        return $this->belongsToMany(LensMaterial::class)->withPivot('allowed');
+        return $this->belongsToMany(LensMaterial::class, 'frame_lens_material_limitations')->withPivot('allowed');
     }
 
     public function lensStyleLimitations()
     {
-        return $this->belongsToMany(LensStyle::class)->withPivot('allowed', 'minimum_pd');
+        return $this->belongsToMany(LensStyle::class, 'frame_lens_style_limitations')->withPivot('allowed', 'minimum_pd');
     }
 
     public function offloadAvailabilities()

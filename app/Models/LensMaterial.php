@@ -8,9 +8,4 @@ use Illuminate\Database\Eloquent\Model;
 class LensMaterial extends Model
 {
     use HasFactory;
-
-    public function frames()
-    {
-        return $this->belongsToMany(Frame::class)->withPivot('allowed');
-    }
 }

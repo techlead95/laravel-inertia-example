@@ -18,15 +18,15 @@ export default function LimitationsPanel({
   offloadAvailabilities,
 }: Props) {
   return (
-    <Group>
+    <Group align="flex-start">
       <Stack flex={1}>
         <Text fw="bold" size="lg">
           Lens Material Limitations
         </Text>
         <BaseDataTable
           columns={[
-            { accessor: 'fl_material', title: 'Lens Material' },
-            { accessor: 'fl_material_allowed', title: 'Allowed' },
+            { accessor: 'lm_lens_material', title: 'Lens Material' },
+            { accessor: 'pivot.allowed', title: 'Allowed' },
           ]}
           records={lensMaterialLimitations}
         />
@@ -38,9 +38,9 @@ export default function LimitationsPanel({
         </Text>
         <BaseDataTable
           columns={[
-            { accessor: 'fl_lens_style', title: 'Lens Style' },
-            { accessor: 'fl_lens_style_allowed', title: 'Allowed' },
-            { accessor: 'fl_min_pd', title: 'Minimum PD' },
+            { accessor: 'ls_lenstyl_lens_style', title: 'Lens Style' },
+            { accessor: 'pivot.allowed', title: 'Allowed' },
+            { accessor: 'pivot.minimum_pd', title: 'Minimum PD' },
           ]}
           records={lensStyleLimitations}
         />
@@ -52,9 +52,9 @@ export default function LimitationsPanel({
         </Text>
         <BaseDataTable
           columns={[
-            { accessor: 'fl_vendor', title: 'Vendor' },
-            { accessor: 'fl_vendor_allowed', title: 'Allowed' },
-            { accessor: 'fl_auto_offload', title: 'Automatic Offload' },
+            { accessor: 'fo_vendor', title: 'Vendor' },
+            { accessor: 'fo_vendor_allowed', title: 'Allowed' },
+            { accessor: 'fo_auto_offload', title: 'Automatic Offload' },
           ]}
           records={offloadAvailabilities}
         />

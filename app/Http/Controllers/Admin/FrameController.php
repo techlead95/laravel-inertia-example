@@ -43,9 +43,8 @@ class FrameController extends Controller
         $shields = Shield::all();
         $shieldColors = ShieldColor::all();
         $addons = FrameAddon::all();
-        $limitations = FrameLimitation::all();
 
-        return Inertia::render('Admin/Frame/CreateFrame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'frames', 'shields', 'shieldColors', 'addons', 'limitations'));
+        return Inertia::render('Admin/Frame/CreateFrame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'frames', 'shields', 'shieldColors', 'addons'));
     }
 
     /**
@@ -99,10 +98,9 @@ class FrameController extends Controller
         $shields = Shield::all();
         $shieldColors = ShieldColor::all();
         $addons = FrameAddon::all();
-        $limitations = FrameLimitation::all();
-        $frame = Frame::with('variations')->find($id);
+        $frame = Frame::with('variations', 'lensMaterialLimitations', 'lensStyleLimitations', 'offloadAvailabilities')->find($id);
 
-        return Inertia::render('Admin/Frame/EditFrame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'frames', 'shields', 'shieldColors', 'addons', 'limitations', 'frame'));
+        return Inertia::render('Admin/Frame/EditFrame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'frames', 'shields', 'shieldColors', 'addons', 'frame'));
     }
 
     /**
