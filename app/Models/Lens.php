@@ -12,6 +12,8 @@ class Lens extends Model
     use HasFactory;
     protected $table = 'lenses';
 
+    protected $with = ['style', 'material'];
+
     protected $fillable = [
         'le_lens_mat',
         'le_lens_col',
