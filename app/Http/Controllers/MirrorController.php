@@ -48,8 +48,10 @@ class MirrorController extends Controller
 
         $mirror = Mirror::create($validated);
         $coatings = $request->input('mr_coatings');
-        $coatings = array_map("intval", $coatings);
-        $mirror->coatings()->attach($coatings);
+        if ($coatings) {
+            $coatings = array_map("intval", $coatings);
+            $mirror->coatings()->attach($coatings);
+        }
 
 
         Session::flash('success', 'Mirror created successfully');
@@ -95,8 +97,9 @@ class MirrorController extends Controller
         $mirror->update($validated);
 
         $coatings = $request->input('mr_coatings');
+
+        //dd($coatings);
         $coatings = array_map("intval", $coatings);
-        //dd($lens);
         $mirror->coatings()->sync($coatings);
 
         Session::flash('success', 'Mirror updated successfully');
