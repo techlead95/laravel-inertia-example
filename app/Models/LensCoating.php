@@ -25,4 +25,9 @@ class LensCoating extends Model
     {
         return $this->belongsToMany(Lens::class, 'lens_coating');
     }
+
+    public function mirrors(): BelongsToMany
+    {
+        return $this->belongsToMany(Mirror::class, 'coating_mirror');
+    }
 }

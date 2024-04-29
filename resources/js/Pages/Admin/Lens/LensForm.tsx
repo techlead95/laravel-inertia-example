@@ -29,7 +29,7 @@ interface Props {
 export default function LensForm({ styles, materials, coatings, form }: Props) {
   const getFieldStyles = useGetFieldStyles();
   const { getFieldProps, data, setData, post } = form;
-  //console.log(styles);
+  console.log(coatings);
   /*
   const { getFieldProps, data, setData, post } =
     useBaseForm<Partial<Lens>>({

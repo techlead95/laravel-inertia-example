@@ -374,3 +374,14 @@ export interface LensStyleLimitation extends Timestamps {
     minimum_pd: string | null;
   };
 }
+export interface Mirror extends Timestamps {
+  id: number;
+  mr_mirror: string;
+  mr_o1_translation?: string;
+  mr_dvi_translation?: string;
+  mr_o2_add_code?: string;
+  mr_o1_add_code?: string;
+  mr_setup_by?: string;
+  mr_last_modified_by?: string;
+  mr_coatings: string[];
+}
