@@ -4,9 +4,9 @@ import {
   FrameCollection,
   FrameDefaultGroup,
   FrameEdge,
-  FrameLimitation,
   FrameMaterial,
   FrameType,
+  LensMaterial,
   Shield,
   ShieldColor,
 } from '@/types';
@@ -21,5 +21,5 @@ export interface FramePageProps {
   shields: Shield[];
   shieldColors: ShieldColor[];
   addons: FrameAddon[];
-  limitations: FrameLimitation[];
+  lensMaterials: LensMaterial[];
 }

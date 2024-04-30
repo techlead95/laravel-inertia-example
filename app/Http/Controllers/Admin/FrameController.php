@@ -13,6 +13,7 @@ use App\Models\FrameAddon;
 use App\Models\FrameCollection;
 use App\Models\FrameDefaultGroup;
 use App\Models\FrameLimitation;
+use App\Models\LensMaterial;
 use App\Models\Shield;
 use App\Models\ShieldColor;
 use Illuminate\Support\Facades\Session;
@@ -98,9 +99,16 @@ class FrameController extends Controller
         $shields = Shield::all();
         $shieldColors = ShieldColor::all();
         $addons = FrameAddon::all();
+        $lensMaterials = LensMaterial::all();
         $frame = Frame::with('variations', 'lensMaterialLimitations', 'lensStyleLimitations', 'offloadAvailabilities')->find($id);
 
-        return Inertia::render('Admin/Frame/EditFrame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'frames', 'shields', 'shieldColors', 'addons', 'frame'));
+        $frame->lensMaterialLimitations = $frame->lensMaterialLimitations->map(function ($lensMaterialLimitation) {
+            $lensMaterialLimitation->allowed = $lensMaterialLimitation->pivot->allowed;
+            unset($lensMaterialLimitation->pivot);
+            return $lensMaterialLimitation;
+        });
+
+        return Inertia::render('Admin/Frame/EditFrame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'frames', 'shields', 'shieldColors', 'addons', 'lensMaterials', 'frame'));
     }
 
     /**

@@ -8,7 +8,9 @@ import AddOnsPanel from './AddOnsPanel';
 import { FramePageProps } from './FramePage';
 import FramePanel from './FramePanel';
 import FrameTabsPanel from './FrameTabsPanel';
-import LimitationsPanel from './LimitationsPanel';
+import LensMaterialLimitations from './LensMaterialLimitations';
+import LensStyleLimitations from './LensStyleLimitations';
+import OffloadAvailabilities from './OffloadAvailabilities';
 import TranslationsPanel from './TranslationsPanel';
 
 interface Props extends FramePageProps {
@@ -27,6 +29,7 @@ export default function FrameForm({
   shieldColors,
   addons,
   frame,
+  lensMaterials,
   form,
 }: Props) {
   const { getFieldProps } = form;
@@ -111,11 +114,18 @@ export default function FrameForm({
           </FrameTabsPanel>
 
           <FrameTabsPanel value="limitations">
-            <LimitationsPanel
-              lensMaterialLimitations={frame.lens_material_limitations ?? []}
-              lensStyleLimitations={frame.lens_style_limitations ?? []}
-              offloadAvailabilities={frame.offload_availabilities ?? []}
-            />
+            <Group align="flex-start">
+              <LensMaterialLimitations
+                materials={lensMaterials}
+                lensMaterialLimitations={frame.lens_material_limitations ?? []}
+              />
+              <LensStyleLimitations
+                lensStyleLimitations={frame.lens_style_limitations ?? []}
+              />
+              <OffloadAvailabilities
+                offloadAvailabilities={frame.offload_availabilities ?? []}
+              />
+            </Group>
           </FrameTabsPanel>
 
           <FrameTabsPanel value="translations">

@@ -1,8 +1,7 @@
+import DeleteIconCell from '@/Components/DeleteIconCell';
+import useEditableTableRow from '@/Hooks/useEditableTableRow';
 import { FrameVariation } from '@/types';
-import { ActionIcon, Table, TextInput } from '@mantine/core';
-import { Delete } from '@mui/icons-material';
-import { ChangeEvent } from 'react';
-import { useDebouncedCallback } from 'use-debounce';
+import { Table, TextInput } from '@mantine/core';
 
 interface Props {
   variation?: Partial<FrameVariation>;
@@ -17,23 +16,11 @@ export default function FrameVariationRow({
   onDebouncedUpdate,
   onDelete,
 }: Props) {
-  const debouncedUpdate = useDebouncedCallback(
-    (updated: Partial<FrameVariation>) => {
-      onDebouncedUpdate(updated);
-    },
-    500,
-  );
-
-  const getFieldProps = (field: keyof FrameVariation) => {
-    return {
-      value: String(variation?.[field] ?? ''),
-      onChange(e: ChangeEvent<HTMLInputElement>) {
-        const updated = { ...variation, [field]: e.target.value };
-        onUpdate(updated);
-        debouncedUpdate(updated);
-      },
-    };
-  };
+  const { getFieldProps } = useEditableTableRow({
+    item: variation,
+    onUpdate,
+    onDebouncedUpdate,
+  });
 
   return (
     <Table.Tr>
@@ -70,13 +57,7 @@ export default function FrameVariationRow({
       <Table.Td>
         <TextInput {...getFieldProps('fv_dig_default_seg')} />
       </Table.Td>
-      {variation?.id && (
-        <Table.Td>
-          <ActionIcon variant="subtle" color="red" onClick={onDelete}>
-            <Delete />
-          </ActionIcon>
-        </Table.Td>
-      )}
+      {variation?.id && <DeleteIconCell onDelete={onDelete} />}
     </Table.Tr>
   );
 }

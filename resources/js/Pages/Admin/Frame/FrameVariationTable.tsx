@@ -1,9 +1,7 @@
+import useEditableTable from '@/Hooks/useEditableTable';
 import { FrameVariation } from '@/types';
-import { openDeleteConfirmModal, showErrorNotification } from '@/utils';
 import { Table } from '@mantine/core';
-import axios from 'axios';
 import { produce } from 'immer';
-import { useState } from 'react';
 
 import FrameVariationRow from './FrameVariationRow';
 
@@ -16,53 +14,21 @@ export default function FrameVariationTable({
   frameId,
   frameVariations,
 }: Props) {
-  const [variations, setVariations] = useState<Partial<FrameVariation>[]>([
-    ...frameVariations,
-    {},
-  ]);
-
-  const handleDelete = (index: number) => {
-    const deletingId = variations[index].id;
-
-    openDeleteConfirmModal({
-      title: 'Are you sure to delete this add-on?',
-      onConfirm() {
-        axios
-          .delete(
-            route('admin.frames.frame-variations.destroy', {
-              frame: frameId,
-              frame_variation: deletingId,
-            }),
-          )
-          .then(() => {
-            setVariations(
-              variations.filter((variation) => variation.id !== deletingId),
-            );
-          })
-          .catch((r) => {
-            showErrorNotification(r.data.error);
-          });
-      },
-    });
-  };
-
-  const handleDebouncedUpdate = (updated: Partial<FrameVariation>) => {
-    if (!updated.id) {
-      axios
-        .post(route('admin.frames.frame-variations.store', frameId), updated)
-        .then((res) => {
-          setVariations([...variations.slice(0, -1), res.data, {}]);
-        });
-    } else {
-      axios.put(
+  const { items, setItems, handleDelete, handleDebouncedUpdate, getRowKey } =
+    useEditableTable({
+      initialItems: frameVariations,
+      storeUrl: route('admin.frames.frame-variations.store', frameId),
+      getDestoryUrl: (id) =>
+        route('admin.frames.frame-variations.destroy', {
+          frame: frameId,
+          frame_variation: id,
+        }),
+      getUpdateUrl: (id) =>
         route('admin.frames.frame-variations.update', {
           frame: frameId,
-          frame_variation: updated.id,
+          frame_variation: id,
         }),
-        updated,
-      );
-    }
-  };
+    });
 
   return (
     <Table bg="white">
@@ -82,12 +48,12 @@ export default function FrameVariationTable({
         </Table.Tr>
       </Table.Thead>
       <Table.Tbody>
-        {variations.map((variation, index) => (
+        {items.map((item, index) => (
           <FrameVariationRow
-            key={index}
-            variation={variation}
+            key={getRowKey(item, index)}
+            variation={item}
             onUpdate={(variation) =>
-              setVariations(
+              setItems(
                 produce((draft) => {
                   draft[index] = variation;
                 }),

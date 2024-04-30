@@ -1,7 +1,8 @@
+import DeleteIconCell from '@/Components/DeleteIconCell';
+import useEditableTableRow from '@/Hooks/useEditableTableRow';
 import { FrameAddon } from '@/types';
 import { ActionIcon, Select, Table, TextInput } from '@mantine/core';
 import { Delete } from '@mui/icons-material';
-import { useDebouncedCallback } from 'use-debounce';
 
 interface Props {
   addon: Partial<FrameAddon>;
@@ -20,74 +21,42 @@ export default function AddOnRow({
   onDebouncedUpdate,
   onDelete,
 }: Props) {
-  const debouncedUpdate = useDebouncedCallback(
-    (updatedAddon: Partial<FrameAddon>) => {
-      onDebouncedUpdate(updatedAddon);
-    },
-    500,
-  );
-
-  const handleUpdate = (field: keyof FrameAddon, value: string | null) => {
-    const updatedAddon = { ...addon, [field]: value };
-    onUpdateAddon(updatedAddon);
-    debouncedUpdate(updatedAddon);
-  };
+  const { getFieldProps } = useEditableTableRow({
+    item: addon,
+    onUpdate: onUpdateAddon,
+    onDebouncedUpdate: onDebouncedUpdate,
+  });
 
   return (
     <Table.Tr>
       <Table.Td>
-        <TextInput
-          value={addon.fa_UPC ?? ''}
-          onChange={(e) => handleUpdate('fa_UPC', e.target.value)}
-        />
+        <TextInput {...getFieldProps('fa_UPC')} />
       </Table.Td>
       <Table.Td>
         <Select
           data={shieldOptions}
-          value={addon.fa_side_shield_type}
-          onChange={(newValue) => handleUpdate('fa_side_shield_type', newValue)}
+          {...getFieldProps('fa_side_shield_type')}
         />
       </Table.Td>
       <Table.Td>
         <Select
           data={shieldColorOptions}
-          value={addon.fa_side_shield_color}
-          onChange={(newValue) =>
-            handleUpdate('fa_side_shield_color', newValue)
-          }
+          {...getFieldProps('fa_side_shield_color')}
         />
       </Table.Td>
       <Table.Td>
-        <TextInput
-          value={addon.fa_legacy_clc ?? ''}
-          onChange={(e) => handleUpdate('fa_legacy_clc', e.target.value)}
-        />
+        <TextInput {...getFieldProps('fa_legacy_clc')} />
       </Table.Td>
       <Table.Td>
-        <TextInput
-          value={addon.fa_legacy_ss_code ?? ''}
-          onChange={(e) => handleUpdate('fa_legacy_ss_code', e.target.value)}
-        />
+        <TextInput {...getFieldProps('fa_legacy_ss_code')} />
       </Table.Td>
       <Table.Td>
-        <TextInput
-          value={addon.fa_dvi_services_code ?? ''}
-          onChange={(e) => handleUpdate('fa_dvi_services_code', e.target.value)}
-        />
+        <TextInput {...getFieldProps('fa_dvi_services_code')} />
       </Table.Td>
       <Table.Td>
-        <TextInput
-          value={addon.fa_dvi_service_code ?? ''}
-          onChange={(e) => handleUpdate('fa_dvi_service_code', e.target.value)}
-        />
+        <TextInput {...getFieldProps('fa_dvi_service_code')} />
       </Table.Td>
-      {addon.id && (
-        <Table.Td>
-          <ActionIcon variant="subtle" color="red" onClick={onDelete}>
-            <Delete />
-          </ActionIcon>
-        </Table.Td>
-      )}
+      {addon.id && <DeleteIconCell onDelete={onDelete} />}
     </Table.Tr>
   );
 }

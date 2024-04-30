@@ -5,14 +5,12 @@ import { CSSProperties } from 'react';
 interface Params {
   horizontal?: boolean;
   blueLabel?: boolean;
-  centered?: boolean;
-  noMargin?: boolean;
 }
 
 export default function useGetFieldStyles() {
   const theme = useMantineTheme();
 
-  return ({ horizontal, blueLabel, centered, noMargin }: Params) => {
+  return ({ horizontal, blueLabel }: Params) => {
     const styles: Record<string, CSSProperties> = {};
 
     if (horizontal) {
