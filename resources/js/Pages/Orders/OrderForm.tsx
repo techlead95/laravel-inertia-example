@@ -54,25 +54,35 @@ export default function OrderForm({ lenses, frameVariations, tints, lensCoatingS
   useEffect(() => {
     var frameFinal = [];
     if (data.or_frame_style || data.or_frame_color || data.or_frame_size) {
-      var filtered = [];
-      if (data.or_frame_style) {
-        filtered = frameVariations.filter(frameVariation => frameVariation.frame.fr_frame_style?.includes(data.or_frame_style ?? ''));
-      } else {
-        filtered = frameVariations;
-      }
-      var filtered2 = [];
-      if (data.or_frame_color) {
-        filtered2 = filtered.filter(frameVariation => frameVariation.fv_frame_color?.includes(data.or_frame_color ?? ''));
-      } else {
-        filtered2 = filtered;
-      }
-      var filtered3 = [];
-      if (data.or_frame_size) {
-        filtered3 = filtered2.filter(frameVariation => frameVariation.fv_size?.includes(data.or_frame_size ?? ''));
-      } else {
-        filtered3 = filtered2;
-      }
-      frameFinal = filtered3;
+      frameFinal = frameVariations.filter(frameVariation => {
+        if (data.or_frame_style && !frameVariation.frame.fr_frame_style?.includes(data.or_frame_style ?? ''))
+          return false;
+        if (data.or_frame_color && !frameVariation.fv_frame_color?.includes(data.or_frame_color ?? ''))
+          return false;
+        if (data.or_frame_size && !frameVariation.fv_size?.includes(data.or_frame_size ?? ''))
+          return false;
+        return true;
+      });
+
+      /*  var filtered = [];
+        if (data.or_frame_style) {
+          filtered = frameVariations.filter(frameVariation => frameVariation.frame.fr_frame_style?.includes(data.or_frame_style ?? ''));
+        } else {
+          filtered = frameVariations;
+        }
+        var filtered2 = [];
+        if (data.or_frame_color) {
+          filtered2 = filtered.filter(frameVariation => frameVariation.fv_frame_color?.includes(data.or_frame_color ?? ''));
+        } else {
+          filtered2 = filtered;
+        }
+        var filtered3 = [];
+        if (data.or_frame_size) {
+          filtered3 = filtered2.filter(frameVariation => frameVariation.fv_size?.includes(data.or_frame_size ?? ''));
+        } else {
+          filtered3 = filtered2;
+        }
+        frameFinal = filtered3;*/
     } else {
       frameFinal = frameVariations;
     }
@@ -96,8 +106,23 @@ export default function OrderForm({ lenses, frameVariations, tints, lensCoatingS
   useEffect(() => {
     var lensRightFinal = [];
     if (data.or_material_right || data.or_lens_style_right || data.or_lens_color_right) {
-      var filtered = [];
-      if (data.or_material_right) {
+      //var filtered = [];
+      lensRightFinal = lenses.filter(lens => {
+        if (data.or_material_right && !lens.le_lens_mat?.includes(data.or_material_right ?? ''))
+          return false;
+        if (data.or_lens_style_right && !lens.le_lens_style?.includes(data.or_lens_style_right ?? ''))
+          return false;
+        if (data.or_lens_color_right && !lens.le_lens_col?.includes(data.or_lens_color_right ?? ''))
+          return false;
+
+        return true;
+
+
+
+      });
+
+
+      /*if (data.or_material_right) {
         filtered = lenses.filter(lens => lens.le_lens_mat?.includes(data.or_material_right ?? ''));
       } else {
         filtered = lenses;
@@ -114,7 +139,7 @@ export default function OrderForm({ lenses, frameVariations, tints, lensCoatingS
       } else {
         filtered3 = filtered2;
       }
-      lensRightFinal = filtered3;
+      lensRightFinal = filtered3;*/
     } else {
       lensRightFinal = lenses;
     }
@@ -134,27 +159,21 @@ export default function OrderForm({ lenses, frameVariations, tints, lensCoatingS
   }, [data.or_material_right, data.or_lens_style_right, data.or_lens_color_right]);
 
   useEffect(() => {
+
     var lensLeftFinal = [];
     if (data.or_material_left || data.or_lens_style_left || data.or_lens_color_left) {
-      var filtered = [];
-      if (data.or_material_left) {
-        filtered = lenses.filter(lens => lens.le_lens_mat?.includes(data.or_material_left ?? ''));
-      } else {
-        filtered = lenses;
-      }
-      var filtered2 = [];
-      if (data.or_lens_style_left) {
-        filtered2 = filtered.filter(lens => lens.le_lens_style?.includes(data.or_lens_style_left ?? ''));
-      } else {
-        filtered2 = filtered;
-      }
-      var filtered3 = [];
-      if (data.or_lens_color_left) {
-        filtered3 = filtered2.filter(lens => lens.le_lens_col?.includes(data.or_lens_color_left ?? ''));
-      } else {
-        filtered3 = filtered2;
-      }
-      lensLeftFinal = filtered3;
+      //var filtered = [];
+      lensLeftFinal = lenses.filter(lens => {
+        if (data.or_material_left && !lens.le_lens_mat?.includes(data.or_material_left ?? ''))
+          return false;
+        if (data.or_lens_style_left && !lens.le_lens_style?.includes(data.or_lens_style_left ?? ''))
+          return false;
+        if (data.or_lens_color_left && !lens.le_lens_col?.includes(data.or_lens_color_left ?? ''))
+          return false;
+
+        return true;
+
+      });
     } else {
       lensLeftFinal = lenses;
     }

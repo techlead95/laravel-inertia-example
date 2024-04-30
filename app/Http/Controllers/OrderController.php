@@ -44,7 +44,7 @@ class OrderController extends Controller
     {
 
         $frameVariations = FrameVariation::with('frame')->get();
-        $lenses = Lens::all();
+        $lenses = Lens::with('coatings')->get();
         $tints = Tint::all();
         $miscs = Misc::all();
         $lensCoatingSelects = [];

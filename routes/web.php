@@ -9,6 +9,7 @@ use App\Http\Controllers\FrameAddonController;
 use App\Http\Controllers\FrameVariationController;
 use App\Http\Controllers\LensCoatingController;
 use App\Http\Controllers\MiscController;
+use App\Http\Controllers\MirrorController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TintController;
 
@@ -43,6 +44,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/lens/catalog', [LensController::class, 'catalog'])->name('lens.catalog');
     Route::resource('lens', LensController::class);
+
+
+    Route::get('/mirror/catalog', [MirrorController::class, 'catalog'])->name('mirror.catalog');
+    Route::resource('mirror', MirrorController::class);
 
     Route::resource('frame-addon', FrameAddonController::class);
 

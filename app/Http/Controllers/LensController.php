@@ -62,8 +62,10 @@ class LensController extends Controller
         $lens = Lens::create($validated);
 
         $coatings = $request->input('le_coatings');
-        $coatings = array_map("intval", $coatings);
-        $lens->coatings()->attach($coatings);
+        if ($coatings) {
+            $coatings = array_map("intval", $coatings);
+            $lens->coatings()->attach($coatings);
+        }
 
         //dd($request, $coatings);
 

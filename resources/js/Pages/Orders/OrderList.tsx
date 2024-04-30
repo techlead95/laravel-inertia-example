@@ -63,7 +63,7 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
     }
 
     return result;
-  }, [status]);
+  }, [ostatus]);
 
   return (
     <>
