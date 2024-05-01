@@ -332,7 +332,7 @@ export interface ShieldColor {
 }
 
 export interface FrameAddon {
-  id: string;
+  id: number;
   fa_UPC: string | null;
   fa_side_shield_type: string | null;
   fa_side_shield_color: string | null;
@@ -363,9 +363,7 @@ export interface FrameOffloadAvailability extends Timestamps {
 }
 
 export interface LensMaterialLimitation extends LensMaterial {
-  pivot: {
-    allowed: boolean;
-  };
+  allowed: string;
 }
 
 export interface LensStyleLimitation extends Timestamps {
