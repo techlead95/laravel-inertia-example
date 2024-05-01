@@ -17,7 +17,8 @@ class LensController extends Controller
      */
     public function index()
     {
-        $lenses = Lens::with('style', 'material')->get();
+        //$lenses = Lens::with('style', 'material')->get();
+        $lenses = Lens::all();
         return inertia()->render('Admin/Lens/LensList', compact('lenses'));
     }
 

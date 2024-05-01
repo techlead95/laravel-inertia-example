@@ -33,8 +33,8 @@ export default function LensCatalog({ lenses }: Props) {
           withTableBorder
           borderRadius="md"
           columns={[
-            { accessor: 'style.ls_lenstyl_lens_style', title: 'Style' },
-            { accessor: 'material.lm_lens_material', title: 'Material' },
+            { accessor: 'le_lens_style', title: 'Style' },
+            { accessor: 'le_lens_mat', title: 'Material' },
             { accessor: 'le_lens_col', title: 'Color' },
             {
               accessor: 'actions',
