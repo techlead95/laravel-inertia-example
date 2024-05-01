@@ -165,7 +165,17 @@ class OrderController extends Controller
                 break;
             case "submit":
                 //dd("submit");
+                $or_tint_color = $request->input('or_tint_color');
+                if ($or_tint_color) {
+                    $tint = Tint::where('ti_color', $or_tint_color)->first();
+                    $tintl = $tint->ti_lower_range;
+                    $tintu = $tint->ti_upper_range;
+                } else {
+                    $tintl = 0;
+                    $tintu = 999;
+                }
 
+                //dd($tint, $tintl, $tintu);
                 $validated = $request->validate([
                     'or_ship_to' => 'nullable',
                     'or_ordby_billto_dash' => 'nullable',
@@ -224,9 +234,9 @@ class OrderController extends Controller
                     'or_upper_add_left' => 'nullable',
                     'or_seg_height_right' => 'nullable',
                     'or_set_height_left' => 'nullable',
-                    'or_tint_color' => 'nullable',
+                    'or_tint_color' => "nullable",
                     'or_tint_color_left' => 'nullable',
-                    'or_tint_percent' => 'nullable',
+                    'or_tint_percent' => "nullable|required_with:or_tint_color|integer|numeric|between:$tintl,$tintu",
                     'or_tint_percent_left' => 'nullable',
                     'or_mirror' => 'nullable',
                     'or_mirror_left' => 'nullable',
@@ -259,6 +269,7 @@ class OrderController extends Controller
 
                 Session::flash('success', 'Order submitted successfully');
 
+                return to_route('orders.index');
 
 
                 break;
@@ -405,6 +416,16 @@ class OrderController extends Controller
             case "submit":
                 //dd("submit");
 
+                $or_tint_color = $request->input('or_tint_color');
+                if ($or_tint_color) {
+                    $tint = Tint::where('ti_color', $or_tint_color)->first();
+                    $tintl = $tint->ti_lower_range;
+                    $tintu = $tint->ti_upper_range;
+                } else {
+                    $tintl = 0;
+                    $tintu = 999;
+                }
+
                 $validated = $request->validate([
                     'or_ship_to' => 'nullable',
                     'or_ordby_billto_dash' => 'nullable',
@@ -465,7 +486,7 @@ class OrderController extends Controller
                     'or_set_height_left' => 'nullable',
                     'or_tint_color' => 'nullable',
                     'or_tint_color_left' => 'nullable',
-                    'or_tint_percent' => 'nullable',
+                    'or_tint_percent' => "nullable|required_with:or_tint_color|integer|numeric|between:$tintl,$tintu",
                     'or_tint_percent_left' => 'nullable',
                     'or_mirror' => 'nullable',
                     'or_mirror_left' => 'nullable',
@@ -499,6 +520,7 @@ class OrderController extends Controller
 
                 Session::flash('success', 'Order submitted successfully');
 
+                return to_route('orders.index');
 
 
                 break;
