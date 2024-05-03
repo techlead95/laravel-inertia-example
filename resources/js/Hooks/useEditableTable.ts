@@ -15,7 +15,9 @@ export default function useEditableTable<T extends { id: number }>({
   getUpdateUrl,
   storeUrl,
 }: Props<T>) {
-  const [items, setItems] = useState<Partial<T>[]>([...initialItems, {}]);
+  const [items, setItems] = useState<Partial<T>[]>(
+    !storeUrl ? initialItems : [...initialItems, {}],
+  );
 
   const handleDelete = (index: number) => {
     const deletingId = items[index].id!;
@@ -49,5 +51,11 @@ export default function useEditableTable<T extends { id: number }>({
     return item.id ?? `index-${index}`;
   };
 
-  return { items, setItems, handleDelete, handleDebouncedUpdate, getRowKey };
+  return {
+    items,
+    setItems,
+    handleDelete,
+    handleDebouncedUpdate,
+    getRowKey,
+  };
 }

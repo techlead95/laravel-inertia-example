@@ -40,6 +40,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('users', UserController::class);
 
     Route::get('/frame/catalog', [FrameController::class, 'catalog'])->name('frame.catalog');
+    Route::put('frames/{frame}/lens-materials/{lens_material}/save-limitation', [FrameController::class, 'saveLensMaterialLimitation'])->name('frames.lens-materials.save-limitation');
+    Route::put('frames/{frame}/lens-styles/{lens_style}/save-limitation', [FrameController::class, 'saveLensStyleLimitation'])->name('frames.lens-styles.save-limitation');
     Route::resource('frame', FrameController::class);
 
     Route::get('/lens/catalog', [LensController::class, 'catalog'])->name('lens.catalog');

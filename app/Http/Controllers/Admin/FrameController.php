@@ -12,8 +12,8 @@ use App\Http\Controllers\Controller;
 use App\Models\FrameAddon;
 use App\Models\FrameCollection;
 use App\Models\FrameDefaultGroup;
-use App\Models\FrameLimitation;
 use App\Models\LensMaterial;
+use App\Models\LensStyle;
 use App\Models\Shield;
 use App\Models\ShieldColor;
 use Illuminate\Support\Facades\Session;
@@ -100,15 +100,37 @@ class FrameController extends Controller
         $shieldColors = ShieldColor::all();
         $addons = FrameAddon::all();
         $lensMaterials = LensMaterial::all();
+        $lensStyles = LensStyle::all();
         $frame = Frame::with('variations', 'lensMaterialLimitations', 'lensStyleLimitations', 'offloadAvailabilities')->find($id);
 
-        $frame->lensMaterialLimitations = $frame->lensMaterialLimitations->map(function ($lensMaterialLimitation) {
-            $lensMaterialLimitation->allowed = $lensMaterialLimitation->pivot->allowed;
-            unset($lensMaterialLimitation->pivot);
-            return $lensMaterialLimitation;
+        $frame->lensMaterialLimitations = $frame->lensMaterialLimitations->map(function ($limitation) {
+            $limitation->allowed = $limitation->pivot->allowed;
+            unset($limitation->pivot);
+            return $limitation;
         });
 
-        return Inertia::render('Admin/Frame/EditFrame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'frames', 'shields', 'shieldColors', 'addons', 'lensMaterials', 'frame'));
+        $frame->lensStyleLimitations = $frame->lensStyleLimitations->map(function ($limitation) {
+            $limitation->allowed = $limitation->pivot->allowed;
+            $limitation->minimum_pd = $limitation->pivot->minimum_pd;
+            unset($limitation->pivot);
+            return $limitation;
+        });
+
+
+        return Inertia::render('Admin/Frame/EditFrame', compact(
+            'edges',
+            'materials',
+            'brands',
+            'collections',
+            'groups',
+            'frames',
+            'shields',
+            'shieldColors',
+            'addons',
+            'lensMaterials',
+            'lensStyles',
+            'frame'
+        ));
     }
 
     /**
@@ -156,5 +178,21 @@ class FrameController extends Controller
     public function catalog()
     {
         return Inertia::render('Admin/Frame/FrameCatalog');
+    }
+
+    public function saveLensMaterialLimitation(Request $request, $frameId, $lensMaterialId)
+    {
+        $frame = Frame::findOrFail($frameId);
+        $frame->lensMaterialLimitations()->syncWithoutDetaching([
+            $lensMaterialId => ['allowed' => $request->allowed]
+        ]);
+    }
+
+    public function saveLensStyleLimitation(Request $request, $frameId, $lensStyleId)
+    {
+        $frame = Frame::findOrFail($frameId);
+        $frame->lensStyleLimitations()->syncWithoutDetaching([
+            $lensStyleId => ['allowed' => $request->allowed, 'minimum_pd' => $request->minimum_pd]
+        ]);
     }
 }

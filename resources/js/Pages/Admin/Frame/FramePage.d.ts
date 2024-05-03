@@ -7,6 +7,7 @@ import {
   FrameMaterial,
   FrameType,
   LensMaterial,
+  LensStyle,
   Shield,
   ShieldColor,
 } from '@/types';
@@ -22,4 +23,5 @@ export interface FramePageProps {
   shieldColors: ShieldColor[];
   addons: FrameAddon[];
   lensMaterials: LensMaterial[];
+  lensStyles: LensStyle[];
 }

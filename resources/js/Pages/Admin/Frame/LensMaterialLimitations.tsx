@@ -2,28 +2,41 @@ import useEditableTable from '@/Hooks/useEditableTable';
 import { LensMaterial, LensMaterialLimitation } from '@/types';
 import { Stack, Table, Text } from '@mantine/core';
 import { produce } from 'immer';
+import { keyBy } from 'lodash';
+import { useMemo } from 'react';
 
 import LensMaterialLimitationRow from './LensMaterialLimitationRow';
 
 interface Props {
+  frameId: number;
   lensMaterialLimitations: LensMaterialLimitation[];
   materials: LensMaterial[];
 }
 
 export default function LensMaterialLimitations({
+  frameId,
   lensMaterialLimitations,
   materials,
 }: Props) {
-  const materialOptions = materials.map((material) => ({
-    value: String(material.id),
-    label: material.lm_lens_material,
-  }));
+  const initialItems = useMemo(() => {
+    const normalizedLimitations = keyBy(lensMaterialLimitations, 'id');
 
-  const { items, setItems, handleDelete, handleDebouncedUpdate, getRowKey } =
+    return materials.map((material) => ({
+      ...normalizedLimitations[material.id],
+      id: material.id,
+      lm_lens_material: material.lm_lens_material,
+    }));
+  }, [lensMaterialLimitations, materials]);
+
+  const { items, setItems, handleDebouncedUpdate, getRowKey } =
     useEditableTable({
-      initialItems: lensMaterialLimitations,
-      getDestoryUrl: (id) => '',
-      getUpdateUrl: (id) => '',
+      initialItems,
+      getDestoryUrl: () => '',
+      getUpdateUrl: (id) =>
+        route('admin.frames.lens-materials.save-limitation', {
+          frame: frameId,
+          lens_material: id,
+        }),
       storeUrl: '',
     });
 
@@ -44,7 +57,6 @@ export default function LensMaterialLimitations({
             <LensMaterialLimitationRow
               key={getRowKey(item, index)}
               lensMaterialLimitation={item}
-              materialOptions={materialOptions}
               onUpdate={(updatedLimitation) => {
                 setItems(
                   produce((draft) => {
@@ -53,9 +65,6 @@ export default function LensMaterialLimitations({
                 );
               }}
               onDebouncedUpdate={handleDebouncedUpdate}
-              onDelete={() => {
-                handleDelete(index);
-              }}
             />
           ))}
         </Table.Tbody>

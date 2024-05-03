@@ -30,6 +30,7 @@ export default function FrameForm({
   addons,
   frame,
   lensMaterials,
+  lensStyles,
   form,
 }: Props) {
   const { getFieldProps } = form;
@@ -116,10 +117,13 @@ export default function FrameForm({
           <FrameTabsPanel value="limitations">
             <Group align="flex-start">
               <LensMaterialLimitations
+                frameId={frame.id}
                 materials={lensMaterials}
                 lensMaterialLimitations={frame.lens_material_limitations ?? []}
               />
               <LensStyleLimitations
+                frameId={frame.id}
+                styles={lensStyles}
                 lensStyleLimitations={frame.lens_style_limitations ?? []}
               />
               <OffloadAvailabilities

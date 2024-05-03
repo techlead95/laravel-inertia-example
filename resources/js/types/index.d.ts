@@ -366,11 +366,9 @@ export interface LensMaterialLimitation extends LensMaterial {
   allowed: string;
 }
 
-export interface LensStyleLimitation extends Timestamps {
-  pivot: {
-    allowed: boolean;
-    minimum_pd: string | null;
-  };
+export interface LensStyleLimitation extends LensStyle {
+  allowed: string;
+  minimum_pd: string | null;
 }
 export interface Mirror extends Timestamps {
   id: number;

@@ -29,6 +29,7 @@ export default function useEditableTableRow<T>({
         })();
 
         const updated = { ...item, [field]: newValue };
+
         onUpdate(updated);
         debouncedUpdate(updated);
       },
