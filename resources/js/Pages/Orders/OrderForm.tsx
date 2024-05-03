@@ -43,6 +43,7 @@ export default function OrderForm({ lenses, frameVariations, tints, lensCoatingS
   const [filteredFrameStyles, setFilteredFrameStyles] = useState([""]);
   const [filteredFrameSizes, setFilteredFrameSizes] = useState([""]);
   const [filteredFrameColors, setFilteredFrameColors] = useState([""]);
+  const [filteredFrameBrands, setFilteredFrameBrands] = useState([""]);
   const [filteredLensColorsRight, setFilteredLensColorsRight] = useState([""]);
   const [filteredLensStlyesRight, setFilteredLensStylesRight] = useState([""]);
   const [filteredLensMaterialsRight, setFilteredLensMaterialsRight] = useState([""]);
@@ -53,42 +54,26 @@ export default function OrderForm({ lenses, frameVariations, tints, lensCoatingS
   const { getFieldProps, data, setData, post, processing, errors } = form;
   useEffect(() => {
     var frameFinal = [];
-    if (data.or_frame_style || data.or_frame_color || data.or_frame_size) {
+    if (data.or_frame_style || data.or_frame_color || data.or_frame_size || data.or_frame_manufacturer) {
       frameFinal = frameVariations.filter(frameVariation => {
-        if (data.or_frame_style && !frameVariation.frame.fr_frame_style?.includes(data.or_frame_style ?? ''))
+        if (data.or_frame_style && !frameVariation.frame.fr_frame_name?.includes(data.or_frame_style ?? ''))
           return false;
         if (data.or_frame_color && !frameVariation.fv_frame_color?.includes(data.or_frame_color ?? ''))
           return false;
         if (data.or_frame_size && !frameVariation.fv_size?.includes(data.or_frame_size ?? ''))
           return false;
+        if (data.or_frame_manufacturer && !frameVariation.frame.fr_brand?.includes(data.or_frame_manufacturer))
+          return false;
+
         return true;
       });
 
-      /*  var filtered = [];
-        if (data.or_frame_style) {
-          filtered = frameVariations.filter(frameVariation => frameVariation.frame.fr_frame_style?.includes(data.or_frame_style ?? ''));
-        } else {
-          filtered = frameVariations;
-        }
-        var filtered2 = [];
-        if (data.or_frame_color) {
-          filtered2 = filtered.filter(frameVariation => frameVariation.fv_frame_color?.includes(data.or_frame_color ?? ''));
-        } else {
-          filtered2 = filtered;
-        }
-        var filtered3 = [];
-        if (data.or_frame_size) {
-          filtered3 = filtered2.filter(frameVariation => frameVariation.fv_size?.includes(data.or_frame_size ?? ''));
-        } else {
-          filtered3 = filtered2;
-        }
-        frameFinal = filtered3;*/
     } else {
       frameFinal = frameVariations;
     }
     //setFilteredFrameVariations(frameFinal);
     var frameStyle = [];
-    frameStyle = frameFinal.map((frameVariation) => frameVariation.frame.fr_frame_style ?? '');
+    frameStyle = frameFinal.map((frameVariation) => frameVariation.frame.fr_frame_name ?? '');
     var frameStyleFiltered = [...new Set(frameStyle)];
     setFilteredFrameStyles(frameStyleFiltered);
     var frameSize = [];
@@ -99,9 +84,13 @@ export default function OrderForm({ lenses, frameVariations, tints, lensCoatingS
     frameColor = frameFinal.map((frameVariation) => frameVariation.fv_frame_color ?? '');
     var frameColorFiltered = [...new Set(frameColor)];
     setFilteredFrameColors(frameColorFiltered);
+    var frameBrand = [];
+    frameBrand = frameFinal.map((frameVariation) => frameVariation.frame.fr_brand ?? '');
+    var frameBrandFiltered = [...new Set(frameBrand)];
+    setFilteredFrameBrands(frameBrandFiltered);
 
-    console.log(lensCoatingSelects);
-  }, [data.or_frame_style, data.or_frame_color, data.or_frame_size]);
+    //console.log(lensCoatingSelects);
+  }, [data.or_frame_style, data.or_frame_color, data.or_frame_size, data.or_frame_manufacturer]);
 
   useEffect(() => {
     var lensRightFinal = [];
@@ -114,7 +103,6 @@ export default function OrderForm({ lenses, frameVariations, tints, lensCoatingS
           return false;
         if (data.or_lens_color_right && !lens.le_lens_col?.includes(data.or_lens_color_right ?? ''))
           return false;
-
         return true;
 
 
@@ -122,24 +110,6 @@ export default function OrderForm({ lenses, frameVariations, tints, lensCoatingS
       });
 
 
-      /*if (data.or_material_right) {
-        filtered = lenses.filter(lens => lens.le_lens_mat?.includes(data.or_material_right ?? ''));
-      } else {
-        filtered = lenses;
-      }
-      var filtered2 = [];
-      if (data.or_lens_style_right) {
-        filtered2 = filtered.filter(lens => lens.le_lens_style?.includes(data.or_lens_style_right ?? ''));
-      } else {
-        filtered2 = filtered;
-      }
-      var filtered3 = [];
-      if (data.or_lens_color_right) {
-        filtered3 = filtered2.filter(lens => lens.le_lens_col?.includes(data.or_lens_color_right ?? ''));
-      } else {
-        filtered3 = filtered2;
-      }
-      lensRightFinal = filtered3;*/
     } else {
       lensRightFinal = lenses;
     }
@@ -573,7 +543,7 @@ export default function OrderForm({ lenses, frameVariations, tints, lensCoatingS
             <Table.Td>
               <Select
                 {...getFieldProps('or_frame_manufacturer')}
-                data={['Visa', 'MasterCard', 'Discover', 'American Express']}
+                data={filteredFrameBrands}
               />
             </Table.Td>
             <Table.Td>
