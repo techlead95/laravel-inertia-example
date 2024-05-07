@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('lc_o2_add_code')->nullable();
             $table->string('lc_o1_add_code')->nullable();
             $table->string('lc_lens_color')->nullable();
+            $table->boolean('lc_tintable')->default(true);
             $table->string('lc_lens_clarity_shield')->nullable();
             $table->string('lc_ez_clean')->nullable();
             $table->string('lc_anti_fog')->nullable();

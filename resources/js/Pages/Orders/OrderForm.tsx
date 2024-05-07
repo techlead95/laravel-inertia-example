@@ -27,12 +27,12 @@ interface Props {
   lenses: Lens[];
   frameVariations: FrameVariation[];
   tints: Tint[];
-  lensCoatingSelects: LensCoatingSelect[];
   form: ReturnType<typeof useBaseForm<Partial<Order>>>;
   miscs: Misc[];
+  coatings: LensCoating[];
 }
 
-export default function OrderForm({ lenses, frameVariations, tints, lensCoatingSelects, form, miscs }: Props) {
+export default function OrderForm({ lenses, frameVariations, tints, form, miscs, coatings }: Props) {
   const getFieldStyles = useGetFieldStyles();
 
 
@@ -50,6 +50,7 @@ export default function OrderForm({ lenses, frameVariations, tints, lensCoatingS
   const [filteredLensColorsLeft, setFilteredLensColorsLeft] = useState([""]);
   const [filteredLensStlyesLeft, setFilteredLensStylesLeft] = useState([""]);
   const [filteredLensMaterialsLeft, setFilteredLensMaterialsLeft] = useState([""]);
+  const [filteredLensCoatings, setFilteredLensCoatings] = useState([""]);
   //const { register, handleSubmit, setValue } = useForm();
   const { getFieldProps, data, setData, post, processing, errors } = form;
   useEffect(() => {
@@ -89,11 +90,12 @@ export default function OrderForm({ lenses, frameVariations, tints, lensCoatingS
     var frameBrandFiltered = [...new Set(frameBrand)];
     setFilteredFrameBrands(frameBrandFiltered);
 
-    //console.log(lensCoatingSelects);
+    //console.log(lenses);
   }, [data.or_frame_style, data.or_frame_color, data.or_frame_size, data.or_frame_manufacturer]);
 
   useEffect(() => {
     var lensRightFinal = [];
+    //if (data.or_material_right || data.or_lens_style_right || data.or_lens_color_right || data.or_coating) {
     if (data.or_material_right || data.or_lens_style_right || data.or_lens_color_right) {
       //var filtered = [];
       lensRightFinal = lenses.filter(lens => {
@@ -103,6 +105,19 @@ export default function OrderForm({ lenses, frameVariations, tints, lensCoatingS
           return false;
         if (data.or_lens_color_right && !lens.le_lens_col?.includes(data.or_lens_color_right ?? ''))
           return false;
+
+        /*if (data.or_coating) {
+
+          var coatings = lens.coatings?.filter(coating => {
+            if (!coating.lc_lens_coating.includes(data.or_coating ?? ''))
+              return false;
+            return true;
+          })
+
+          console.log(coatings)
+          if (!(coatings && coatings.length > 0))
+            return false;
+        }*/
         return true;
 
 
@@ -125,8 +140,13 @@ export default function OrderForm({ lenses, frameVariations, tints, lensCoatingS
     lensColorRight = lensRightFinal.map((lens) => lens.le_lens_col ?? '');
     var lensColorRightFiltered = [...new Set(lensColorRight)];
     setFilteredLensColorsRight(lensColorRightFiltered);
+    /*var lensCoating = [];
+    lensCoating = lensRightFinal.map((lens) => lens.coatings?.map((coating) => coating.lc_lens_coating)).flat();
+    var lensCoatingFiltered = [...new Set(lensCoating)];
+    setFilteredLensCoatings(lensCoatingFiltered);*/
     //console.log(filteredRightLenses)
   }, [data.or_material_right, data.or_lens_style_right, data.or_lens_color_right]);
+  //}, [data.or_material_right, data.or_lens_style_right, data.or_lens_color_right, data.or_coating]);
 
   useEffect(() => {
 
@@ -159,6 +179,7 @@ export default function OrderForm({ lenses, frameVariations, tints, lensCoatingS
     lensColorLeft = lensLeftFinal.map((lens) => lens.le_lens_col ?? '');
     var lensColorLeftFiltered = [...new Set(lensColorLeft)];
     setFilteredLensColorsLeft(lensColorLeftFiltered);
+
   }, [data.or_material_left, data.or_lens_style_left, data.or_lens_color_left]);
 
   return (
@@ -507,7 +528,7 @@ export default function OrderForm({ lenses, frameVariations, tints, lensCoatingS
             <Table.Td>
               <Select {...getFieldProps('or_coating')}
                 placeholder="Select Coating"
-                data={lensCoatingSelects}
+                data={filteredLensCoatings}
               //data={lensCoatings.map((lensCoating) => lensCoating.lc_lens_coating ?? '')}
               />
             </Table.Td>
