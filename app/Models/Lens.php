@@ -29,6 +29,8 @@ class Lens extends Model
         'le_o1_material_add_code',
         'le_o1_color_add_code',
         'le_minimun_seg',
+        'le_upper_add',
+        'le_ocht',
     ];
 
     public function coatings(): BelongsToMany

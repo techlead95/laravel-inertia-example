@@ -187,6 +187,7 @@ export interface LensCoating extends Timestamps {
   id: number;
   lc_lens_coating: string;
   lc_coating_group: string;
+  lc_tintable: boolean;
   lc_o1_translation?: string;
   lc_dvi_translation?: string;
   lc_cost?: number;
