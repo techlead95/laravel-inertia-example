@@ -127,6 +127,7 @@ export default function FrameForm({
                 lensStyleLimitations={frame.lens_style_limitations ?? []}
               />
               <OffloadAvailabilities
+                frameId={frame.id}
                 offloadAvailabilities={frame.offload_availabilities ?? []}
               />
             </Group>

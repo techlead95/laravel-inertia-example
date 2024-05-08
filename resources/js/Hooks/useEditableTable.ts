@@ -23,7 +23,7 @@ export default function useEditableTable<T extends { id: number }>({
     const deletingId = items[index].id!;
 
     openDeleteConfirmModal({
-      title: 'Are you sure to delete this add-on?',
+      title: 'Are you sure to delete this item?',
       onConfirm() {
         axios
           .delete(getDestoryUrl(deletingId))

@@ -6,6 +6,7 @@ use App\Http\Controllers\LensController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\FrameController;
 use App\Http\Controllers\FrameAddonController;
+use App\Http\Controllers\FrameOffloadAvailabilityController;
 use App\Http\Controllers\FrameVariationController;
 use App\Http\Controllers\LensCoatingController;
 use App\Http\Controllers\MiscController;
@@ -42,6 +43,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/frame/catalog', [FrameController::class, 'catalog'])->name('frame.catalog');
     Route::put('frames/{frame}/lens-materials/{lens_material}/save-limitation', [FrameController::class, 'saveLensMaterialLimitation'])->name('frames.lens-materials.save-limitation');
     Route::put('frames/{frame}/lens-styles/{lens_style}/save-limitation', [FrameController::class, 'saveLensStyleLimitation'])->name('frames.lens-styles.save-limitation');
+    Route::resource('frames.frame-variations', FrameVariationController::class);
+    Route::resource('frames.offload-availabilities', FrameOffloadAvailabilityController::class);
     Route::resource('frame', FrameController::class);
 
     Route::get('/lens/catalog', [LensController::class, 'catalog'])->name('lens.catalog');
@@ -94,8 +97,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('tint', TintController::class);
 
     Route::resource('misc', MiscController::class);
-
-    Route::resource('frames.frame-variations', FrameVariationController::class);
 });
 
 Route::resource('orders', OrderController::class);

@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('frame_offload_availabilities', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('fo_frame_id')->nullable();
-            $table->string('fo_vendor');
+            $table->string('fo_vendor')->nullable();
             $table->boolean('fo_vendor_allowed')->default(false);
-            $table->string('fo_auto_offload');
+            $table->string('fo_auto_offload')->nullable();
             $table->timestamps();
 
             $table->foreign('fo_frame_id')->references('id')->on('frames')->onDelete('cascade');
