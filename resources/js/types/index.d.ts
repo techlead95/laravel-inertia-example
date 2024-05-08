@@ -107,6 +107,20 @@ export interface FrameVariation extends Timestamps {
   fv_dig_default_seg?: string;
   frame: Frame;
   fv_size: string;
+
+  fv_optic_legacy?: string;
+  fv_o1_add_code?: string;
+  fv_o1_stock_code?: string;
+  fv_o2_add_code?: string;
+  fv_o2_stock_code?: string;
+
+  fv_dvi_frm_mfr?: string;
+  fv_dvi_frm_style?: string;
+  fv_dvi_frm_color?: string;
+  fv_dvi_frm_eye?: string;
+  fv_dvi_frm_bridge?: string;
+  fv_dvi_frm_temple?: string;
+  fv_dvi_frm_tpl_type?: string;
 }
 
 export type FrameType = Frame;
@@ -370,6 +384,7 @@ export interface LensStyleLimitation extends LensStyle {
   allowed: string;
   minimum_pd: string | null;
 }
+
 export interface Mirror extends Timestamps {
   id: number;
   mr_mirror: string;

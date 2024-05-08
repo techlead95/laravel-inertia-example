@@ -26,6 +26,20 @@ return new class extends Migration
             $table->string('fv_non_dig_default_seg')->nullable();
             $table->string('fv_dig_default_seg')->nullable();
 
+            $table->string('fv_optic_legacy')->nullable();
+            $table->string('fv_o1_add_code')->nullable();
+            $table->string('fv_o1_stock_code')->nullable();
+            $table->string('fv_o2_add_code')->nullable();
+            $table->string('fv_o2_stock_code')->nullable();
+
+            $table->string('fv_dvi_frm_mfr')->nullable();
+            $table->string('fv_dvi_frm_style')->nullable();
+            $table->string('fv_dvi_frm_color')->nullable();
+            $table->string('fv_dvi_frm_eye')->nullable();
+            $table->string('fv_dvi_frm_bridge')->nullable();
+            $table->string('fv_dvi_frm_temple')->nullable();
+            $table->string('fv_dvi_frm_tpl_type')->nullable();
+
             $table->timestamps();
         });
     }

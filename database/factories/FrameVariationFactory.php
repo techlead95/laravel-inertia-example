@@ -28,6 +28,20 @@ class FrameVariationFactory extends Factory
             'fv_DBL' => fake()->word(),
             'fv_non_dig_default_seg' => fake()->word(),
             'fv_dig_default_seg' => fake()->word(),
+
+            'fv_optic_legacy' => fake()->word(),
+            'fv_o1_add_code' => fake()->word(),
+            'fv_o1_stock_code' => fake()->word(),
+            'fv_o2_add_code' => fake()->word(),
+            'fv_o2_stock_code' => fake()->word(),
+
+            'fv_dvi_frm_mfr' => fake()->word(),
+            'fv_dvi_frm_style' => fake()->word(),
+            'fv_dvi_frm_color' => fake()->word(),
+            'fv_dvi_frm_eye' => fake()->word(),
+            'fv_dvi_frm_bridge' => fake()->word(),
+            'fv_dvi_frm_temple' => fake()->word(),
+            'fv_dvi_frm_tpl_type' => fake()->word(),
         ];
     }
 }
