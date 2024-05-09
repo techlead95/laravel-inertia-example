@@ -40,6 +40,20 @@ class FrameVariationController extends Controller
             'fv_DBL' => 'nullable',
             'fv_non_dig_default_seg' => 'nullable',
             'fv_dig_default_seg' => 'nullable',
+
+            'fv_optic_legacy' => 'nullable',
+            'fv_o1_add_code' => 'nullable',
+            'fv_o1_stock_code' => 'nullable',
+            'fv_o2_add_code' => 'nullable',
+            'fv_o2_stock_code' => 'nullable',
+
+            'fv_dvi_frm_mfr' => 'nullable',
+            'fv_dvi_frm_style' => 'nullable',
+            'fv_dvi_frm_color' => 'nullable',
+            'fv_dvi_frm_eye' => 'nullable',
+            'fv_dvi_frm_bridge' => 'nullable',
+            'fv_dvi_frm_temple' => 'nullable',
+            'fv_dvi_frm_tpl_type' => 'nullable',
         ]);
 
         $validated['fv_frame_id'] = intval($frameId);
@@ -82,6 +96,20 @@ class FrameVariationController extends Controller
             'fv_DBL' => 'nullable',
             'fv_non_dig_default_seg' => 'nullable',
             'fv_dig_default_seg' => 'nullable',
+
+            'fv_optic_legacy' => 'nullable',
+            'fv_o1_add_code' => 'nullable',
+            'fv_o1_stock_code' => 'nullable',
+            'fv_o2_add_code' => 'nullable',
+            'fv_o2_stock_code' => 'nullable',
+
+            'fv_dvi_frm_mfr' => 'nullable',
+            'fv_dvi_frm_style' => 'nullable',
+            'fv_dvi_frm_color' => 'nullable',
+            'fv_dvi_frm_eye' => 'nullable',
+            'fv_dvi_frm_bridge' => 'nullable',
+            'fv_dvi_frm_temple' => 'nullable',
+            'fv_dvi_frm_tpl_type' => 'nullable',
         ]);
 
         $frameVariation = FrameVariation::where('id', $id)->update($validated);

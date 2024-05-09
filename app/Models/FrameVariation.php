@@ -24,6 +24,20 @@ class FrameVariation extends Model
         'fv_DBL',
         'fv_non_dig_default_seg',
         'fv_dig_default_seg',
+
+        'fv_optic_legacy',
+        'fv_o1_add_code',
+        'fv_o1_stock_code',
+        'fv_o2_add_code',
+        'fv_o2_stock_code',
+
+        'fv_dvi_frm_mfr',
+        'fv_dvi_frm_style',
+        'fv_dvi_frm_color',
+        'fv_dvi_frm_eye',
+        'fv_dvi_frm_bridge',
+        'fv_dvi_frm_temple',
+        'fv_dvi_frm_tpl_type',
     ];
 
     public function frame()

@@ -3,17 +3,14 @@ import { FrameVariation } from '@/types';
 import { Stack, Table, Text } from '@mantine/core';
 import { produce } from 'immer';
 
-import OpticLegacyTranslationRow from './OpticLegacyTranslationRow';
+import DviTranslationRow from './DviTranslationRow';
 
 interface Props {
   frameId: number;
   frameVariations: FrameVariation[];
 }
 
-export default function OpticLegacyTranslations({
-  frameId,
-  frameVariations,
-}: Props) {
+export default function DviTranslations({ frameId, frameVariations }: Props) {
   const { items, setItems, handleDebouncedUpdate, getRowKey } =
     useEditableTable({
       initialItems: frameVariations,
@@ -29,7 +26,7 @@ export default function OpticLegacyTranslations({
   return (
     <Stack>
       <Text fw="bold" size="lg">
-        Optic Legacy
+        DVI
       </Text>
       <Table bg="white">
         <Table.Thead>
@@ -39,16 +36,18 @@ export default function OpticLegacyTranslations({
             <Table.Th>Temple Type</Table.Th>
             <Table.Th>Temple Size</Table.Th>
             <Table.Th>Color</Table.Th>
-            <Table.Th>Optic Legacy</Table.Th>
-            <Table.Th>Legacy Add Code</Table.Th>
-            <Table.Th>Legacy Stock Code</Table.Th>
-            <Table.Th>O2 Add Code</Table.Th>
-            <Table.Th>O2 Stock Code</Table.Th>
+            <Table.Th>DVI FRM MFR</Table.Th>
+            <Table.Th>DVI FRM Style</Table.Th>
+            <Table.Th>DVI FRM Color</Table.Th>
+            <Table.Th>DVI FRM Eye</Table.Th>
+            <Table.Th>DVI FRM Bridge</Table.Th>
+            <Table.Th>DVI FRM Temple</Table.Th>
+            <Table.Th>DVI FRM TPL Type</Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
           {items.map((item, index) => (
-            <OpticLegacyTranslationRow
+            <DviTranslationRow
               key={getRowKey(item, index)}
               variation={item}
               onUpdate={(variation) =>

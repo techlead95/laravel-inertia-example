@@ -10,7 +10,7 @@ interface Props {
   ) => void;
 }
 
-export default function OpticLegacyTranslationRow({
+export default function DviTranslationRow({
   variation,
   onUpdate,
   onDebouncedUpdate,
@@ -29,19 +29,25 @@ export default function OpticLegacyTranslationRow({
       <Table.Td>{variation.fv_temple_size}</Table.Td>
       <Table.Td>{variation.fv_frame_color}</Table.Td>
       <Table.Td>
-        <TextInput {...getFieldProps('fv_optic_legacy')} />
+        <TextInput {...getFieldProps('fv_dvi_frm_mfr')} />
       </Table.Td>
       <Table.Td>
-        <TextInput {...getFieldProps('fv_o1_add_code')} />
+        <TextInput {...getFieldProps('fv_dvi_frm_style')} />
       </Table.Td>
       <Table.Td>
-        <TextInput {...getFieldProps('fv_o1_stock_code')} />
+        <TextInput {...getFieldProps('fv_dvi_frm_color')} />
       </Table.Td>
       <Table.Td>
-        <TextInput {...getFieldProps('fv_o2_add_code')} />
+        <TextInput {...getFieldProps('fv_dvi_frm_eye')} />
       </Table.Td>
       <Table.Td>
-        <TextInput {...getFieldProps('fv_o2_stock_code')} />
+        <TextInput {...getFieldProps('fv_dvi_frm_bridge')} />
+      </Table.Td>
+      <Table.Td>
+        <TextInput {...getFieldProps('fv_dvi_frm_temple')} />
+      </Table.Td>
+      <Table.Td>
+        <TextInput {...getFieldProps('fv_dvi_frm_tpl_type')} />
       </Table.Td>
     </Table.Tr>
   );
