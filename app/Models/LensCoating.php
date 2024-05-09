@@ -18,7 +18,8 @@ class LensCoating extends Model
         'lc_o1_translation',
         'lc_dvi_translation',
         'lc_o2_add_code',
-        'lc_o1_add_code'
+        'lc_o1_add_code',
+        'lc_tintable'
     ];
 
     public function lenses(): BelongsToMany

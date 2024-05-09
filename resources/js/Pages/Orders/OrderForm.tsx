@@ -51,6 +51,11 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
   const [filteredLensStlyesLeft, setFilteredLensStylesLeft] = useState([""]);
   const [filteredLensMaterialsLeft, setFilteredLensMaterialsLeft] = useState([""]);
   const [filteredLensCoatings, setFilteredLensCoatings] = useState([""]);
+  const [filteredLensMirrors, setFilteredLensMirrors] = useState([""]);
+  const [lOcht, setLOcht] = useState(true);
+  const [lUpperAdd, setLUpperAdd] = useState(true);
+  const [rOcht, setROcht] = useState(true);
+  const [rUpperAdd, setRUpperAdd] = useState(true);
   //const { register, handleSubmit, setValue } = useForm();
   const { getFieldProps, data, setData, post, processing, errors } = form;
   useEffect(() => {
@@ -123,10 +128,25 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
 
 
       });
-
-
     } else {
       lensRightFinal = lenses;
+    }
+
+    if (data.or_material_right && data.or_lens_style_right && data.or_lens_color_right) {
+      var lens = lensRightFinal[0];
+      if (true == lens.le_ocht) {
+        setROcht(false);
+      } else {
+        setROcht(true);
+      }
+      if (true == lens.le_upper_add) {
+        setRUpperAdd(false);
+      } else {
+        setRUpperAdd(true);
+      }
+    } else {
+      setROcht(true);
+      setRUpperAdd(true);
     }
     var lensMaterialRight = [];
     lensMaterialRight = lensRightFinal.map((lens) => lens.le_lens_mat ?? '');
@@ -147,7 +167,6 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
     //console.log(filteredRightLenses)
   }, [data.or_material_right, data.or_lens_style_right, data.or_lens_color_right]);
   //}, [data.or_material_right, data.or_lens_style_right, data.or_lens_color_right, data.or_coating]);
-
   useEffect(() => {
 
     var lensLeftFinal = [];
@@ -167,6 +186,25 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
     } else {
       lensLeftFinal = lenses;
     }
+
+    //console.log(document.getElementsByName("or_ocht_left")?.getAttribute("diabled"))
+    //console.log(document.getElementsByName("or_lens_color_left")?.getAttribute("diabled"))
+    if (data.or_material_left && data.or_lens_style_left && data.or_lens_color_left) {
+      var lens = lensLeftFinal[0];
+      if (true == lens.le_ocht) {
+        setLOcht(false);
+      } else {
+        setLOcht(true);
+      }
+      if (true == lens.le_upper_add) {
+        setLUpperAdd(false);
+      } else {
+        setLUpperAdd(true);
+      }
+    } else {
+      setLOcht(true);
+      setLUpperAdd(true);
+    }
     var lensMaterialLeft = [];
     lensMaterialLeft = lensLeftFinal.map((lens) => lens.le_lens_mat ?? '');
     var lensMaterialLeftFiltered = [...new Set(lensMaterialLeft)];
@@ -181,6 +219,42 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
     setFilteredLensColorsLeft(lensColorLeftFiltered);
 
   }, [data.or_material_left, data.or_lens_style_left, data.or_lens_color_left]);
+  useEffect(() => {
+    var filterCoating = [];
+    if (data.or_coating || data.or_tint_color || data.or_mirror) {
+      filterCoating = coatings.filter(coating => {
+        if (data.or_coating && !coating.lc_lens_coating.includes(data.or_coating))
+          return false;
+        console.log(coating.lc_tintable)
+        if (data.or_tint_color && (false == coating.lc_tintable))
+          return false;
+        if (data.or_mirror) {
+          var mirrors = coating.mirrors?.filter(mirror => {
+            if (!mirror.mr_mirror.includes(data.or_mirror ?? ''))
+              return false;
+            return true;
+          })
+          if (!(mirrors && mirrors.length > 0))
+            return false;
+        }
+
+        return true;
+
+      });
+
+    } else {
+      filterCoating = coatings;
+    }
+    var lensCoatings = [];
+    lensCoatings = filterCoating.map((coating) => coating.lc_lens_coating ?? '');
+    var lensCatingsFiltered = [...new Set(lensCoatings)];
+    setFilteredLensCoatings(lensCatingsFiltered);
+    var lensMirror = filterCoating.map((coating) => coating.mirrors?.map((mirror) => mirror.mr_mirror)).flat();
+    var lensMirrorFiltered = [...new Set(lensMirror)];
+    setFilteredLensMirrors(lensMirrorFiltered);
+
+
+  }, [data.or_coating, data.or_tint_color, data.or_mirror]);
 
   return (
     <>
@@ -369,12 +443,15 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
               />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_ocht_right')} />
+              <TextInput {...getFieldProps('or_ocht_right')}
+                disabled={rOcht}
+              />
             </Table.Td>
             <Table.Td>
               <Select
                 {...getFieldProps('or_measurement_right')}
                 data={['Above Frame', 'Below Frame']}
+                disabled={rOcht}
               />
             </Table.Td>
           </Table.Tr>
@@ -404,12 +481,15 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
               />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_ocht_left')} />
+              <TextInput {...getFieldProps('or_ocht_left')}
+                disabled={lOcht}
+              />
             </Table.Td>
             <Table.Td>
               <Select
                 {...getFieldProps('or_measurement_left')}
                 data={['Above Frame', 'Below Frame']}
+                disabled={lOcht}
               />
             </Table.Td>
           </Table.Tr>
@@ -506,7 +586,9 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
               <TextInput {...getFieldProps('or_add_right')} />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_upper_add_right')} />
+              <TextInput {...getFieldProps('or_upper_add_right')}
+                disabled={rUpperAdd}
+              />
             </Table.Td>
             <Table.Td>
               <TextInput {...getFieldProps('or_seg_height_right')} />
@@ -523,6 +605,7 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
             <Table.Td>
               <Select {...getFieldProps('or_mirror')}
                 placeholder="Select Mirror"
+                data={filteredLensMirrors}
               />
             </Table.Td>
             <Table.Td>
@@ -538,7 +621,9 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
               <TextInput {...getFieldProps('or_add_left')} />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_upper_add_left')} />
+              <TextInput {...getFieldProps('or_upper_add_left')}
+                disabled={lUpperAdd}
+              />
             </Table.Td>
             <Table.Td>
               <TextInput {...getFieldProps('or_seg_height_left')} />
@@ -608,7 +693,7 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
               <Select {...getFieldProps('or_frame_side_shield')} data={[]} />
             </Table.Td>
             <Table.Td>
-              <Select {...getFieldProps('or_extra_ss')} data={[]} />
+              <Select {...getFieldProps('or_extra_ss')} data={['n/a', '1']} />
             </Table.Td>
             <Table.Td>
               <Select {...getFieldProps('or_frame_case')} data={[]} />

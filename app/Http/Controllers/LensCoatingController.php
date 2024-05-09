@@ -36,6 +36,7 @@ class LensCoatingController extends Controller
             'lc_dvi_translation' => 'nullable',
             'lc_o2_add_code' => 'nullable',
             'lc_o1_add_code' => 'nullable',
+            'lc_tintable' => 'required',
         ]);
 
         LensCoating::create($validated);
@@ -73,6 +74,7 @@ class LensCoatingController extends Controller
             'lc_dvi_translation' => 'nullable',
             'lc_o2_add_code' => 'nullable',
             'lc_o1_add_code' => 'nullable',
+            'lc_tintable' => 'required',
         ]);
 
         LensCoating::where('id', $id)->update($validated);

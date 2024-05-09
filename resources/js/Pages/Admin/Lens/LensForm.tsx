@@ -32,8 +32,8 @@ export default function LensForm({ styles, materials, coatings, form }: Props) {
   const { getFieldProps, data, setData, post } = form;
   //if (0 == data.le_ocht)
   //  setData('le_ocht', false);
-  console.log(data.le_ocht);
-  console.log(data.le_upper_add);
+  //console.log(data.le_ocht);
+  //console.log(data.le_upper_add);
   /*
   const { getFieldProps, data, setData, post } =
     useBaseForm<Partial<Lens>>({
@@ -104,12 +104,12 @@ export default function LensForm({ styles, materials, coatings, form }: Props) {
           <Group>
             <Switch
               label="Ocht"
-              checked={data.le_ocht}
+              checked={true == data.le_ocht}
               onChange={(event) => setData('le_ocht', event.currentTarget.checked)}
             />
             <Switch
               label="Upper Add"
-              checked={data.le_upper_add}
+              checked={true == data.le_upper_add}
               onChange={(event) => setData('le_upper_add', event.currentTarget.checked)}
             />
           </Group>
