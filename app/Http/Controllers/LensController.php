@@ -57,6 +57,8 @@ class LensController extends Controller
             'le_o1_material_add_code' => 'nullable',
             'le_o1_color_add_code' => 'nullable',
             'le_minimun_seg' => 'nullable',
+            'le_upper_add' => 'required',
+            'le_ocht' => 'required',
 
         ]);
 
@@ -110,6 +112,7 @@ class LensController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        //dd($request);
 
         $validated = $request->validate([
             'le_lens_mat' => 'required',
@@ -126,6 +129,8 @@ class LensController extends Controller
             'le_o1_material_add_code' => 'nullable',
             'le_o1_color_add_code' => 'nullable',
             'le_minimun_seg' => 'nullable',
+            'le_upper_add' => 'required',
+            'le_ocht' => 'required',
 
         ]);
 

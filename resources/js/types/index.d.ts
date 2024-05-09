@@ -175,15 +175,19 @@ export interface Lens extends Timestamps {
   le_o1_lens_add_code?: string;
   le_o1_material_add_code?: string;
   le_o1_color_add_code?: string;
+  le_ocht: boolean;
+  le_upper_add: boolean;
   le_minimun_seg?: string;
   le_coatings: string[];
   style?: LensStyle;
   material?: LensMaterial;
+  coatings?: LensCoating[];
 }
 export interface LensCoating extends Timestamps {
   id: number;
   lc_lens_coating: string;
   lc_coating_group: string;
+  lc_tintable: boolean;
   lc_o1_translation?: string;
   lc_dvi_translation?: string;
   lc_cost?: number;

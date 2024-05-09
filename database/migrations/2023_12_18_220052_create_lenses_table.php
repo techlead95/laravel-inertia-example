@@ -51,6 +51,8 @@ return new class extends Migration
             $table->string('le_o1_material_add_code')->nullable();
             $table->string('le_o1_color_add_code')->nullable();
             $table->string('le_minimun_seg')->nullable();
+            $table->boolean('le_ocht')->default(true);
+            $table->boolean('le_upper_add')->default(true);
 
 
             $table->timestamps();

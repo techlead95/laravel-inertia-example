@@ -1,7 +1,7 @@
 import useBaseForm from '@/Hooks/useBaseForm';
 import useGetFieldStyles from '@/Hooks/useFieldStyles';
 import { LensCoating } from '@/types';
-import { Button, Group, Stack, Text, TextInput } from '@mantine/core';
+import { Button, Group, Stack, Text, TextInput, Switch } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function CoatingForm({ form }: Props) {
-  const { data, getFieldProps } = form;
+  const { data, setData, getFieldProps } = form;
   const getFieldStyles = useGetFieldStyles();
 
   return (
@@ -45,6 +45,12 @@ export default function CoatingForm({ form }: Props) {
       </Group>
       <Group align="flex-start">
         <Stack>
+
+          <Switch
+            label="Tintable"
+            checked={data.lc_tintable}
+            onChange={(event) => setData('lc_tintable', event.currentTarget.checked)}
+          />
           <TextInput
             label="Coating Group"
             styles={getFieldStyles({ horizontal: true })}

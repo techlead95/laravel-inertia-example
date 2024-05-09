@@ -44,16 +44,20 @@ class OrderController extends Controller
     {
 
         $frameVariations = FrameVariation::with('frame')->get();
-        $lenses = Lens::with('coatings')->get();
+        //$lenses = Lens::with('coatings')->get();
+        $lenses = Lens::all();
+        //dd($lenses);
         $tints = Tint::all();
         $miscs = Misc::all();
-        $lensCoatingSelects = [];
+        $coatings = LensCoating::with('mirrors')->get();
+        /*$lensCoatingSelects = [];
         foreach (LensCoating::select('lc_coating_group', 'lc_lens_coating as item')->get()->groupBy('lc_coating_group')->toArray() as $group => $items) {
             $lensCoatingSelects[] = ['group' => $group, 'items' => array_map(function ($item) {
                 return $item['item'];
             }, $items)];
-        }
-        return inertia()->render('Orders/CreateOrder', compact('lenses', 'frameVariations', 'tints', 'lensCoatingSelects', 'miscs'));
+        }*/
+
+        return inertia()->render('Orders/CreateOrder', compact('lenses', 'frameVariations', 'tints', 'miscs', 'coatings'));
         //return inertia()->render('Orders/CreateOrder', compact('frames', 'lenses', 'frameVariations'));
     }
 
@@ -295,15 +299,15 @@ class OrderController extends Controller
         $order = Order::find($id);
 
         $frameVariations = FrameVariation::with('frame')->get();
-        $lenses = Lens::all();
+        $lenses = Lens::with('coatings');
         $tints = Tint::all();
         $miscs = Misc::all();
-        $lensCoatingSelects = [];
+        /*$lensCoatingSelects = [];
         foreach (LensCoating::select('lc_coating_group', 'lc_lens_coating as item')->get()->groupBy('lc_coating_group')->toArray() as $group => $items) {
             $lensCoatingSelects[] = ['group' => $group, 'items' => array_map(function ($item) {
                 return $item['item'];
             }, $items)];
-        }
+        }*/
         return inertia()->render('Orders/EditOrder', compact('lenses', 'frameVariations', 'tints', 'lensCoatingSelects', 'order', 'miscs'));
     }
 

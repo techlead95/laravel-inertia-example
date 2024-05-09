@@ -11,11 +11,11 @@ interface Props {
     lenses: Lens[];
     frameVariations: FrameVariation[];
     tints: Tint[];
-    lensCoatingSelects: LensCoatingSelect[];
-    miscs: Misc;
+    miscs: Misc[];
+    coatings: LensCoating[];
 }
 
-export default function CreateOrder({ lenses, frameVariations, tints, lensCoatingSelects, miscs }: Props) {
+export default function CreateOrder({ lenses, frameVariations, tints, miscs, coatings }: Props) {
     const form =
         useBaseForm<Partial<Order>>({
             //useBaseForm<Order>({
@@ -118,7 +118,7 @@ export default function CreateOrder({ lenses, frameVariations, tints, lensCoatin
             }}
         >
             <PageTitle title="Create Order" />
-            <OrderForm lenses={lenses} frameVariations={frameVariations} tints={tints} lensCoatingSelects={lensCoatingSelects} form={form} miscs={miscs} />
+            <OrderForm lenses={lenses} frameVariations={frameVariations} tints={tints} form={form} miscs={miscs} coatings={coatings} />
         </Stack>
     );
 
