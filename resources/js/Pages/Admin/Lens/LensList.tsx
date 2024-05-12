@@ -1,63 +1,77 @@
 import EditDeleteActions from '@/Components/EditDeleteActions';
-import PageTitle from '@/Components/PageTitle';
+import MultiSearchForm from '@/Components/MultiSearchForm';
 import { Lens } from '@/types';
-import { Link, router } from '@inertiajs/react';
-import { Button, Group, Stack, TextInput } from '@mantine/core';
-import { Search } from '@mui/icons-material';
+import { Head, Link, router } from '@inertiajs/react';
+import { Button, Group, TextInput } from '@mantine/core';
 import { DataTable } from 'mantine-datatable';
 
 interface Props {
   lenses: Lens[];
+  style?: string;
+  material?: string;
+  color?: string;
 }
 
-export default function LensCatalog({ lenses }: Props) {
+export default function LensList({ lenses, style, material, color }: Props) {
   return (
     <>
-      <PageTitle title="Lens Catalog" />
-      <Group justify="flex-end" mb="lg">
+      <Head title="Lens" />
+      <Group justify="space-between" mb="lg">
+        <MultiSearchForm
+          initialValues={{ style, material, color }}
+          onSearch={(newValues) => {
+            router.get(route('admin.lens.index', newValues ?? {}));
+          }}
+          hideClear
+        >
+          {({ getFieldProps }) => (
+            <>
+              <TextInput
+                placeholder="Filter by Style"
+                {...getFieldProps('style')}
+              />
+              <TextInput
+                placeholder="Filter by Material"
+                {...getFieldProps('material')}
+              />
+              <TextInput
+                placeholder="Filter by Color"
+                {...getFieldProps('color')}
+              />
+            </>
+          )}
+        </MultiSearchForm>
         <Link href={route('admin.lens.create')}>
           <Button>New Lens</Button>
         </Link>
       </Group>
-      <Stack mt="xl">
-        <Group>
-          <TextInput placeholder="Filter by Style" />
-          <TextInput placeholder="Filter by Material" />
-          <TextInput placeholder="Filter by Color" />
-          <Button variant="outline" leftSection={<Search />}>
-            Search
-          </Button>
-        </Group>
-        <DataTable
-          style={{ flex: 1 }}
-          withTableBorder
-          borderRadius="md"
-          columns={[
-            { accessor: 'le_lens_style', title: 'Style' },
-            { accessor: 'le_lens_mat', title: 'Material' },
-            { accessor: 'le_lens_col', title: 'Color' },
-            {
-              accessor: 'actions',
-              title: '',
-              textAlign: 'right',
-              render(lens) {
-                return (
-                  <EditDeleteActions
-                    editUrl={route('admin.lens.edit', { id: lens.id })}
-                    deleteConfirmMessage="Are you sure to delete this lens?"
-                    onDelete={() =>
-                      router.delete(
-                        route('admin.lens.destroy', { id: lens.id }),
-                      )
-                    }
-                  />
-                );
-              },
+      <DataTable
+        style={{ flex: 1 }}
+        withTableBorder
+        borderRadius="md"
+        columns={[
+          { accessor: 'le_lens_style', title: 'Style' },
+          { accessor: 'le_lens_mat', title: 'Material' },
+          { accessor: 'le_lens_col', title: 'Color' },
+          {
+            accessor: 'actions',
+            title: '',
+            textAlign: 'right',
+            render(lens) {
+              return (
+                <EditDeleteActions
+                  editUrl={route('admin.lens.edit', { id: lens.id })}
+                  deleteConfirmMessage="Are you sure to delete this lens?"
+                  onDelete={() =>
+                    router.delete(route('admin.lens.destroy', { id: lens.id }))
+                  }
+                />
+              );
             },
-          ]}
-          records={lenses}
-        />
-      </Stack>
+          },
+        ]}
+        records={lenses}
+      />
     </>
   );
 }

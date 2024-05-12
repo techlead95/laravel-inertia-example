@@ -1,10 +1,9 @@
+import BaseDataTable from '@/Components/BaseDataTable';
 import EditDeleteActions from '@/Components/EditDeleteActions';
 import PageTitle from '@/Components/PageTitle';
 import { Mirror } from '@/types';
 import { Link, router } from '@inertiajs/react';
 import { Button, Group, Stack, TextInput } from '@mantine/core';
-import { Search } from '@mui/icons-material';
-import { DataTable } from 'mantine-datatable';
 
 interface Props {
   mirrors: Mirror[];
@@ -20,13 +19,13 @@ export default function MirrorCatalog({ mirrors }: Props) {
         </Link>
       </Group>
       <Stack mt="xl">
-        <Group>
+        {/* <Group>
           <TextInput placeholder="Filter by Mirror" />
           <Button variant="outline" leftSection={<Search />}>
             Search
           </Button>
-        </Group>
-        <DataTable
+        </Group> */}
+        <BaseDataTable
           style={{ flex: 1 }}
           withTableBorder
           borderRadius="md"

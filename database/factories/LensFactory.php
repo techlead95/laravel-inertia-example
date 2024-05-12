@@ -18,8 +18,8 @@ class LensFactory extends Factory
      */
     public function definition(): array
     {
-        $lensMaterials = LensMaterial::pluck('id')->toArray();
-        $lensStyles = LensStyle::pluck('id')->toArray();
+        $lensMaterials = LensMaterial::pluck('lm_lens_material')->toArray();
+        $lensStyles = LensStyle::pluck('ls_lenstyl_lens_style')->toArray();
 
         return [
             'le_lens_mat' => fake()->randomElement($lensMaterials),

@@ -1,11 +1,9 @@
 import BaseDataTable from '@/Components/BaseDataTable';
 import EditDeleteActions from '@/Components/EditDeleteActions';
-import SearchForm from '@/Components/SearchForm';
+import MultiSearchForm from '@/Components/MultiSearchForm';
 import { User } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
-import { ActionIcon, Button, Group, Stack, Switch } from '@mantine/core';
-import { modals, openConfirmModal } from '@mantine/modals';
-import { Delete, Edit } from '@mui/icons-material';
+import { Button, Group, Stack, Switch, TextInput } from '@mantine/core';
 
 interface Props {
   users: User[];
@@ -17,13 +15,18 @@ export default function AdminHome({ users, search }: Props) {
     <>
       <Head title="Admin Home" />
       <Group style={{ flex: 1 }} gap="xl" align="flex-start">
-        <Stack style={{ flex: 3 }} h="100%">
-          <SearchForm
-            initialValue={search}
-            onSearch={(newSearch) => {
-              router.get(route('admin.users.index', { search: newSearch }));
+        <Stack style={{ flex: 3 }} h="100%" gap={0}>
+          <MultiSearchForm
+            initialValues={{ search }}
+            onSearch={(newValues) => {
+              router.get(route('admin.users.index', newValues ?? {}));
             }}
-          />
+            mb="lg"
+          >
+            {({ getFieldProps }) => (
+              <TextInput placeholder="Search" {...getFieldProps('search')} />
+            )}
+          </MultiSearchForm>
           <BaseDataTable
             style={{ flex: 1 }}
             striped
@@ -56,7 +59,7 @@ export default function AdminHome({ users, search }: Props) {
             records={users}
           />
         </Stack>
-        <Stack style={{ flex: 1 }} gap="xs" mt={52}>
+        <Stack style={{ flex: 1 }} gap="xs" mt={56}>
           <Switch defaultChecked label="Portal Active" disabled />
           <Link href="/admin/ship-to-account-maintenance">
             <Button variant="outline" w="100%">

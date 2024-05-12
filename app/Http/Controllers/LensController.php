@@ -17,9 +17,19 @@ class LensController extends Controller
      */
     public function index()
     {
-        //$lenses = Lens::with('style', 'material')->get();
-        $lenses = Lens::all();
-        return inertia()->render('Admin/Lens/LensList', compact('lenses'));
+        $style = request()->style;
+        $material = request()->material;
+        $color = request()->color;
+
+        $lenses = Lens::when($style, function ($query, $style) {
+            return $query->where('le_lens_style', 'like', "%$style%");
+        })->when($material, function ($query, $material) {
+            return $query->where('le_lens_mat', 'like', "%$material%");
+        })->when($color, function ($query, $color) {
+            return $query->where('le_lens_col', 'like', "%$color%");
+        })->get();
+
+        return inertia()->render('Admin/Lens/LensList', compact('lenses', 'style', 'material', 'color'));
     }
 
     /**

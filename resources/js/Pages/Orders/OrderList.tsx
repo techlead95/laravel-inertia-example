@@ -1,11 +1,11 @@
 import BaseDataTable from '@/Components/BaseDataTable';
 import DateRangeFilterForm from '@/Components/DateRangeFilterForm';
+import MultiSearchForm from '@/Components/MultiSearchForm';
 import PageTitle from '@/Components/PageTitle';
-import SearchForm from '@/Components/SearchForm';
 import { DATE_DISPLAY_FORMAT } from '@/constants';
 import { Order } from '@/types';
 import { router } from '@inertiajs/react';
-import { Group, SegmentedControl } from '@mantine/core';
+import { Group, SegmentedControl, TextInput } from '@mantine/core';
 import dayjs from 'dayjs';
 import { DataTableColumn } from 'mantine-datatable';
 import { useMemo, useState } from 'react';
@@ -22,7 +22,6 @@ interface Props {
   endDate: string | null;
   orders: Order[];
 }
-
 
 export default function Orders({ search, startDate, endDate, orders }: Props) {
   const [ostatus, setOStatus] = useState(OrderStatus.Active);
@@ -48,18 +47,34 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
         { accessor: 'status.ot_status', title: 'Status' },
         //{ accessor: 'eta', title: 'ETA' },
       );
-      setFilteredOrders(orders.filter(order => order.status.ot_status.includes("In Process") || order.status.ot_status.includes("Pending")));
+      setFilteredOrders(
+        orders.filter(
+          (order) =>
+            order.status?.ot_status?.includes('In Process') ||
+            order.status?.ot_status?.includes('Pending'),
+        ),
+      );
     }
 
     if (ostatus === OrderStatus.Shipped) {
-      result.push({ accessor: 'status.ot_tracking_no', title: 'Tracking Number' });
-      setFilteredOrders(orders.filter(order => order.status.ot_status.includes("Shipped")));
+      result.push({
+        accessor: 'status.ot_tracking_no',
+        title: 'Tracking Number',
+      });
+      setFilteredOrders(
+        orders.filter((order) => order.status?.ot_status?.includes('Shipped')),
+      );
     }
 
     if (ostatus === OrderStatus.Problem) {
-      result.push({ accessor: 'status.ot_station_description', title: 'Location' });
+      result.push({
+        accessor: 'status.ot_station_description',
+        title: 'Location',
+      });
 
-      setFilteredOrders(orders.filter(order => order.status.ot_status.includes("Problem")));
+      setFilteredOrders(
+        orders.filter((order) => order.status?.ot_status?.includes('Problem')),
+      );
     }
 
     return result;
@@ -74,14 +89,17 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
           onChange={(newStatus) => setOStatus(newStatus as OrderStatus)}
           data={Object.values(OrderStatus)}
         />
-        <SearchForm
-          initialValue={search}
-          onSearch={(newSearch) => {
-            router.get(route('orders.index', { search: newSearch }));
+        <MultiSearchForm
+          initialValues={{ search }}
+          onSearch={(newValues) => {
+            router.get(route('orders.index', newValues ?? {}));
           }}
-          inputWidth={220}
           hideClear
-        />
+        >
+          {({ getFieldProps }) => (
+            <TextInput placeholder="Search" {...getFieldProps('search')} />
+          )}
+        </MultiSearchForm>
       </Group>
       <DateRangeFilterForm
         mt="lg"
