@@ -12,6 +12,8 @@ export default function CoatingForm({ form }: Props) {
   const { data, setData, getFieldProps } = form;
   const getFieldStyles = useGetFieldStyles();
 
+  //console.log(data.lc_tintable);
+
   return (
     <>
       <Group justify="space-between">
@@ -48,7 +50,7 @@ export default function CoatingForm({ form }: Props) {
 
           <Switch
             label="Tintable"
-            checked={data.lc_tintable}
+            checked={true == data.lc_tintable}
             onChange={(event) => setData('lc_tintable', event.currentTarget.checked)}
           />
           <TextInput

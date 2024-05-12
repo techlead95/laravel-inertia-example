@@ -208,6 +208,7 @@ export interface LensCoating extends Timestamps {
   lc_2_sided_scratch_plastic?: string;
   lc_setup_by?: string;
   lc_last_modified_by?: string;
+  mirrors?: Mirror[];
 }
 export interface LensCoatingSelect {
   group: string;
