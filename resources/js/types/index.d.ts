@@ -296,6 +296,7 @@ export interface Order extends Timestamps {
   or_frame_color: string;
   or_frame_size: string;
   or_frame_side_shield: string;
+  or_frame_side_shield_color: string;
   or_extra_ss: string;
   or_frame_case: string;
   or_add_on_1: string;

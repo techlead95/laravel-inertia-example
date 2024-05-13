@@ -78,6 +78,7 @@ return new class extends Migration
             $table->string('or_frame_color')->nullable();
             $table->string('or_frame_size')->nullable();
             $table->string('or_frame_side_shield')->nullable();
+            $table->string('or_frame_side_shield_color')->nullable();
             $table->string('or_extra_ss')->nullable();
             $table->string('or_frame_case')->nullable();
             $table->string('or_add_on_1')->nullable();
