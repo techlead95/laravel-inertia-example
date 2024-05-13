@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('frame_id');
             $table->unsignedBigInteger('lens_style_id');
-            $table->boolean('allowed')->default(true);
-            $table->string('minimum_pd')->nullable();
             $table->timestamps();
 
             $table->foreign('frame_id')->references('id')->on('frames')->onDelete('cascade');

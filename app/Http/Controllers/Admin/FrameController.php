@@ -103,20 +103,6 @@ class FrameController extends Controller
         $lensStyles = LensStyle::all();
         $frame = Frame::with('variations', 'lensMaterialLimitations', 'lensStyleLimitations', 'offloadAvailabilities')->find($id);
 
-        $frame->lensMaterialLimitations = $frame->lensMaterialLimitations->map(function ($limitation) {
-            $limitation->allowed = $limitation->pivot->allowed;
-            unset($limitation->pivot);
-            return $limitation;
-        });
-
-        $frame->lensStyleLimitations = $frame->lensStyleLimitations->map(function ($limitation) {
-            $limitation->allowed = $limitation->pivot->allowed;
-            $limitation->minimum_pd = $limitation->pivot->minimum_pd;
-            unset($limitation->pivot);
-            return $limitation;
-        });
-
-
         return Inertia::render('Admin/Frame/EditFrame', compact(
             'edges',
             'materials',
@@ -180,19 +166,15 @@ class FrameController extends Controller
         return Inertia::render('Admin/Frame/FrameCatalog');
     }
 
-    public function saveLensMaterialLimitation(Request $request, $frameId, $lensMaterialId)
+    public function updateLensMaterialLimitation(Request $request, $frameId)
     {
         $frame = Frame::findOrFail($frameId);
-        $frame->lensMaterialLimitations()->syncWithoutDetaching([
-            $lensMaterialId => ['allowed' => $request->allowed]
-        ]);
+        $frame->lensMaterialLimitations()->sync($request->limitations);
     }
 
-    public function saveLensStyleLimitation(Request $request, $frameId, $lensStyleId)
+    public function updateLensStyleLimitation(Request $request, $frameId)
     {
         $frame = Frame::findOrFail($frameId);
-        $frame->lensStyleLimitations()->syncWithoutDetaching([
-            $lensStyleId => ['allowed' => $request->allowed, 'minimum_pd' => $request->minimum_pd]
-        ]);
+        $frame->lensStyleLimitations()->sync($request->limitations);
     }
 }

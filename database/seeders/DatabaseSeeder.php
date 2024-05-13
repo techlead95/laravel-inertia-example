@@ -44,8 +44,8 @@ class DatabaseSeeder extends Seeder
         FrameDefaultGroup::factory()->count(3)->create();
         Frame::factory()->count(2)->create()->each(function ($frame) {
             $frame->variations()->saveMany(FrameVariation::factory()->count(3)->create());
-            $frame->lensMaterialLimitations()->attach(LensMaterial::all()->random(2), ['allowed' => false]);
-            $frame->lensStyleLimitations()->attach(LensStyle::all()->random(2), ['allowed' => false]);
+            $frame->lensMaterialLimitations()->attach(LensMaterial::all()->random(3));
+            $frame->lensStyleLimitations()->attach(LensStyle::all()->random(2));
             $frame->offloadAvailabilities()->saveMany(FrameOffloadAvailability::factory(5)->create());
         });
 

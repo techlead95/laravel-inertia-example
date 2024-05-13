@@ -41,8 +41,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('users', UserController::class);
 
     Route::get('/frame/catalog', [FrameController::class, 'catalog'])->name('frame.catalog');
-    Route::put('frames/{frame}/lens-materials/{lens_material}/save-limitation', [FrameController::class, 'saveLensMaterialLimitation'])->name('frames.lens-materials.save-limitation');
-    Route::put('frames/{frame}/lens-styles/{lens_style}/save-limitation', [FrameController::class, 'saveLensStyleLimitation'])->name('frames.lens-styles.save-limitation');
+    Route::put('frames/{frame}/update-lens-material-limitations', [FrameController::class, 'updateLensMaterialLimitation'])->name('frames.update-lens-material-limitations');
+    Route::put('frames/{frame}/update-lens-style-limitations', [FrameController::class, 'updateLensStyleLimitation'])->name('frames.update-lens-style-limitations');
     Route::resource('frames.frame-variations', FrameVariationController::class);
     Route::resource('frames.offload-availabilities', FrameOffloadAvailabilityController::class);
     Route::resource('frame', FrameController::class);

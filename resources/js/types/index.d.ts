@@ -87,8 +87,8 @@ export interface Frame extends Timestamps {
   fr_frame_color?: string | null;
   fr_eyesize?: string | null;
   variations?: FrameVariation[];
-  lens_material_limitations?: LensMaterialLimitation[];
-  lens_style_limitations?: LensStyleLimitation[];
+  lens_material_limitations?: LensMaterial[];
+  lens_style_limitations?: LensStyle[];
   offload_availabilities?: FrameOffloadAvailability[];
 }
 
@@ -379,15 +379,6 @@ export interface FrameOffloadAvailability extends Timestamps {
   fo_vendor: string;
   fo_vendor_allowed: string;
   fo_auto_offload: string;
-}
-
-export interface LensMaterialLimitation extends LensMaterial {
-  allowed: string;
-}
-
-export interface LensStyleLimitation extends LensStyle {
-  allowed: string;
-  minimum_pd: string | null;
 }
 
 export interface Mirror extends Timestamps {

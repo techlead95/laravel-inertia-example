@@ -1,15 +1,12 @@
-import useEditableTable from '@/Hooks/useEditableTable';
-import { LensStyle, LensStyleLimitation } from '@/types';
-import { Stack, Table, Text } from '@mantine/core';
-import { produce } from 'immer';
-import { keyBy } from 'lodash';
-import { useMemo } from 'react';
-
-import LensStyleLimitationRow from './LensStyleLimitationRow';
+import { LensStyle } from '@/types';
+import { MultiSelect, Stack, Text } from '@mantine/core';
+import axios from 'axios';
+import { useState } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
 
 interface Props {
   frameId: number;
-  lensStyleLimitations: LensStyleLimitation[];
+  lensStyleLimitations: LensStyle[];
   styles: LensStyle[];
 }
 
@@ -18,58 +15,34 @@ export default function LensStyleLimitations({
   lensStyleLimitations,
   styles,
 }: Props) {
-  const initialItems = useMemo(() => {
-    const normalizedLimitations = keyBy(lensStyleLimitations, 'id');
+  const options = styles.map((style) => ({
+    value: String(style.id),
+    label: style.ls_lenstyl_lens_style,
+  }));
 
-    return styles.map((style) => ({
-      ...normalizedLimitations[style.id],
-      id: style.id,
-      ls_lenstyl_lens_style: style.ls_lenstyl_lens_style,
-    }));
-  }, [lensStyleLimitations, styles]);
+  const [value, setValue] = useState(
+    lensStyleLimitations.map((limitation) => String(limitation.id)),
+  );
 
-  const { items, setItems, handleDebouncedUpdate, getRowKey } =
-    useEditableTable({
-      initialItems,
-      getDestoryUrl: () => '',
-      getUpdateUrl: (id) =>
-        route('admin.frames.lens-styles.save-limitation', {
-          frame: frameId,
-          lens_style: id,
-        }),
-      storeUrl: '',
+  const debouncedUpdate = useDebouncedCallback(() => {
+    axios.put(route('admin.frames.update-lens-style-limitations', frameId), {
+      limitations: value,
     });
+  }, 500);
 
   return (
     <Stack flex={1}>
       <Text fw="bold" size="lg">
         Lens Style Limitations
       </Text>
-      <Table bg="white">
-        <Table.Thead>
-          <Table.Tr>
-            <Table.Th>Lens Style</Table.Th>
-            <Table.Th>Allowed</Table.Th>
-            <Table.Th>Minimum PD</Table.Th>
-          </Table.Tr>
-        </Table.Thead>
-        <Table.Tbody>
-          {items.map((item, index) => (
-            <LensStyleLimitationRow
-              key={getRowKey(item, index)}
-              lensStyleLimitation={item}
-              onUpdate={(updatedLimitation) => {
-                setItems(
-                  produce((draft) => {
-                    draft[index] = updatedLimitation;
-                  }),
-                );
-              }}
-              onDebouncedUpdate={handleDebouncedUpdate}
-            />
-          ))}
-        </Table.Tbody>
-      </Table>
+      <MultiSelect
+        data={options}
+        value={value}
+        onChange={(newVal) => {
+          setValue(newVal);
+          debouncedUpdate();
+        }}
+      />
     </Stack>
   );
 }

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('frame_id');
             $table->unsignedBigInteger('lens_material_id');
-            $table->boolean('allowed')->default(true);
             $table->timestamps();
 
             $table->foreign('frame_id')->references('id')->on('frames')->onDelete('cascade');
