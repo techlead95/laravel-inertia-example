@@ -56,6 +56,7 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
   const [lUpperAdd, setLUpperAdd] = useState(true);
   const [rOcht, setROcht] = useState(true);
   const [rUpperAdd, setRUpperAdd] = useState(true);
+  const [dTint, setDTint] = useState(false);
   //const { register, handleSubmit, setValue } = useForm();
   const { getFieldProps, data, setData, post, processing, errors } = form;
   useEffect(() => {
@@ -76,6 +77,12 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
 
     } else {
       frameFinal = frameVariations;
+    }
+    if (data.or_frame_style && data.or_frame_color && data.or_frame_size) {
+      var framevar = frameFinal[0];
+      var addons = framevar.frame.
+
+
     }
     //setFilteredFrameVariations(frameFinal);
     var frameStyle = [];
@@ -245,11 +252,22 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
     } else {
       filterCoating = coatings;
     }
+    if (data.or_coating) {
+      var coating = filterCoating[0];
+      if (false == coating.lc_tintable) {
+        setDTint(true);
+      } else {
+        setDTint(false);
+      }
+    } else {
+      setDTint(false);
+    }
     var lensCoatings = [];
     lensCoatings = filterCoating.map((coating) => coating.lc_lens_coating ?? '');
     var lensCatingsFiltered = [...new Set(lensCoatings)];
     setFilteredLensCoatings(lensCatingsFiltered);
-    var lensMirror = filterCoating.map((coating) => coating.mirrors?.map((mirror) => mirror.mr_mirror)).flat();
+    var lensMirror = [];
+    lensMirror = filterCoating.map((coating) => coating.mirrors?.map((mirror) => mirror.mr_mirror)).flat();
     var lensMirrorFiltered = [...new Set(lensMirror)];
     setFilteredLensMirrors(lensMirrorFiltered);
 
@@ -597,10 +615,13 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
               <Select {...getFieldProps('or_tint_color')}
                 placeholder="Select Tint"
                 data={tints.map((tint) => tint.ti_color ?? '')}
+                disabled={dTint}
               />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_tint_percent')} />
+              <TextInput {...getFieldProps('or_tint_percent')}
+                disabled={dTint}
+              />
             </Table.Td>
             <Table.Td>
               <Select {...getFieldProps('or_mirror')}
@@ -669,7 +690,7 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
 
         <OrderTable
           ml={26}
-          headers={['Color', 'Size', 'Side Shield', 'Extra SS', 'Case']}
+          headers={['Color', 'Size', 'Side Shield', 'Side Shield Color', 'Extra SS']}
         >
           <Table.Tr>
             <Table.Td>
@@ -693,10 +714,10 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
               <Select {...getFieldProps('or_frame_side_shield')} data={[]} />
             </Table.Td>
             <Table.Td>
-              <Select {...getFieldProps('or_extra_ss')} data={['n/a', '1']} />
+              <Select {...getFieldProps('or_frame_side_shield_color')} data={[]} />
             </Table.Td>
             <Table.Td>
-              <Select {...getFieldProps('or_frame_case')} data={[]} />
+              <Select {...getFieldProps('or_extra_ss')} data={['n/a', '1']} />
             </Table.Td>
           </Table.Tr>
         </OrderTable>
