@@ -14,6 +14,7 @@ use App\Models\OrderTracking;
 use App\Http\Controllers\DB;
 use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Database\Eloquent\Builder;
 use PhpParser\Node\Stmt\For_;
 
 class OrderController extends Controller
@@ -179,6 +180,30 @@ class OrderController extends Controller
                     $tintl = 0;
                     $tintu = 999;
                 }
+                $rightlens = Lens::where([
+                    'le_lens_mat' => $request->input('or_material_right'),
+                    'le_lens_col' => $request->input('or_lens_color_right'),
+                    'le_lens_style' => $request->input('or_lens_style_right')
+                ])->first();
+
+                $leftlens = Lens::where([
+                    'le_lens_mat' => $request->input('or_material_left'),
+                    'le_lens_col' => $request->input('or_lens_color_left'),
+                    'le_lens_style' => $request->input('or_lens_style_left')
+                ])->first();
+                $or_frame_style =  $request->input('or_frame_style');
+                //fv_eyesize . '-' . $this->fv_front_bridge . '-' . $this->fv_temple_size
+                $fvsize = explode('-', $request->input('or_frame_size'));
+                //dd($fvsize);
+                $fvar = FrameVariation::where([
+                    'fv_frame_color' => $request->input('or_frame_color'),
+                    'fv_eyesize' =>  $fvsize[0],
+                    'fv_front_bridge' =>  $fvsize[1],
+                    'fv_temple_size' =>  $fvsize[2]
+                ])->whereHas('frame', function (Builder $query) use ($or_frame_style) {
+                    $query->where('fr_frame_name', $or_frame_style);
+                })->first();
+                dd($rightlens, $leftlens, $fvar);
 
                 //dd($tint, $tintl, $tintu);
                 $validated = $request->validate([

@@ -52,11 +52,14 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
   const [filteredLensMaterialsLeft, setFilteredLensMaterialsLeft] = useState([""]);
   const [filteredLensCoatings, setFilteredLensCoatings] = useState([""]);
   const [filteredLensMirrors, setFilteredLensMirrors] = useState([""]);
+  const [filteredSS, setFilteredSS] = useState([""]);
+  const [filteredSSColor, setFilteredSSColor] = useState([""]);
   const [lOcht, setLOcht] = useState(true);
   const [lUpperAdd, setLUpperAdd] = useState(true);
   const [rOcht, setROcht] = useState(true);
   const [rUpperAdd, setRUpperAdd] = useState(true);
   const [dTint, setDTint] = useState(false);
+  const [sS, setSS] = useState(true);
   //const { register, handleSubmit, setValue } = useForm();
   const { getFieldProps, data, setData, post, processing, errors } = form;
   useEffect(() => {
@@ -78,12 +81,16 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
     } else {
       frameFinal = frameVariations;
     }
+
     if (data.or_frame_style && data.or_frame_color && data.or_frame_size) {
       var framevar = frameFinal[0];
-      var addons = framevar.frame.
+      //var addons = framevar.frame.
+      setSS(false);
 
-
+    } else {
+      setSS(true);
     }
+
     //setFilteredFrameVariations(frameFinal);
     var frameStyle = [];
     frameStyle = frameFinal.map((frameVariation) => frameVariation.frame.fr_frame_name ?? '');
@@ -711,13 +718,19 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
               />
             </Table.Td>
             <Table.Td>
-              <Select {...getFieldProps('or_frame_side_shield')} data={[]} />
+              <Select {...getFieldProps('or_frame_side_shield')} data={filteredSS}
+                disabled={sS}
+              />
             </Table.Td>
             <Table.Td>
-              <Select {...getFieldProps('or_frame_side_shield_color')} data={[]} />
+              <Select {...getFieldProps('or_frame_side_shield_color')} data={filteredSSColor}
+                disabled={sS}
+              />
             </Table.Td>
             <Table.Td>
-              <Select {...getFieldProps('or_extra_ss')} data={['n/a', '1']} />
+              <Select {...getFieldProps('or_extra_ss')} data={['n/a', '1']}
+                disabled={sS}
+              />
             </Table.Td>
           </Table.Tr>
         </OrderTable>
