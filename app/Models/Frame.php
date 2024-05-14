@@ -49,14 +49,19 @@ class Frame extends Model
         return $this->hasMany(FrameVariation::class, 'fv_frame_id', 'id');
     }
 
+    public function addons()
+    {
+        return $this->hasMany(FrameAddon::class, 'fa_frame_id', 'id');
+    }
+
     public function lensMaterialLimitations()
     {
-        return $this->belongsToMany(LensMaterial::class, 'frame_lens_material_limitations')->withPivot('allowed');
+        return $this->belongsToMany(LensMaterial::class, 'frame_lens_material_limitations');
     }
 
     public function lensStyleLimitations()
     {
-        return $this->belongsToMany(LensStyle::class, 'frame_lens_style_limitations')->withPivot('allowed', 'minimum_pd');
+        return $this->belongsToMany(LensStyle::class, 'frame_lens_style_limitations');
     }
 
     public function offloadAvailabilities()

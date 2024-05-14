@@ -87,6 +87,7 @@ export interface Frame extends Timestamps {
   fr_frame_color?: string | null;
   fr_eyesize?: string | null;
   variations?: FrameVariation[];
+  addons?: FrameAddon[];
   lens_material_limitations?: LensMaterial[];
   lens_style_limitations?: LensStyle[];
   offload_availabilities?: FrameOffloadAvailability[];

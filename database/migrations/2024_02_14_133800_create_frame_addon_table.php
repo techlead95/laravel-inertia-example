@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('frame_addon', function (Blueprint $table) {
             $table->id();
+            $table->integer('fa_frame_id')->nullable();
             $table->string('fa_UPC')->nullable();
             $table->string('fa_side_shield_type')->nullable();
             $table->string('fa_side_shield_color')->nullable();

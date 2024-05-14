@@ -21,7 +21,6 @@ export interface FramePageProps {
   frames: FrameType[];
   shields: Shield[];
   shieldColors: ShieldColor[];
-  addons: FrameAddon[];
   lensMaterials: LensMaterial[];
   lensStyles: LensStyle[];
 }

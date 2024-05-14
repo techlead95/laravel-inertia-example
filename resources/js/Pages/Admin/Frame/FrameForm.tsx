@@ -28,7 +28,6 @@ export default function FrameForm({
   frames,
   shields,
   shieldColors,
-  addons,
   frame,
   lensMaterials,
   lensStyles,
@@ -109,9 +108,10 @@ export default function FrameForm({
 
           <FrameTabsPanel value="addOns">
             <AddOnsPanel
+              frameId={frame.id}
               shields={shields}
               shieldColors={shieldColors}
-              addons={addons}
+              addons={frame?.addons ?? []}
             />
           </FrameTabsPanel>
 

@@ -44,6 +44,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('frames/{frame}/update-lens-material-limitations', [FrameController::class, 'updateLensMaterialLimitation'])->name('frames.update-lens-material-limitations');
     Route::put('frames/{frame}/update-lens-style-limitations', [FrameController::class, 'updateLensStyleLimitation'])->name('frames.update-lens-style-limitations');
     Route::resource('frames.frame-variations', FrameVariationController::class);
+    Route::resource('frames.frame-addon', FrameAddonController::class);
     Route::resource('frames.offload-availabilities', FrameOffloadAvailabilityController::class);
     Route::resource('frame', FrameController::class);
 
@@ -53,8 +54,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/mirror/catalog', [MirrorController::class, 'catalog'])->name('mirror.catalog');
     Route::resource('mirror', MirrorController::class);
-
-    Route::resource('frame-addon', FrameAddonController::class);
 
     Route::get('/ship-to-account-maintenance', function () {
         return Inertia::render('Admin/ShipToAccountMaintenance', [
@@ -100,10 +99,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 Route::resource('orders', OrderController::class);
-
-Route::get('/sign-in', function () {
-    return Inertia::render('Public/SignIn');
-});
 
 Route::get('/customers', function () {
     return Inertia::render('Customers');

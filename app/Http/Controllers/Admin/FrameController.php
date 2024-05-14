@@ -40,12 +40,11 @@ class FrameController extends Controller
         $brands = FrameBrand::all();
         $collections = FrameCollection::all();
         $groups = FrameDefaultGroup::all();
-        $frames = Frame::with('variations')->get();
+        $frames = Frame::with('variations', 'addons')->get();
         $shields = Shield::all();
         $shieldColors = ShieldColor::all();
-        $addons = FrameAddon::all();
 
-        return Inertia::render('Admin/Frame/CreateFrame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'frames', 'shields', 'shieldColors', 'addons'));
+        return Inertia::render('Admin/Frame/CreateFrame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'frames', 'shields', 'shieldColors'));
     }
 
     /**
@@ -98,10 +97,9 @@ class FrameController extends Controller
         $frames = Frame::with('variations')->get();
         $shields = Shield::all();
         $shieldColors = ShieldColor::all();
-        $addons = FrameAddon::all();
         $lensMaterials = LensMaterial::all();
         $lensStyles = LensStyle::all();
-        $frame = Frame::with('variations', 'lensMaterialLimitations', 'lensStyleLimitations', 'offloadAvailabilities')->find($id);
+        $frame = Frame::with('variations', 'addons', 'lensMaterialLimitations', 'lensStyleLimitations', 'offloadAvailabilities')->find($id);
 
         return Inertia::render('Admin/Frame/EditFrame', compact(
             'edges',
@@ -112,7 +110,6 @@ class FrameController extends Controller
             'frames',
             'shields',
             'shieldColors',
-            'addons',
             'lensMaterials',
             'lensStyles',
             'frame'

@@ -26,7 +26,7 @@ class FrameAddonController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, string $frameId)
     {
         $validated = $request->validate([
             'fa_UPC' => 'nullable',
@@ -38,6 +38,8 @@ class FrameAddonController extends Controller
             'fa_dvi_service_code' => 'nullable',
             'fa_default_case' => 'nullable',
         ]);
+
+        $validated['fa_frame_id'] = intval($frameId);
 
         $frameAddon = FrameAddon::create($validated);
 
@@ -63,7 +65,7 @@ class FrameAddonController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $frameId, string $id)
     {
         $validated = $request->validate([
             'fa_UPC' => 'nullable',
@@ -88,7 +90,7 @@ class FrameAddonController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $frameId, string $id)
     {
         $frameAddon = FrameAddon::find($id);
 

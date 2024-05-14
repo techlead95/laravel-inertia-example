@@ -12,6 +12,7 @@ class FrameAddon extends Model
     protected $table = 'frame_addon';
 
     protected $fillable = [
+        'fa_frame_id',
         'fa_UPC',
         'fa_side_shield_type',
         'fa_side_shield_color',

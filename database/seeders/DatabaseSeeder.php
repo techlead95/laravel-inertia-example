@@ -42,16 +42,15 @@ class DatabaseSeeder extends Seeder
         FrameBrand::factory()->count(3)->create();
         FrameCollection::factory()->count(5)->create();
         FrameDefaultGroup::factory()->count(3)->create();
+        Shield::factory()->count(5)->create();
+        ShieldColor::factory()->count(5)->create();
         Frame::factory()->count(2)->create()->each(function ($frame) {
+            $frame->addons()->saveMany(FrameAddon::factory()->count(2)->create());
             $frame->variations()->saveMany(FrameVariation::factory()->count(3)->create());
             $frame->lensMaterialLimitations()->attach(LensMaterial::all()->random(3));
             $frame->lensStyleLimitations()->attach(LensStyle::all()->random(2));
             $frame->offloadAvailabilities()->saveMany(FrameOffloadAvailability::factory(5)->create());
         });
-
-        Shield::factory()->count(5)->create();
-        ShieldColor::factory()->count(5)->create();
-        FrameAddon::factory()->count(3)->create();
 
         Tint::factory(5)->create();
         Misc::factory(3)->create();

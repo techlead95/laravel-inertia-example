@@ -10,9 +10,15 @@ interface Props {
   shields: Shield[];
   shieldColors: ShieldColor[];
   addons: FrameAddon[];
+  frameId: number;
 }
 
-export default function AddOnsPanel({ shields, shieldColors, addons }: Props) {
+export default function AddOnsPanel({
+  shields,
+  shieldColors,
+  addons,
+  frameId,
+}: Props) {
   const shieldOptions = useMemo(() => {
     return shields.map((shield) => ({
       value: String(shield.id),
@@ -28,9 +34,17 @@ export default function AddOnsPanel({ shields, shieldColors, addons }: Props) {
   const { items, setItems, handleDelete, handleDebouncedUpdate, getRowKey } =
     useEditableTable({
       initialItems: addons,
-      getDestoryUrl: (id) => route('admin.frame-addon.destroy', id),
-      getUpdateUrl: (id) => route('admin.frame-addon.update', id),
-      storeUrl: route('admin.frame-addon.store'),
+      getDestoryUrl: (id) =>
+        route('admin.frames.frame-addon.destroy', {
+          frame: frameId,
+          frame_addon: id,
+        }),
+      getUpdateUrl: (id) =>
+        route('admin.frames.frame-addon.update', {
+          frame: frameId,
+          frame_addon: id,
+        }),
+      storeUrl: route('admin.frames.frame-addon.store', frameId),
     });
 
   return (
