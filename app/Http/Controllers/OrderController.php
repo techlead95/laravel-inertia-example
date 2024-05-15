@@ -44,7 +44,7 @@ class OrderController extends Controller
     public function create()
     {
 
-        $frameVariations = FrameVariation::with('frame')->get();
+        $frameVariations = FrameVariation::with('frame.addons')->get();
         //$lenses = Lens::with('coatings')->get();
         $lenses = Lens::all();
         //dd($lenses);
