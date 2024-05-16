@@ -1,13 +1,11 @@
 import useEditableTableRow from '@/Hooks/useEditableTableRow';
-import { FrameVariation, LensStyleLimitation } from '@/types';
+import { FrameVariation } from '@/types';
 import { Table, TextInput } from '@mantine/core';
 
 interface Props {
   variation: Partial<FrameVariation>;
   onUpdate: (variation: Partial<FrameVariation>) => void;
-  onDebouncedUpdate: (
-    lensStyleLimitation: Partial<LensStyleLimitation>,
-  ) => void;
+  onDebouncedUpdate: (lensStyleLimitation: Partial<FrameVariation>) => void;
 }
 
 export default function OpticLegacyTranslationRow({

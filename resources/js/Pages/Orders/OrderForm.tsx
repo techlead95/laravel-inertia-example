@@ -1,8 +1,14 @@
 import useBaseForm from '@/Hooks/useBaseForm';
 import useGetFieldStyles from '@/Hooks/useFieldStyles';
-import { useState, useEffect } from 'react';
-import { Frame, Order, Lens, FrameVariation, Tint, LensCoating, LensCoatingSelect, Misc, FrameAddon } from '@/types';
-import { Head } from '@inertiajs/react';
+import {
+  FrameAddon,
+  FrameVariation,
+  Lens,
+  LensCoating,
+  Misc,
+  Order,
+  Tint,
+} from '@/types';
 import { router } from '@inertiajs/react';
 import {
   Box,
@@ -19,6 +25,7 @@ import {
   TextInput,
   Textarea,
 } from '@mantine/core';
+import { useEffect, useState } from 'react';
 
 import OrderTable from './OrderTable';
 
@@ -32,28 +39,38 @@ interface Props {
   coatings: LensCoating[];
 }
 
-export default function OrderForm({ lenses, frameVariations, tints, form, miscs, coatings }: Props) {
+export default function OrderForm({
+  lenses,
+  frameVariations,
+  tints,
+  form,
+  miscs,
+  coatings,
+}: Props) {
   const getFieldStyles = useGetFieldStyles();
-
 
   //const [filteredFrames, setFilteredFrames] = useState(frames);
   //const [filteredFrameVariations, setFilteredFrameVariations] = useState(frameVariations);
   //const [filteredRightLenses, setFilteredRightLenses] = useState(lenses);
   //const [filteredLeftLenses, setFilteredLeftLenses] = useState(lenses);
-  const [filteredFrameStyles, setFilteredFrameStyles] = useState([""]);
-  const [filteredFrameSizes, setFilteredFrameSizes] = useState([""]);
-  const [filteredFrameColors, setFilteredFrameColors] = useState([""]);
-  const [filteredFrameBrands, setFilteredFrameBrands] = useState([""]);
-  const [filteredLensColorsRight, setFilteredLensColorsRight] = useState([""]);
-  const [filteredLensStlyesRight, setFilteredLensStylesRight] = useState([""]);
-  const [filteredLensMaterialsRight, setFilteredLensMaterialsRight] = useState([""]);
-  const [filteredLensColorsLeft, setFilteredLensColorsLeft] = useState([""]);
-  const [filteredLensStlyesLeft, setFilteredLensStylesLeft] = useState([""]);
-  const [filteredLensMaterialsLeft, setFilteredLensMaterialsLeft] = useState([""]);
-  const [filteredLensCoatings, setFilteredLensCoatings] = useState([""]);
-  const [filteredLensMirrors, setFilteredLensMirrors] = useState([""]);
-  const [filteredSS, setFilteredSS] = useState([""]);
-  const [filteredSSColor, setFilteredSSColor] = useState([""]);
+  const [filteredFrameStyles, setFilteredFrameStyles] = useState(['']);
+  const [filteredFrameSizes, setFilteredFrameSizes] = useState(['']);
+  const [filteredFrameColors, setFilteredFrameColors] = useState(['']);
+  const [filteredFrameBrands, setFilteredFrameBrands] = useState(['']);
+  const [filteredLensColorsRight, setFilteredLensColorsRight] = useState(['']);
+  const [filteredLensStlyesRight, setFilteredLensStylesRight] = useState(['']);
+  const [filteredLensMaterialsRight, setFilteredLensMaterialsRight] = useState([
+    '',
+  ]);
+  const [filteredLensColorsLeft, setFilteredLensColorsLeft] = useState(['']);
+  const [filteredLensStlyesLeft, setFilteredLensStylesLeft] = useState(['']);
+  const [filteredLensMaterialsLeft, setFilteredLensMaterialsLeft] = useState([
+    '',
+  ]);
+  const [filteredLensCoatings, setFilteredLensCoatings] = useState(['']);
+  const [filteredLensMirrors, setFilteredLensMirrors] = useState(['']);
+  const [filteredSS, setFilteredSS] = useState(['']);
+  const [filteredSSColor, setFilteredSSColor] = useState(['']);
   const [frameAddons, setFrameAddons] = useState<FrameAddon[]>([]);
   const [lOcht, setLOcht] = useState(true);
   const [lUpperAdd, setLUpperAdd] = useState(true);
@@ -65,20 +82,38 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
   const { getFieldProps, data, setData, post, processing, errors } = form;
   useEffect(() => {
     var frameFinal = [];
-    if (data.or_frame_style || data.or_frame_color || data.or_frame_size || data.or_frame_manufacturer) {
-      frameFinal = frameVariations.filter(frameVariation => {
-        if (data.or_frame_style && !frameVariation.frame.fr_frame_name?.includes(data.or_frame_style ?? ''))
+    if (
+      data.or_frame_style ||
+      data.or_frame_color ||
+      data.or_frame_size ||
+      data.or_frame_manufacturer
+    ) {
+      frameFinal = frameVariations.filter((frameVariation) => {
+        if (
+          data.or_frame_style &&
+          !frameVariation.frame.fr_frame_name?.includes(
+            data.or_frame_style ?? '',
+          )
+        )
           return false;
-        if (data.or_frame_color && !frameVariation.fv_frame_color?.includes(data.or_frame_color ?? ''))
+        if (
+          data.or_frame_color &&
+          !frameVariation.fv_frame_color?.includes(data.or_frame_color ?? '')
+        )
           return false;
-        if (data.or_frame_size && !frameVariation.fv_size?.includes(data.or_frame_size ?? ''))
+        if (
+          data.or_frame_size &&
+          !frameVariation.fv_size?.includes(data.or_frame_size ?? '')
+        )
           return false;
-        if (data.or_frame_manufacturer && !frameVariation.frame.fr_brand?.includes(data.or_frame_manufacturer))
+        if (
+          data.or_frame_manufacturer &&
+          !frameVariation.frame.fr_brand?.includes(data.or_frame_manufacturer)
+        )
           return false;
 
         return true;
       });
-
     } else {
       frameFinal = frameVariations;
     }
@@ -89,47 +124,67 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
       var addons = framevar.frame.addons;
       //console.log(addons);
       if (addons) {
-        var sideshields = addons.map(addon => addon.fa_side_shield_type);
+        var sideshields = addons.map((addon) => addon.fa_side_shield_type);
         var ssfiltered = [...new Set(sideshields)];
-        setFilteredSS(ssfiltered);
-        var sideshieldcolors = addons.map(addon => addon.fa_side_shield_color);
+        setFilteredSS(ssfiltered as string[]);
+        var sideshieldcolors = addons.map(
+          (addon) => addon.fa_side_shield_color,
+        );
         var sscolorfiltered = [...new Set(sideshieldcolors)];
-        setFilteredSSColor(sscolorfiltered);
+        setFilteredSSColor(sscolorfiltered as string[]);
         setFrameAddons(addons);
       } else {
         setSS(true);
       }
-
     } else {
       setSS(true);
     }
 
     //setFilteredFrameVariations(frameFinal);
     var frameStyle = [];
-    frameStyle = frameFinal.map((frameVariation) => frameVariation.frame.fr_frame_name ?? '');
+    frameStyle = frameFinal.map(
+      (frameVariation) => frameVariation.frame.fr_frame_name ?? '',
+    );
     var frameStyleFiltered = [...new Set(frameStyle)];
     setFilteredFrameStyles(frameStyleFiltered);
     var frameSize = [];
-    frameSize = frameFinal.map((frameVariation) => frameVariation.fv_size ?? '');
+    frameSize = frameFinal.map(
+      (frameVariation) => frameVariation.fv_size ?? '',
+    );
     var frameSizeFiltered = [...new Set(frameSize)];
     setFilteredFrameSizes(frameSizeFiltered);
     var frameColor = [];
-    frameColor = frameFinal.map((frameVariation) => frameVariation.fv_frame_color ?? '');
+    frameColor = frameFinal.map(
+      (frameVariation) => frameVariation.fv_frame_color ?? '',
+    );
     var frameColorFiltered = [...new Set(frameColor)];
     setFilteredFrameColors(frameColorFiltered);
     var frameBrand = [];
-    frameBrand = frameFinal.map((frameVariation) => frameVariation.frame.fr_brand ?? '');
+    frameBrand = frameFinal.map(
+      (frameVariation) => frameVariation.frame.fr_brand ?? '',
+    );
     var frameBrandFiltered = [...new Set(frameBrand)];
     setFilteredFrameBrands(frameBrandFiltered);
 
     //console.log(lenses);
-  }, [data.or_frame_style, data.or_frame_color, data.or_frame_size, data.or_frame_manufacturer]);
+  }, [
+    data.or_frame_style,
+    data.or_frame_color,
+    data.or_frame_size,
+    data.or_frame_manufacturer,
+  ]);
 
   useEffect(() => {
-    var fAddon = frameAddons.filter(addon => {
-      if (data.or_frame_side_shield && !addon.fa_side_shield_type?.includes(data.or_frame_side_shield))
+    var fAddon = frameAddons.filter((addon) => {
+      if (
+        data.or_frame_side_shield &&
+        !addon.fa_side_shield_type?.includes(data.or_frame_side_shield)
+      )
         return false;
-      if (data.or_frame_side_shield_color && !addon.fa_side_shield_color?.includes(data.or_frame_side_shield_color))
+      if (
+        data.or_frame_side_shield_color &&
+        !addon.fa_side_shield_color?.includes(data.or_frame_side_shield_color)
+      )
         return false;
       return true;
     });
@@ -141,21 +196,32 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
     frameSSColor = fAddon.map((addon) => addon.fa_side_shield_color ?? '');
     var frameSSColorFiltered = [...new Set(frameSSColor)];
     setFilteredSSColor(frameSSColorFiltered);
-
-
   }, [data.or_frame_side_shield, data.or_frame_side_shield_color]);
 
   useEffect(() => {
     var lensRightFinal = [];
     //if (data.or_material_right || data.or_lens_style_right || data.or_lens_color_right || data.or_coating) {
-    if (data.or_material_right || data.or_lens_style_right || data.or_lens_color_right) {
+    if (
+      data.or_material_right ||
+      data.or_lens_style_right ||
+      data.or_lens_color_right
+    ) {
       //var filtered = [];
-      lensRightFinal = lenses.filter(lens => {
-        if (data.or_material_right && !lens.le_lens_mat?.includes(data.or_material_right ?? ''))
+      lensRightFinal = lenses.filter((lens) => {
+        if (
+          data.or_material_right &&
+          !lens.le_lens_mat?.includes(data.or_material_right ?? '')
+        )
           return false;
-        if (data.or_lens_style_right && !lens.le_lens_style?.includes(data.or_lens_style_right ?? ''))
+        if (
+          data.or_lens_style_right &&
+          !lens.le_lens_style?.includes(data.or_lens_style_right ?? '')
+        )
           return false;
-        if (data.or_lens_color_right && !lens.le_lens_col?.includes(data.or_lens_color_right ?? ''))
+        if (
+          data.or_lens_color_right &&
+          !lens.le_lens_col?.includes(data.or_lens_color_right ?? '')
+        )
           return false;
 
         /*if (data.or_coating) {
@@ -171,15 +237,16 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
             return false;
         }*/
         return true;
-
-
-
       });
     } else {
       lensRightFinal = lenses;
     }
 
-    if (data.or_material_right && data.or_lens_style_right && data.or_lens_color_right) {
+    if (
+      data.or_material_right &&
+      data.or_lens_style_right &&
+      data.or_lens_color_right
+    ) {
       var lens = lensRightFinal[0];
       if (true == lens.le_ocht) {
         setROcht(false);
@@ -212,23 +279,38 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
     var lensCoatingFiltered = [...new Set(lensCoating)];
     setFilteredLensCoatings(lensCoatingFiltered);*/
     //console.log(filteredRightLenses)
-  }, [data.or_material_right, data.or_lens_style_right, data.or_lens_color_right]);
+  }, [
+    data.or_material_right,
+    data.or_lens_style_right,
+    data.or_lens_color_right,
+  ]);
   //}, [data.or_material_right, data.or_lens_style_right, data.or_lens_color_right, data.or_coating]);
   useEffect(() => {
-
     var lensLeftFinal = [];
-    if (data.or_material_left || data.or_lens_style_left || data.or_lens_color_left) {
+    if (
+      data.or_material_left ||
+      data.or_lens_style_left ||
+      data.or_lens_color_left
+    ) {
       //var filtered = [];
-      lensLeftFinal = lenses.filter(lens => {
-        if (data.or_material_left && !lens.le_lens_mat?.includes(data.or_material_left ?? ''))
+      lensLeftFinal = lenses.filter((lens) => {
+        if (
+          data.or_material_left &&
+          !lens.le_lens_mat?.includes(data.or_material_left ?? '')
+        )
           return false;
-        if (data.or_lens_style_left && !lens.le_lens_style?.includes(data.or_lens_style_left ?? ''))
+        if (
+          data.or_lens_style_left &&
+          !lens.le_lens_style?.includes(data.or_lens_style_left ?? '')
+        )
           return false;
-        if (data.or_lens_color_left && !lens.le_lens_col?.includes(data.or_lens_color_left ?? ''))
+        if (
+          data.or_lens_color_left &&
+          !lens.le_lens_col?.includes(data.or_lens_color_left ?? '')
+        )
           return false;
 
         return true;
-
       });
     } else {
       lensLeftFinal = lenses;
@@ -236,7 +318,11 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
 
     //console.log(document.getElementsByName("or_ocht_left")?.getAttribute("diabled"))
     //console.log(document.getElementsByName("or_lens_color_left")?.getAttribute("diabled"))
-    if (data.or_material_left && data.or_lens_style_left && data.or_lens_color_left) {
+    if (
+      data.or_material_left &&
+      data.or_lens_style_left &&
+      data.or_lens_color_left
+    ) {
       var lens = lensLeftFinal[0];
       if (true == lens.le_ocht) {
         setLOcht(false);
@@ -264,31 +350,28 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
     lensColorLeft = lensLeftFinal.map((lens) => lens.le_lens_col ?? '');
     var lensColorLeftFiltered = [...new Set(lensColorLeft)];
     setFilteredLensColorsLeft(lensColorLeftFiltered);
-
   }, [data.or_material_left, data.or_lens_style_left, data.or_lens_color_left]);
   useEffect(() => {
     var filterCoating = [];
     if (data.or_coating || data.or_tint_color || data.or_mirror) {
-      filterCoating = coatings.filter(coating => {
-        if (data.or_coating && !coating.lc_lens_coating.includes(data.or_coating))
+      filterCoating = coatings.filter((coating) => {
+        if (
+          data.or_coating &&
+          !coating.lc_lens_coating.includes(data.or_coating)
+        )
           return false;
-        console.log(coating.lc_tintable)
-        if (data.or_tint_color && (false == coating.lc_tintable))
-          return false;
+        console.log(coating.lc_tintable);
+        if (data.or_tint_color && false == coating.lc_tintable) return false;
         if (data.or_mirror) {
-          var mirrors = coating.mirrors?.filter(mirror => {
-            if (!mirror.mr_mirror.includes(data.or_mirror ?? ''))
-              return false;
+          var mirrors = coating.mirrors?.filter((mirror) => {
+            if (!mirror.mr_mirror.includes(data.or_mirror ?? '')) return false;
             return true;
-          })
-          if (!(mirrors && mirrors.length > 0))
-            return false;
+          });
+          if (!(mirrors && mirrors.length > 0)) return false;
         }
 
         return true;
-
       });
-
     } else {
       filterCoating = coatings;
     }
@@ -303,15 +386,17 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
       setDTint(false);
     }
     var lensCoatings = [];
-    lensCoatings = filterCoating.map((coating) => coating.lc_lens_coating ?? '');
+    lensCoatings = filterCoating.map(
+      (coating) => coating.lc_lens_coating ?? '',
+    );
     var lensCatingsFiltered = [...new Set(lensCoatings)];
     setFilteredLensCoatings(lensCatingsFiltered);
     var lensMirror = [];
-    lensMirror = filterCoating.map((coating) => coating.mirrors?.map((mirror) => mirror.mr_mirror)).flat();
-    var lensMirrorFiltered = [...new Set(lensMirror)];
+    lensMirror = filterCoating
+      .map((coating) => coating.mirrors?.map((mirror) => mirror.mr_mirror))
+      .flat();
+    var lensMirrorFiltered = [...new Set(lensMirror)] as string[];
     setFilteredLensMirrors(lensMirrorFiltered);
-
-
   }, [data.or_coating, data.or_tint_color, data.or_mirror]);
 
   return (
@@ -465,13 +550,7 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
         </Text>
 
         <OrderTable
-          headers={[
-            'Material',
-            'Style',
-            'Color',
-            'Ocht',
-            'Measurement',
-          ]}
+          headers={['Material', 'Style', 'Color', 'Ocht', 'Measurement']}
           hasRL
           hasEditable
         >
@@ -489,7 +568,7 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
                 {...getFieldProps('or_lens_style_right')}
                 placeholder="Select Lens Style"
                 data={filteredLensStlyesRight}
-              //data={['test', 'test2', 'test3', 'test4']}
+                //data={['test', 'test2', 'test3', 'test4']}
               />
             </Table.Td>
             <Table.Td>
@@ -497,13 +576,11 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
                 {...getFieldProps('or_lens_color_right')}
                 placeholder="Select Lens Color"
                 data={filteredLensColorsRight}
-              //data={['test', 'test2', 'test3', 'test4']}
+                //data={['test', 'test2', 'test3', 'test4']}
               />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_ocht_right')}
-                disabled={rOcht}
-              />
+              <TextInput {...getFieldProps('or_ocht_right')} disabled={rOcht} />
             </Table.Td>
             <Table.Td>
               <Select
@@ -519,7 +596,7 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
                 {...getFieldProps('or_material_left')}
                 placeholder="Select Material"
                 data={filteredLensMaterialsLeft}
-              //data={['test', 'test2', 'test3', 'test4']}
+                //data={['test', 'test2', 'test3', 'test4']}
               />
             </Table.Td>
             <Table.Td>
@@ -527,7 +604,7 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
                 {...getFieldProps('or_lens_style_left')}
                 placeholder="Select Lens Style"
                 data={filteredLensStlyesLeft}
-              //data={['test', 'test2', 'test3', 'test4']}
+                //data={['test', 'test2', 'test3', 'test4']}
               />
             </Table.Td>
             <Table.Td>
@@ -535,13 +612,11 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
                 {...getFieldProps('or_lens_color_left')}
                 placeholder="Select Lens Color"
                 data={filteredLensColorsLeft}
-              //data={['test', 'test2', 'test3', 'test4']}
+                //data={['test', 'test2', 'test3', 'test4']}
               />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_ocht_left')}
-                disabled={lOcht}
-              />
+              <TextInput {...getFieldProps('or_ocht_left')} disabled={lOcht} />
             </Table.Td>
             <Table.Td>
               <Select
@@ -583,16 +658,32 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
             </Table.Td>
             <Table.Td w="200">
               <Group>
-                <Select mr="-10" w="83"  {...getFieldProps('or_prism_in_right')}
-                  data={['*', 'IN', 'OUT']} />
-                <TextInput ml="-10" w="94" {...getFieldProps('or_prism_in_right_value')} />
+                <Select
+                  mr="-10"
+                  w="83"
+                  {...getFieldProps('or_prism_in_right')}
+                  data={['*', 'IN', 'OUT']}
+                />
+                <TextInput
+                  ml="-10"
+                  w="94"
+                  {...getFieldProps('or_prism_in_right_value')}
+                />
               </Group>
             </Table.Td>
             <Table.Td w="200">
               <Group>
-                <Select mr="-10" w="83"  {...getFieldProps('or_prism_up_right')}
-                  data={['*', 'UP', 'DOWN']} />
-                <TextInput ml="-10" w="94" {...getFieldProps('or_prism_up_right_value')} />
+                <Select
+                  mr="-10"
+                  w="83"
+                  {...getFieldProps('or_prism_up_right')}
+                  data={['*', 'UP', 'DOWN']}
+                />
+                <TextInput
+                  ml="-10"
+                  w="94"
+                  {...getFieldProps('or_prism_up_right_value')}
+                />
               </Group>
             </Table.Td>
           </Table.Tr>
@@ -614,14 +705,32 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
             </Table.Td>
             <Table.Td>
               <Group>
-                <Select mr="-10" w="83"  {...getFieldProps('or_prism_in_left')}
-                  data={['*', 'IN', 'OUT']} /><TextInput ml="-10" w="94" {...getFieldProps('or_prism_in_left_value')} />
+                <Select
+                  mr="-10"
+                  w="83"
+                  {...getFieldProps('or_prism_in_left')}
+                  data={['*', 'IN', 'OUT']}
+                />
+                <TextInput
+                  ml="-10"
+                  w="94"
+                  {...getFieldProps('or_prism_in_left_value')}
+                />
               </Group>
             </Table.Td>
             <Table.Td>
               <Group>
-                <Select mr="-10" w="83"  {...getFieldProps('or_prism_up_left')} data={['*', 'UP', 'DOWN']} />
-                <TextInput ml="-10" w="94" {...getFieldProps('or_prism_up_left_value')} />
+                <Select
+                  mr="-10"
+                  w="83"
+                  {...getFieldProps('or_prism_up_left')}
+                  data={['*', 'UP', 'DOWN']}
+                />
+                <TextInput
+                  ml="-10"
+                  w="94"
+                  {...getFieldProps('or_prism_up_left_value')}
+                />
               </Group>
             </Table.Td>
           </Table.Tr>
@@ -644,7 +753,8 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
               <TextInput {...getFieldProps('or_add_right')} />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_upper_add_right')}
+              <TextInput
+                {...getFieldProps('or_upper_add_right')}
                 disabled={rUpperAdd}
               />
             </Table.Td>
@@ -652,28 +762,32 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
               <TextInput {...getFieldProps('or_seg_height_right')} />
             </Table.Td>
             <Table.Td>
-              <Select {...getFieldProps('or_tint_color')}
+              <Select
+                {...getFieldProps('or_tint_color')}
                 placeholder="Select Tint"
                 data={tints.map((tint) => tint.ti_color ?? '')}
                 disabled={dTint}
               />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_tint_percent')}
+              <TextInput
+                {...getFieldProps('or_tint_percent')}
                 disabled={dTint}
               />
             </Table.Td>
             <Table.Td>
-              <Select {...getFieldProps('or_mirror')}
+              <Select
+                {...getFieldProps('or_mirror')}
                 placeholder="Select Mirror"
                 data={filteredLensMirrors}
               />
             </Table.Td>
             <Table.Td>
-              <Select {...getFieldProps('or_coating')}
+              <Select
+                {...getFieldProps('or_coating')}
                 placeholder="Select Coating"
                 data={filteredLensCoatings}
-              //data={lensCoatings.map((lensCoating) => lensCoating.lc_lens_coating ?? '')}
+                //data={lensCoatings.map((lensCoating) => lensCoating.lc_lens_coating ?? '')}
               />
             </Table.Td>
           </Table.Tr>
@@ -682,7 +796,8 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
               <TextInput {...getFieldProps('or_add_left')} />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_upper_add_left')}
+              <TextInput
+                {...getFieldProps('or_upper_add_left')}
                 disabled={lUpperAdd}
               />
             </Table.Td>
@@ -730,38 +845,52 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
 
         <OrderTable
           ml={26}
-          headers={['Color', 'Size', 'Side Shield', 'Side Shield Color', 'Extra SS']}
+          headers={[
+            'Color',
+            'Size',
+            'Side Shield',
+            'Side Shield Color',
+            'Extra SS',
+          ]}
         >
           <Table.Tr>
             <Table.Td>
-              <Select {...getFieldProps('or_frame_color')}
+              <Select
+                {...getFieldProps('or_frame_color')}
                 //data={filteredFrames.map((frame) => frame.fr_frame_color ?? '')}
                 //data={frames.map((frame) => frame.variations?.fv_frame_color ?? '')}
                 //data={frames.map((frame) => frame.variations?.map((frameVariation) => frameVariation.fv_frame_color ?? ''))}
                 data={filteredFrameColors}
-              //onDropdownOpen={ }
-              //data={[]}
+                //onDropdownOpen={ }
+                //data={[]}
               />
             </Table.Td>
             <Table.Td>
-              <Select {...getFieldProps('or_frame_size')}
+              <Select
+                {...getFieldProps('or_frame_size')}
                 //data={filteredFrames.map((frame) => frame.fr_eyesize ?? '')}
                 data={filteredFrameSizes}
-              //data={[]}
+                //data={[]}
               />
             </Table.Td>
             <Table.Td>
-              <Select {...getFieldProps('or_frame_side_shield')} data={filteredSS}
+              <Select
+                {...getFieldProps('or_frame_side_shield')}
+                data={filteredSS}
                 disabled={sS}
               />
             </Table.Td>
             <Table.Td>
-              <Select {...getFieldProps('or_frame_side_shield_color')} data={filteredSSColor}
+              <Select
+                {...getFieldProps('or_frame_side_shield_color')}
+                data={filteredSSColor}
                 disabled={sS}
               />
             </Table.Td>
             <Table.Td>
-              <Select {...getFieldProps('or_extra_ss')} data={['n/a', '1']}
+              <Select
+                {...getFieldProps('or_extra_ss')}
+                data={['n/a', '1']}
                 disabled={sS}
               />
             </Table.Td>
@@ -808,8 +937,22 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
       </Stack>
 
       <Group justify="space-between">
-        <Button type="submit" name="action" value="save" onClick={() => setData('method', "save")}>Save as Pending</Button>
-        <Button type="submit" name="action" value="submit" onClick={() => setData('method', "submit")}>Submit</Button>
+        <Button
+          type="submit"
+          name="action"
+          value="save"
+          onClick={() => setData('method', 'save')}
+        >
+          Save as Pending
+        </Button>
+        <Button
+          type="submit"
+          name="action"
+          value="submit"
+          onClick={() => setData('method', 'submit')}
+        >
+          Submit
+        </Button>
       </Group>
     </>
   );
