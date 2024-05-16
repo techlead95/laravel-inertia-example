@@ -106,6 +106,8 @@ return new class extends Migration
             $table->string('or_manual_ship_addr_1')->nullable();
             $table->string('or_manual_ship_addr_2')->nullable();
             $table->string('or_manual_ship_addr_3')->nullable();
+            $table->string('or_jobtype')->nullable();
+            $table->string('or_eyes')->nullable();
             $table->timestamps();
         });
     }

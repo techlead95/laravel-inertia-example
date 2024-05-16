@@ -104,6 +104,8 @@ export default function CreateOrder({ lenses, frameVariations, tints, miscs, coa
             or_manual_ship_addr_2: '',
             or_manual_ship_addr_3: '',
             method: '',
+            or_jobtype: '',
+            or_eyes: '',
         });
 
     const { post } = form;

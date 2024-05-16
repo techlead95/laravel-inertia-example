@@ -12,10 +12,13 @@ use App\Models\Misc;
 use App\Models\LensCoating;
 use App\Models\OrderTracking;
 use App\Http\Controllers\DB;
+use App\Models\LensMaterial;
+use App\Models\LensStyle;
 use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\Builder;
 use PhpParser\Node\Stmt\For_;
+use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
@@ -158,6 +161,8 @@ class OrderController extends Controller
                     'or_cc_emp_card_exp_date' => 'nullable',
                     'or_cc_company_card_type' => 'nullable',
                     'or_cc_company_card_exp_date' => 'nullable',
+                    'or_jobtype' => 'nullable',
+                    'or_eyes' => 'nullable',
                 ]);
 
                 $order = Order::create($validated);
@@ -180,36 +185,46 @@ class OrderController extends Controller
                     $tintl = 0;
                     $tintu = 999;
                 }
-                $rightlens = Lens::where([
+                $rightLensStyle = LensStyle::where(['ls_lenstyl_lens_style' => $request->input('or_lens_style_right')])->first();
+                $rightLensMaterial = LensMaterial::where(['lm_lens_material' => $request->input('or_material_right')])->first();
+                $rightLens = Lens::where([
                     'le_lens_mat' => $request->input('or_material_right'),
                     'le_lens_col' => $request->input('or_lens_color_right'),
                     'le_lens_style' => $request->input('or_lens_style_right')
                 ])->first();
 
-                $leftlens = Lens::where([
-                    'le_lens_mat' => $request->input('or_material_left'),
+                $leftLensStyle = LensStyle::where(['ls_lenstyl_lens_style' => $request->input('or_lens_style_left')])->first();
+                $leftLensMaterial = LensMaterial::where(['lm_lens_material' => $request->input('or_material_left')])->first();
+                $leftLens = Lens::where([
+                    'le_lens_mat' => $leftLensMaterial,
                     'le_lens_col' => $request->input('or_lens_color_left'),
-                    'le_lens_style' => $request->input('or_lens_style_left')
+                    'le_lens_style' => $leftLensStyle
                 ])->first();
                 $or_frame_style =  $request->input('or_frame_style');
                 //fv_eyesize . '-' . $this->fv_front_bridge . '-' . $this->fv_temple_size
                 $fvsize = explode('-', $request->input('or_frame_size'));
                 //dd($fvsize);
-                $fvar = FrameVariation::where([
-                    'fv_frame_color' => $request->input('or_frame_color'),
-                    'fv_eyesize' =>  $fvsize[0],
-                    'fv_front_bridge' =>  $fvsize[1],
-                    'fv_temple_size' =>  $fvsize[2]
-                ])->whereHas('frame', function (Builder $query) use ($or_frame_style) {
-                    $query->where('fr_frame_name', $or_frame_style);
-                })->first();
-                dd($rightlens, $leftlens, $fvar);
+                if ($request->input('or_frame_color') && $fvsize[0] && $fvsize[1] && $fvsize[2]) {
+                    $fvar = FrameVariation::where([
+                        'fv_frame_color' => $request->input('or_frame_color'),
+                        'fv_eyesize' =>  $fvsize[0],
+                        'fv_front_bridge' =>  $fvsize[1],
+                        'fv_temple_size' =>  $fvsize[2]
+                    ])->whereHas('frame', function (Builder $query) use ($or_frame_style) {
+                        $query->where('fr_frame_name', $or_frame_style);
+                    })->first();
+                } else {
+                    $fvar = null;
+                }
+                $or_coating = LensCoating::where(['lc_lens_coating' => $request->input('or_coating')])->first();
+                //dd($rightlens, $leftlens, $fvar);
 
                 //dd($tint, $tintl, $tintu);
-                $validated = $request->validate([
+                //$validated = $request->validate([
+                $validator = Validator::make($request->all(), [
                     'or_ship_to' => 'nullable',
                     'or_ordby_billto_dash' => 'nullable',
-                    'or_po_no' => 'nullable',
+                    'or_po_no' => 'required',
                     'or_emp_name_last' => 'nullable',
                     'or_emp_name_first' => 'nullable',
                     'or_emp_phone' => 'nullable',
@@ -219,12 +234,12 @@ class OrderController extends Controller
                     'or_req' => 'nullable',
                     'or_order_pending' => 'nullable',
                     'filler' => 'nullable',
-                    'or_material_right' => 'nullable',
-                    'or_material_left' => 'nullable',
-                    'or_lens_style_right' => 'nullable',
-                    'or_lens_style_left' => 'nullable',
-                    'or_lens_color_right' => 'nullable',
-                    'or_lens_color_left' => 'nullable',
+                    'or_material_right' => 'nullable|required_if:or_eyes,Both|required_if:or_eyes,Right',
+                    'or_material_left' => 'nullable|required_if:or_eyes,Both|required_if:or_eyes,Left',
+                    'or_lens_style_right' => 'nullable|required_if:or_eyes,Both|required_if:or_eyes,Right',
+                    'or_lens_style_left' => 'nullable|required_if:or_eyes,Both|required_if:or_eyes,Left',
+                    'or_lens_color_right' => 'nullable|required_if:or_eyes,Both|required_if:or_eyes,Right',
+                    'or_lens_color_left' => 'nullable|required_if:or_eyes,Both|required_if:or_eyes,Left',
                     'or_ocht_right' => 'nullable',
                     'or_ocht_left' => 'nullable',
                     'or_measurement_right' => 'nullable',
@@ -274,9 +289,9 @@ class OrderController extends Controller
                     'or_coating_left' => 'nullable',
                     'or_frame_info' => 'nullable',
                     'or_frame_manufacturer' => 'nullable',
-                    'or_frame_style' => 'nullable',
-                    'or_frame_color' => 'nullable',
-                    'or_frame_size' => 'nullable',
+                    'or_frame_style' => 'required',
+                    'or_frame_color' => 'required',
+                    'or_frame_size' => 'required',
                     'or_frame_side_shield' => 'nullable',
                     'or_frame_side_shield_color' => 'nullable',
                     'or_extra_ss' => 'nullable',
@@ -292,7 +307,57 @@ class OrderController extends Controller
                     'or_cc_emp_card_exp_date' => 'nullable',
                     'or_cc_company_card_type' => 'nullable',
                     'or_cc_company_card_exp_date' => 'nullable',
+                    'or_jobtype' => 'nullable',
+                    'or_eyes' => 'required',
                 ]);
+
+                $validator->after(function ($validator) use ($fvar, $leftLensMaterial, $leftLensStyle, $rightLensMaterial, $rightLensStyle, $leftLens, $rightLens, $or_coating) {
+                    //$limit = $fvar->frame->lensMaterialLimitation->contains();
+
+                    if ($fvar && $fvar->frame->lensMaterialLimitations->contains($leftLensMaterial)) {
+                        $validator->errors()->add(
+                            'or_material_left',
+                            'Material not compatible with frame'
+                        );
+                    }
+                    if ($fvar && $fvar->frame->lensMaterialLimitations->contains($rightLensMaterial)) {
+                        $validator->errors()->add(
+                            'or_material_right',
+                            'Material not compatible with frame'
+                        );
+                    }
+                    if ($fvar && $fvar->frame->lensMaterialLimitations->contains($leftLensStyle)) {
+                        $validator->errors()->add(
+                            'or_lens_style_left',
+                            'Style not compatible with frame'
+                        );
+                    }
+                    if ($fvar && $fvar->frame->lensMaterialLimitations->contains($rightLensStyle)) {
+                        $validator->errors()->add(
+                            'or_lens_style_right',
+                            'Style not compatible with frame'
+                        );
+                    }
+                    if ($or_coating && !$leftLens->coatings->contains($or_coating)) {
+                        $validator->errors()->add(
+                            'or_coating',
+                            'Coating not compatible with Left Lens'
+                        );
+                    }
+                    if ($or_coating && !$rightLens->coatings->contains($or_coating)) {
+                        $validator->errors()->add(
+                            'or_coating',
+                            'Coating not compatible with Right Lens'
+                        );
+                    }
+                });
+
+                if ($validator->fails()) {
+                    return back()->withErrors($validator)->withInput();
+                }
+
+                // Retrieve the validated input...
+                $validated = $validator->validated();
 
                 $order = Order::create($validated);
                 $ot = new OrderTracking(['ot_status' => 'In Process', 'ot_portal_order_number' => $order->or_portal_order_number]);
@@ -435,6 +500,8 @@ class OrderController extends Controller
                     'or_cc_emp_card_exp_date' => 'nullable',
                     'or_cc_company_card_type' => 'nullable',
                     'or_cc_company_card_exp_date' => 'nullable',
+                    'or_jobtype' => 'nullable',
+                    'or_eyes' => 'nullable',
                 ]);
 
                 $order->update($validated);
@@ -456,11 +523,46 @@ class OrderController extends Controller
                     $tintl = 0;
                     $tintu = 999;
                 }
+                $rightLensStyle = LensStyle::where(['ls_lenstyl_lens_style' => $request->input('or_lens_style_right')])->first();
+                $rightLensMaterial = LensMaterial::where(['lm_lens_material' => $request->input('or_material_right')])->first();
+                $rightLens = Lens::where([
+                    'le_lens_mat' => $request->input('or_material_right'),
+                    'le_lens_col' => $request->input('or_lens_color_right'),
+                    'le_lens_style' => $request->input('or_lens_style_right')
+                ])->first();
 
-                $validated = $request->validate([
+                $leftLensStyle = LensStyle::where(['ls_lenstyl_lens_style' => $request->input('or_lens_style_left')])->first();
+                $leftLensMaterial = LensMaterial::where(['lm_lens_material' => $request->input('or_material_left')])->first();
+                $leftLens = Lens::where([
+                    'le_lens_mat' => $leftLensMaterial,
+                    'le_lens_col' => $request->input('or_lens_color_left'),
+                    'le_lens_style' => $leftLensStyle
+                ])->first();
+                $or_frame_style =  $request->input('or_frame_style');
+                //fv_eyesize . '-' . $this->fv_front_bridge . '-' . $this->fv_temple_size
+                $fvsize = explode('-', $request->input('or_frame_size'));
+                //dd($fvsize);
+                if ($request->input('or_frame_color') && $fvsize[0] && $fvsize[1] && $fvsize[2]) {
+                    $fvar = FrameVariation::where([
+                        'fv_frame_color' => $request->input('or_frame_color'),
+                        'fv_eyesize' =>  $fvsize[0],
+                        'fv_front_bridge' =>  $fvsize[1],
+                        'fv_temple_size' =>  $fvsize[2]
+                    ])->whereHas('frame', function (Builder $query) use ($or_frame_style) {
+                        $query->where('fr_frame_name', $or_frame_style);
+                    })->first();
+                } else {
+                    $fvar = null;
+                }
+                $or_coating = LensCoating::where(['lc_lens_coating' => $request->input('or_coating')])->first();
+                //dd($rightlens, $leftlens, $fvar);
+
+                //dd($tint, $tintl, $tintu);
+                //$validated = $request->validate([
+                $validator = Validator::make($request->all(), [
                     'or_ship_to' => 'nullable',
                     'or_ordby_billto_dash' => 'nullable',
-                    'or_po_no' => 'nullable',
+                    'or_po_no' => 'required',
                     'or_emp_name_last' => 'nullable',
                     'or_emp_name_first' => 'nullable',
                     'or_emp_phone' => 'nullable',
@@ -470,12 +572,12 @@ class OrderController extends Controller
                     'or_req' => 'nullable',
                     'or_order_pending' => 'nullable',
                     'filler' => 'nullable',
-                    'or_material_right' => 'nullable',
-                    'or_material_left' => 'nullable',
-                    'or_lens_style_right' => 'nullable',
-                    'or_lens_style_left' => 'nullable',
-                    'or_lens_color_right' => 'nullable',
-                    'or_lens_color_left' => 'nullable',
+                    'or_material_right' => 'nullable|required_if:or_eyes,Both|required_if:or_eyes,Right',
+                    'or_material_left' => 'nullable|required_if:or_eyes,Both|required_if:or_eyes,Left',
+                    'or_lens_style_right' => 'nullable|required_if:or_eyes,Both|required_if:or_eyes,Right',
+                    'or_lens_style_left' => 'nullable|required_if:or_eyes,Both|required_if:or_eyes,Left',
+                    'or_lens_color_right' => 'nullable|required_if:or_eyes,Both|required_if:or_eyes,Right',
+                    'or_lens_color_left' => 'nullable|required_if:or_eyes,Both|required_if:or_eyes,Left',
                     'or_ocht_right' => 'nullable',
                     'or_ocht_left' => 'nullable',
                     'or_measurement_right' => 'nullable',
@@ -515,7 +617,7 @@ class OrderController extends Controller
                     'or_upper_add_left' => 'nullable',
                     'or_seg_height_right' => 'nullable',
                     'or_set_height_left' => 'nullable',
-                    'or_tint_color' => 'nullable',
+                    'or_tint_color' => "nullable",
                     'or_tint_color_left' => 'nullable',
                     'or_tint_percent' => "nullable|required_with:or_tint_color|integer|numeric|between:$tintl,$tintu",
                     'or_tint_percent_left' => 'nullable',
@@ -525,10 +627,11 @@ class OrderController extends Controller
                     'or_coating_left' => 'nullable',
                     'or_frame_info' => 'nullable',
                     'or_frame_manufacturer' => 'nullable',
-                    'or_frame_style' => 'nullable',
-                    'or_frame_color' => 'nullable',
-                    'or_frame_size' => 'nullable',
+                    'or_frame_style' => 'required',
+                    'or_frame_color' => 'required',
+                    'or_frame_size' => 'required',
                     'or_frame_side_shield' => 'nullable',
+                    'or_frame_side_shield_color' => 'nullable',
                     'or_extra_ss' => 'nullable',
                     'or_frame_case' => 'nullable',
                     'or_add_on_1' => 'nullable',
@@ -542,8 +645,57 @@ class OrderController extends Controller
                     'or_cc_emp_card_exp_date' => 'nullable',
                     'or_cc_company_card_type' => 'nullable',
                     'or_cc_company_card_exp_date' => 'nullable',
+                    'or_jobtype' => 'nullable',
+                    'or_eyes' => 'required',
                 ]);
 
+                $validator->after(function ($validator) use ($fvar, $leftLensMaterial, $leftLensStyle, $rightLensMaterial, $rightLensStyle, $leftLens, $rightLens, $or_coating) {
+                    //$limit = $fvar->frame->lensMaterialLimitation->contains();
+
+                    if ($fvar && $fvar->frame->lensMaterialLimitations->contains($leftLensMaterial)) {
+                        $validator->errors()->add(
+                            'or_material_left',
+                            'Material not compatible with frame'
+                        );
+                    }
+                    if ($fvar && $fvar->frame->lensMaterialLimitations->contains($rightLensMaterial)) {
+                        $validator->errors()->add(
+                            'or_material_right',
+                            'Material not compatible with frame'
+                        );
+                    }
+                    if ($fvar && $fvar->frame->lensMaterialLimitations->contains($leftLensStyle)) {
+                        $validator->errors()->add(
+                            'or_lens_style_left',
+                            'Style not compatible with frame'
+                        );
+                    }
+                    if ($fvar && $fvar->frame->lensMaterialLimitations->contains($rightLensStyle)) {
+                        $validator->errors()->add(
+                            'or_lens_style_right',
+                            'Style not compatible with frame'
+                        );
+                    }
+                    if ($or_coating && !$leftLens->coatings->contains($or_coating)) {
+                        $validator->errors()->add(
+                            'or_coating',
+                            'Coating not compatible with Left Lens'
+                        );
+                    }
+                    if ($or_coating && !$rightLens->coatings->contains($or_coating)) {
+                        $validator->errors()->add(
+                            'or_coating',
+                            'Coating not compatible with Right Lens'
+                        );
+                    }
+                });
+
+                if ($validator->fails()) {
+                    return back()->withErrors($validator)->withInput();
+                }
+
+                // Retrieve the validated input...
+                $validated = $validator->validated();
                 $order->update($validated);
 
                 $ot = new OrderTracking(['ot_status' => 'In Process', 'ot_portal_order_number' => $order->or_portal_order_number]);

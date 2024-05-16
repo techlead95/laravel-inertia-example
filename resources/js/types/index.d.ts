@@ -321,6 +321,8 @@ export interface Order extends Timestamps {
   or_manual_ship_addr_3: string;
   method: string;
   status: OrderTracking;
+  or_jobtype: string;
+  or_eyes: string;
 }
 export interface OrderTracking extends Timestamps {
   id: number;
