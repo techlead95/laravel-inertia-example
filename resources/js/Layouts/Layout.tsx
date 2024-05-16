@@ -37,7 +37,8 @@ export default function Layout({
               <HeaderIconButton
                 icon={<Logout />}
                 label="Log Out"
-                href="/sign-in"
+                method="post"
+                href={route('logout')}
               />
             </Group>
           </Group>

@@ -22,6 +22,7 @@ use App\Models\Misc;
 use App\Models\Shield;
 use App\Models\ShieldColor;
 use App\Models\Tint;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -30,7 +31,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->count(10)->create();
+        User::create([
+            'name' => 'User',
+            'email' => 'user@test.com',
+            'password' => Hash::make('password')
+        ]);
+
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@test.com',
+            'password' => Hash::make('password'),
+            'is_admin' => true,
+        ]);
 
         LensStyle::factory()->count(5)->create();
         LensMaterial::factory()->count(5)->create();

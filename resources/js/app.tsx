@@ -65,7 +65,7 @@ createInertiaApp({
     page.default.layout =
       page.default.layout ||
       ((page: ReactNode) =>
-        name.startsWith('Public/') ? (
+        name.startsWith('Auth/') ? (
           page
         ) : name.startsWith('Admin/') ? (
           <AdminLayout children={page} />

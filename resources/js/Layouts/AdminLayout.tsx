@@ -1,6 +1,4 @@
-import HeaderIconButton from '@/Components/HeaderIconButton';
 import MenuLink from '@/Components/MenuLink';
-import { Settings } from '@mui/icons-material';
 import { PropsWithChildren } from 'react';
 
 import Layout from './Layout';
@@ -8,13 +6,7 @@ import Layout from './Layout';
 export default function AdminLayout({ children }: PropsWithChildren) {
   return (
     <Layout
-      headerButtons={
-        <HeaderIconButton
-          icon={<Settings />}
-          label="Back to Optic 2"
-          href="/"
-        />
-      }
+      headerButtons={null}
       menuLinks={
         <>
           <MenuLink href="/admin">Admin Home</MenuLink>

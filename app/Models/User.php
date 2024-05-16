@@ -32,6 +32,7 @@ class User extends Authenticatable
         'zip',
         'country',
         'nick_name',
+        'is_admin'
     ];
 
     /**
