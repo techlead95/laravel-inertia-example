@@ -1,7 +1,7 @@
 import useBaseForm from '@/Hooks/useBaseForm';
 import useGetFieldStyles from '@/Hooks/useFieldStyles';
 import { useState, useEffect } from 'react';
-import { Frame, Order, Lens, FrameVariation, Tint, LensCoating, LensCoatingSelect, Misc } from '@/types';
+import { Frame, Order, Lens, FrameVariation, Tint, LensCoating, LensCoatingSelect, Misc, FrameAddon } from '@/types';
 import { Head } from '@inertiajs/react';
 import { router } from '@inertiajs/react';
 import {
@@ -52,11 +52,15 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
   const [filteredLensMaterialsLeft, setFilteredLensMaterialsLeft] = useState([""]);
   const [filteredLensCoatings, setFilteredLensCoatings] = useState([""]);
   const [filteredLensMirrors, setFilteredLensMirrors] = useState([""]);
+  const [filteredSS, setFilteredSS] = useState([""]);
+  const [filteredSSColor, setFilteredSSColor] = useState([""]);
+  const [frameAddons, setFrameAddons] = useState<FrameAddon[]>([]);
   const [lOcht, setLOcht] = useState(true);
   const [lUpperAdd, setLUpperAdd] = useState(true);
   const [rOcht, setROcht] = useState(true);
   const [rUpperAdd, setRUpperAdd] = useState(true);
   const [dTint, setDTint] = useState(false);
+  const [sS, setSS] = useState(true);
   //const { register, handleSubmit, setValue } = useForm();
   const { getFieldProps, data, setData, post, processing, errors } = form;
   useEffect(() => {
@@ -78,12 +82,28 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
     } else {
       frameFinal = frameVariations;
     }
+
     if (data.or_frame_style && data.or_frame_color && data.or_frame_size) {
       var framevar = frameFinal[0];
-      var addons = framevar.frame.
+      setSS(false);
+      var addons = framevar.frame.addons;
+      //console.log(addons);
+      if (addons) {
+        var sideshields = addons.map(addon => addon.fa_side_shield_type);
+        var ssfiltered = [...new Set(sideshields)];
+        setFilteredSS(ssfiltered);
+        var sideshieldcolors = addons.map(addon => addon.fa_side_shield_color);
+        var sscolorfiltered = [...new Set(sideshieldcolors)];
+        setFilteredSSColor(sscolorfiltered);
+        setFrameAddons(addons);
+      } else {
+        setSS(true);
+      }
 
-
+    } else {
+      setSS(true);
     }
+
     //setFilteredFrameVariations(frameFinal);
     var frameStyle = [];
     frameStyle = frameFinal.map((frameVariation) => frameVariation.frame.fr_frame_name ?? '');
@@ -104,6 +124,26 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
 
     //console.log(lenses);
   }, [data.or_frame_style, data.or_frame_color, data.or_frame_size, data.or_frame_manufacturer]);
+
+  useEffect(() => {
+    var fAddon = frameAddons.filter(addon => {
+      if (data.or_frame_side_shield && !addon.fa_side_shield_type?.includes(data.or_frame_side_shield))
+        return false;
+      if (data.or_frame_side_shield_color && !addon.fa_side_shield_color?.includes(data.or_frame_side_shield_color))
+        return false;
+      return true;
+    });
+    var frameSS = [];
+    frameSS = fAddon.map((addon) => addon.fa_side_shield_type ?? '');
+    var frameSSFiltered = [...new Set(frameSS)];
+    setFilteredSS(frameSSFiltered);
+    var frameSSColor = [];
+    frameSSColor = fAddon.map((addon) => addon.fa_side_shield_color ?? '');
+    var frameSSColorFiltered = [...new Set(frameSSColor)];
+    setFilteredSSColor(frameSSColorFiltered);
+
+
+  }, [data.or_frame_side_shield, data.or_frame_side_shield_color]);
 
   useEffect(() => {
     var lensRightFinal = [];
@@ -711,13 +751,19 @@ export default function OrderForm({ lenses, frameVariations, tints, form, miscs,
               />
             </Table.Td>
             <Table.Td>
-              <Select {...getFieldProps('or_frame_side_shield')} data={[]} />
+              <Select {...getFieldProps('or_frame_side_shield')} data={filteredSS}
+                disabled={sS}
+              />
             </Table.Td>
             <Table.Td>
-              <Select {...getFieldProps('or_frame_side_shield_color')} data={[]} />
+              <Select {...getFieldProps('or_frame_side_shield_color')} data={filteredSSColor}
+                disabled={sS}
+              />
             </Table.Td>
             <Table.Td>
-              <Select {...getFieldProps('or_extra_ss')} data={['n/a', '1']} />
+              <Select {...getFieldProps('or_extra_ss')} data={['n/a', '1']}
+                disabled={sS}
+              />
             </Table.Td>
           </Table.Tr>
         </OrderTable>
