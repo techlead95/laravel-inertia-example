@@ -21,7 +21,7 @@ export default function AddOnsPanel({
 }: Props) {
   const shieldOptions = useMemo(() => {
     return shields.map((shield) => ({
-      value: String(shield.id),
+      value: shield.sh_ss_type,
       label: shield.sh_ss_desc,
     }));
   }, [shields]);

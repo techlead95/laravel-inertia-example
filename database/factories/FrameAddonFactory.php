@@ -18,7 +18,7 @@ class FrameAddonFactory extends Factory
      */
     public function definition(): array
     {
-        $shields = Shield::pluck('id')->toArray();
+        $shields = Shield::pluck('sh_ss_type')->toArray();
         $shieldColors = ShieldColor::pluck('ss_color')->toArray();
 
         return [
