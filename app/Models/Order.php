@@ -107,7 +107,9 @@ class Order extends Model
         'or_manual_ship_name',
         'or_manual_ship_addr_1',
         'or_manual_ship_addr_2',
-        'or_manual_ship_addr_3'
+        'or_manual_ship_addr_3',
+        'or_jobtype',
+        'or_eyes'
     ];
 
 
