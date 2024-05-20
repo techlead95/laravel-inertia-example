@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "69bf1162104f23c2f05c65e861cea9ff",
+    "content-hash": "38571109ae21cc28a734397444e102e8",
     "packages": [
         {
             "name": "brick/math",
@@ -3525,6 +3525,47 @@
                 "source": "https://github.com/socialiteproviders/providers"
             },
             "time": "2022-03-15T21:17:43+00:00"
+        },
+        {
+            "name": "socialiteproviders/salesforce",
+            "version": "4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocialiteProviders/SalesForce.git",
+                "reference": "1fb0583a806d1cc00c33ef1874417bb91bf0b453"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SocialiteProviders/SalesForce/zipball/1fb0583a806d1cc00c33ef1874417bb91bf0b453",
+                "reference": "1fb0583a806d1cc00c33ef1874417bb91bf0b453",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^7.2 || ^8.0",
+                "socialiteproviders/manager": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SocialiteProviders\\SalesForce\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Wendt",
+                    "email": "andy@awendt.com"
+                }
+            ],
+            "description": "SalesForce OAuth2 Provider for Laravel Socialite",
+            "support": {
+                "source": "https://github.com/SocialiteProviders/SalesForce/tree/4.1.0"
+            },
+            "time": "2020-12-01T23:10:59+00:00"
         },
         {
             "name": "symfony/console",
@@ -8628,5 +8669,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }

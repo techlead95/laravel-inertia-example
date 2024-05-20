@@ -13,6 +13,7 @@
         "laravel/socialite": "^5.11",
         "laravel/tinker": "^2.8",
         "socialiteproviders/microsoft-azure": "^5.1",
+        "socialiteproviders/salesforce": "^4.1",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {

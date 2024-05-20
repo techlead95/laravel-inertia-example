@@ -15,7 +15,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN pecl install pdo_sqlsrv sqlsrv && docker-php-ext-enable pdo_sqlsrv sqlsrv
 
 WORKDIR /var/www/html
-COPY . /var/www/html
+COPY . .
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install --no-interaction --no-dev --prefer-dist
 
