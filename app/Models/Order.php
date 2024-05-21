@@ -6,16 +6,18 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Order extends Model
 {
     use HasFactory;
     use HasUuids;
-    protected $with = ['status'];
+    protected $with = ['status', 'user'];
 
     protected $fillable = [
         'or_ship_to',
         'or_ordby_billto_dash',
+        'user_id',
         'or_po_no',
         'or_emp_name_last',
         'or_emp_name_first',
@@ -120,6 +122,10 @@ class Order extends Model
     public function status()
     {
         return $this->hasOne(OrderTracking::class)->latest();
+    }
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     public static function boot()

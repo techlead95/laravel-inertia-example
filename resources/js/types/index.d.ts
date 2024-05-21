@@ -323,6 +323,7 @@ export interface Order extends Timestamps {
   status: OrderTracking;
   or_jobtype: string;
   or_eyes: string;
+  user: User;
 }
 export interface OrderTracking extends Timestamps {
   id: number;
