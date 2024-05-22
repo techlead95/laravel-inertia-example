@@ -1,5 +1,5 @@
 import useBaseForm from '@/Hooks/useBaseForm';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import {
   ActionIcon,
   Anchor,
@@ -12,6 +12,7 @@ import {
   Image,
   Paper,
   PasswordInput,
+  Stack,
   TextInput,
 } from '@mantine/core';
 import { Help, Phone } from '@mui/icons-material';
@@ -27,9 +28,8 @@ export default function SignIn() {
   return (
     <Flex h="100vh">
       <Head title="Sign In" />
-      <Flex style={{ flex: 1 }} justify="center" align="center">
-        <Paper
-          component="form"
+      <Stack style={{ flex: 1 }} justify="center" align="center">
+        <form
           onSubmit={(e) => {
             e.preventDefault();
             post(route('login'));
@@ -59,8 +59,19 @@ export default function SignIn() {
               Login
             </Button>
           </Group>
-        </Paper>
-      </Flex>
+        </form>
+        <Group>
+          <Button
+            variant="outline"
+            onClick={() => {
+              location.href = route('salesforce');
+            }}
+          >
+            Salesforce
+          </Button>
+          <Button variant="outline">Azure AD</Button>
+        </Group>
+      </Stack>
       <BackgroundImage
         src="https://placehold.co/800x960?text=Login+Background"
         style={{ flex: 1 }}

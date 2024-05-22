@@ -22,9 +22,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // URL::forceScheme('https');
+        if (app()->environment('production')) {
+            URL::forceScheme('https');
+        }
+
         Event::listen(function (SocialiteWasCalled $event) {
-            $event->extendSocialite('SalesForce', \SocialiteProviders\SalesForce\Provider::class);
+            $event->extendSocialite('salesforce', \SocialiteProviders\SalesForce\Provider::class);
         });
     }
 }
