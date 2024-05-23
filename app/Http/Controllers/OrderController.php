@@ -402,16 +402,17 @@ class OrderController extends Controller
         $order = Order::find($id);
 
         $frameVariations = FrameVariation::with('frame')->get();
-        $lenses = Lens::with('coatings');
+        $lenses = Lens::all();
         $tints = Tint::all();
         $miscs = Misc::all();
+        $coatings = LensCoating::with('mirrors')->get();
         /*$lensCoatingSelects = [];
         foreach (LensCoating::select('lc_coating_group', 'lc_lens_coating as item')->get()->groupBy('lc_coating_group')->toArray() as $group => $items) {
             $lensCoatingSelects[] = ['group' => $group, 'items' => array_map(function ($item) {
                 return $item['item'];
             }, $items)];
         }*/
-        return inertia()->render('Orders/EditOrder', compact('lenses', 'frameVariations', 'tints', 'lensCoatingSelects', 'order', 'miscs'));
+        return inertia()->render('Orders/EditOrder', compact('lenses', 'frameVariations', 'tints', 'order', 'miscs', 'coatings'));
     }
 
     /**
