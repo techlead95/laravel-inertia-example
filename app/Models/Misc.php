@@ -15,5 +15,7 @@ class Misc extends Model
         'mi_dvi_translation',
         'mi_o2_add_code',
         'mi_o1_add_code',
+        'mi_setup_by',
+        'mi_modified_by',
     ];
 }

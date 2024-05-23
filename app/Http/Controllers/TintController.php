@@ -30,7 +30,10 @@ class TintController extends Controller
      */
     public function store(Request $request)
     {
+        $user = $request->user();
+        $request->merge(['ti_setup_by' => $user->name]);
         $validated = $request->validate([
+            'ti_setup_by' => 'required',
             'ti_color' => 'required',
             'ti_group' => 'required',
             'ti_lower_range' => 'required',
@@ -71,7 +74,10 @@ class TintController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $user = $request->user();
+        $request->merge(['ti_last_modified_by' => $user->name]);
         $validated = $request->validate([
+            'ti_last_modified_by' => 'required',
             'ti_color' => 'required',
             'ti_group' => 'required',
             'ti_lower_range' => 'required',

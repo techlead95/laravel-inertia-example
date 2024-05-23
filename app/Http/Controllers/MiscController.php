@@ -30,7 +30,11 @@ class MiscController extends Controller
      */
     public function store(Request $request)
     {
+        $user = $request->user();
+        $request->merge(['mi_setup_by' => $user->name]);
+        //dd($request);
         $validated = $request->validate([
+            'mi_setup_by' => 'required',
             'mi_item_name' => 'required',
             'mi_o1_translation' => 'required',
             'mi_dvi_translation' => 'required',
@@ -66,7 +70,10 @@ class MiscController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $user = $request->user();
+        $request->merge(['mi_modified_by' => $user->name]);
         $validated = $request->validate([
+            'mi_modified_by' => 'required',
             'mi_item_name' => 'required',
             'mi_o1_translation' => 'required',
             'mi_dvi_translation' => 'required',
