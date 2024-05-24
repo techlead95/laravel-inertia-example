@@ -1,4 +1,5 @@
 import HeaderIconButton from '@/Components/HeaderIconButton';
+import { router } from '@inertiajs/react';
 import { Box, Container, Flex, Group } from '@mantine/core';
 import { Help, Logout, Notifications, Person } from '@mui/icons-material';
 import { PropsWithChildren, ReactNode } from 'react';
@@ -37,8 +38,9 @@ export default function Layout({
               <HeaderIconButton
                 icon={<Logout />}
                 label="Log Out"
-                method="post"
-                href={route('logout')}
+                onClick={() => {
+                  router.post(route('logout'));
+                }}
               />
             </Group>
           </Group>
