@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@test.com',
             'password' => Hash::make('password'),
             'is_admin' => true,
+            'approved' => true
         ]);
 
         LensStyle::factory()->count(5)->create();

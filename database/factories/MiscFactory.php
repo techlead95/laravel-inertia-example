@@ -17,7 +17,7 @@ class MiscFactory extends Factory
     public function definition(): array
     {
         return [
-            'mi_item_name' => fake()->word(),
+            'mi_item_name' => fake()->unique()->word(),
             'mi_o1_translation' => fake()->word(),
             'mi_dvi_translation' => fake()->word(),
             'mi_o2_add_code' => fake()->word(),

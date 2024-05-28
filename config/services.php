@@ -38,9 +38,10 @@ return [
         'tenant' => env('AZURE_TENANT_ID'),
     ],
 
-    'salesforce' => [    
-        'client_id' => env('SALESFORCE_CLIENT_ID'),  
-        'client_secret' => env('SALESFORCE_CLIENT_SECRET'),  
-        'redirect' => env('SALESFORCE_REDIRECT_URI') 
+    'salesforce' => [
+        'client_id' => env('SALESFORCE_CLIENT_ID'),
+        'client_secret' => env('SALESFORCE_CLIENT_SECRET'),
+        'redirect' => env('SALESFORCE_REDIRECT_URI'),
+        'instance_url' => env('SALESFORCE_INSTANCE_URL')
     ],
 ];

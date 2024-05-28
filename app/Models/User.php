@@ -32,7 +32,9 @@ class User extends Authenticatable
         'zip',
         'country',
         'nick_name',
-        'is_admin'
+        'is_admin',
+        'salesforce_id',
+        'approved'
     ];
 
     /**
@@ -53,5 +55,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'approved' => 'boolean',
+        'is_admin' => 'boolean'
     ];
 }

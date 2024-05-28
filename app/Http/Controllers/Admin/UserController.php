@@ -17,7 +17,7 @@ class UserController extends Controller
         $search = request()->search;
         $users = User::when($search, function ($query, $search) {
             return $query->where('name', 'like', '%' . $search . '%');
-        })->get();
+        })->get()->toArray();
 
         return Inertia::render('Admin/Users/UserList', compact('users', 'search'));
     }
@@ -73,6 +73,15 @@ class UserController extends Controller
         $user->update(array_merge($validated, $request->except(['name', 'email'])));
 
         return to_route('admin.users.index');
+    }
+
+    public function ajaxUpdate(Request $request, string $id)
+    {
+        $user = User::find($id);
+
+        $user->update($request->all());
+
+        return response()->json($user);
     }
 
     /**

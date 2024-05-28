@@ -18,6 +18,7 @@ export default function useEditableTable<T extends { id: number }>({
   const [items, setItems] = useState<Partial<T>[]>(
     !storeUrl ? initialItems : [...initialItems, {}],
   );
+  const [addingNew, setAddingNew] = useState(false);
 
   const handleDelete = (index: number) => {
     const deletingId = items[index].id!;
@@ -39,9 +40,15 @@ export default function useEditableTable<T extends { id: number }>({
 
   const handleDebouncedUpdate = (updated: Partial<T>) => {
     if (!updated.id) {
-      axios.post(storeUrl, updated).then((res) => {
-        setItems([...items.slice(0, -1), res.data, {}]);
-      });
+      setAddingNew(true);
+      axios
+        .post(storeUrl, updated)
+        .then((res) => {
+          setItems([...items.slice(0, -1), res.data, {}]);
+        })
+        .finally(() => {
+          setAddingNew(false);
+        });
     } else {
       axios.put(getUpdateUrl(updated.id), updated);
     }
@@ -51,11 +58,16 @@ export default function useEditableTable<T extends { id: number }>({
     return item.id ?? `index-${index}`;
   };
 
+  const getRowDisabled = (item: Partial<T>) => {
+    return !item.id && addingNew;
+  };
+
   return {
     items,
     setItems,
     handleDelete,
     handleDebouncedUpdate,
+    getRowDisabled,
     getRowKey,
   };
 }

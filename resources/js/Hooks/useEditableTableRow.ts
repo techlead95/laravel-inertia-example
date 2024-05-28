@@ -5,12 +5,14 @@ interface Props<T> {
   item?: Partial<T>;
   onUpdate: (item: Partial<T>) => void;
   onDebouncedUpdate: (item: Partial<T>) => void;
+  disabled?: boolean;
 }
 
 export default function useEditableTableRow<T>({
   item,
   onUpdate,
   onDebouncedUpdate,
+  disabled,
 }: Props<T>) {
   const debouncedUpdate = useDebouncedCallback((updated: Partial<T>) => {
     onDebouncedUpdate(updated);
@@ -33,6 +35,7 @@ export default function useEditableTableRow<T>({
         onUpdate(updated);
         debouncedUpdate(updated);
       },
+      disabled,
     };
   };
 

@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->boolean('is_admin')->nullable();
             $table->string('salesforce_id')->nullable();
+            $table->boolean('approved')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
