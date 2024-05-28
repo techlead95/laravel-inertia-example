@@ -8,8 +8,10 @@ import {
   Misc,
   Order,
   Tint,
+  User,
+  PageProps
 } from '@/types';
-import { router } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 import {
   Box,
   Button,
@@ -25,7 +27,7 @@ import {
   TextInput,
   Textarea,
 } from '@mantine/core';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, } from 'react';
 
 import OrderTable from './OrderTable';
 
@@ -37,6 +39,7 @@ interface Props {
   form: ReturnType<typeof useBaseForm<Partial<Order>>>;
   miscs: Misc[];
   coatings: LensCoating[];
+  //user: User;
 }
 
 export default function OrderForm({
@@ -46,8 +49,11 @@ export default function OrderForm({
   form,
   miscs,
   coatings,
+  //}: PageProps<Props>) {
 }: Props) {
   const getFieldStyles = useGetFieldStyles();
+
+  //console.log(user);
 
   //const [filteredFrames, setFilteredFrames] = useState(frames);
   //const [filteredFrameVariations, setFilteredFrameVariations] = useState(frameVariations);
@@ -422,7 +428,6 @@ export default function OrderForm({
     var lensMirrorFiltered = [...new Set(lensMirror)] as string[];
     setFilteredLensMirrors(lensMirrorFiltered);
   }, [data.or_coating, data.or_tint_color, data.or_mirror]);
-
   return (
     <>
       <Box>
@@ -436,6 +441,7 @@ export default function OrderForm({
             <TextInput
               label="Ship To Account"
               {...getFieldProps('or_ship_to')}
+              disabled={true}
               styles={getFieldStyles({ blueLabel: true })}
             />
             <TextInput

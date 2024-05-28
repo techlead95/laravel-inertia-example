@@ -29,7 +29,10 @@ class LensCoatingController extends Controller
      */
     public function store(Request $request)
     {
+        $user = $request->user();
+        $request->merge(['lc_setup_by' => $user->name]);
         $validated = $request->validate([
+            'lc_setup_by' => 'required',
             'lc_lens_coating' => 'required',
             'lc_coating_group' => 'required',
             'lc_o1_translation' => 'nullable',
@@ -67,7 +70,10 @@ class LensCoatingController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $user = $request->user();
+        $request->merge(['lc_last_modified_by' => $user->name]);
         $validated = $request->validate([
+            'lc_last_modified_by' => 'required',
             'lc_lens_coating' => 'required',
             'lc_coating_group' => 'required',
             'lc_o1_translation' => 'nullable',

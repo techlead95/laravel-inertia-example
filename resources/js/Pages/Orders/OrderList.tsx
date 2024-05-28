@@ -36,8 +36,8 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
         render: (order) => dayjs(order.created_at).format(DATE_DISPLAY_FORMAT),
       },
       { accessor: 'or_portal_order_number', title: 'RX Number' },
-      { accessor: 'orderBy', title: 'Order By' },
-      { accessor: 'orderByName', title: 'Order By Name' },
+      { accessor: 'or_ordby_billto_dash', title: 'Order By' },
+      { accessor: 'user.name', title: 'Order By Name' },
       { accessor: 'or_emp_name_last', title: 'Patient Name' },
     ];
 
@@ -74,6 +74,13 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
 
       setFilteredOrders(
         orders.filter((order) => order.status?.ot_status?.includes('Problem')),
+        /*orders.filter(
+          (order) =>
+            !(order.status?.ot_status?.includes('In Process') ||
+              order.status?.ot_status?.includes('Pending') ||
+              order.status?.ot_status?.includes('Shipped'))
+        ),*/
+
       );
     }
 

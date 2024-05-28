@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\Builder;
 use PhpParser\Node\Stmt\For_;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -27,10 +28,12 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $search = request()->search;
         $startDate = request()->startDate;
         $endDate = request()->endDate;
-        $orders = Order::when($search, function ($query, $search) {
+        //$orders = Order::when($search, function ($query, $search) {
+        $orders = Order::where('user_id', $user->id)->when($search, function ($query, $search) {
             return $query->where('or_portal_order_number', 'like', '%' . $search . '%');
         })->when($startDate, function ($query, $startDate) {
             return $query->where('created_at', '>=', $startDate);
@@ -54,6 +57,7 @@ class OrderController extends Controller
         $tints = Tint::all();
         $miscs = Misc::all();
         $coatings = LensCoating::with('mirrors')->get();
+        //$user = auth()->user();
         /*$lensCoatingSelects = [];
         foreach (LensCoating::select('lc_coating_group', 'lc_lens_coating as item')->get()->groupBy('lc_coating_group')->toArray() as $group => $items) {
             $lensCoatingSelects[] = ['group' => $group, 'items' => array_map(function ($item) {
@@ -70,7 +74,9 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
+        //$user = $request->user();
+        //$request->merge(['user_id' => $user->id]);
+        //dd($user, $request);
         switch ($request->input('method')) {
             case 'save':
 
@@ -165,7 +171,8 @@ class OrderController extends Controller
                     'or_eyes' => 'nullable',
                 ]);
 
-                $order = Order::create($validated);
+                //$order = Order::create($validated);
+                $order = $request->user()->orders()->create($validated);
                 $ot = new OrderTracking(['ot_status' => 'Pending', 'ot_portal_order_number' => $order->or_portal_order_number]);
                 $order->order_trackings()->save($ot);
 
@@ -196,9 +203,9 @@ class OrderController extends Controller
                 $leftLensStyle = LensStyle::where(['ls_lenstyl_lens_style' => $request->input('or_lens_style_left')])->first();
                 $leftLensMaterial = LensMaterial::where(['lm_lens_material' => $request->input('or_material_left')])->first();
                 $leftLens = Lens::where([
-                    'le_lens_mat' => $leftLensMaterial,
+                    'le_lens_mat' => $request->input('or_material_left'),
                     'le_lens_col' => $request->input('or_lens_color_left'),
-                    'le_lens_style' => $leftLensStyle
+                    'le_lens_style' => $request->input('or_lens_style_left')
                 ])->first();
                 $or_frame_style =  $request->input('or_frame_style');
                 //fv_eyesize . '-' . $this->fv_front_bridge . '-' . $this->fv_temple_size
@@ -338,17 +345,20 @@ class OrderController extends Controller
                             'Style not compatible with frame'
                         );
                     }
-                    if ($or_coating && !$leftLens->coatings->contains($or_coating)) {
-                        $validator->errors()->add(
-                            'or_coating',
-                            'Coating not compatible with Left Lens'
-                        );
-                    }
-                    if ($or_coating && !$rightLens->coatings->contains($or_coating)) {
-                        $validator->errors()->add(
-                            'or_coating',
-                            'Coating not compatible with Right Lens'
-                        );
+                    if ($or_coating) {
+                        //dd($or_coating, $leftLens, $rightLens);
+                        if (!$leftLens->coatings->contains($or_coating)) {
+                            $validator->errors()->add(
+                                'or_coating',
+                                'Coating not compatible with Left Lens'
+                            );
+                        }
+                        if (!$rightLens->coatings->contains($or_coating)) {
+                            $validator->errors()->add(
+                                'or_coating',
+                                'Coating not compatible with Right Lens'
+                            );
+                        }
                     }
                 });
 
@@ -360,6 +370,7 @@ class OrderController extends Controller
                 $validated = $validator->validated();
 
                 $order = Order::create($validated);
+                //$order = $request->user()->orders()->create($validated);
                 $ot = new OrderTracking(['ot_status' => 'In Process', 'ot_portal_order_number' => $order->or_portal_order_number]);
                 $order->order_trackings()->save($ot);
 
@@ -391,16 +402,17 @@ class OrderController extends Controller
         $order = Order::find($id);
 
         $frameVariations = FrameVariation::with('frame')->get();
-        $lenses = Lens::with('coatings');
+        $lenses = Lens::all();
         $tints = Tint::all();
         $miscs = Misc::all();
+        $coatings = LensCoating::with('mirrors')->get();
         /*$lensCoatingSelects = [];
         foreach (LensCoating::select('lc_coating_group', 'lc_lens_coating as item')->get()->groupBy('lc_coating_group')->toArray() as $group => $items) {
             $lensCoatingSelects[] = ['group' => $group, 'items' => array_map(function ($item) {
                 return $item['item'];
             }, $items)];
         }*/
-        return inertia()->render('Orders/EditOrder', compact('lenses', 'frameVariations', 'tints', 'lensCoatingSelects', 'order', 'miscs'));
+        return inertia()->render('Orders/EditOrder', compact('lenses', 'frameVariations', 'tints', 'order', 'miscs', 'coatings'));
     }
 
     /**

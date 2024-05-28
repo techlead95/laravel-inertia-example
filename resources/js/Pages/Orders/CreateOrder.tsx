@@ -2,7 +2,7 @@ import PageTitle from '@/Components/PageTitle';
 import useBaseForm from '@/Hooks/useBaseForm';
 import { Stack } from '@mantine/core';
 
-import { Frame, Order, Lens, FrameVariation, Tint, LensCoating, LensCoatingSelect, Misc } from '@/types';
+import { Frame, Order, Lens, FrameVariation, Tint, LensCoating, LensCoatingSelect, Misc, PageProps } from '@/types';
 import OrderForm from './OrderForm';
 
 
@@ -15,11 +15,11 @@ interface Props {
     coatings: LensCoating[];
 }
 
-export default function CreateOrder({ lenses, frameVariations, tints, miscs, coatings }: Props) {
+export default function CreateOrder({ lenses, frameVariations, tints, miscs, coatings, auth, flash }: PageProps<Props>) {
     const form =
         useBaseForm<Partial<Order>>({
             //useBaseForm<Order>({
-            or_ship_to: '',
+            or_ship_to: auth.user.ship_to_account,
             or_ordby_billto_dash: '',
             or_po_no: '',
             or_emp_name_last: '',
@@ -99,10 +99,10 @@ export default function CreateOrder({ lenses, frameVariations, tints, miscs, coa
             or_cc_emp_ivc: '',
             or_cc_emp_zip: '',
             or_manual_ship_addr_flag: '',
-            or_manual_ship_name: '',
-            or_manual_ship_addr_1: '',
-            or_manual_ship_addr_2: '',
-            or_manual_ship_addr_3: '',
+            or_manual_ship_name: auth.user.business_name,
+            or_manual_ship_addr_1: auth.user.address1,
+            or_manual_ship_addr_2: auth.user.address2,
+            or_manual_ship_addr_3: auth.user.city + ' ' + auth.user.state + ' ' + auth.user.zip,
             method: '',
             or_jobtype: '',
             or_eyes: '',

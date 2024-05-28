@@ -2,7 +2,7 @@ import LabelledContent from '@/Components/LabelledContent';
 import { DATE_DISPLAY_FORMAT } from '@/constants';
 import { Order } from '@/types';
 import { Head, router } from '@inertiajs/react';
-import { Box, Button, Grid, Group, Stack, Table, Text } from '@mantine/core';
+import { Box, Button, Grid, Group, Stack, Table, Text, Popover } from '@mantine/core';
 import dayjs from 'dayjs';
 
 import OrderTable from './OrderTable';
@@ -13,9 +13,12 @@ interface Props {
 
 export default function OrderDetail({ order }: Props) {
 
-  console.log(order)
+  //console.log(order)
+
+  const btndisable = !("Pending" == order.status.ot_status);
   return (
     <>
+
       <Head title="Order Detail" />
       <Grid columns={5} align="center">
         <Grid.Col span={1}>
@@ -29,8 +32,27 @@ export default function OrderDetail({ order }: Props) {
           </LabelledContent>
         </Grid.Col>
         <Grid.Col span={1}>
+
           <LabelledContent label="Patient Name">
-            {order.or_emp_name_last}
+            <Popover width={200} position="bottom" withArrow shadow="md">
+              <Popover.Target>
+                <Button>
+                  {order.or_emp_name_first} {order.or_emp_name_last}
+                </Button>
+              </Popover.Target>
+              <Popover.Dropdown>
+                <Text >
+                  First Name: {order.or_emp_name_first} <br />
+                  Last Name: {order.or_emp_name_last} <br />
+                  Phone: {order.or_emp_phone} <br />
+                  Employee Number: {order.or_emp_no} <br />
+                  Email: {order.or_emp_email} <br />
+                  Employee Dept: {order.or_dept} <br />
+                  PO: {order.or_po_no} <br />
+                  Req: {order.or_req}
+                </Text>
+              </Popover.Dropdown>
+            </Popover>
           </LabelledContent>
         </Grid.Col>
         <Grid.Col span={1}>
@@ -68,8 +90,12 @@ export default function OrderDetail({ order }: Props) {
         </Grid.Col>
         <Grid.Col span={4} mt="lg">
           <Group justify="space-between">
-            <Button>Place on Hold</Button>
-            <Button>Cancel</Button>
+            <Button
+              onClick={() => router.get(route('orders.edit', { id: order.id }))}
+              disabled={btndisable}
+            >
+              Edit
+            </Button>
           </Group>
           <Stack
             mt="lg"

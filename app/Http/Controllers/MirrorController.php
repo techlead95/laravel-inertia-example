@@ -35,7 +35,10 @@ class MirrorController extends Controller
      */
     public function store(Request $request)
     {
+        $user = $request->user();
+        $request->merge(['mr_setup_by' => $user->name]);
         $validated = $request->validate([
+            'mr_setup_by' => 'required',
             'mr_mirror' => 'required',
             'mr_o1_translation' => 'nullable',
             'mr_dvi_translation' => 'nullable',
@@ -83,8 +86,11 @@ class MirrorController extends Controller
      */
     public function update(Request $request, Mirror $mirror)
     {
+        $user = $request->user();
+        $request->merge(['mr_last_modified_by' => $user->name]);
 
         $validated = $request->validate([
+            'mr_last_modified_by' => 'required',
             'mr_mirror' => 'required',
             'mr_o1_translation' => 'nullable',
             'mr_dvi_translation' => 'nullable',

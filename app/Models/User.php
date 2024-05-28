@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -58,4 +60,8 @@ class User extends Authenticatable
         'approved' => 'boolean',
         'is_admin' => 'boolean'
     ];
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
 }
