@@ -25,6 +25,7 @@ export interface User {
   zip: string | null;
   country: string | null;
   nick_name: string | null;
+  approved: boolean | null;
   deleted_at: string | null;
 }
 

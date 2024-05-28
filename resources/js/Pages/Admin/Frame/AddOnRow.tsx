@@ -11,6 +11,7 @@ interface Props {
   onUpdateAddon: (addon: Partial<FrameAddon>) => void;
   onDebouncedUpdate: (addon: Partial<FrameAddon>) => void;
   onDelete: () => void;
+  disabled?: boolean;
 }
 
 export default function AddOnRow({
@@ -20,11 +21,13 @@ export default function AddOnRow({
   onUpdateAddon,
   onDebouncedUpdate,
   onDelete,
+  disabled,
 }: Props) {
   const { getFieldProps } = useEditableTableRow({
     item: addon,
     onUpdate: onUpdateAddon,
     onDebouncedUpdate: onDebouncedUpdate,
+    disabled,
   });
 
   return (

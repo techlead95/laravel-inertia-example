@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
             return redirect()->route('admin.users.index');
         });
 
+        Route::put('users/{user}/ajax-update', [UserController::class, 'ajaxUpdate'])->name('users.ajax-update');
         Route::resource('users', UserController::class);
 
         Route::get('/frame/catalog', [FrameController::class, 'catalog'])->name('frame.catalog');
@@ -44,7 +45,6 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/lens/catalog', [LensController::class, 'catalog'])->name('lens.catalog');
         Route::resource('lens', LensController::class);
-
 
         Route::get('/mirror/catalog', [MirrorController::class, 'catalog'])->name('mirror.catalog');
         Route::resource('mirror', MirrorController::class);
@@ -97,22 +97,10 @@ Route::middleware('auth')->group(function () {
             return Inertia::render('Home');
         });
 
-        Route::get('/alerts', function () {
-            return Inertia::render('Alerts/Alerts');
-        });
-
         Route::resource('orders', OrderController::class);
 
         Route::get('/customers', function () {
             return Inertia::render('Customers');
-        });
-
-        Route::get('/help', function () {
-            return Inertia::render('Help');
-        });
-
-        Route::get('/my-account', function () {
-            return Inertia::render('MyAccount');
         });
 
         Route::get('/technical-documents', function () {
@@ -129,6 +117,20 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/frame-availability', function () {
             return Inertia::render('FrameAvailability');
+        });
+    });
+
+    Route::middleware('auth')->group(function () {
+        Route::get('/alerts', function () {
+            return Inertia::render('Alerts/Alerts');
+        });
+
+        Route::get('/help', function () {
+            return Inertia::render('Help');
+        });
+
+        Route::get('/my-account', function () {
+            return Inertia::render('MyAccount');
         });
     });
 });

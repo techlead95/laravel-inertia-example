@@ -31,21 +31,27 @@ export default function AddOnsPanel({
     [shieldColors],
   );
 
-  const { items, setItems, handleDelete, handleDebouncedUpdate, getRowKey } =
-    useEditableTable({
-      initialItems: addons,
-      getDestoryUrl: (id) =>
-        route('admin.frames.frame-addon.destroy', {
-          frame: frameId,
-          frame_addon: id,
-        }),
-      getUpdateUrl: (id) =>
-        route('admin.frames.frame-addon.update', {
-          frame: frameId,
-          frame_addon: id,
-        }),
-      storeUrl: route('admin.frames.frame-addon.store', frameId),
-    });
+  const {
+    items,
+    setItems,
+    handleDelete,
+    handleDebouncedUpdate,
+    getRowKey,
+    getRowDisabled,
+  } = useEditableTable({
+    initialItems: addons,
+    getDestoryUrl: (id) =>
+      route('admin.frames.frame-addon.destroy', {
+        frame: frameId,
+        frame_addon: id,
+      }),
+    getUpdateUrl: (id) =>
+      route('admin.frames.frame-addon.update', {
+        frame: frameId,
+        frame_addon: id,
+      }),
+    storeUrl: route('admin.frames.frame-addon.store', frameId),
+  });
 
   return (
     <Table bg="white">
@@ -64,6 +70,7 @@ export default function AddOnsPanel({
         {items.map((item, index) => (
           <AddOnRow
             key={getRowKey(item, index)}
+            disabled={getRowDisabled(item)}
             addon={item}
             shieldOptions={shieldOptions}
             shieldColorOptions={shieldColorOptions}

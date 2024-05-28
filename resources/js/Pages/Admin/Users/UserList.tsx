@@ -4,13 +4,19 @@ import MultiSearchForm from '@/Components/MultiSearchForm';
 import { User } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
 import { Button, Group, Stack, Switch, TextInput } from '@mantine/core';
+import { produce } from 'immer';
+import { useState } from 'react';
+
+import ApproveUserCheckbox from './ApproveUserCheckbox';
 
 interface Props {
   users: User[];
   search: string;
 }
 
-export default function AdminHome({ users, search }: Props) {
+export default function AdminHome({ search, ...props }: Props) {
+  const [users, setUsers] = useState(props.users);
+
   return (
     <>
       <Head title="Admin Home" />
@@ -37,6 +43,29 @@ export default function AdminHome({ users, search }: Props) {
               { accessor: 'email', title: 'Email' },
               { accessor: 'name', title: 'Name' },
               { accessor: 'ship_to_account', title: 'Ship to Account' },
+              {
+                accessor: 'approved',
+                title: 'Approved',
+                render(user) {
+                  return (
+                    <ApproveUserCheckbox
+                      userId={user.id}
+                      approved={user.approved ?? false}
+                      onApprovedChange={(newApproved) => {
+                        setUsers(
+                          produce((draft) => {
+                            draft.forEach((draftUser) => {
+                              if (draftUser.id === user.id) {
+                                draftUser.approved = newApproved;
+                              }
+                            });
+                          }),
+                        );
+                      }}
+                    />
+                  );
+                },
+              },
               {
                 accessor: 'actions',
                 title: '',
