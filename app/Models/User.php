@@ -36,7 +36,9 @@ class User extends Authenticatable
         'nick_name',
         'is_admin',
         'salesforce_id',
-        'approved'
+        'approved',
+        'first_name',
+        'last_name',
     ];
 
     /**
