@@ -345,15 +345,31 @@ class OrderController extends Controller
                             'Style not compatible with frame'
                         );
                     }
+                    if ($fvar) {
+                        if ($fvar->frame->fr_min_near_pd) {
+                            if ($validator->safe()->or_pd_near_right && ($fvar->frame->fr_min_near_pd > $validator->safe()->or_pd_near_right)) {
+                                $validator->errors()->add(
+                                    'or_pd_near_right',
+                                    'Minimum Near PD is ' . $fvar->frame->fr_min_near_pd
+                                );
+                            }
+                            if ($validator->safe()->or_pd_near_left && ($fvar->frame->fr_min_near_pd > $validator->safe()->or_pd_near_left)) {
+                                $validator->errors()->add(
+                                    'or_pd_near_left',
+                                    'Minimum Near PD is ' . $fvar->frame->fr_min_near_pd
+                                );
+                            }
+                        }
+                    }
                     if ($or_coating) {
                         //dd($or_coating, $leftLens, $rightLens);
-                        if (!$leftLens->coatings->contains($or_coating)) {
+                        if ($leftLens && !$leftLens->coatings->contains($or_coating)) {
                             $validator->errors()->add(
                                 'or_coating',
                                 'Coating not compatible with Left Lens'
                             );
                         }
-                        if (!$rightLens->coatings->contains($or_coating)) {
+                        if ($rightLens && !$rightLens->coatings->contains($or_coating)) {
                             $validator->errors()->add(
                                 'or_coating',
                                 'Coating not compatible with Right Lens'
@@ -369,8 +385,8 @@ class OrderController extends Controller
                 // Retrieve the validated input...
                 $validated = $validator->validated();
 
-                $order = Order::create($validated);
-                //$order = $request->user()->orders()->create($validated);
+                //$order = Order::create($validated);
+                $order = $request->user()->orders()->create($validated);
                 $ot = new OrderTracking(['ot_status' => 'In Process', 'ot_portal_order_number' => $order->or_portal_order_number]);
                 $order->order_trackings()->save($ot);
 
