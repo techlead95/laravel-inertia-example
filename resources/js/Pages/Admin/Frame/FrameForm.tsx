@@ -63,12 +63,14 @@ export default function FrameForm({
             label="Setup Date"
             w={120}
             readOnly
+            disabled
             {...getFieldProps('created_at', { type: 'date' })}
           />
           <DateInput
             label="Last Modified Date"
             w={140}
             readOnly
+            disabled
             {...getFieldProps('updated_at', { type: 'date' })}
           />
           <Button variant="outline" mt={24} w={200}>
