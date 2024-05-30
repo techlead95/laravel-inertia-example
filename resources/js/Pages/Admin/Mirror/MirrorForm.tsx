@@ -31,24 +31,28 @@ export default function MirrorForm({ coatings, form }: Props) {
             label="Setup Date"
             w={140}
             readOnly
+            disabled
             value={data.created_at ? new Date(data.created_at) : null}
           />
           <TextInput
             label="Setup By"
             w={140}
             readOnly
+            disabled
             value={data.mr_setup_by ?? ''}
           />
           <DateInput
             label="Last Modified Date"
             w={140}
             readOnly
+            disabled
             value={data.updated_at ? new Date(data.updated_at) : null}
           />
           <TextInput
             label="Modified By"
             w={140}
             readOnly
+            aria-disabled
             value={data.mr_last_modified_by ?? ''}
           />
         </Group>

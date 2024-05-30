@@ -672,7 +672,7 @@ export default function OrderForm({
         <OrderTable
           headers={[
             'Sphere',
-            'Cly',
+            'Cyl',
             'Axis',
             'Dist PD',
             'Near PD',

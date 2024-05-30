@@ -65,7 +65,11 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
+        $request->merge(['name' => $request->input('first_name') . ' ' . $request->input('last_name')]);
+
         $validated = $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
         ]);

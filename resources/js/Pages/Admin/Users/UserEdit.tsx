@@ -24,10 +24,10 @@ export default function UserEdit({ user }: Props) {
             <TextInput label="Email Address" {...getFieldProps('email')} />
           </Grid.Col>
           <Grid.Col span={4}>
-            <TextInput label="Name" {...getFieldProps('name')} />
+            <TextInput label="First Name" {...getFieldProps('first_name')} />
           </Grid.Col>
           <Grid.Col span={4}>
-            <TextInput label="NickName" {...getFieldProps('nick_name')} />
+            <TextInput label="Last Name" {...getFieldProps('last_name')} />
           </Grid.Col>
           <Grid.Col span={4}>
             <TextInput
