@@ -132,6 +132,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/my-account', function () {
             return Inertia::render('MyAccount');
         });
+
+        Route::get('need-approval', function () {
+            return inertia()->render('NeedApproval');
+        })->name('need-approval');
     });
 });
 

@@ -1,5 +1,6 @@
 import HeaderIconButton from '@/Components/HeaderIconButton';
-import { router } from '@inertiajs/react';
+import { PageProps } from '@/types';
+import { router, usePage } from '@inertiajs/react';
 import { Box, Container, Flex, Group } from '@mantine/core';
 import { Help, Logout, Notifications, Person } from '@mui/icons-material';
 import { PropsWithChildren, ReactNode } from 'react';
@@ -16,6 +17,9 @@ export default function Layout({
   menuLinks,
   children,
 }: PropsWithChildren<Props>) {
+  const { props } = usePage<PageProps<{}>>();
+  const user = props.auth.user;
+
   return (
     <Flex h="100%" direction="column">
       <Box>
@@ -23,18 +27,22 @@ export default function Layout({
           <Group justify="space-between" align="center" py="xs">
             <img src={safeVisionImage} />
             <Group gap={4}>
-              {headerButtons}
-              <HeaderIconButton
-                icon={<Notifications />}
-                label="Alerts"
-                href="/alerts"
-              />
-              <HeaderIconButton icon={<Help />} label="Help" href="/help" />
-              <HeaderIconButton
-                icon={<Person />}
-                label="My Account"
-                href="/my-account"
-              />
+              {user.approved && (
+                <>
+                  {headerButtons}
+                  <HeaderIconButton
+                    icon={<Notifications />}
+                    label="Alerts"
+                    href="/alerts"
+                  />
+                  <HeaderIconButton icon={<Help />} label="Help" href="/help" />
+                  <HeaderIconButton
+                    icon={<Person />}
+                    label="My Account"
+                    href="/my-account"
+                  />
+                </>
+              )}
               <HeaderIconButton
                 icon={<Logout />}
                 label="Log Out"
@@ -49,8 +57,8 @@ export default function Layout({
       </Box>
 
       <Box bg="blue" py="lg">
-        <Container size="xl">
-          <Group gap="xl">{menuLinks}</Group>
+        <Container size="xl" mih={24}>
+          {user.approved && <Group gap="xl">{menuLinks}</Group>}
         </Container>
       </Box>
 
