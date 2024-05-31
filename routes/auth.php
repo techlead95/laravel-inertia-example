@@ -34,8 +34,8 @@ Route::middleware('guest')->group(function () {
         $user = User::updateOrCreate([
             'salesforce_id' => $user->id,
         ], [
-            'name' => $user->name,
             'email' => $user->email,
+            'name' => $user->name,
         ]);
 
         Auth::login($user);
