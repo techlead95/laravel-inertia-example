@@ -34,7 +34,9 @@ class OrderController extends Controller
         $endDate = request()->endDate;
         //$orders = Order::when($search, function ($query, $search) {
         $orders = Order::where('user_id', $user->id)->when($search, function ($query, $search) {
-            return $query->where('or_portal_order_number', 'like', '%' . $search . '%');
+            return $query->where('or_portal_order_number', 'like', '%' . $search . '%')
+                ->orWhere('or_emp_name_first', 'like', '%' . $search . '%')
+                ->orWhere('or_emp_name_last', 'like', '%' . $search . '%');
         })->when($startDate, function ($query, $startDate) {
             return $query->where('created_at', '>=', $startDate);
         })->when($endDate, function ($query, $endDate) {
