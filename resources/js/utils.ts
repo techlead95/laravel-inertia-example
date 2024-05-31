@@ -1,4 +1,7 @@
 import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
+
+import notificationClasses from '../css/notification.module.css';
 
 export const includesIgnoreCase = (str: string, search: string) =>
   (str ?? '').toLowerCase().includes(search.toLowerCase());
@@ -15,5 +18,9 @@ export const openDeleteConfirmModal = (
 };
 
 export const showErrorNotification = (error: string) => {
-  alert(error);
+  notifications.show({
+    message: error,
+    color: 'red',
+    classNames: notificationClasses,
+  });
 };

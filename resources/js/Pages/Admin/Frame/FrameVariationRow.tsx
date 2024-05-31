@@ -8,6 +8,7 @@ interface Props {
   onUpdate: (variation: Partial<FrameVariation>) => void;
   onDebouncedUpdate: (variation: Partial<FrameVariation>) => void;
   onDelete: () => void;
+  disabled?: boolean;
 }
 
 export default function FrameVariationRow({
@@ -15,11 +16,13 @@ export default function FrameVariationRow({
   onUpdate,
   onDebouncedUpdate,
   onDelete,
+  disabled,
 }: Props) {
   const { getFieldProps } = useEditableTableRow({
     item: variation,
     onUpdate,
     onDebouncedUpdate,
+    disabled,
   });
 
   return (

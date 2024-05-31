@@ -7,6 +7,8 @@ import {
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import { ModalsProvider } from '@mantine/modals';
+import { Notifications } from '@mantine/notifications';
+import '@mantine/notifications/styles.css';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import 'mantine-datatable/styles.layer.css';
 import { ReactNode } from 'react';
@@ -79,6 +81,7 @@ createInertiaApp({
 
     root.render(
       <MantineProvider theme={theme}>
+        <Notifications position="top-right" />
         <ModalsProvider>
           <App {...props} />
         </ModalsProvider>
