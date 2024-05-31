@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->integer('or_portal_order_number')->unique();
             $table->integer('or_legacy_order_number')->nullable();
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->nullable();
             $table->string('or_ship_to')->nullable();
             $table->string('or_ordby_billto_dash')->nullable();
             $table->string('or_po_no')->nullable();

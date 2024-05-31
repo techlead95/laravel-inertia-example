@@ -16,12 +16,8 @@ class UserMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && !Auth::user()->is_admin) {
-            if (Auth::user()->approved) {
-                return $next($request);
-            }
-
-            return redirect()->route('need-approval');
+        if (!Auth::user()->is_admin) {
+            return $next($request);
         }
 
         return redirect()->route('admin.users.index');
