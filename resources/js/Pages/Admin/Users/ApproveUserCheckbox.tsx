@@ -1,4 +1,5 @@
 import { User } from '@/types';
+import { showErrorNotification } from '@/utils';
 import { Checkbox, Loader } from '@mantine/core';
 import axios from 'axios';
 import { useState } from 'react';
@@ -25,6 +26,13 @@ export default function ApproveUserCheckbox({
         const user = r.data as User;
 
         onApprovedChange(user.approved ?? false);
+      })
+      .catch((e) => {
+        const error = e?.response?.data?.message;
+
+        if (error) {
+          showErrorNotification(error);
+        }
       })
       .finally(() => {
         setUpdating(false);

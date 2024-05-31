@@ -14,21 +14,27 @@ export default function FrameVariationTable({
   frameId,
   frameVariations,
 }: Props) {
-  const { items, setItems, handleDelete, handleDebouncedUpdate, getRowKey } =
-    useEditableTable({
-      initialItems: frameVariations,
-      storeUrl: route('admin.frames.frame-variations.store', frameId),
-      getDestoryUrl: (id) =>
-        route('admin.frames.frame-variations.destroy', {
-          frame: frameId,
-          frame_variation: id,
-        }),
-      getUpdateUrl: (id) =>
-        route('admin.frames.frame-variations.update', {
-          frame: frameId,
-          frame_variation: id,
-        }),
-    });
+  const {
+    items,
+    setItems,
+    handleDelete,
+    handleDebouncedUpdate,
+    getRowKey,
+    getRowDisabled,
+  } = useEditableTable({
+    initialItems: frameVariations,
+    storeUrl: route('admin.frames.frame-variations.store', frameId),
+    getDestoryUrl: (id) =>
+      route('admin.frames.frame-variations.destroy', {
+        frame: frameId,
+        frame_variation: id,
+      }),
+    getUpdateUrl: (id) =>
+      route('admin.frames.frame-variations.update', {
+        frame: frameId,
+        frame_variation: id,
+      }),
+  });
 
   return (
     <Table bg="white">
@@ -51,6 +57,7 @@ export default function FrameVariationTable({
         {items.map((item, index) => (
           <FrameVariationRow
             key={getRowKey(item, index)}
+            disabled={getRowDisabled(item)}
             variation={item}
             onUpdate={(variation) =>
               setItems(

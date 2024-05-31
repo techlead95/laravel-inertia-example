@@ -15,21 +15,27 @@ export default function OffloadAvailabilities({
   frameId,
   offloadAvailabilities,
 }: Props) {
-  const { items, setItems, handleDebouncedUpdate, handleDelete, getRowKey } =
-    useEditableTable({
-      initialItems: offloadAvailabilities,
-      storeUrl: route('admin.frames.offload-availabilities.store', frameId),
-      getDestoryUrl: (id) =>
-        route('admin.frames.offload-availabilities.destroy', {
-          frame: frameId,
-          offload_availability: id,
-        }),
-      getUpdateUrl: (id) =>
-        route('admin.frames.offload-availabilities.update', {
-          frame: frameId,
-          offload_availability: id,
-        }),
-    });
+  const {
+    items,
+    setItems,
+    handleDebouncedUpdate,
+    handleDelete,
+    getRowKey,
+    getRowDisabled,
+  } = useEditableTable({
+    initialItems: offloadAvailabilities,
+    storeUrl: route('admin.frames.offload-availabilities.store', frameId),
+    getDestoryUrl: (id) =>
+      route('admin.frames.offload-availabilities.destroy', {
+        frame: frameId,
+        offload_availability: id,
+      }),
+    getUpdateUrl: (id) =>
+      route('admin.frames.offload-availabilities.update', {
+        frame: frameId,
+        offload_availability: id,
+      }),
+  });
 
   return (
     <Stack flex={1}>
@@ -48,6 +54,7 @@ export default function OffloadAvailabilities({
           {items.map((item, index) => (
             <OffloadAvailabilityRow
               key={getRowKey(item, index)}
+              disabled={getRowDisabled(item)}
               offloadAvailability={item}
               onUpdate={(updatedItem) => {
                 setItems(

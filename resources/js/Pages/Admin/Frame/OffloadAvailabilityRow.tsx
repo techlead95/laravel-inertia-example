@@ -9,6 +9,7 @@ interface Props {
   onUpdate: (addon: Partial<FrameOffloadAvailability>) => void;
   onDebouncedUpdate: (addon: Partial<FrameOffloadAvailability>) => void;
   onDelete: () => void;
+  disabled?: boolean;
 }
 
 export default function OffloadAvailabilityRow({
@@ -16,11 +17,13 @@ export default function OffloadAvailabilityRow({
   onUpdate,
   onDebouncedUpdate,
   onDelete,
+  disabled,
 }: Props) {
   const { getFieldProps } = useEditableTableRow({
     item: offloadAvailability,
     onUpdate,
     onDebouncedUpdate,
+    disabled,
   });
 
   return (
