@@ -18,7 +18,7 @@ export default function CreateMisc() {
         post(route('admin.misc.store'));
       }}
     >
-      <PageTitle title="Create Misc" />
+      <PageTitle title="Create Misc" showBackButton />
       <MiscForm form={form} />
     </Stack>
   );

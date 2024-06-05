@@ -17,7 +17,7 @@ class ShieldColorFactory extends Factory
     public function definition(): array
     {
         return [
-            'ss_color' => fake()->colorName()
+            'ss_color' => fake()->unique()->colorName()
         ];
     }
 }

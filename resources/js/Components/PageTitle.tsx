@@ -4,21 +4,28 @@ import { ChevronLeft } from '@mui/icons-material';
 
 interface Props {
   title: string;
+  showBackButton?: boolean;
   backUrl?: string;
 }
 
-export default function PageTitle({ title, backUrl }: Props) {
+export default function PageTitle({ title, showBackButton, backUrl }: Props) {
   const theme = useMantineTheme();
 
   return (
     <>
       <Head title={title} />
       <Group>
-        {backUrl && (
+        {showBackButton && (
           <ActionIcon
             variant="transparent"
             color={theme.black}
-            onClick={() => router.visit(backUrl)}
+            onClick={() => {
+              if (backUrl) {
+                router.visit(backUrl);
+              } else {
+                history.back();
+              }
+            }}
           >
             <ChevronLeft />
           </ActionIcon>

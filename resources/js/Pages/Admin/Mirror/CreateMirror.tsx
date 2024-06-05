@@ -1,8 +1,8 @@
 import PageTitle from '@/Components/PageTitle';
 import useBaseForm from '@/Hooks/useBaseForm';
+import { LensCoating, Mirror } from '@/types';
 import { Stack } from '@mantine/core';
 
-import { Mirror, LensCoating } from '@/types';
 import MirrorForm from './MirrorForm';
 
 interface Props {
@@ -23,7 +23,7 @@ export default function CreateMirror({ coatings }: Props) {
         post(route('admin.mirror.store'));
       }}
     >
-      <PageTitle title="Create Mirror" />
+      <PageTitle title="Create Mirror" showBackButton />
       <MirrorForm coatings={coatings} form={form} />
     </Stack>
   );

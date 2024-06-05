@@ -22,7 +22,7 @@ export default function EditTint({ tint }: Props) {
         put(route('admin.tint.update', { id: data.id }));
       }}
     >
-      <PageTitle title="Edit Tint" />
+      <PageTitle title="Edit Tint" showBackButton />
       <TintForm form={form} />
     </Stack>
   );

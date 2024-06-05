@@ -22,7 +22,7 @@ export default function CoatingEdit({ coating }: Props) {
         put(route('admin.coatings.update', { id: data.id }));
       }}
     >
-      <PageTitle title="Edit Coating" />
+      <PageTitle title="Edit Coating" showBackButton />
       <CoatingForm form={form} />
     </Stack>
   );

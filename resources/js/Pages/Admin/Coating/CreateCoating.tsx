@@ -18,7 +18,7 @@ export default function CreateCoating() {
         post(route('admin.coatings.store'));
       }}
     >
-      <PageTitle title="Create Coating" />
+      <PageTitle title="Create Coating" showBackButton />
       <CoatingForm form={form} />
     </Stack>
   );

@@ -12,7 +12,7 @@ export default function UserEdit({ user }: Props) {
 
   return (
     <>
-      <PageTitle title="Edit User" backUrl={route('admin.users.index')} />
+      <PageTitle title="Edit User" showBackButton />
       <form
         onSubmit={(e) => {
           e.preventDefault();

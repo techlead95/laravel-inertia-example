@@ -32,7 +32,7 @@ export default function LensEdit({
         put(route('admin.lens.update', { id: data.id }));
       }}
     >
-      <PageTitle title="Edit Lens" />
+      <PageTitle title="Edit Lens" showBackButton />
       <LensForm
         styles={styles}
         materials={materials}

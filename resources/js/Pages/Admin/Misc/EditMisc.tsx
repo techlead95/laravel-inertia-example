@@ -24,7 +24,7 @@ export default function MiscEdit({ misc }: Props) {
         put(route('admin.misc.update', { id: data.id }));
       }}
     >
-      <PageTitle title="Edit Misc" />
+      <PageTitle title="Edit Misc" showBackButton />
       <MiscForm form={form} />
     </Stack>
   );

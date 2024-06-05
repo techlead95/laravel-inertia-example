@@ -23,7 +23,7 @@ export default function EditFrame({ frame, ...props }: Props) {
         put(route('admin.frame.update', { id: data.id }));
       }}
     >
-      <PageTitle title="Edit Frame" />
+      <PageTitle title="Edit Frame" showBackButton />
       <FrameForm form={form} frame={frame} {...props} />
     </Stack>
   );

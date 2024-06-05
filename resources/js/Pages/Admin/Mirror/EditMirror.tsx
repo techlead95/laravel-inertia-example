@@ -1,7 +1,7 @@
 import PageTitle from '@/Components/PageTitle';
 import useBaseForm from '@/Hooks/useBaseForm';
 import useGetFieldStyles from '@/Hooks/useFieldStyles';
-import { Mirror, LensCoating } from '@/types';
+import { LensCoating, Mirror } from '@/types';
 import { Head } from '@inertiajs/react';
 import { Stack } from '@mantine/core';
 
@@ -13,7 +13,11 @@ interface Props {
   selectCoatings: string[];
 }
 
-export default function MirrorEdit({ coatings, mirror, selectCoatings }: Props) {
+export default function MirrorEdit({
+  coatings,
+  mirror,
+  selectCoatings,
+}: Props) {
   mirror.mr_coatings = selectCoatings;
   const form = useBaseForm(mirror);
   const { data, setData, put } = form;
@@ -27,7 +31,7 @@ export default function MirrorEdit({ coatings, mirror, selectCoatings }: Props) 
         put(route('admin.mirror.update', { id: data.id }));
       }}
     >
-      <PageTitle title="Edit Mirror" />
+      <PageTitle title="Edit Mirror" showBackButton />
       <MirrorForm coatings={coatings} form={form} />
     </Stack>
   );

@@ -19,7 +19,7 @@ class ShieldFactory extends Factory
         return [
             'sh_frame_style' => 'Style ' . fake()->word(),
             'sh_eye_size' => 'Size ' . fake()->word(),
-            'sh_ss_type' => 'Type ' . fake()->word(),
+            'sh_ss_type' => 'Type ' . fake()->unique()->word(),
             'sh_ss_desc' => 'Shield ' . fake()->word(),
             'sh_preasm_ind' => 'Ind ' . fake()->word(),
             'sh_ss_type2' => 'Typ2 ' . fake()->word(),

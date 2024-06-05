@@ -1,8 +1,8 @@
 import PageTitle from '@/Components/PageTitle';
 import useBaseForm from '@/Hooks/useBaseForm';
+import { Lens, LensCoating, LensMaterial, LensStyle } from '@/types';
 import { Stack } from '@mantine/core';
 
-import { LensMaterial, LensStyle, Lens, LensCoating } from '@/types';
 import LensForm from './LensForm';
 
 interface Props {
@@ -25,8 +25,13 @@ export default function CreateLens({ styles, materials, coatings }: Props) {
         post(route('admin.lens.store'));
       }}
     >
-      <PageTitle title="Create Lens" />
-      <LensForm styles={styles} materials={materials} coatings={coatings} form={form} />
+      <PageTitle title="Create Lens" showBackButton />
+      <LensForm
+        styles={styles}
+        materials={materials}
+        coatings={coatings}
+        form={form}
+      />
     </Stack>
   );
 }

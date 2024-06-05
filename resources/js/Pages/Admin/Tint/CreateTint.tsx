@@ -18,7 +18,7 @@ export default function CreateTint() {
         post(route('admin.tint.store'));
       }}
     >
-      <PageTitle title="Create Tint" />
+      <PageTitle title="Create Tint" showBackButton />
       <TintForm form={form} />
     </Stack>
   );

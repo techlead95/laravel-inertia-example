@@ -19,7 +19,7 @@ export default function CreateCoating(props: FramePageProps) {
         post(route('admin.frame.store'));
       }}
     >
-      <PageTitle title="Create Frame" />
+      <PageTitle title="Create Frame" showBackButton />
       <FrameForm form={form} {...props} />
     </Stack>
   );
