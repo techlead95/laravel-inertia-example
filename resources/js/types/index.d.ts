@@ -8,6 +8,26 @@ export type PageProps<T> = T & {
   };
 };
 
+interface PageLink {
+  active: boolean;
+  label: string;
+  url: string | null;
+}
+
+export type Paginated<T> = {
+  current_page: number;
+  data: T[];
+  from: number;
+  to: number;
+  last_page: number;
+  last_page_url: string;
+  next_page_url: string | null;
+  prev_page_url: string | null;
+  path: string;
+  total: number;
+  links: PageLink[];
+};
+
 export interface User {
   id: number;
   name: string;

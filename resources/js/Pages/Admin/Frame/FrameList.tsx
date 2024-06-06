@@ -1,11 +1,12 @@
 import BaseDataTable from '@/Components/BaseDataTable';
+import BasePagination from '@/Components/BasePagination';
 import EditDeleteActions from '@/Components/EditDeleteActions';
-import { Frame } from '@/types';
+import { Frame, Paginated } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
 import { Button, Group } from '@mantine/core';
 
 interface Props {
-  frames: Frame[];
+  frames: Paginated<Frame>;
 }
 
 export default function Coating({ frames }: Props) {
@@ -43,8 +44,9 @@ export default function Coating({ frames }: Props) {
             },
           },
         ]}
-        records={frames}
+        records={frames.data}
       />
+      <BasePagination paginatedData={frames} />
     </>
   );
 }

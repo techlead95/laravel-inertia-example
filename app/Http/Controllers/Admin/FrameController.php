@@ -25,7 +25,7 @@ class FrameController extends Controller
      */
     public function index()
     {
-        $frames = Frame::all();
+        $frames = Frame::paginate(10);
 
         return inertia()->render('Admin/Frame/FrameList', compact('frames'));
     }
