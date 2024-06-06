@@ -8,7 +8,9 @@ import { router } from '@inertiajs/react';
 import { Group, SegmentedControl, TextInput } from '@mantine/core';
 import dayjs from 'dayjs';
 import { DataTableColumn } from 'mantine-datatable';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
+import { type DataTableSortStatus } from 'mantine-datatable';
+import sortBy from 'lodash/sortBy';
 
 enum OrderStatus {
   Active = 'Active Orders',
@@ -26,7 +28,17 @@ interface Props {
 export default function Orders({ search, startDate, endDate, orders }: Props) {
   const [ostatus, setOStatus] = useState(OrderStatus.Active);
 
-  const [filteredOrders, setFilteredOrders] = useState(orders);
+  const [sortStatus, setSortStatus] = useState<DataTableSortStatus<Order>>({
+    columnAccessor: 'Rx Number',
+    direction: 'desc',
+  });
+
+  const [filteredOrders, setFilteredOrders] = useState(sortBy(orders, 'Rx Number'));
+
+  useEffect(() => {
+    const data = sortBy(orders, sortStatus.columnAccessor) as Order[];
+    setFilteredOrders(sortStatus.direction === 'desc' ? data.reverse() : data);
+  }, [sortStatus]);
 
   const columns = useMemo(() => {
     const result: DataTableColumn<Order>[] = [
@@ -34,21 +46,23 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
         accessor: 'created_at',
         title: 'Date Created',
         render: (order) => dayjs(order.created_at).format(DATE_DISPLAY_FORMAT),
+        sortable: true,
       },
-      { accessor: 'or_portal_order_number', title: 'RX Number' },
+      { accessor: 'or_portal_order_number', title: 'RX Number', sortable: true, },
       //{ accessor: 'or_portal_order_number', title: 'or_portal_order_number' },
-      { accessor: 'or_ordby_billto_dash', title: 'Order By' },
-      { accessor: 'user.name', title: 'Order By Name' },
+      { accessor: 'or_ordby_billto_dash', title: 'Order By', sortable: true, },
+      { accessor: 'user.name', title: 'Order By Name', sortable: true, },
       {
         accessor: 'Employee Name',
         render: ({ or_emp_name_first, or_emp_name_last }) => `${or_emp_name_first} ${or_emp_name_last}`,
+        sortable: true,
       }
     ];
 
     if (ostatus === OrderStatus.Active) {
       result.push(
-        { accessor: 'status.ot_station_description', title: 'Location' },
-        { accessor: 'status.ot_status', title: 'Status' },
+        { accessor: 'status.ot_station_description', title: 'Location', sortable: true, },
+        { accessor: 'status.ot_status', title: 'Status', sortable: true, },
         //{ accessor: 'eta', title: 'ETA' },
       );
       setFilteredOrders(
@@ -64,6 +78,7 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
       result.push({
         accessor: 'status.ot_tracking_no',
         title: 'Tracking Number',
+        sortable: true,
       });
       setFilteredOrders(
         orders.filter((order) => order.status?.ot_status?.includes('Shipped')),
@@ -74,6 +89,7 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
       result.push({
         accessor: 'status.ot_station_description',
         title: 'Location',
+        sortable: true,
       });
 
       setFilteredOrders(
@@ -155,6 +171,8 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
         onRowClick={(row) => {
           router.get(route('orders.show', { id: row.record.id }));
         }}
+        sortStatus={sortStatus}
+        onSortStatusChange={setSortStatus}
       />
     </>
   );
