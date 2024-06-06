@@ -36,10 +36,11 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
         render: (order) => dayjs(order.created_at).format(DATE_DISPLAY_FORMAT),
       },
       { accessor: 'or_portal_order_number', title: 'RX Number' },
+      //{ accessor: 'or_portal_order_number', title: 'or_portal_order_number' },
       { accessor: 'or_ordby_billto_dash', title: 'Order By' },
       { accessor: 'user.name', title: 'Order By Name' },
       {
-        accessor: 'Patient Name',
+        accessor: 'Employee Name',
         render: ({ or_emp_name_first, or_emp_name_last }) => `${or_emp_name_first} ${or_emp_name_last}`,
       }
     ];
@@ -128,19 +129,23 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
         }}
       />
       <BaseDataTable
-        /*rowBackgroundColor={({ status }) => {
-          if (status.ot_status === 'In Process') return { dark: '#232b25', light: '#f0f7f1' };
+        rowBackgroundColor={({ status }) => {
+          if (status.ot_status === 'In Process') return 'green';
           //console.log(status, status.ot_status)
           //console.log(status.ot_status)
           //if (status.ot_status === 'In Process') return '#232b25';
           if (status.ot_status === 'Problem') return 'red';
           //if (Status === 'In Process') return '#232b25';
           //if (Status === 'Problem') return 'red';
-        }}*/
+        }}
         /*rowBackgroundColor={({ or_portal_order_number }) => {
-          if (or_portal_order_number === 10000) return '#232b25';
+          if (or_portal_order_number == 10006) return 'violet';
+        }}
+        rowColor={({ or_portal_order_number }) => {
+          if (or_portal_order_number == 10006) return '#232b25';
         }}*/
         //rowBackgroundColor=
+        //backgroundColor='green'
         mt="xl"
         highlightOnHover
         withTableBorder
