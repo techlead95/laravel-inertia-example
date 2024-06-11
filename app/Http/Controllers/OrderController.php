@@ -421,7 +421,9 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
         Gate::authorize('update', $order);
-        if ("Pending" == $order->status->ot_status) {
+        //$or_tracking = $order->status->ot_status;
+        // dd($order->status->ot_status);
+        if ('Pending' == $order->status->ot_status) {
             $frameVariations = FrameVariation::with('frame')->get();
             $lenses = Lens::all();
             $tints = Tint::all();
@@ -435,8 +437,6 @@ class OrderController extends Controller
         }*/
             return inertia()->render('Orders/EditOrder', compact('lenses', 'frameVariations', 'tints', 'order', 'miscs', 'coatings'));
         } else {
-
-
             return to_route('orders.index');
         }
     }
@@ -447,7 +447,9 @@ class OrderController extends Controller
     public function update(Request $request, string $id)
     {
 
+
         $order = Order::find($id);
+        Gate::authorize('update', $order);
         //dd($request);
         switch ($request->input('method')) {
             case 'save':
