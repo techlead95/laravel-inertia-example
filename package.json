@@ -39,7 +39,7 @@
         "immer": "^10.0.4",
         "lodash": "^4.17.21",
         "luxon": "^3.4.4",
-        "mantine-datatable": "^7.6.0",
+        "mantine-datatable": "^7.9.1",
         "use-debounce": "^10.0.0"
     }
 }

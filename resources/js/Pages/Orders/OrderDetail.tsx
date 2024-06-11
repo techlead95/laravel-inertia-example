@@ -33,7 +33,7 @@ export default function OrderDetail({ order }: Props) {
         </Grid.Col>
         <Grid.Col span={1}>
 
-          <LabelledContent label="Patient Name">
+          <LabelledContent label="Employee Name">
             <Popover width={200} position="bottom" withArrow shadow="md">
               <Popover.Target>
                 <Button>
@@ -114,8 +114,8 @@ export default function OrderDetail({ order }: Props) {
                 'Axis',
                 'Dist PD',
                 'Near PD',
-                'Prism (I/O)',
                 'Prism (U/D)',
+                'Prism (I/O)',
               ]}
               hasRL
             >
@@ -125,8 +125,8 @@ export default function OrderDetail({ order }: Props) {
                 <Table.Td ta="center">{order.or_axis_right}</Table.Td>
                 <Table.Td ta="center">{order.or_pd_dist_right}</Table.Td>
                 <Table.Td ta="center">{order.or_pd_near_right}</Table.Td>
-                <Table.Td ta="center">{order.or_prism_in_right}{order.or_prism_in_right_value}</Table.Td>
                 <Table.Td ta="center">{order.or_prism_up_right}{order.or_prism_up_right_value}</Table.Td>
+                <Table.Td ta="center">{order.or_prism_in_right}{order.or_prism_in_right_value}</Table.Td>
               </Table.Tr>
               <Table.Tr>
                 <Table.Td ta="center">{order.or_sphere_left}</Table.Td>
@@ -134,8 +134,8 @@ export default function OrderDetail({ order }: Props) {
                 <Table.Td ta="center">{order.or_axis_left}</Table.Td>
                 <Table.Td ta="center">{order.or_pd_dist_left}</Table.Td>
                 <Table.Td ta="center">{order.or_pd_near_left}</Table.Td>
-                <Table.Td ta="center">{order.or_prism_in_left}{order.or_prism_in_left_value}</Table.Td>
                 <Table.Td ta="center">{order.or_prism_up_left}{order.or_prism_up_left_value}</Table.Td>
+                <Table.Td ta="center">{order.or_prism_in_left}{order.or_prism_in_left_value}</Table.Td>
               </Table.Tr>
             </OrderTable>
             <OrderTable
@@ -143,10 +143,10 @@ export default function OrderDetail({ order }: Props) {
                 'Add',
                 'Upper Add',
                 'Seg Height',
+                'Coating',
                 'Tint Color',
                 'Tint %',
                 'Mirror',
-                'Coating',
               ]}
               hasRL
             >
@@ -154,23 +154,23 @@ export default function OrderDetail({ order }: Props) {
                 <Table.Td ta="center">{order.or_add_right}</Table.Td>
                 <Table.Td ta="center">{order.or_upper_add_right}</Table.Td>
                 <Table.Td ta="center">{order.or_seg_height_right}</Table.Td>
+                <Table.Td ta="center">{order.or_coating}</Table.Td>
                 <Table.Td ta="center">{order.or_tint_color}</Table.Td>
                 <Table.Td ta="center">{order.or_tint_percent}</Table.Td>
                 <Table.Td ta="center">{order.or_mirror}</Table.Td>
-                <Table.Td ta="center">{order.or_coating}</Table.Td>
               </Table.Tr>
               <Table.Tr>
                 <Table.Td ta="center">{order.or_add_left}</Table.Td>
                 <Table.Td ta="center">{order.or_upper_add_left}</Table.Td>
                 <Table.Td ta="center">{order.or_seg_height_left}</Table.Td>
+                <Table.Td ta="center">{order.or_coating}</Table.Td>
                 <Table.Td ta="center">{order.or_tint_color}</Table.Td>
                 <Table.Td ta="center">{order.or_tint_percent}</Table.Td>
                 <Table.Td ta="center">{order.or_mirror}</Table.Td>
-                <Table.Td ta="center">{order.or_coating}</Table.Td>
               </Table.Tr>
             </OrderTable>
             <OrderTable
-              headers={['Material', 'Style', 'Color', 'Ocht', 'Measurement']}
+              headers={['Material', 'Style', 'Color', 'OC Ht', 'Measurement']}
               hasRL
             >
               <Table.Tr>
@@ -212,7 +212,7 @@ export default function OrderDetail({ order }: Props) {
                 </OrderTable>
               </Stack>
               <Box flex={1}>
-                <OrderTable headers={['Frame Information']}>
+                <OrderTable headers={['Frame Source']}>
                   <Table.Tr>
                     <Table.Td ta="center">{order.or_frame_info}</Table.Td>
                   </Table.Tr>
