@@ -21,6 +21,10 @@ export default function BasePagination<T>({
     router.visit(newUrl);
   };
 
+  if (paginatedData.from == paginatedData.last_page) {
+    return null;
+  }
+
   return (
     <Flex justify={justify} mt={mt} {...props}>
       <Pagination

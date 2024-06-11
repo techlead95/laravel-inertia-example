@@ -6,7 +6,7 @@ import { Stack } from '@mantine/core';
 import FrameForm from './FrameForm';
 import { FramePageProps } from './FramePage';
 
-export default function CreateCoating(props: FramePageProps) {
+export default function CreateFrame(props: FramePageProps) {
   const form = useBaseForm<Frame>();
   const { post } = form;
 

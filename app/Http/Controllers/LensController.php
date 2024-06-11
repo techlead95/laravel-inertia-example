@@ -27,7 +27,7 @@ class LensController extends Controller
             return $query->where('le_lens_mat', 'like', "%$material%");
         })->when($color, function ($query, $color) {
             return $query->where('le_lens_col', 'like', "%$color%");
-        })->get();
+        })->paginate();
 
         return inertia()->render('Admin/Lens/LensList', compact('lenses', 'style', 'material', 'color'));
     }

@@ -1,12 +1,13 @@
+import BasePagination from '@/Components/BasePagination';
 import EditDeleteActions from '@/Components/EditDeleteActions';
 import MultiSearchForm from '@/Components/MultiSearchForm';
-import { Lens } from '@/types';
+import { Lens, Paginated } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
 import { Button, Group, TextInput } from '@mantine/core';
 import { DataTable } from 'mantine-datatable';
 
 interface Props {
-  lenses: Lens[];
+  lenses: Paginated<Lens>;
   style?: string;
   material?: string;
   color?: string;
@@ -70,8 +71,9 @@ export default function LensList({ lenses, style, material, color }: Props) {
             },
           },
         ]}
-        records={lenses}
+        records={lenses.data}
       />
+      <BasePagination paginatedData={lenses} />
     </>
   );
 }

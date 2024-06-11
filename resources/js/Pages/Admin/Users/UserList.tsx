@@ -1,7 +1,8 @@
 import BaseDataTable from '@/Components/BaseDataTable';
+import BasePagination from '@/Components/BasePagination';
 import EditDeleteActions from '@/Components/EditDeleteActions';
 import MultiSearchForm from '@/Components/MultiSearchForm';
-import { User } from '@/types';
+import { Paginated, User } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
 import { Button, Group, Stack, Switch, TextInput } from '@mantine/core';
 import { produce } from 'immer';
@@ -10,12 +11,12 @@ import { useState } from 'react';
 import ApproveUserCheckbox from './ApproveUserCheckbox';
 
 interface Props {
-  users: User[];
+  users: Paginated<User>;
   search: string;
 }
 
 export default function AdminHome({ search, ...props }: Props) {
-  const [users, setUsers] = useState(props.users);
+  const [users, setUsers] = useState(props.users.data);
 
   return (
     <>
@@ -88,6 +89,7 @@ export default function AdminHome({ search, ...props }: Props) {
             ]}
             records={users}
           />
+          <BasePagination paginatedData={props.users} />
         </Stack>
         <Stack style={{ flex: 1 }} gap="xs" mt={56}>
           <Switch defaultChecked label="Portal Active" disabled />

@@ -9,7 +9,6 @@ use App\Models\FrameBrand;
 use Illuminate\Http\Request;
 use App\Models\FrameMaterial;
 use App\Http\Controllers\Controller;
-use App\Models\FrameAddon;
 use App\Models\FrameCollection;
 use App\Models\FrameDefaultGroup;
 use App\Models\LensMaterial;
@@ -25,7 +24,7 @@ class FrameController extends Controller
      */
     public function index()
     {
-        $frames = Frame::paginate(10);
+        $frames = Frame::paginate();
 
         return inertia()->render('Admin/Frame/FrameList', compact('frames'));
     }
@@ -40,11 +39,10 @@ class FrameController extends Controller
         $brands = FrameBrand::all();
         $collections = FrameCollection::all();
         $groups = FrameDefaultGroup::all();
-        $frames = Frame::with('variations', 'addons')->get();
         $shields = Shield::all();
         $shieldColors = ShieldColor::all();
 
-        return Inertia::render('Admin/Frame/CreateFrame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'frames', 'shields', 'shieldColors'));
+        return Inertia::render('Admin/Frame/CreateFrame', compact('edges', 'materials', 'brands', 'collections', 'groups', 'shields', 'shieldColors'));
     }
 
     /**
@@ -94,7 +92,6 @@ class FrameController extends Controller
         $brands = FrameBrand::all();
         $collections = FrameCollection::all();
         $groups = FrameDefaultGroup::all();
-        $frames = Frame::with('variations')->get();
         $shields = Shield::all();
         $shieldColors = ShieldColor::all();
         $lensMaterials = LensMaterial::all();
@@ -107,7 +104,6 @@ class FrameController extends Controller
             'brands',
             'collections',
             'groups',
-            'frames',
             'shields',
             'shieldColors',
             'lensMaterials',

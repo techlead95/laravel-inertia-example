@@ -1,7 +1,7 @@
 import BaseAutocomplete from '@/Components/BaseAutocomplete';
 import useBaseForm from '@/Hooks/useBaseForm';
 import { Frame } from '@/types';
-import { Button, Group, Select, Stack, Tabs } from '@mantine/core';
+import { Button, Group, Select, Stack, Tabs, TextInput } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 
 import AddOnsPanel from './AddOnsPanel';
@@ -25,7 +25,6 @@ export default function FrameForm({
   brands,
   collections,
   groups,
-  frames,
   shields,
   shieldColors,
   frame,
@@ -45,10 +44,9 @@ export default function FrameForm({
             w={200}
             {...getFieldProps('fr_brand')}
           />
-          <BaseAutocomplete
+          <TextInput
             label="Frame Name"
             w={200}
-            data={frames.map((frame) => frame.fr_frame_name)}
             {...getFieldProps('fr_frame_name')}
           />
         </Group>

@@ -18,7 +18,6 @@ export interface FramePageProps {
   brands: FrameBrand[];
   collections: FrameCollection[];
   groups: FrameDefaultGroup[];
-  frames: FrameType[];
   shields: Shield[];
   shieldColors: ShieldColor[];
   lensMaterials: LensMaterial[];

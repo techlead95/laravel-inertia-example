@@ -46,6 +46,8 @@ class DatabaseSeeder extends Seeder
             'approved' => true
         ]);
 
+        User::factory(20)->create();
+
         LensStyle::factory()->count(5)->create();
         LensMaterial::factory()->count(5)->create();
         LensCoating::factory(3)->create();
@@ -58,7 +60,7 @@ class DatabaseSeeder extends Seeder
         FrameDefaultGroup::factory()->count(3)->create();
         Shield::factory()->count(5)->create();
         ShieldColor::factory()->count(5)->create();
-        Frame::factory()->count(25)->create()->each(function ($frame) {
+        Frame::factory(50)->create()->each(function ($frame) {
             $frame->addons()->saveMany(FrameAddon::factory()->count(2)->create());
             $frame->variations()->saveMany(FrameVariation::factory()->count(3)->create());
             $frame->lensMaterialLimitations()->attach(LensMaterial::all()->random(3));
