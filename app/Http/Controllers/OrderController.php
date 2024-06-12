@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Builder;
 use PhpParser\Node\Stmt\For_;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class OrderController extends Controller
 {
@@ -407,6 +408,7 @@ class OrderController extends Controller
     public function show(string $id)
     {
         $order = Order::find($id);
+        Gate::authorize('view', $order);
         //$order = Order::with('status')->find($id);
 
         return inertia()->render('Orders/OrderDetail', compact('order'));
@@ -418,19 +420,25 @@ class OrderController extends Controller
     public function edit(string $id)
     {
         $order = Order::find($id);
-
-        $frameVariations = FrameVariation::with('frame')->get();
-        $lenses = Lens::all();
-        $tints = Tint::all();
-        $miscs = Misc::all();
-        $coatings = LensCoating::with('mirrors')->get();
-        /*$lensCoatingSelects = [];
+        Gate::authorize('update', $order);
+        //$or_tracking = $order->status->ot_status;
+        // dd($order->status->ot_status);
+        if ('Pending' == $order->status->ot_status) {
+            $frameVariations = FrameVariation::with('frame')->get();
+            $lenses = Lens::all();
+            $tints = Tint::all();
+            $miscs = Misc::all();
+            $coatings = LensCoating::with('mirrors')->get();
+            /*$lensCoatingSelects = [];
         foreach (LensCoating::select('lc_coating_group', 'lc_lens_coating as item')->get()->groupBy('lc_coating_group')->toArray() as $group => $items) {
             $lensCoatingSelects[] = ['group' => $group, 'items' => array_map(function ($item) {
                 return $item['item'];
             }, $items)];
         }*/
-        return inertia()->render('Orders/EditOrder', compact('lenses', 'frameVariations', 'tints', 'order', 'miscs', 'coatings'));
+            return inertia()->render('Orders/EditOrder', compact('lenses', 'frameVariations', 'tints', 'order', 'miscs', 'coatings'));
+        } else {
+            return to_route('orders.index');
+        }
     }
 
     /**
@@ -439,7 +447,9 @@ class OrderController extends Controller
     public function update(Request $request, string $id)
     {
 
+
         $order = Order::find($id);
+        Gate::authorize('update', $order);
         //dd($request);
         switch ($request->input('method')) {
             case 'save':
