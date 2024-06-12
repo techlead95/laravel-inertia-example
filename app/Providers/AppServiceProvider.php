@@ -28,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
 
         Event::listen(function (SocialiteWasCalled $event) {
             $event->extendSocialite('salesforce', \SocialiteProviders\SalesForce\Provider::class);
+            $event->extendSocialite('azure', \SocialiteProviders\Azure\Provider::class);
         });
     }
 }

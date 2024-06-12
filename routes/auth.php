@@ -43,6 +43,25 @@ Route::middleware('guest')->group(function () {
         return redirect()->intended(RouteServiceProvider::HOME);
     });
 
+    Route::get('azure', function () {
+        return Socialite::driver('azure')->redirect();
+    })->name('azure');
+
+    Route::get('azure/callback', function () {
+        $user = Socialite::driver('azure')->user();
+
+        $user = User::updateOrCreate([
+            'azure_id' => $user->id,
+        ], [
+            'email' => $user->email,
+            'name' => $user->name,
+        ]);
+
+        Auth::login($user);
+
+        return redirect()->intended(RouteServiceProvider::HOME);
+    });
+
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])

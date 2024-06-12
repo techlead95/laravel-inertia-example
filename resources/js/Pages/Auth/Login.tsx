@@ -69,7 +69,14 @@ export default function SignIn() {
           >
             Salesforce
           </Button>
-          <Button variant="outline">Azure AD</Button>
+          <Button
+            variant="outline"
+            onClick={() => {
+              location.href = route('azure');
+            }}
+          >
+            Azure AD
+          </Button>
         </Group>
       </Stack>
       <BackgroundImage

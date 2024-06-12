@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
         LensStyle::factory()->count(5)->create();
         LensMaterial::factory()->count(5)->create();
         LensCoating::factory(3)->create();
-        Lens::factory(5)->create();
+        Lens::factory(20)->create();
 
         FrameEdge::factory()->count(5)->create();
         FrameMaterial::factory()->count(5)->create();

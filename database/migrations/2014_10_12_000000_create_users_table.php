@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->boolean('is_admin')->nullable();
             $table->string('salesforce_id')->nullable();
+            $table->string('azure_id')->nullable();
             $table->boolean('approved')->nullable();
             $table->rememberToken();
             $table->timestamps();
