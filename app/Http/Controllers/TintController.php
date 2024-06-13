@@ -12,7 +12,7 @@ class TintController extends Controller
      */
     public function index()
     {
-        $tints = Tint::all();
+        $tints = Tint::paginate();
 
         return inertia()->render('Admin/Tint/TintList', compact('tints'));
     }

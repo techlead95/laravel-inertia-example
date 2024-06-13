@@ -12,7 +12,7 @@ class LensCoatingController extends Controller
      */
     public function index()
     {
-        $coatings = LensCoating::all();
+        $coatings = LensCoating::paginate();
         return inertia()->render('Admin/Coating/CoatingList', compact('coatings'));
     }
 

@@ -1,9 +1,9 @@
+import BaseDataTable from '@/Components/BaseDataTable';
 import PageTitle from '@/Components/PageTitle';
 import useGetFieldStyles from '@/Hooks/useFieldStyles';
 import { includesIgnoreCase } from '@/utils';
 import { Button, Group, Stack, TextInput } from '@mantine/core';
 import { Search } from '@mui/icons-material';
-import { DataTable } from 'mantine-datatable';
 import { useState } from 'react';
 
 interface ShipTo {
@@ -36,7 +36,7 @@ export default function ShipToAccountMaintenance({ shipTos }: Props) {
               Search
             </Button>
           </Group>
-          <DataTable
+          <BaseDataTable
             style={{ flex: 1 }}
             striped
             withTableBorder

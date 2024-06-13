@@ -15,8 +15,7 @@ class MirrorController extends Controller
      */
     public function index()
     {
-
-        $mirrors = Mirror::all();
+        $mirrors = Mirror::paginate();
 
         return inertia()->render('Admin/Mirror/MirrorList', compact('mirrors'));
     }

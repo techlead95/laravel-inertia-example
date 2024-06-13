@@ -1,34 +1,49 @@
-import { Button, Group, GroupProps } from '@mantine/core';
-import { isEmpty, isEqual, isNil, omitBy } from 'lodash';
-import { ChangeEventHandler, ReactNode, useState } from 'react';
+import {
+  Button,
+  CloseButton,
+  Group,
+  GroupProps,
+  TextInput,
+} from '@mantine/core';
+import { isEmpty, isEqual, omitBy } from 'lodash';
+import { ComponentProps, ReactNode, useState } from 'react';
 
-type GetFieldProps<T> = (field: keyof T) => {
-  value: any;
-  onChange: ChangeEventHandler<HTMLInputElement>;
-};
+type GetFieldProps<T> = (
+  field: keyof T,
+) => Partial<ComponentProps<typeof TextInput>>;
 
 interface Props<T> extends Omit<GroupProps, 'children'> {
   initialValues: T;
   onSearch: (values: T | null) => void;
-  hideClear?: boolean;
+  showClear?: boolean;
   children: (params: { getFieldProps: GetFieldProps<T> }) => ReactNode;
 }
 
 export default function MultiSearchForm<T extends {}>({
   initialValues,
   onSearch,
-  hideClear,
+  showClear,
   children,
   ...props
 }: Props<T>) {
   const [values, setValues] = useState<T>(initialValues);
 
   const getFieldProps: GetFieldProps<T> = (field: keyof T) => {
+    const value = (values[field] ?? '') as string;
+
     return {
-      value: values[field] ?? '',
+      value,
       onChange: (e) => {
         setValues({ ...values, [field]: e.target.value });
       },
+      w: 200,
+      rightSection: value ? (
+        <CloseButton
+          onClick={() => {
+            setValues({ ...values, [field]: '' });
+          }}
+        />
+      ) : null,
     };
   };
 
@@ -53,7 +68,7 @@ export default function MultiSearchForm<T extends {}>({
       >
         Search
       </Button>
-      {!hideClear && (
+      {showClear && (
         <Button
           miw={120}
           variant="default"

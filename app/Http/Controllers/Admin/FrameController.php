@@ -24,9 +24,16 @@ class FrameController extends Controller
      */
     public function index()
     {
-        $frames = Frame::paginate();
+        $brand = request()->brand;
+        $frame_name = request()->frame_name;
 
-        return inertia()->render('Admin/Frame/FrameList', compact('frames'));
+        $frames = Frame::when($brand, function ($query, $brand) {
+            return $query->where('fr_brand', 'like', "%$brand%");
+        })->when($frame_name, function ($query, $frame_name) {
+            return $query->where('fr_frame_name', 'like', "%$frame_name%");
+        })->paginate();
+
+        return inertia()->render('Admin/Frame/FrameList', compact('frames', 'brand', 'frame_name'));
     }
 
     /**

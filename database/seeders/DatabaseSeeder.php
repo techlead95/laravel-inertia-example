@@ -18,6 +18,7 @@ use App\Models\FrameOffloadAvailability;
 use App\Models\FrameVariation;
 use App\Models\Lens;
 use App\Models\LensCoating;
+use App\Models\Mirror;
 use App\Models\Misc;
 use App\Models\Shield;
 use App\Models\ShieldColor;
@@ -50,7 +51,7 @@ class DatabaseSeeder extends Seeder
 
         LensStyle::factory()->count(5)->create();
         LensMaterial::factory()->count(5)->create();
-        LensCoating::factory(3)->create();
+        LensCoating::factory(20)->create();
         Lens::factory(20)->create();
 
         FrameEdge::factory()->count(5)->create();
@@ -60,7 +61,7 @@ class DatabaseSeeder extends Seeder
         FrameDefaultGroup::factory()->count(3)->create();
         Shield::factory()->count(5)->create();
         ShieldColor::factory()->count(5)->create();
-        Frame::factory(50)->create()->each(function ($frame) {
+        Frame::factory(35)->create()->each(function ($frame) {
             $frame->addons()->saveMany(FrameAddon::factory()->count(2)->create());
             $frame->variations()->saveMany(FrameVariation::factory()->count(3)->create());
             $frame->lensMaterialLimitations()->attach(LensMaterial::all()->random(3));
@@ -68,8 +69,9 @@ class DatabaseSeeder extends Seeder
             $frame->offloadAvailabilities()->saveMany(FrameOffloadAvailability::factory(5)->create());
         });
 
-        Tint::factory(5)->create();
-        Misc::factory(3)->create();
+        Tint::factory(20)->create();
+        Mirror::factory(20)->create();
+        Misc::factory(20)->create();
 
         Order::factory()->count(6)->create();
     }

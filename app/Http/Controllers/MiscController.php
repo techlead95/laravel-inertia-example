@@ -12,7 +12,7 @@ class MiscController extends Controller
      */
     public function index()
     {
-        $miscs = Misc::all();
+        $miscs = Misc::paginate();
 
         return inertia()->render('Admin/Misc/MiscList', compact('miscs'));
     }
