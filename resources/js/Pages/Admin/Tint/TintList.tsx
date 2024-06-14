@@ -1,11 +1,12 @@
 import BaseDataTable from '@/Components/BaseDataTable';
+import BasePagination from '@/Components/BasePagination';
 import EditDeleteActions from '@/Components/EditDeleteActions';
-import { Tint } from '@/types';
+import { Paginated, Tint } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
 import { Button, Group } from '@mantine/core';
 
 interface Props {
-  tints: Tint[];
+  tints: Paginated<Tint>;
 }
 
 export default function TintList({ tints }: Props) {
@@ -42,8 +43,9 @@ export default function TintList({ tints }: Props) {
             },
           },
         ]}
-        records={tints}
+        records={tints.data}
       />
+      <BasePagination paginatedData={tints} />
     </>
   );
 }

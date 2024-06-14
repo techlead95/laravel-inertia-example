@@ -7,10 +7,10 @@ import { Order } from '@/types';
 import { router } from '@inertiajs/react';
 import { Group, SegmentedControl, TextInput } from '@mantine/core';
 import dayjs from 'dayjs';
-import { DataTableColumn } from 'mantine-datatable';
-import { useMemo, useState, useEffect } from 'react';
-import { type DataTableSortStatus } from 'mantine-datatable';
 import sortBy from 'lodash/sortBy';
+import { DataTableColumn } from 'mantine-datatable';
+import { type DataTableSortStatus } from 'mantine-datatable';
+import { useEffect, useMemo, useState } from 'react';
 
 enum OrderStatus {
   Active = 'Active Orders',
@@ -33,7 +33,9 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
     direction: 'desc',
   });
 
-  const [filteredOrders, setFilteredOrders] = useState(sortBy(orders, 'Rx Number'));
+  const [filteredOrders, setFilteredOrders] = useState(
+    sortBy(orders, 'Rx Number'),
+  );
 
   useEffect(() => {
     const data = sortBy(orders, sortStatus.columnAccessor) as Order[];
@@ -48,21 +50,30 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
         render: (order) => dayjs(order.created_at).format(DATE_DISPLAY_FORMAT),
         sortable: true,
       },
-      { accessor: 'or_portal_order_number', title: 'RX Number', sortable: true, },
+      {
+        accessor: 'or_portal_order_number',
+        title: 'RX Number',
+        sortable: true,
+      },
       //{ accessor: 'or_portal_order_number', title: 'or_portal_order_number' },
-      { accessor: 'or_ordby_billto_dash', title: 'Order By', sortable: true, },
-      { accessor: 'user.name', title: 'Order By Name', sortable: true, },
+      { accessor: 'or_ordby_billto_dash', title: 'Order By', sortable: true },
+      { accessor: 'user.name', title: 'Order By Name', sortable: true },
       {
         accessor: 'Employee Name',
-        render: ({ or_emp_name_first, or_emp_name_last }) => `${or_emp_name_first} ${or_emp_name_last}`,
+        render: ({ or_emp_name_first, or_emp_name_last }) =>
+          `${or_emp_name_first} ${or_emp_name_last}`,
         sortable: true,
-      }
+      },
     ];
 
     if (ostatus === OrderStatus.Active) {
       result.push(
-        { accessor: 'status.ot_station_description', title: 'Location', sortable: true, },
-        { accessor: 'status.ot_status', title: 'Status', sortable: true, },
+        {
+          accessor: 'status.ot_station_description',
+          title: 'Location',
+          sortable: true,
+        },
+        { accessor: 'status.ot_status', title: 'Status', sortable: true },
         //{ accessor: 'eta', title: 'ETA' },
       );
       setFilteredOrders(
@@ -100,7 +111,6 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
               order.status?.ot_status?.includes('Pending') ||
               order.status?.ot_status?.includes('Shipped'))
         ),*/
-
       );
     }
 
@@ -121,10 +131,11 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
           onSearch={(newValues) => {
             router.get(route('orders.index', newValues ?? {}));
           }}
-          hideClear
         >
           {({ getFieldProps }) => (
-            <TextInput placeholder="Search Rx #, First or Last name" {...getFieldProps('search')}
+            <TextInput
+              placeholder="Search Rx #, First or Last name"
+              {...getFieldProps('search')}
               description="Search Rx #, Patient First or Last name"
             />
           )}

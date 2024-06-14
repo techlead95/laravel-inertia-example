@@ -1,19 +1,41 @@
 import BaseDataTable from '@/Components/BaseDataTable';
 import BasePagination from '@/Components/BasePagination';
 import EditDeleteActions from '@/Components/EditDeleteActions';
+import MultiSearchForm from '@/Components/MultiSearchForm';
 import { Frame, Paginated } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
-import { Button, Group } from '@mantine/core';
+import { Button, CloseButton, Group, TextInput } from '@mantine/core';
 
 interface Props {
   frames: Paginated<Frame>;
+  brand?: string;
+  frame_name?: string;
 }
 
-export default function Coating({ frames }: Props) {
+export default function Coating({ frames, brand, frame_name }: Props) {
   return (
     <>
       <Head title="Frame" />
-      <Group justify="flex-end" mb="lg">
+      <Group justify="space-between" mb="lg">
+        <MultiSearchForm
+          initialValues={{ brand, frame_name }}
+          onSearch={(newValues) => {
+            router.get(route('admin.frame.index', newValues ?? {}));
+          }}
+        >
+          {({ getFieldProps }) => (
+            <>
+              <TextInput
+                placeholder="Filter by Brand"
+                {...getFieldProps('brand')}
+              />
+              <TextInput
+                placeholder="Filter by Frame Name"
+                {...getFieldProps('frame_name')}
+              />
+            </>
+          )}
+        </MultiSearchForm>
         <Link href={route('admin.frame.create')}>
           <Button>New Frame</Button>
         </Link>

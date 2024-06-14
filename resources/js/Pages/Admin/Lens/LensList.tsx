@@ -1,3 +1,4 @@
+import BaseDataTable from '@/Components/BaseDataTable';
 import BasePagination from '@/Components/BasePagination';
 import EditDeleteActions from '@/Components/EditDeleteActions';
 import MultiSearchForm from '@/Components/MultiSearchForm';
@@ -23,7 +24,6 @@ export default function LensList({ lenses, style, material, color }: Props) {
           onSearch={(newValues) => {
             router.get(route('admin.lens.index', newValues ?? {}));
           }}
-          hideClear
         >
           {({ getFieldProps }) => (
             <>
@@ -46,7 +46,7 @@ export default function LensList({ lenses, style, material, color }: Props) {
           <Button>New Lens</Button>
         </Link>
       </Group>
-      <DataTable
+      <BaseDataTable
         style={{ flex: 1 }}
         withTableBorder
         borderRadius="md"

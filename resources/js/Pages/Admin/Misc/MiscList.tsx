@@ -1,11 +1,12 @@
 import BaseDataTable from '@/Components/BaseDataTable';
+import BasePagination from '@/Components/BasePagination';
 import EditDeleteActions from '@/Components/EditDeleteActions';
-import { Misc } from '@/types';
+import { Misc, Paginated } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
 import { Button, Group } from '@mantine/core';
 
 interface Props {
-  miscs: Misc[];
+  miscs: Paginated<Misc>;
 }
 
 export default function MiscList({ miscs }: Props) {
@@ -42,8 +43,9 @@ export default function MiscList({ miscs }: Props) {
             },
           },
         ]}
-        records={miscs}
+        records={miscs.data}
       />
+      <BasePagination paginatedData={miscs} />
     </>
   );
 }
