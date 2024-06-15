@@ -26,14 +26,20 @@ class FrameController extends Controller
     {
         $brand = request()->brand;
         $frame_name = request()->frame_name;
+        $collection = request()->collection;
+        $frame_group = request()->frame_group;
 
         $frames = Frame::when($brand, function ($query, $brand) {
             return $query->where('fr_brand', 'like', "%$brand%");
         })->when($frame_name, function ($query, $frame_name) {
             return $query->where('fr_frame_name', 'like', "%$frame_name%");
+        })->when($collection, function ($query, $collection) {
+            return $query->where('fr_collection', 'like', "%$collection%");
+        })->when($frame_group, function ($query, $frame_group) {
+            return $query->where('fr_frame_group', 'like', "%$frame_group%");
         })->paginate();
 
-        return inertia()->render('Admin/Frame/FrameList', compact('frames', 'brand', 'frame_name'));
+        return inertia()->render('Admin/Frame/FrameList', compact('frames', 'brand', 'frame_name', 'collection', 'frame_group'));
     }
 
     /**

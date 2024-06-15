@@ -42,8 +42,7 @@ export default function AdminHome({ search, ...props }: Props) {
             columns={[
               { accessor: 'id', title: 'ID' },
               { accessor: 'email', title: 'Email' },
-              { accessor: 'last_name', title: 'Last Name' },
-              { accessor: 'first_name', title: 'First Name' },
+              { accessor: 'name', title: 'Full Name' },
               { accessor: 'ship_to_account', title: 'Ship to Account' },
               {
                 accessor: 'approved',

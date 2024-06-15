@@ -1,19 +1,31 @@
 import BaseDataTable from '@/Components/BaseDataTable';
 import BasePagination from '@/Components/BasePagination';
 import EditDeleteActions from '@/Components/EditDeleteActions';
+import MultiSearchForm from '@/Components/MultiSearchForm';
 import { LensCoating, Paginated } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
-import { Button, Group } from '@mantine/core';
+import { Button, Group, TextInput } from '@mantine/core';
 
 interface Props {
   coatings: Paginated<LensCoating>;
+  search?: string;
 }
 
-export default function Coating({ coatings }: Props) {
+export default function Coating({ coatings, search }: Props) {
   return (
     <>
       <Head title="Coating" />
-      <Group justify="flex-end" mb="lg">
+      <Group justify="space-between" mb="lg">
+        <MultiSearchForm
+          initialValues={{ search }}
+          onSearch={(newValues) => {
+            router.get(route('admin.coatings.index', newValues ?? {}));
+          }}
+        >
+          {({ getFieldProps }) => (
+            <TextInput placeholder="Search" {...getFieldProps('search')} />
+          )}
+        </MultiSearchForm>
         <Link href={route('admin.coatings.create')}>
           <Button>New Coating</Button>
         </Link>

@@ -12,8 +12,18 @@ class LensCoatingController extends Controller
      */
     public function index()
     {
-        $coatings = LensCoating::paginate();
-        return inertia()->render('Admin/Coating/CoatingList', compact('coatings'));
+        $search = request()->search;
+
+        $coatings = LensCoating::when($search, function ($query, $search) {
+            return $query->where('lc_lens_coating', 'like', "%$search%")
+                ->orWhere('lc_coating_group', 'like', "%$search%")
+                ->orWhere('lc_o1_translation', 'like', "%$search%")
+                ->orWhere('lc_dvi_translation', 'like', "%$search%")
+                ->orWhere('lc_o2_add_code', 'like', "%$search%")
+                ->orWhere('lc_o1_add_code', 'like', "%$search%");
+        })->paginate();
+
+        return inertia()->render('Admin/Coating/CoatingList', compact('coatings', 'search'));
     }
 
     /**

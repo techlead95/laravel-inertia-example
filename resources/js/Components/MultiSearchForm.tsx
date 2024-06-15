@@ -36,7 +36,7 @@ export default function MultiSearchForm<T extends {}>({
       onChange: (e) => {
         setValues({ ...values, [field]: e.target.value });
       },
-      w: 200,
+      w: 180,
       rightSection: value ? (
         <CloseButton
           onClick={() => {

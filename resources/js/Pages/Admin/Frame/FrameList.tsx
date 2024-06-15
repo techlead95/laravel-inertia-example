@@ -10,15 +10,23 @@ interface Props {
   frames: Paginated<Frame>;
   brand?: string;
   frame_name?: string;
+  collection?: string;
+  frame_group?: string;
 }
 
-export default function Coating({ frames, brand, frame_name }: Props) {
+export default function Coating({
+  frames,
+  brand,
+  frame_name,
+  collection,
+  frame_group,
+}: Props) {
   return (
     <>
       <Head title="Frame" />
       <Group justify="space-between" mb="lg">
         <MultiSearchForm
-          initialValues={{ brand, frame_name }}
+          initialValues={{ brand, frame_name, collection, frame_group }}
           onSearch={(newValues) => {
             router.get(route('admin.frame.index', newValues ?? {}));
           }}
@@ -32,6 +40,14 @@ export default function Coating({ frames, brand, frame_name }: Props) {
               <TextInput
                 placeholder="Filter by Frame Name"
                 {...getFieldProps('frame_name')}
+              />
+              <TextInput
+                placeholder="Filter by Collection"
+                {...getFieldProps('collection')}
+              />
+              <TextInput
+                placeholder="Filter by Frame Group"
+                {...getFieldProps('frame_group')}
               />
             </>
           )}

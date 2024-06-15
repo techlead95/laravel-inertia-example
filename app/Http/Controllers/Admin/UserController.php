@@ -16,7 +16,8 @@ class UserController extends Controller
     {
         $search = request()->search;
         $users = User::when($search, function ($query, $search) {
-            return $query->where('name', 'like', '%' . $search . '%');
+            return $query->where('email', 'like', "%$search%")
+                ->orWhere('name', 'like', "%$search%");
         })->paginate();
 
         return Inertia::render('Admin/Users/UserList', compact('users', 'search'));
