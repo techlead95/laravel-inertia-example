@@ -256,7 +256,7 @@ export interface Tint extends Timestamps {
 export interface Order extends Timestamps {
   id: number;
   or_portal_order_number: number;
-  or_ship_to: string;
+  or_ship_to: string | null;
   or_ordby_billto_dash: string;
   or_po_no: string;
   or_emp_name_last: string;

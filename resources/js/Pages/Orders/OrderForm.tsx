@@ -7,9 +7,9 @@ import {
   LensCoating,
   Misc,
   Order,
+  PageProps,
   Tint,
   User,
-  PageProps
 } from '@/types';
 import { router, usePage } from '@inertiajs/react';
 import {
@@ -19,6 +19,7 @@ import {
   Grid,
   Group,
   Input,
+  NumberInput,
   Radio,
   Select,
   Stack,
@@ -26,9 +27,8 @@ import {
   Text,
   TextInput,
   Textarea,
-  NumberInput,
 } from '@mantine/core';
-import { useEffect, useState, } from 'react';
+import { useEffect, useState } from 'react';
 
 import OrderTable from './OrderTable';
 
@@ -95,17 +95,27 @@ export default function OrderForm({
   //console.log(errors);
   const xrightBlur = () => {
     var xright = data.or_axis_right;
+
+    if (!xright) {
+      return;
+    }
+
     while (xright.length < 3) {
       xright = '0' + xright;
     }
-    setData('or_axis_right', xright)
+    setData('or_axis_right', xright);
   };
   const xleftBlur = () => {
     var xleft = data.or_axis_left;
+
+    if (!xleft) {
+      return;
+    }
+
     while (xleft.length < 3) {
       xleft = '0' + xleft;
     }
-    setData('or_axis_left', xleft)
+    setData('or_axis_left', xleft);
   };
   useEffect(() => {
     var frameFinal = [];
@@ -226,21 +236,14 @@ export default function OrderForm({
   }, [data.or_frame_side_shield, data.or_frame_side_shield_color]);
   useEffect(() => {
     if (data.or_eyes) {
-      if ("Both" == data.or_eyes || "Right" == data.or_eyes)
-        setRDisable(false);
-      else
-        setRDisable(true);
-      if ("Both" == data.or_eyes || "Left" == data.or_eyes)
-        setLDisable(false);
-      else
-        setLDisable(true);
-
+      if ('Both' == data.or_eyes || 'Right' == data.or_eyes) setRDisable(false);
+      else setRDisable(true);
+      if ('Both' == data.or_eyes || 'Left' == data.or_eyes) setLDisable(false);
+      else setLDisable(true);
     } else {
       setRDisable(true);
       setLDisable(true);
     }
-
-
   }, [data.or_eyes]);
   useEffect(() => {
     var lensRightFinal = [];
@@ -446,12 +449,18 @@ export default function OrderForm({
   if (Object.keys(errors).length > 0) {
     //console.log(Object.values(errors)[0]);
     if (!('' == Object.values(errors)[0])) {
-      errormessage = <Flex justify="center"> <Text c="red" fw="bold">Please see errors below</Text>    </Flex>;
+      errormessage = (
+        <Flex justify="center">
+          {' '}
+          <Text c="red" fw="bold">
+            Please see errors below
+          </Text>{' '}
+        </Flex>
+      );
     }
   }
   return (
     <>
-
       <Box>
         <Button onClick={() => router.get(route('orders.index'))}>
           Back to Home
@@ -494,7 +503,11 @@ export default function OrderForm({
                 styles={getFieldStyles({ blueLabel: true })}
                 flex={1}
               />
-              <a rel="noopener noreferrer" href="https://us.hoyasafety.com/GetToken/" target="_blank">
+              <a
+                rel="noopener noreferrer"
+                href="https://us.hoyasafety.com/GetToken/"
+                target="_blank"
+              >
                 <Button mt={25}>Get a Token</Button>
               </a>
             </Group>
@@ -574,7 +587,7 @@ export default function OrderForm({
             name="or_jobtype"
             label="Job Type"
             value={data.or_jobtype}
-            onChange={e => setData('or_jobtype', e)}
+            onChange={(e) => setData('or_jobtype', e)}
             styles={getFieldStyles({ blueLabel: true })}
           >
             <Stack mt="xs">
@@ -586,7 +599,7 @@ export default function OrderForm({
             name="or_eyes"
             label="Eyes"
             value={data.or_eyes}
-            onChange={e => setData('or_eyes', e)}
+            onChange={(e) => setData('or_eyes', e)}
             styles={getFieldStyles({ blueLabel: true })}
             mt="xl"
           >
@@ -629,7 +642,7 @@ export default function OrderForm({
                 disabled={rDiasble}
                 placeholder="Select Lens Style"
                 data={filteredLensStlyesRight}
-              //data={['test', 'test2', 'test3', 'test4']}
+                //data={['test', 'test2', 'test3', 'test4']}
               />
             </Table.Td>
             <Table.Td>
@@ -638,7 +651,7 @@ export default function OrderForm({
                 disabled={rDiasble}
                 placeholder="Select Lens Color"
                 data={filteredLensColorsRight}
-              //data={['test', 'test2', 'test3', 'test4']}
+                //data={['test', 'test2', 'test3', 'test4']}
               />
             </Table.Td>
             <Table.Td>
@@ -659,7 +672,7 @@ export default function OrderForm({
                 disabled={lDiasble}
                 placeholder="Select Material"
                 data={filteredLensMaterialsLeft}
-              //data={['test', 'test2', 'test3', 'test4']}
+                //data={['test', 'test2', 'test3', 'test4']}
               />
             </Table.Td>
             <Table.Td>
@@ -668,7 +681,7 @@ export default function OrderForm({
                 disabled={lDiasble}
                 placeholder="Select Lens Style"
                 data={filteredLensStlyesLeft}
-              //data={['test', 'test2', 'test3', 'test4']}
+                //data={['test', 'test2', 'test3', 'test4']}
               />
             </Table.Td>
             <Table.Td>
@@ -677,7 +690,7 @@ export default function OrderForm({
                 disabled={lDiasble}
                 placeholder="Select Lens Color"
                 data={filteredLensColorsLeft}
-              //data={['test', 'test2', 'test3', 'test4']}
+                //data={['test', 'test2', 'test3', 'test4']}
               />
             </Table.Td>
             <Table.Td>
@@ -707,49 +720,66 @@ export default function OrderForm({
         >
           <Table.Tr>
             <Table.Td>
-              <TextInput {...getFieldProps('or_sphere_right')}
+              <TextInput
+                {...getFieldProps('or_sphere_right')}
                 disabled={rDiasble}
               />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_cyl_right')}
+              <TextInput
+                {...getFieldProps('or_cyl_right')}
                 disabled={rDiasble}
               />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_axis_right')}
+              <TextInput
+                {...getFieldProps('or_axis_right')}
                 disabled={rDiasble}
                 onBlur={xrightBlur}
               />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_pd_dist_right')}
+              <TextInput
+                {...getFieldProps('or_pd_dist_right')}
                 disabled={rDiasble}
               />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_pd_near_right')}
+              <TextInput
+                {...getFieldProps('or_pd_near_right')}
                 disabled={rDiasble}
               />
             </Table.Td>
             <Table.Td w="200">
               <Group>
-                <Select mr="-10" w="83"  {...getFieldProps('or_prism_up_right')}
+                <Select
+                  mr="-10"
+                  w="83"
+                  {...getFieldProps('or_prism_up_right')}
                   disabled={rDiasble}
-
-                  data={['*', 'UP', 'DOWN']} />
-                <TextInput ml="-10" w="94" {...getFieldProps('or_prism_up_right_value')}
+                  data={['*', 'UP', 'DOWN']}
+                />
+                <TextInput
+                  ml="-10"
+                  w="94"
+                  {...getFieldProps('or_prism_up_right_value')}
                   disabled={rDiasble}
                 />
               </Group>
             </Table.Td>
             <Table.Td w="200">
               <Group>
-                <Select mr="-10" w="83"  {...getFieldProps('or_prism_in_right')}
+                <Select
+                  mr="-10"
+                  w="83"
+                  {...getFieldProps('or_prism_in_right')}
                   disabled={rDiasble}
-
-                  data={['*', 'IN', 'OUT']} />
-                <TextInput ml="-10" w="94" {...getFieldProps('or_prism_in_right_value')}
+                  data={['*', 'IN', 'OUT']}
+                />
+                <TextInput
+                  ml="-10"
+                  w="94"
+                  {...getFieldProps('or_prism_in_right_value')}
                   disabled={rDiasble}
                 />
               </Group>
@@ -757,48 +787,66 @@ export default function OrderForm({
           </Table.Tr>
           <Table.Tr>
             <Table.Td>
-              <TextInput {...getFieldProps('or_sphere_left')}
+              <TextInput
+                {...getFieldProps('or_sphere_left')}
                 disabled={lDiasble}
               />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_cyl_left')}
+              <TextInput
+                {...getFieldProps('or_cyl_left')}
                 disabled={lDiasble}
               />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_axis_left')}
+              <TextInput
+                {...getFieldProps('or_axis_left')}
                 disabled={lDiasble}
                 onBlur={xleftBlur}
               />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_pd_dist_left')}
+              <TextInput
+                {...getFieldProps('or_pd_dist_left')}
                 disabled={lDiasble}
               />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_pd_near_left')}
+              <TextInput
+                {...getFieldProps('or_pd_near_left')}
                 disabled={lDiasble}
               />
             </Table.Td>
             <Table.Td>
               <Group>
-                <Select mr="-10" w="83"  {...getFieldProps('or_prism_up_left')} data={['*', 'UP', 'DOWN']}
+                <Select
+                  mr="-10"
+                  w="83"
+                  {...getFieldProps('or_prism_up_left')}
+                  data={['*', 'UP', 'DOWN']}
                   disabled={lDiasble}
                 />
-                <TextInput ml="-10" w="94" {...getFieldProps('or_prism_up_left_value')}
+                <TextInput
+                  ml="-10"
+                  w="94"
+                  {...getFieldProps('or_prism_up_left_value')}
                   disabled={lDiasble}
                 />
               </Group>
             </Table.Td>
             <Table.Td>
               <Group>
-                <Select mr="-10" w="83"  {...getFieldProps('or_prism_in_left')}
+                <Select
+                  mr="-10"
+                  w="83"
+                  {...getFieldProps('or_prism_in_left')}
                   disabled={lDiasble}
-
-                  data={['*', 'IN', 'OUT']} />
-                <TextInput ml="-10" w="94" {...getFieldProps('or_prism_in_left_value')}
+                  data={['*', 'IN', 'OUT']}
+                />
+                <TextInput
+                  ml="-10"
+                  w="94"
+                  {...getFieldProps('or_prism_in_left_value')}
                   disabled={lDiasble}
                 />
               </Group>
@@ -820,7 +868,8 @@ export default function OrderForm({
         >
           <Table.Tr>
             <Table.Td>
-              <TextInput {...getFieldProps('or_add_right')}
+              <TextInput
+                {...getFieldProps('or_add_right')}
                 disabled={rDiasble}
               />
             </Table.Td>
@@ -831,7 +880,8 @@ export default function OrderForm({
               />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_seg_height_right')}
+              <TextInput
+                {...getFieldProps('or_seg_height_right')}
                 disabled={rDiasble}
               />
             </Table.Td>
@@ -840,7 +890,7 @@ export default function OrderForm({
                 {...getFieldProps('or_coating')}
                 placeholder="Select Coating"
                 data={filteredLensCoatings}
-              //data={lensCoatings.map((lensCoating) => lensCoating.lc_lens_coating ?? '')}
+                //data={lensCoatings.map((lensCoating) => lensCoating.lc_lens_coating ?? '')}
               />
             </Table.Td>
             <Table.Td>
@@ -867,7 +917,8 @@ export default function OrderForm({
           </Table.Tr>
           <Table.Tr>
             <Table.Td>
-              <TextInput {...getFieldProps('or_add_left')}
+              <TextInput
+                {...getFieldProps('or_add_left')}
                 disabled={lDiasble}
               />
             </Table.Td>
@@ -878,7 +929,8 @@ export default function OrderForm({
               />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_seg_height_left')}
+              <TextInput
+                {...getFieldProps('or_seg_height_left')}
                 disabled={lDiasble}
               />
             </Table.Td>
@@ -939,8 +991,8 @@ export default function OrderForm({
                 //data={frames.map((frame) => frame.variations?.fv_frame_color ?? '')}
                 //data={frames.map((frame) => frame.variations?.map((frameVariation) => frameVariation.fv_frame_color ?? ''))}
                 data={filteredFrameColors}
-              //onDropdownOpen={ }
-              //data={[]}
+                //onDropdownOpen={ }
+                //data={[]}
               />
             </Table.Td>
             <Table.Td>
@@ -948,7 +1000,7 @@ export default function OrderForm({
                 {...getFieldProps('or_frame_size')}
                 //data={filteredFrames.map((frame) => frame.fr_eyesize ?? '')}
                 data={filteredFrameSizes}
-              //data={[]}
+                //data={[]}
               />
             </Table.Td>
             <Table.Td>
