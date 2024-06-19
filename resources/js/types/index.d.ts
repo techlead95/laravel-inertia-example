@@ -419,3 +419,11 @@ export interface Mirror extends Timestamps {
   mr_last_modified_by?: string;
   mr_coatings: string[];
 }
+export interface ShipTo extends Timestamps {
+  id: number;
+  st_account: string;
+  st_name: string;
+  st_order_by: string;
+  st_bill_to: string;
+  user_id: number;
+}

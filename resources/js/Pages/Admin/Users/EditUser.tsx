@@ -1,68 +1,88 @@
 import PageTitle from '@/Components/PageTitle';
 import useBaseForm from '@/Hooks/useBaseForm';
+import useGetFieldStyles from '@/Hooks/useFieldStyles';
 import { User } from '@/types';
-import { Button, Grid, Group, TextInput } from '@mantine/core';
+import { Button, Grid, Group, TextInput, Stack, Switch } from '@mantine/core';
+import { Head, Link, router } from '@inertiajs/react';
 
 interface Props {
   user: User;
 }
 
 export default function UserEdit({ user }: Props) {
+  const getFieldStyles = useGetFieldStyles();
   const { getFieldProps, put } = useBaseForm(user);
 
   return (
     <>
       <PageTitle title="Edit User" showBackButton />
-      <form
+      {/*</><form
+        onSubmit={(e) => {
+          e.preventDefault();
+          put(route('admin.users.update', { id: user.id }));
+        }}
+      >*/ }
+
+
+      <Stack
+        component="form"
+        gap="xl"
         onSubmit={(e) => {
           e.preventDefault();
           put(route('admin.users.update', { id: user.id }));
         }}
       >
-        <Grid mt="xl">
-          <Grid.Col span={4}>
-            <TextInput label="Email Address" {...getFieldProps('email')} />
-          </Grid.Col>
-          <Grid.Col span={4}>
-            <TextInput label="First Name" {...getFieldProps('first_name')} />
-          </Grid.Col>
-          <Grid.Col span={4}>
-            <TextInput label="Last Name" {...getFieldProps('last_name')} />
-          </Grid.Col>
-          <Grid.Col span={4}>
+        <Group>
+          <Stack>
+            <TextInput label="Email Address" {...getFieldProps('email')}
+              styles={getFieldStyles({ horizontal: true })} />
+            <TextInput label="First Name" {...getFieldProps('first_name')}
+              styles={getFieldStyles({ horizontal: true })} />
+            <TextInput label="Last Name" {...getFieldProps('last_name')}
+              styles={getFieldStyles({ horizontal: true })} />
             <TextInput
               label="Ship To Account"
               {...getFieldProps('ship_to_account')}
+              styles={getFieldStyles({ horizontal: true })}
             />
-          </Grid.Col>
-          <Grid.Col span={4}>
             <TextInput
               label="Business Name"
               {...getFieldProps('business_name')}
+              styles={getFieldStyles({ horizontal: true })}
             />
-          </Grid.Col>
-          <Grid.Col span={4}>
-            <TextInput label="PO Box" {...getFieldProps('po_box')} />
-          </Grid.Col>
-          <Grid.Col span={6}>
-            <TextInput label="Address 1" {...getFieldProps('address1')} />
-          </Grid.Col>
-          <Grid.Col span={6}>
-            <TextInput label="Address 2" {...getFieldProps('address2')} />
-          </Grid.Col>
-          <Grid.Col span={3}>
-            <TextInput label="City" {...getFieldProps('city')} />
-          </Grid.Col>
-          <Grid.Col span={3}>
-            <TextInput label="State" {...getFieldProps('state')} />
-          </Grid.Col>
-          <Grid.Col span={3}>
-            <TextInput label="Zip" {...getFieldProps('zip')} />
-          </Grid.Col>
-          <Grid.Col span={3}>
-            <TextInput label="Country" {...getFieldProps('country')} />
-          </Grid.Col>
-        </Grid>
+            <TextInput label="PO Box" {...getFieldProps('po_box')}
+              styles={getFieldStyles({ horizontal: true })} />
+            <TextInput label="Address 1" {...getFieldProps('address1')}
+              styles={getFieldStyles({ horizontal: true })} />
+            <TextInput label="Address 2" {...getFieldProps('address2')}
+              styles={getFieldStyles({ horizontal: true })} />
+            <TextInput label="City" {...getFieldProps('city')}
+              styles={getFieldStyles({ horizontal: true })} />
+            <TextInput label="State" {...getFieldProps('state')}
+              styles={getFieldStyles({ horizontal: true })} />
+            <TextInput label="Zip" {...getFieldProps('zip')}
+              styles={getFieldStyles({ horizontal: true })} />
+            <TextInput label="Country" {...getFieldProps('country')}
+              styles={getFieldStyles({ horizontal: true })} />
+          </Stack>
+
+          <Stack>
+            <Switch defaultChecked label="Portal Active" disabled />
+            <Link href={route('admin.users.shiptos.index', user.id)}>
+              <Button variant="outline" w="100%">
+                Ship to Account Maintenance
+              </Button>
+            </Link>
+            <Link href="/admin/modules">
+              <Button variant="outline" w="100%">
+                Modules
+              </Button>
+            </Link>
+            <Button variant="outline" disabled>
+              Default Settings
+            </Button>
+          </Stack>
+        </Group >
         <Group mt="xl">
           <Button miw={120} type="submit">
             Save
@@ -71,7 +91,7 @@ export default function UserEdit({ user }: Props) {
             Cancel
           </Button>
         </Group>
-      </form>
+      </Stack >
     </>
   );
 }

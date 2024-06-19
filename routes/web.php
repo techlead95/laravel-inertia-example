@@ -13,6 +13,8 @@ use App\Http\Controllers\MiscController;
 use App\Http\Controllers\MirrorController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TintController;
+use App\Http\Controllers\ShipToController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +52,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/mirror/catalog', [MirrorController::class, 'catalog'])->name('mirror.catalog');
             Route::resource('mirror', MirrorController::class);
 
-            Route::get('/ship-to-account-maintenance', function () {
+            /*Route::get('/ship-to-account-maintenance', function () {
                 return Inertia::render('Admin/ShipToAccountMaintenance', [
                     'shipTos' => [
                         [
@@ -80,7 +82,7 @@ Route::middleware('auth')->group(function () {
                         ],
                     ]
                 ]);
-            });
+            });*/
 
             Route::get('/modules', function () {
                 return Inertia::render('Admin/Modules');
@@ -91,6 +93,8 @@ Route::middleware('auth')->group(function () {
             Route::resource('tint', TintController::class);
 
             Route::resource('misc', MiscController::class);
+
+            Route::resource('users.shiptos', ShipToController::class);
         });
 
         Route::middleware('user')->group(function () {
