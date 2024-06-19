@@ -12,9 +12,15 @@ class TintController extends Controller
      */
     public function index()
     {
-        $tints = Tint::paginate();
+        $search = request()->search;
 
-        return inertia()->render('Admin/Tint/TintList', compact('tints'));
+        $tints = Tint::when($search, function ($query, $search) {
+            return $query->where('ti_color', 'like', "%$search%")
+                ->orWhere('ti_group', 'like', "%$search%")
+                ->orWhere('ti_o1_translation', 'like', "%$search%");
+        })->paginate();
+
+        return inertia()->render('Admin/Tint/TintList', compact('tints', 'search'));
     }
 
     /**
