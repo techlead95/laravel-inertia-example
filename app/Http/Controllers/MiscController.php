@@ -12,9 +12,17 @@ class MiscController extends Controller
      */
     public function index()
     {
-        $miscs = Misc::paginate();
+        $search = request()->search;
 
-        return inertia()->render('Admin/Misc/MiscList', compact('miscs'));
+        $miscs = Misc::when($search, function ($query, $search) {
+            return $query->where('mi_item_name', 'like', "%$search%")
+                ->orWhere('mi_o1_translation', 'like', "%$search%")
+                ->orWhere('mi_dvi_translation', 'like', "%$search%")
+                ->orWhere('mi_o2_add_code', 'like', "%$search%")
+                ->orWhere('mi_o1_add_code', 'like', "%$search%");
+        })->paginate();
+
+        return inertia()->render('Admin/Misc/MiscList', compact('miscs', 'search'));
     }
 
     /**

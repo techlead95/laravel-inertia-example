@@ -15,9 +15,13 @@ class MirrorController extends Controller
      */
     public function index()
     {
-        $mirrors = Mirror::paginate();
+        $search = request()->search;
 
-        return inertia()->render('Admin/Mirror/MirrorList', compact('mirrors'));
+        $mirrors = Mirror::when($search, function ($query, $search) {
+            return $query->where('mr_mirror', 'like', "%$search%");
+        })->paginate();
+
+        return inertia()->render('Admin/Mirror/MirrorList', compact('mirrors', 'search'));
     }
 
     /**

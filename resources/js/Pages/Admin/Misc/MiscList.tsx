@@ -1,19 +1,31 @@
 import BaseDataTable from '@/Components/BaseDataTable';
 import BasePagination from '@/Components/BasePagination';
 import EditDeleteActions from '@/Components/EditDeleteActions';
+import MultiSearchForm from '@/Components/MultiSearchForm';
 import { Misc, Paginated } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
-import { Button, Group } from '@mantine/core';
+import { Button, Group, TextInput } from '@mantine/core';
 
 interface Props {
   miscs: Paginated<Misc>;
+  search?: string;
 }
 
-export default function MiscList({ miscs }: Props) {
+export default function MiscList({ miscs, search }: Props) {
   return (
     <>
       <Head title="Misc" />
-      <Group justify="flex-end" mb="lg">
+      <Group justify="space-between" mb="lg">
+        <MultiSearchForm
+          initialValues={{ search }}
+          onSearch={(newValues) => {
+            router.get(route('admin.misc.index', newValues ?? {}));
+          }}
+        >
+          {({ getFieldProps }) => (
+            <TextInput placeholder="Search" {...getFieldProps('search')} />
+          )}
+        </MultiSearchForm>
         <Link href={route('admin.misc.create')}>
           <Button>New Misc</Button>
         </Link>
