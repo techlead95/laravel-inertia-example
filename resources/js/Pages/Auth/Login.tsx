@@ -1,5 +1,5 @@
 import useBaseForm from '@/Hooks/useBaseForm';
-import { Head, Link, router } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import {
   ActionIcon,
   Anchor,
@@ -10,7 +10,6 @@ import {
   Flex,
   Group,
   Image,
-  Paper,
   PasswordInput,
   Stack,
   TextInput,
@@ -32,7 +31,7 @@ export default function SignIn() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            post(route('login'));
+            post(route('email-login'));
           }}
         >
           <Image src={safeVisionOpticHubImage} w="fit-content" />
@@ -60,24 +59,6 @@ export default function SignIn() {
             </Button>
           </Group>
         </form>
-        <Group>
-          <Button
-            variant="outline"
-            onClick={() => {
-              location.href = route('salesforce');
-            }}
-          >
-            Salesforce
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => {
-              location.href = route('azure');
-            }}
-          >
-            Azure AD
-          </Button>
-        </Group>
       </Stack>
       <BackgroundImage
         src="https://placehold.co/800x960?text=Login+Background"
