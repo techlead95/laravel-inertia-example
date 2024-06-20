@@ -90,22 +90,6 @@ export default function AdminHome({ search, ...props }: Props) {
           />
           <BasePagination paginatedData={props.users} />
         </Stack>
-        <Stack style={{ flex: 1 }} gap="xs" mt={56}>
-          <Switch defaultChecked label="Portal Active" disabled />
-          <Link href="/admin/ship-to-account-maintenance">
-            <Button variant="outline" w="100%">
-              Ship to Account Maintenance
-            </Button>
-          </Link>
-          <Link href="/admin/modules">
-            <Button variant="outline" w="100%">
-              Modules
-            </Button>
-          </Link>
-          <Button variant="outline" disabled>
-            Default Settings
-          </Button>
-        </Stack>
       </Group>
     </>
   );

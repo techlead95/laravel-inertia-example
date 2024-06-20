@@ -63,7 +63,6 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         $user = User::find($id);
-
         $request->merge(['name' => $request->input('first_name') . ' ' . $request->input('last_name')]);
 
         $validated = $request->validate([
@@ -71,9 +70,21 @@ class UserController extends Controller
             'last_name' => 'required',
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
+            'ship_to_account' => 'nullable',
+            'business_name' => 'nullable',
+            'address1' => 'nullable',
+            'address2' => 'nullable',
+            'po_box' => 'nullable',
+            'city' => 'nullable',
+            'state' => 'nullable',
+            'zip' => 'nullable',
+            'country' => 'nullable',
+            'nick_name' => 'nullable',
+            'is_admin' => 'nullable',
         ]);
 
         $user->update(array_merge($validated, $request->except(['name', 'email'])));
+        //dd($user);
 
         return to_route('admin.users.index');
     }
