@@ -39,7 +39,7 @@ class ShipToController extends Controller
             'st_account' => 'required',
             'st_name' => 'required',
             'st_order_by' => 'nullable',
-            'st_bill_too' => 'nullable',
+            'st_bill_to' => 'nullable',
         ]);
 
         $shipto = $user->shiptos()->create($validated);
@@ -58,24 +58,47 @@ class ShipToController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ShipTo $shipTo)
+    public function edit($user_id, $id)
     {
-        //
+
+        $user = User::find($user_id);
+        $shipTo = ShipTo::find($id);
+        //dd($id, $user, $shipTo);
+
+        return inertia()->render('Admin/ShipTos/EditShipTo', compact('shipTo', 'user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ShipTo $shipTo)
+    public function update($user_id, Request $request, $id)
     {
-        //
+
+        $user = User::find($user_id);
+        $shipTo = ShipTo::find($id);
+        $validated = $request->validate([
+            'st_account' => 'required',
+            'st_name' => 'required',
+            'st_order_by' => 'nullable',
+            'st_bill_to' => 'nullable',
+        ]);
+        //ShipTo::where('id', $id)->update($validated);
+        $shipTo->update($validated);
+        $shiptos = ShipTo::where('user_id', $user_id)->get();
+        return inertia()->render('Admin/ShipTos/ShipToList', compact('shiptos', 'user'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ShipTo $shipTo)
+    public function destroy($user_id, $id)
     {
-        //
+        $user = User::find($user_id);
+        $shipTo = ShipTo::find($id);
+
+        $shipTo->delete();
+
+        $shiptos = ShipTo::where('user_id', $user_id)->get();
+        return inertia()->render('Admin/ShipTos/ShipToList', compact('shiptos', 'user'));
     }
 }

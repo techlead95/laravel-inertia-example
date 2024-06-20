@@ -7,6 +7,8 @@ import { Search } from '@mui/icons-material';
 import { DataTable } from 'mantine-datatable';
 import { useState } from 'react';
 import useBaseForm from '@/Hooks/useBaseForm';
+import EditDeleteActions from '@/Components/EditDeleteActions';
+import { router } from '@inertiajs/react';
 
 
 
@@ -20,10 +22,10 @@ export default function ShipToAccountMaintenance({ shiptos, user }: Props) {
   const getFieldStyles = useGetFieldStyles();
   const { data, getFieldProps, post } = useBaseForm<ShipTo>()
 
-  console.log(shiptos);
+  //console.log(shiptos);
   return (
     <>
-      <PageTitle title="Ship To Account Maintenance" />
+      <PageTitle title={"Ship To Account Maintenance for " + user.first_name + ' ' + user.last_name} />
       <Group style={{ flex: 1 }} gap="xl" align="flex-start" mt="xl">
         <Stack h="100%" style={{ flex: 1 }}>
           <Group>
@@ -45,6 +47,22 @@ export default function ShipToAccountMaintenance({ shiptos, user }: Props) {
               { accessor: 'st_name', title: 'Ship To Name' },
               { accessor: 'st_order_by', title: 'Order By Account' },
               { accessor: 'st_bill_to', title: 'Bill To Account' },
+              {
+                accessor: 'actions',
+                title: '',
+                textAlign: 'right',
+                render(shipto) {
+                  return (
+                    <EditDeleteActions
+                      editUrl={route('admin.users.shiptos.edit', [user.id, { id: shipto.id }])}
+                      deleteConfirmMessage="Are you sure to delete this misc?"
+                      onDelete={() =>
+                        router.delete(route('admin.users.shiptos.destroy', [user.id, { id: shipto.id }]))
+                      }
+                    />
+                  );
+                },
+              },
             ]}
             records={shiptos}
           />
@@ -58,7 +76,7 @@ export default function ShipToAccountMaintenance({ shiptos, user }: Props) {
           }}
         >
           <Group ml={166}>
-            <Button miw={120} type="submit">Save</Button>
+            <Button miw={120} type="submit">Add</Button>
           </Group>
           <TextInput
             label="Ship to Account"
