@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Authenticatable
 {
@@ -25,6 +26,7 @@ class User extends Authenticatable
         'email',
         'password',
         'ship_to_account',
+        'ship_to_id',
         'business_name',
         'address1',
         'address2',
@@ -67,8 +69,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class);
     }
-    public function shiptos(): HasMany
+    public function shipTos(): HasMany
     {
         return $this->hasMany(ShipTo::class);
+    }
+    //default ship to:
+    public function shipTo(): BelongsTo
+    {
+        return $this->belongsTo(ShipTo::class);
     }
 }

@@ -15,10 +15,12 @@ class UserController extends Controller
     public function index()
     {
         $search = request()->search;
-        $users = User::when($search, function ($query, $search) {
+        //$users = User::when($search, function ($query, $search) {
+        $users = User::with(['shipTo'])->when($search, function ($query, $search) {
             return $query->where('email', 'like', "%$search%")
                 ->orWhere('name', 'like', "%$search%");
         })->paginate();
+        //dd($users);
 
         return Inertia::render('Admin/Users/UserList', compact('users', 'search'));
     }
@@ -53,8 +55,11 @@ class UserController extends Controller
     public function edit(string $id)
     {
         $user = User::find($id);
+        $shipTos = $user->shipTos;
 
-        return Inertia::render('Admin/Users/EditUser', compact('user'));
+        //dd($shipTos);
+
+        return Inertia::render('Admin/Users/EditUser', compact('user', 'shipTos'));
     }
 
     /**
@@ -71,6 +76,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
             'ship_to_account' => 'nullable',
+            'ship_to_id' => 'nullable|integer',
             'business_name' => 'nullable',
             'address1' => 'nullable',
             'address2' => 'nullable',

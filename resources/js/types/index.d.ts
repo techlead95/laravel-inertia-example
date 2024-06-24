@@ -48,6 +48,7 @@ export interface User {
   last_name: string | null;
   approved: boolean | null;
   deleted_at: string | null;
+  ship_to_id: number | null;
 }
 
 export interface Timestamps {
