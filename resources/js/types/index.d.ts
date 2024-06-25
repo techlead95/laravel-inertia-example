@@ -238,6 +238,10 @@ export interface LensCoatingSelect {
   group: string;
   items: string[];
 }
+export interface DropDown {
+  value: string;
+  label: string;
+}
 
 export interface Tint extends Timestamps {
   id: number;

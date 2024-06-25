@@ -44,7 +44,7 @@ export default function AdminHome({ search, ...props }: Props) {
               { accessor: 'id', title: 'ID' },
               { accessor: 'email', title: 'Email' },
               { accessor: 'name', title: 'Full Name' },
-              { accessor: 'ship_to.st_account', title: 'Default Ship to Account' },
+              { accessor: 'ship_to_account', title: 'Default Ship to Account' },
               {
                 accessor: 'approved',
                 title: 'Approved',

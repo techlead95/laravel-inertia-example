@@ -16,7 +16,7 @@ class UserController extends Controller
     {
         $search = request()->search;
         //$users = User::when($search, function ($query, $search) {
-        $users = User::with(['shipTo'])->when($search, function ($query, $search) {
+        $users = User::when($search, function ($query, $search) {
             return $query->where('email', 'like', "%$search%")
                 ->orWhere('name', 'like', "%$search%");
         })->paginate();

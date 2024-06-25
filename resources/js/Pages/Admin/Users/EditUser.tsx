@@ -4,6 +4,7 @@ import useGetFieldStyles from '@/Hooks/useFieldStyles';
 import { ShipTo, User } from '@/types';
 import { Button, Grid, Group, TextInput, Stack, Switch, Select } from '@mantine/core';
 import { Head, Link, router } from '@inertiajs/react';
+import { uniqBy } from "lodash";
 
 interface Props {
   user: User;
@@ -15,9 +16,17 @@ export default function UserEdit({ user, shipTos }: Props) {
   const { getFieldProps, put } = useBaseForm(user);
 
 
-  const shipToList = shipTos.map((shipTo) => ({ value: shipTo.id, label: shipTo.st_account + ' ' + shipTo.st_name }));
+  var shipToList = shipTos.map((shipTo) => ({ value: shipTo.st_account, label: shipTo.st_account + ' ' + shipTo.st_name }));
 
-  console.log(shipToList);
+  var filteredShipTo = uniqBy(shipToList, 'value');
+
+  //var filteredShipTo = [];
+
+  /*
+  var shipToList = shipTos.map((shipTo) => (shipTo.st_account));
+  var filteredShipTo = [...new Set(shipToList)];
+  */
+  console.log(filteredShipTo);
 
   return (
     <>
@@ -49,9 +58,11 @@ export default function UserEdit({ user, shipTos }: Props) {
             <Select
               label="Default Ship To Account"
               //data={shipTos.map((shipTo) => "value: '" + shipTo.id + "', label: '" + shipTo.st_account + " " + shipTo.st_name + "'")}
-              data={shipTos.map((shipTo) => ({ value: shipTo.id.toString(), label: shipTo.st_account + ' ' + shipTo.st_name }))}
+              //data={shipTos.map((shipTo) => ({ value: shipTo.id.toString(), label: shipTo.st_account + ' ' + shipTo.st_name }))}
+              //data={shipTos.map((shipTo) => ({ value: shipTo.st_account, label: shipTo.st_account + ' ' + shipTo.st_name }))}
+              data={filteredShipTo}
               //data={shipToList}
-              {...getFieldProps('ship_to_id')}
+              {...getFieldProps('ship_to_account')}
               styles={getFieldStyles({ horizontal: true })}
             />
             <TextInput

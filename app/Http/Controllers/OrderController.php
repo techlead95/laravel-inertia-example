@@ -14,6 +14,7 @@ use App\Models\OrderTracking;
 use App\Http\Controllers\DB;
 use App\Models\LensMaterial;
 use App\Models\LensStyle;
+use App\Models\ShipTo;
 use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\Builder;
@@ -60,6 +61,8 @@ class OrderController extends Controller
         $tints = Tint::all();
         $miscs = Misc::all();
         $coatings = LensCoating::with('mirrors')->get();
+        $user = Auth::user();
+        $shipTos = $user->shipTos;
         //$user = auth()->user();
         /*$lensCoatingSelects = [];
         foreach (LensCoating::select('lc_coating_group', 'lc_lens_coating as item')->get()->groupBy('lc_coating_group')->toArray() as $group => $items) {
@@ -68,7 +71,7 @@ class OrderController extends Controller
             }, $items)];
         }*/
 
-        return inertia()->render('Orders/CreateOrder', compact('lenses', 'frameVariations', 'tints', 'miscs', 'coatings'));
+        return inertia()->render('Orders/CreateOrder', compact('lenses', 'frameVariations', 'tints', 'miscs', 'coatings', 'user', 'shipTos'));
         //return inertia()->render('Orders/CreateOrder', compact('frames', 'lenses', 'frameVariations'));
     }
 
@@ -429,13 +432,15 @@ class OrderController extends Controller
             $tints = Tint::all();
             $miscs = Misc::all();
             $coatings = LensCoating::with('mirrors')->get();
+            $user = Auth::user();
+            $shipTos = $user->shipTos;
             /*$lensCoatingSelects = [];
         foreach (LensCoating::select('lc_coating_group', 'lc_lens_coating as item')->get()->groupBy('lc_coating_group')->toArray() as $group => $items) {
             $lensCoatingSelects[] = ['group' => $group, 'items' => array_map(function ($item) {
                 return $item['item'];
             }, $items)];
         }*/
-            return inertia()->render('Orders/EditOrder', compact('lenses', 'frameVariations', 'tints', 'order', 'miscs', 'coatings'));
+            return inertia()->render('Orders/EditOrder', compact('lenses', 'frameVariations', 'tints', 'order', 'miscs', 'coatings', 'user', 'shipTos'));
         } else {
             return to_route('orders.index');
         }

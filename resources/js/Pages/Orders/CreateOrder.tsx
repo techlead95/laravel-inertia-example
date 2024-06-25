@@ -9,7 +9,9 @@ import {
   Misc,
   Order,
   PageProps,
+  ShipTo,
   Tint,
+  User,
 } from '@/types';
 import { Stack } from '@mantine/core';
 
@@ -22,9 +24,11 @@ interface Props {
   tints: Tint[];
   miscs: Misc[];
   coatings: LensCoating[];
+  user: User;
+  shipTos: ShipTo[];
 }
 
-export default function CreateOrder({ lenses, frameVariations, tints, miscs, coatings, auth, flash }: PageProps<Props>) {
+export default function CreateOrder({ lenses, frameVariations, tints, miscs, coatings, user, shipTos, auth, flash }: PageProps<Props>) {
   const form =
     useBaseForm<Partial<Order>>({
       //useBaseForm<Order>({
@@ -137,6 +141,8 @@ export default function CreateOrder({ lenses, frameVariations, tints, miscs, coa
         form={form}
         miscs={miscs}
         coatings={coatings}
+        user={user}
+        shipTos={shipTos}
       />
     </Stack>
   );
