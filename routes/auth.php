@@ -18,8 +18,16 @@ Route::middleware('guest')->group(function () {
         ->name('email-login');
 
     Route::get('login', function () {
-        return Socialite::driver('salesforce')->redirect();
+        return inertia()->render('Auth/Login');
     })->name('login');
+
+    Route::get('admin-login', function () {
+        return inertia()->render('Auth/AdminLogin');
+    })->name('admin-login');
+
+    Route::get('salesforce/redirect', function () {
+        return Socialite::driver('salesforce')->redirect();
+    })->name('salesforce');
 
     Route::get('salesforce/callback', function () {
         $user = Socialite::driver('salesforce')->user();
@@ -36,9 +44,9 @@ Route::middleware('guest')->group(function () {
         return redirect()->intended(RouteServiceProvider::HOME);
     });
 
-    Route::get('internal-login', function () {
+    Route::get('azure/redirect', function () {
         return Socialite::driver('azure')->redirect();
-    })->name('internal-login');
+    })->name('azure');
 
     Route::get('azure/callback', function () {
         $user = Socialite::driver('azure')->user();
