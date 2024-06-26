@@ -1,17 +1,32 @@
 import PageTitle from '@/Components/PageTitle';
 import useBaseForm from '@/Hooks/useBaseForm';
 import useGetFieldStyles from '@/Hooks/useFieldStyles';
-import { User } from '@/types';
-import { Button, Grid, Group, TextInput, Stack, Switch } from '@mantine/core';
+import { ShipTo, User } from '@/types';
+import { Button, Grid, Group, TextInput, Stack, Switch, Select } from '@mantine/core';
 import { Head, Link, router } from '@inertiajs/react';
+import { uniqBy } from "lodash";
 
 interface Props {
   user: User;
+  shipTos: ShipTo[];
 }
 
-export default function UserEdit({ user }: Props) {
+export default function UserEdit({ user, shipTos }: Props) {
   const getFieldStyles = useGetFieldStyles();
   const { getFieldProps, put } = useBaseForm(user);
+
+
+  var shipToList = shipTos.map((shipTo) => ({ value: shipTo.st_account, label: shipTo.st_account + ' ' + shipTo.st_name }));
+
+  var filteredShipTo = uniqBy(shipToList, 'value');
+
+  //var filteredShipTo = [];
+
+  /*
+  var shipToList = shipTos.map((shipTo) => (shipTo.st_account));
+  var filteredShipTo = [...new Set(shipToList)];
+  */
+  console.log(filteredShipTo);
 
   return (
     <>
@@ -40,8 +55,13 @@ export default function UserEdit({ user }: Props) {
               styles={getFieldStyles({ horizontal: true })} />
             <TextInput label="Last Name" {...getFieldProps('last_name')}
               styles={getFieldStyles({ horizontal: true })} />
-            <TextInput
-              label="Ship To Account"
+            <Select
+              label="Default Ship To Account"
+              //data={shipTos.map((shipTo) => "value: '" + shipTo.id + "', label: '" + shipTo.st_account + " " + shipTo.st_name + "'")}
+              //data={shipTos.map((shipTo) => ({ value: shipTo.id.toString(), label: shipTo.st_account + ' ' + shipTo.st_name }))}
+              //data={shipTos.map((shipTo) => ({ value: shipTo.st_account, label: shipTo.st_account + ' ' + shipTo.st_name }))}
+              data={filteredShipTo}
+              //data={shipToList}
               {...getFieldProps('ship_to_account')}
               styles={getFieldStyles({ horizontal: true })}
             />

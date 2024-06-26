@@ -48,6 +48,7 @@ export interface User {
   last_name: string | null;
   approved: boolean | null;
   deleted_at: string | null;
+  ship_to_id: number | null;
 }
 
 export interface Timestamps {
@@ -236,6 +237,10 @@ export interface LensCoating extends Timestamps {
 export interface LensCoatingSelect {
   group: string;
   items: string[];
+}
+export interface DropDown {
+  value: string;
+  label: string;
 }
 
 export interface Tint extends Timestamps {

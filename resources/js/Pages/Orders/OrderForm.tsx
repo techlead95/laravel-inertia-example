@@ -10,6 +10,7 @@ import {
   PageProps,
   Tint,
   User,
+  ShipTo,
 } from '@/types';
 import { router, usePage } from '@inertiajs/react';
 import {
@@ -29,6 +30,7 @@ import {
   Textarea,
 } from '@mantine/core';
 import { useEffect, useState } from 'react';
+import { uniqBy } from "lodash";
 
 import OrderTable from './OrderTable';
 
@@ -40,6 +42,8 @@ interface Props {
   form: ReturnType<typeof useBaseForm<Partial<Order>>>;
   miscs: Misc[];
   coatings: LensCoating[];
+  user: User;
+  shipTos: ShipTo[];
   //user: User;
 }
 
@@ -50,6 +54,8 @@ export default function OrderForm({
   form,
   miscs,
   coatings,
+  user,
+  shipTos
   //}: PageProps<Props>) {
 }: Props) {
   const getFieldStyles = useGetFieldStyles();
@@ -78,6 +84,7 @@ export default function OrderForm({
   const [filteredLensMirrors, setFilteredLensMirrors] = useState(['']);
   const [filteredSS, setFilteredSS] = useState(['']);
   const [filteredSSColor, setFilteredSSColor] = useState(['']);
+  const [filteredOrderBy, setFilteredOrderBy] = useState(['']);
   const [frameAddons, setFrameAddons] = useState<FrameAddon[]>([]);
   const [lOcht, setLOcht] = useState(true);
   const [lUpperAdd, setLUpperAdd] = useState(true);
@@ -89,6 +96,9 @@ export default function OrderForm({
   const [rDiasble, setRDisable] = useState(true);
   //const { register, handleSubmit, setValue } = useForm();
   const { getFieldProps, data, setData, post, processing, errors } = form;
+
+  var shipToList = shipTos.map((shipTo) => ({ value: shipTo.st_account, label: shipTo.st_account + ' ' + shipTo.st_name }));
+  var filteredShipTo = uniqBy(shipToList, 'value');
   //console.log(filteredFrameStyles);
   //console.log(filteredFrameSizes);
   //console.log(filteredFrameColors);
@@ -117,6 +127,28 @@ export default function OrderForm({
     }
     setData('or_axis_left', xleft);
   };
+  useEffect(() => {
+    var shipToFinal = [];
+    if (data.or_ship_to) {
+      shipToFinal = shipTos.filter((shipTo) => {
+        //console.log(data.or_ship_to, shipTo.st_account, data.or_ship_to == shipTo.st_account);
+        return data.or_ship_to == shipTo.st_account;
+        //shipTo.st_account?.includes(data.or_ship_to ?? '');
+      })
+    } else {
+      shipToFinal = shipTos;
+    }
+
+    var shipToOrderBy = [];
+    shipToOrderBy = shipToFinal.map(
+      (shipTo) => shipTo.st_order_by ?? '',
+    );
+    var OrderbyFiltered = [...new Set(shipToOrderBy)];
+    setFilteredOrderBy(OrderbyFiltered);
+    //console.log(shipToFinal, shipTos, data.or_ship_to);
+
+  }, [data.or_ship_to]);
+
   useEffect(() => {
     var frameFinal = [];
     if (
@@ -272,13 +304,13 @@ export default function OrderForm({
           return false;
 
         /*if (data.or_coating) {
-
+  
           var coatings = lens.coatings?.filter(coating => {
             if (!coating.lc_lens_coating.includes(data.or_coating ?? ''))
               return false;
             return true;
           })
-
+  
           console.log(coatings)
           if (!(coatings && coatings.length > 0))
             return false;
@@ -470,10 +502,11 @@ export default function OrderForm({
       <Grid columns={5} gutter="xl" align="center">
         <Grid.Col span={2}>
           <Stack>
-            <TextInput
+            <Select
               label="Ship To Account"
               {...getFieldProps('or_ship_to')}
-              disabled={true}
+              data={filteredShipTo}
+              value={user.ship_to_account}
               styles={getFieldStyles({ blueLabel: true })}
             />
             <TextInput
@@ -531,8 +564,9 @@ export default function OrderForm({
         </Grid.Col>
         <Grid.Col span={2}>
           <Stack>
-            <TextInput
+            <Select
               {...getFieldProps('or_ordby_billto_dash')}
+              data={filteredOrderBy}
               label="Ordered By Account Number"
               styles={getFieldStyles({ blueLabel: true })}
             />
@@ -642,7 +676,7 @@ export default function OrderForm({
                 disabled={rDiasble}
                 placeholder="Select Lens Style"
                 data={filteredLensStlyesRight}
-                //data={['test', 'test2', 'test3', 'test4']}
+              //data={['test', 'test2', 'test3', 'test4']}
               />
             </Table.Td>
             <Table.Td>
@@ -651,7 +685,7 @@ export default function OrderForm({
                 disabled={rDiasble}
                 placeholder="Select Lens Color"
                 data={filteredLensColorsRight}
-                //data={['test', 'test2', 'test3', 'test4']}
+              //data={['test', 'test2', 'test3', 'test4']}
               />
             </Table.Td>
             <Table.Td>
@@ -672,7 +706,7 @@ export default function OrderForm({
                 disabled={lDiasble}
                 placeholder="Select Material"
                 data={filteredLensMaterialsLeft}
-                //data={['test', 'test2', 'test3', 'test4']}
+              //data={['test', 'test2', 'test3', 'test4']}
               />
             </Table.Td>
             <Table.Td>
@@ -681,7 +715,7 @@ export default function OrderForm({
                 disabled={lDiasble}
                 placeholder="Select Lens Style"
                 data={filteredLensStlyesLeft}
-                //data={['test', 'test2', 'test3', 'test4']}
+              //data={['test', 'test2', 'test3', 'test4']}
               />
             </Table.Td>
             <Table.Td>
@@ -690,7 +724,7 @@ export default function OrderForm({
                 disabled={lDiasble}
                 placeholder="Select Lens Color"
                 data={filteredLensColorsLeft}
-                //data={['test', 'test2', 'test3', 'test4']}
+              //data={['test', 'test2', 'test3', 'test4']}
               />
             </Table.Td>
             <Table.Td>
@@ -890,7 +924,7 @@ export default function OrderForm({
                 {...getFieldProps('or_coating')}
                 placeholder="Select Coating"
                 data={filteredLensCoatings}
-                //data={lensCoatings.map((lensCoating) => lensCoating.lc_lens_coating ?? '')}
+              //data={lensCoatings.map((lensCoating) => lensCoating.lc_lens_coating ?? '')}
               />
             </Table.Td>
             <Table.Td>
@@ -991,8 +1025,8 @@ export default function OrderForm({
                 //data={frames.map((frame) => frame.variations?.fv_frame_color ?? '')}
                 //data={frames.map((frame) => frame.variations?.map((frameVariation) => frameVariation.fv_frame_color ?? ''))}
                 data={filteredFrameColors}
-                //onDropdownOpen={ }
-                //data={[]}
+              //onDropdownOpen={ }
+              //data={[]}
               />
             </Table.Td>
             <Table.Td>
@@ -1000,7 +1034,7 @@ export default function OrderForm({
                 {...getFieldProps('or_frame_size')}
                 //data={filteredFrames.map((frame) => frame.fr_eyesize ?? '')}
                 data={filteredFrameSizes}
-                //data={[]}
+              //data={[]}
               />
             </Table.Td>
             <Table.Td>

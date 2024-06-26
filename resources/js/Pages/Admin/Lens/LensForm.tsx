@@ -47,7 +47,7 @@ export default function LensForm({ styles, materials, coatings, form }: Props) {
             {...getFieldProps('le_lens_col')}
           />
           <Switch
-            label="Ocht"
+            label="OC Ht"
             checked={data.le_ocht}
             onChange={(event) =>
               setData('le_ocht', event.currentTarget.checked)
