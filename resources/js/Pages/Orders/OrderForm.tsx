@@ -31,6 +31,8 @@ import {
 } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { uniqBy } from "lodash";
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
 
 import OrderTable from './OrderTable';
 
@@ -515,11 +517,11 @@ export default function OrderForm({
               styles={getFieldStyles({ blueLabel: true })}
               maxLength={30}
             />
-            <TextInput
-              label="Employee Phone"
-              {...getFieldProps('or_emp_phone')}
-              styles={getFieldStyles({ blueLabel: true })}
-              maxLength={20}
+            <Text size="sm" c="blue" fw={700}>Employee Phone</Text>
+            <PhoneInput
+              defaultCountry="US"
+              value={data.or_emp_phone}
+              onChange={(e) => setData('or_emp_phone', e)}
             />
             <TextInput
               label="Purchase Order"
