@@ -513,21 +513,25 @@ export default function OrderForm({
               label="Employee First Name"
               {...getFieldProps('or_emp_name_first')}
               styles={getFieldStyles({ blueLabel: true })}
+              maxLength={30}
             />
             <TextInput
               label="Employee Phone"
               {...getFieldProps('or_emp_phone')}
               styles={getFieldStyles({ blueLabel: true })}
+              maxLength={20}
             />
             <TextInput
               label="Purchase Order"
               {...getFieldProps('or_po_no')}
               styles={getFieldStyles({ blueLabel: true })}
+              maxLength={30}
             />
             <TextInput
               label="Employee Number"
               {...getFieldProps('or_emp_no')}
               styles={getFieldStyles({ blueLabel: true })}
+              maxLength={30}
             />
             <Group gap="xl">
               <TextInput
@@ -535,6 +539,7 @@ export default function OrderForm({
                 label="Employee Copay Secure Token"
                 styles={getFieldStyles({ blueLabel: true })}
                 flex={1}
+                maxLength={16}
               />
               <a
                 rel="noopener noreferrer"
@@ -558,6 +563,7 @@ export default function OrderForm({
                 placeholder="MMYY"
                 flex={1}
                 styles={getFieldStyles({ blueLabel: true })}
+                maxLength={4}
               />
             </Group>
           </Stack>
@@ -574,21 +580,25 @@ export default function OrderForm({
               {...getFieldProps('or_emp_name_last')}
               label="Employee Last Name"
               styles={getFieldStyles({ blueLabel: true })}
+              maxLength={30}
             />
             <TextInput
               {...getFieldProps('or_emp_email')}
               label="Employee Email"
               styles={getFieldStyles({ blueLabel: true })}
+              maxLength={30}
             />
             <TextInput
               {...getFieldProps('or_req')}
               label="Requisition Number"
               styles={getFieldStyles({ blueLabel: true })}
+              maxLength={12}
             />
             <TextInput
               {...getFieldProps('or_dept')}
               label="Employee Department"
               styles={getFieldStyles({ blueLabel: true })}
+              maxLength={6}
             />
             <Group gap="xl">
               <TextInput
@@ -596,6 +606,7 @@ export default function OrderForm({
                 label="Company Card Secure Token"
                 styles={getFieldStyles({ blueLabel: true })}
                 flex={1}
+                maxLength={16}
               />
             </Group>
             <Group gap="xl">
@@ -612,6 +623,7 @@ export default function OrderForm({
                 placeholder="MMYY"
                 flex={1}
                 styles={getFieldStyles({ blueLabel: true })}
+                maxLength={4}
               />
             </Group>
           </Stack>
@@ -689,7 +701,11 @@ export default function OrderForm({
               />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_ocht_right')} disabled={rOcht} />
+              <TextInput
+                {...getFieldProps('or_ocht_right')}
+                disabled={rOcht}
+                maxLength={30}
+              />
             </Table.Td>
             <Table.Td>
               <Select
@@ -728,7 +744,11 @@ export default function OrderForm({
               />
             </Table.Td>
             <Table.Td>
-              <TextInput {...getFieldProps('or_ocht_left')} disabled={lOcht} />
+              <TextInput
+                {...getFieldProps('or_ocht_left')}
+                disabled={lOcht}
+                maxLength={30}
+              />
             </Table.Td>
             <Table.Td>
               <Select
@@ -757,12 +777,14 @@ export default function OrderForm({
               <TextInput
                 {...getFieldProps('or_sphere_right')}
                 disabled={rDiasble}
+                maxLength={6}
               />
             </Table.Td>
             <Table.Td>
               <TextInput
                 {...getFieldProps('or_cyl_right')}
                 disabled={rDiasble}
+                maxLength={6}
               />
             </Table.Td>
             <Table.Td>
@@ -770,18 +792,21 @@ export default function OrderForm({
                 {...getFieldProps('or_axis_right')}
                 disabled={rDiasble}
                 onBlur={xrightBlur}
+                maxLength={3}
               />
             </Table.Td>
             <Table.Td>
               <TextInput
                 {...getFieldProps('or_pd_dist_right')}
                 disabled={rDiasble}
+                maxLength={6}
               />
             </Table.Td>
             <Table.Td>
               <TextInput
                 {...getFieldProps('or_pd_near_right')}
                 disabled={rDiasble}
+                maxLength={6}
               />
             </Table.Td>
             <Table.Td w="200">
@@ -798,6 +823,7 @@ export default function OrderForm({
                   w="94"
                   {...getFieldProps('or_prism_up_right_value')}
                   disabled={rDiasble}
+                  maxLength={5}
                 />
               </Group>
             </Table.Td>
@@ -815,6 +841,7 @@ export default function OrderForm({
                   w="94"
                   {...getFieldProps('or_prism_in_right_value')}
                   disabled={rDiasble}
+                  maxLength={5}
                 />
               </Group>
             </Table.Td>
@@ -824,12 +851,14 @@ export default function OrderForm({
               <TextInput
                 {...getFieldProps('or_sphere_left')}
                 disabled={lDiasble}
+                maxLength={6}
               />
             </Table.Td>
             <Table.Td>
               <TextInput
                 {...getFieldProps('or_cyl_left')}
                 disabled={lDiasble}
+                maxLength={6}
               />
             </Table.Td>
             <Table.Td>
@@ -837,18 +866,21 @@ export default function OrderForm({
                 {...getFieldProps('or_axis_left')}
                 disabled={lDiasble}
                 onBlur={xleftBlur}
+                maxLength={3}
               />
             </Table.Td>
             <Table.Td>
               <TextInput
                 {...getFieldProps('or_pd_dist_left')}
                 disabled={lDiasble}
+                maxLength={6}
               />
             </Table.Td>
             <Table.Td>
               <TextInput
                 {...getFieldProps('or_pd_near_left')}
                 disabled={lDiasble}
+                maxLength={6}
               />
             </Table.Td>
             <Table.Td>
@@ -865,6 +897,7 @@ export default function OrderForm({
                   w="94"
                   {...getFieldProps('or_prism_up_left_value')}
                   disabled={lDiasble}
+                  maxLength={5}
                 />
               </Group>
             </Table.Td>
@@ -882,6 +915,7 @@ export default function OrderForm({
                   w="94"
                   {...getFieldProps('or_prism_in_left_value')}
                   disabled={lDiasble}
+                  maxLength={5}
                 />
               </Group>
             </Table.Td>
@@ -905,18 +939,21 @@ export default function OrderForm({
               <TextInput
                 {...getFieldProps('or_add_right')}
                 disabled={rDiasble}
+                maxLength={5}
               />
             </Table.Td>
             <Table.Td>
               <TextInput
                 {...getFieldProps('or_upper_add_right')}
                 disabled={rUpperAdd}
+                maxLength={5}
               />
             </Table.Td>
             <Table.Td>
               <TextInput
                 {...getFieldProps('or_seg_height_right')}
                 disabled={rDiasble}
+                maxLength={5}
               />
             </Table.Td>
             <Table.Td>
@@ -939,6 +976,7 @@ export default function OrderForm({
               <TextInput
                 {...getFieldProps('or_tint_percent')}
                 disabled={dTint}
+                maxLength={5}
               />
             </Table.Td>
             <Table.Td>
@@ -954,18 +992,21 @@ export default function OrderForm({
               <TextInput
                 {...getFieldProps('or_add_left')}
                 disabled={lDiasble}
+                maxLength={5}
               />
             </Table.Td>
             <Table.Td>
               <TextInput
                 {...getFieldProps('or_upper_add_left')}
                 disabled={lUpperAdd}
+                maxLength={5}
               />
             </Table.Td>
             <Table.Td>
               <TextInput
                 {...getFieldProps('or_seg_height_left')}
                 disabled={lDiasble}
+                maxLength={5}
               />
             </Table.Td>
             <Table.Td />
@@ -1094,7 +1135,11 @@ export default function OrderForm({
         <OrderTable ml={26} headers={['Notes']}>
           <Table.Tr>
             <Table.Td>
-              <Textarea {...getFieldProps('or_notes')} rows={6} />
+              <Textarea
+                {...getFieldProps('or_notes')}
+                rows={6}
+                maxLength={60}
+              />
             </Table.Td>
           </Table.Tr>
         </OrderTable>
