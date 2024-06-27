@@ -506,7 +506,7 @@ export default function OrderForm({
               label="Ship To Account"
               {...getFieldProps('or_ship_to')}
               data={filteredShipTo}
-              value={user.ship_to_account}
+              defaultValue={user.ship_to_account}
               styles={getFieldStyles({ blueLabel: true })}
             />
             <TextInput
