@@ -5,13 +5,14 @@ import { Button, Group, Select, Stack, Tabs, TextInput } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 
 import AddOnsPanel from './AddOnsPanel';
+import DviTranslations from './DviTranslations';
 import { FramePageProps } from './FramePage';
 import FramePanel from './FramePanel';
 import FrameTabsPanel from './FrameTabsPanel';
 import LensMaterialLimitations from './LensMaterialLimitations';
 import LensStyleLimitations from './LensStyleLimitations';
 import OffloadAvailabilities from './OffloadAvailabilities';
-import TranslationsPanel from './TranslationsPanel';
+import OpticLegacyTranslations from './OpticLegacyTranslations';
 
 interface Props extends FramePageProps {
   frame?: Frame;
@@ -134,10 +135,16 @@ export default function FrameForm({
           </FrameTabsPanel>
 
           <FrameTabsPanel value="translations">
-            <TranslationsPanel
-              frameId={frame.id}
-              frameVariations={frame.variations ?? []}
-            />
+            <Stack>
+              <OpticLegacyTranslations
+                frameId={frame.id}
+                frameVariations={frame.variations ?? []}
+              />
+              <DviTranslations
+                frameId={frame.id}
+                frameVariations={frame.variations ?? []}
+              />
+            </Stack>
           </FrameTabsPanel>
         </Tabs>
       )}
