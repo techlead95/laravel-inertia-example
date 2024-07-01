@@ -9,6 +9,7 @@ use App\Models\LensCoating;
 use Illuminate\Http\Request;
 use App\Models\Lens;
 use Illuminate\Support\Facades\Session;
+use App\Models\LensColor;
 
 class LensController extends Controller
 {
@@ -41,8 +42,9 @@ class LensController extends Controller
         $styles = LensStyle::all();
         $materials = LensMaterial::all();
         $coatings = LensCoating::all();
+        $lensColors = LensColor::all();
 
-        return Inertia::render('Admin/Lens/CreateLens', compact('styles', 'materials', 'coatings'));
+        return Inertia::render('Admin/Lens/CreateLens', compact('styles', 'materials', 'coatings', 'lensColors'));
     }
 
     /**
@@ -107,6 +109,7 @@ class LensController extends Controller
         $styles = LensStyle::all();
         $materials = LensMaterial::all();
         $coatings = LensCoating::all();
+        $lensColors = LensColor::all();
 
         //dd($lens->coatings());
         //$selectCoatings = $lens->coatings()->allRelatedIds()->toArray();
@@ -114,7 +117,7 @@ class LensController extends Controller
         //dd($selectCoatings);
         //$selectCoatings = array_map("strval", $selectCoatings);
 
-        return inertia()->render('Admin/Lens/EditLens', compact('styles', 'materials', 'coatings', 'lens', 'selectCoatings'));
+        return inertia()->render('Admin/Lens/EditLens', compact('styles', 'materials', 'coatings', 'lens', 'selectCoatings', 'lensColors'));
     }
 
     /**

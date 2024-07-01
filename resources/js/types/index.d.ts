@@ -382,6 +382,10 @@ export interface ShieldColor {
   ss_color: string;
 }
 
+export interface LensColor {
+  lc_color: string;
+}
+
 export interface FrameAddon {
   id: number;
   fa_UPC: string | null;
