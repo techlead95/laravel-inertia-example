@@ -17,6 +17,7 @@ class Order extends Model
     protected $fillable = [
         'or_ship_to',
         'or_ordby_billto_dash',
+        'or_ordby_name',
         'user_id',
         'or_po_no',
         'or_emp_name_last',

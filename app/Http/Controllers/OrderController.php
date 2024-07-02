@@ -83,6 +83,11 @@ class OrderController extends Controller
         //$user = $request->user();
         //$request->merge(['user_id' => $user->id]);
         //dd($user, $request);
+        $or_ordby = $request->input('or_ordby_billto_dash');
+        if ($or_ordby) {
+            $shipto = $request->user()->shipTos()->where('st_order_by', $or_ordby)->first();
+            $request->merge(['or_ordby_name' => $shipto->st_order_by_name]);
+        }
         switch ($request->input('method')) {
             case 'save':
 
@@ -90,6 +95,7 @@ class OrderController extends Controller
                 $validated = $request->validate([
                     'or_ship_to' => 'nullable',
                     'or_ordby_billto_dash' => 'nullable',
+                    'or_ordby_name' => 'nullable',
                     'or_po_no' => 'nullable',
                     'or_emp_name_last' => 'nullable',
                     'or_emp_name_first' => 'nullable',
@@ -237,6 +243,7 @@ class OrderController extends Controller
                 $validator = Validator::make($request->all(), [
                     'or_ship_to' => 'nullable',
                     'or_ordby_billto_dash' => 'nullable',
+                    'or_ordby_name' => 'nullable',
                     'or_po_no' => 'required',
                     'or_emp_name_last' => 'nullable',
                     'or_emp_name_first' => 'nullable',
@@ -456,6 +463,11 @@ class OrderController extends Controller
         $order = Order::find($id);
         Gate::authorize('update', $order);
         //dd($request);
+        $or_ordby = $request->input('or_ordby_billto_dash');
+        if ($or_ordby) {
+            $shipto = $request->user()->shipTos()->where('st_order_by', $or_ordby)->first();
+            $request->merge(['or_ordby_name' => $shipto->st_order_by_name]);
+        }
         switch ($request->input('method')) {
             case 'save':
 
@@ -463,6 +475,7 @@ class OrderController extends Controller
                 $validated = $request->validate([
                     'or_ship_to' => 'nullable',
                     'or_ordby_billto_dash' => 'nullable',
+                    'or_ordby_name' => 'nullable',
                     'or_po_no' => 'nullable',
                     'or_emp_name_last' => 'nullable',
                     'or_emp_name_first' => 'nullable',
@@ -607,6 +620,7 @@ class OrderController extends Controller
                 $validator = Validator::make($request->all(), [
                     'or_ship_to' => 'nullable',
                     'or_ordby_billto_dash' => 'nullable',
+                    'or_ordby_name' => 'nullable',
                     'or_po_no' => 'required',
                     'or_emp_name_last' => 'nullable',
                     'or_emp_name_first' => 'nullable',
