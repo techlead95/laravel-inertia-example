@@ -37,6 +37,8 @@ Route::middleware('guest')->group(function () {
         ], [
             'email' => $user->email,
             'name' => $user->name,
+            'first_name' => $user->user["given_name"],
+            'last_name' => $user->user["family_name"],
         ]);
 
         Auth::login($user);
