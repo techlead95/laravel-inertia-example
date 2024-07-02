@@ -53,9 +53,19 @@ export default function ShipToEdit({ shipTo, user }: Props) {
             {...getFieldProps('st_order_by')}
           />
           <TextInput
+            label="Order By Account Name"
+            styles={getFieldStyles({ horizontal: true })}
+            {...getFieldProps('st_order_by_name')}
+          />
+          <TextInput
             label="Bill to Account"
             styles={getFieldStyles({ horizontal: true })}
             {...getFieldProps('st_bill_to')}
+          />
+          <TextInput
+            label="Bill To Account Name"
+            styles={getFieldStyles({ horizontal: true })}
+            {...getFieldProps('st_bill_to_name')}
           />
         </Stack>
       </Group>
