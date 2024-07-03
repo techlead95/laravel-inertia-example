@@ -1,4 +1,5 @@
 import BaseAutocomplete from '@/Components/BaseAutocomplete';
+import { FrameVariationsTableProvider } from '@/Contexts/FrameVariationsTableContext';
 import useBaseForm from '@/Hooks/useBaseForm';
 import { Frame } from '@/types';
 import { Button, Group, Select, Stack, Tabs, TextInput } from '@mantine/core';
@@ -89,64 +90,60 @@ export default function FrameForm({
       </Group>
 
       {frame && (
-        <Tabs defaultValue="frame">
-          <Tabs.List>
-            <Tabs.Tab value="frame">Frame</Tabs.Tab>
-            <Tabs.Tab value="addOns">Add-ons</Tabs.Tab>
-            <Tabs.Tab value="limitations">Limitations</Tabs.Tab>
-            <Tabs.Tab value="translations">Translations</Tabs.Tab>
-          </Tabs.List>
+        <FrameVariationsTableProvider
+          frameId={frame.id}
+          frameVariations={frame?.variations ?? []}
+        >
+          <Tabs defaultValue="frame">
+            <Tabs.List>
+              <Tabs.Tab value="frame">Frame</Tabs.Tab>
+              <Tabs.Tab value="addOns">Add-ons</Tabs.Tab>
+              <Tabs.Tab value="limitations">Limitations</Tabs.Tab>
+              <Tabs.Tab value="translations">Translations</Tabs.Tab>
+            </Tabs.List>
 
-          <FrameTabsPanel value="frame">
-            <FramePanel
-              frameVariations={frame?.variations ?? []}
-              edges={edges}
-              materials={materials}
-              form={form}
-            />
-          </FrameTabsPanel>
+            <FrameTabsPanel value="frame">
+              <FramePanel edges={edges} materials={materials} form={form} />
+            </FrameTabsPanel>
 
-          <FrameTabsPanel value="addOns">
-            <AddOnsPanel
-              frameId={frame.id}
-              shields={shields}
-              shieldColors={shieldColors}
-              addons={frame?.addons ?? []}
-            />
-          </FrameTabsPanel>
+            <FrameTabsPanel value="addOns">
+              <AddOnsPanel
+                frameId={frame.id}
+                shields={shields}
+                shieldColors={shieldColors}
+                addons={frame?.addons ?? []}
+              />
+            </FrameTabsPanel>
 
-          <FrameTabsPanel value="limitations">
-            <Group align="flex-start">
-              <LensMaterialLimitations
-                frameId={frame.id}
-                materials={lensMaterials}
-                lensMaterialLimitations={frame.lens_material_limitations ?? []}
-              />
-              <LensStyleLimitations
-                frameId={frame.id}
-                styles={lensStyles}
-                lensStyleLimitations={frame.lens_style_limitations ?? []}
-              />
-              <OffloadAvailabilities
-                frameId={frame.id}
-                offloadAvailabilities={frame.offload_availabilities ?? []}
-              />
-            </Group>
-          </FrameTabsPanel>
+            <FrameTabsPanel value="limitations">
+              <Group align="flex-start">
+                <LensMaterialLimitations
+                  frameId={frame.id}
+                  materials={lensMaterials}
+                  lensMaterialLimitations={
+                    frame.lens_material_limitations ?? []
+                  }
+                />
+                <LensStyleLimitations
+                  frameId={frame.id}
+                  styles={lensStyles}
+                  lensStyleLimitations={frame.lens_style_limitations ?? []}
+                />
+                <OffloadAvailabilities
+                  frameId={frame.id}
+                  offloadAvailabilities={frame.offload_availabilities ?? []}
+                />
+              </Group>
+            </FrameTabsPanel>
 
-          <FrameTabsPanel value="translations">
-            <Stack>
-              <OpticLegacyTranslations
-                frameId={frame.id}
-                frameVariations={frame.variations ?? []}
-              />
-              <DviTranslations
-                frameId={frame.id}
-                frameVariations={frame.variations ?? []}
-              />
-            </Stack>
-          </FrameTabsPanel>
-        </Tabs>
+            <FrameTabsPanel value="translations">
+              <Stack>
+                <OpticLegacyTranslations />
+                <DviTranslations />
+              </Stack>
+            </FrameTabsPanel>
+          </Tabs>
+        </FrameVariationsTableProvider>
       )}
     </>
   );

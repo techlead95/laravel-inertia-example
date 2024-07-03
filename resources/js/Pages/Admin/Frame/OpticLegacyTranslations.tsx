@@ -1,30 +1,12 @@
-import useEditableTable from '@/Hooks/useEditableTable';
-import { FrameVariation } from '@/types';
+import { useFrameVariationsTable } from '@/Contexts/FrameVariationsTableContext';
 import { Stack, Table, Text } from '@mantine/core';
 import { produce } from 'immer';
 
 import OpticLegacyTranslationRow from './OpticLegacyTranslationRow';
 
-interface Props {
-  frameId: number;
-  frameVariations: FrameVariation[];
-}
-
-export default function OpticLegacyTranslations({
-  frameId,
-  frameVariations,
-}: Props) {
-  const { items, setItems, handleDebouncedUpdate, getRowKey } =
-    useEditableTable({
-      initialItems: frameVariations,
-      storeUrl: '',
-      getDestoryUrl: () => '',
-      getUpdateUrl: (id) =>
-        route('admin.frames.frame-variations.update', {
-          frame: frameId,
-          frame_variation: id,
-        }),
-    });
+export default function OpticLegacyTranslations() {
+  const { nonEmptyItems, setItems, handleDebouncedUpdate, getRowKey } =
+    useFrameVariationsTable();
 
   return (
     <Stack>
@@ -47,7 +29,7 @@ export default function OpticLegacyTranslations({
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
-          {items.map((item, index) => (
+          {nonEmptyItems.map((item, index) => (
             <OpticLegacyTranslationRow
               key={getRowKey(item, index)}
               variation={item}

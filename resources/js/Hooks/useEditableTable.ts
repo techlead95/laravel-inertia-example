@@ -1,6 +1,7 @@
 import { openDeleteConfirmModal, showErrorNotification } from '@/utils';
 import axios from 'axios';
-import { useState } from 'react';
+import { isEmpty } from 'lodash';
+import { useMemo, useState } from 'react';
 
 interface Props<T> {
   initialItems: T[];
@@ -19,6 +20,11 @@ export default function useEditableTable<T extends { id: number }>({
     !storeUrl ? initialItems : [...initialItems, {}],
   );
   const [addingNew, setAddingNew] = useState(false);
+
+  const nonEmptyItems = useMemo(
+    () => items.filter((item) => item && !isEmpty(item)),
+    [items],
+  );
 
   const handleDelete = (index: number) => {
     const deletingId = items[index].id!;
@@ -65,6 +71,7 @@ export default function useEditableTable<T extends { id: number }>({
   return {
     items,
     setItems,
+    nonEmptyItems,
     handleDelete,
     handleDebouncedUpdate,
     getRowDisabled,

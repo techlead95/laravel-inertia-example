@@ -13,27 +13,18 @@ import {
 import FrameVariationTable from './FrameVariationTable';
 
 interface Props {
-  frameVariations: FrameVariation[];
   edges: FrameEdge[];
   materials: FrameMaterial[];
   form: ReturnType<typeof useBaseForm<Frame>>;
 }
 
-export default function FramePanel({
-  frameVariations,
-  edges,
-  materials,
-  form,
-}: Props) {
+export default function FramePanel({ edges, materials, form }: Props) {
   const getFieldStyles = useGetFieldStyles();
   const { getFieldProps, data } = form;
 
   return (
     <>
-      <FrameVariationTable
-        frameId={data.id}
-        frameVariations={frameVariations}
-      />
+      <FrameVariationTable />
       <Group align="flex-start">
         <Stack gap="xs">
           <Select

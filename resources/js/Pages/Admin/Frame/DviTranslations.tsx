@@ -1,27 +1,12 @@
-import useEditableTable from '@/Hooks/useEditableTable';
-import { FrameVariation } from '@/types';
+import { useFrameVariationsTable } from '@/Contexts/FrameVariationsTableContext';
 import { Stack, Table, Text } from '@mantine/core';
 import { produce } from 'immer';
 
 import DviTranslationRow from './DviTranslationRow';
 
-interface Props {
-  frameId: number;
-  frameVariations: FrameVariation[];
-}
-
-export default function DviTranslations({ frameId, frameVariations }: Props) {
-  const { items, setItems, handleDebouncedUpdate, getRowKey } =
-    useEditableTable({
-      initialItems: frameVariations,
-      storeUrl: '',
-      getDestoryUrl: () => '',
-      getUpdateUrl: (id) =>
-        route('admin.frames.frame-variations.update', {
-          frame: frameId,
-          frame_variation: id,
-        }),
-    });
+export default function DviTranslations() {
+  const { nonEmptyItems, setItems, handleDebouncedUpdate, getRowKey } =
+    useFrameVariationsTable();
 
   return (
     <Stack>
@@ -46,7 +31,7 @@ export default function DviTranslations({ frameId, frameVariations }: Props) {
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
-          {items.map((item, index) => (
+          {nonEmptyItems.map((item, index) => (
             <DviTranslationRow
               key={getRowKey(item, index)}
               variation={item}

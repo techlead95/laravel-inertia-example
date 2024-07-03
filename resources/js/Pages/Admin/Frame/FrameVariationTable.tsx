@@ -1,19 +1,10 @@
-import useEditableTable from '@/Hooks/useEditableTable';
-import { FrameVariation } from '@/types';
+import { useFrameVariationsTable } from '@/Contexts/FrameVariationsTableContext';
 import { Table } from '@mantine/core';
 import { produce } from 'immer';
 
 import FrameVariationRow from './FrameVariationRow';
 
-interface Props {
-  frameId: number;
-  frameVariations: FrameVariation[];
-}
-
-export default function FrameVariationTable({
-  frameId,
-  frameVariations,
-}: Props) {
+export default function FrameVariationTable() {
   const {
     items,
     setItems,
@@ -21,20 +12,7 @@ export default function FrameVariationTable({
     handleDebouncedUpdate,
     getRowKey,
     getRowDisabled,
-  } = useEditableTable({
-    initialItems: frameVariations,
-    storeUrl: route('admin.frames.frame-variations.store', frameId),
-    getDestoryUrl: (id) =>
-      route('admin.frames.frame-variations.destroy', {
-        frame: frameId,
-        frame_variation: id,
-      }),
-    getUpdateUrl: (id) =>
-      route('admin.frames.frame-variations.update', {
-        frame: frameId,
-        frame_variation: id,
-      }),
-  });
+  } = useFrameVariationsTable();
 
   return (
     <Table bg="white">
