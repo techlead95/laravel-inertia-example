@@ -79,12 +79,12 @@ export default function ShipToAccountMaintenance({ shiptos, user }: Props) {
             <Button miw={120} type="submit">Add</Button>
           </Group>
           <TextInput
-            label="Ship to Account"
+            label="Ship To Account"
             styles={getFieldStyles({ horizontal: true })}
             {...getFieldProps('st_account')}
           />
           <TextInput
-            label="Ship to Name"
+            label="Ship To Name"
             styles={getFieldStyles({ horizontal: true })}
             {...getFieldProps('st_name')}
           />
@@ -94,9 +94,19 @@ export default function ShipToAccountMaintenance({ shiptos, user }: Props) {
             {...getFieldProps('st_order_by')}
           />
           <TextInput
-            label="Bill to Account"
+            label="Order By Account Name"
+            styles={getFieldStyles({ horizontal: true })}
+            {...getFieldProps('st_order_by_name')}
+          />
+          <TextInput
+            label="Bill To Account"
             styles={getFieldStyles({ horizontal: true })}
             {...getFieldProps('st_bill_to')}
+          />
+          <TextInput
+            label="Bill To Account Name"
+            styles={getFieldStyles({ horizontal: true })}
+            {...getFieldProps('st_bill_to_name')}
           />
         </Stack>
       </Group>

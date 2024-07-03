@@ -382,6 +382,10 @@ export interface ShieldColor {
   ss_color: string;
 }
 
+export interface LensColor {
+  lc_color: string;
+}
+
 export interface FrameAddon {
   id: number;
   fa_UPC: string | null;
@@ -431,4 +435,6 @@ export interface ShipTo extends Timestamps {
   st_order_by: string;
   st_bill_to: string;
   user_id: number;
+  st_order_by_name: string;
+  st_bill_to_name: string;
 }

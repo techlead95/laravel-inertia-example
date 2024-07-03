@@ -15,6 +15,8 @@ class ShipTo extends Model
         'st_name',
         'st_order_by',
         'st_bill_to',
+        'st_order_by_name',
+        'st_bill_to_name',
     ];
     public function user(): BelongsTo
     {

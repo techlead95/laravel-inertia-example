@@ -1,6 +1,8 @@
 import useBaseForm from '@/Hooks/useBaseForm';
 import useGetFieldStyles from '@/Hooks/useFieldStyles';
-import { Lens, LensCoating, LensMaterial, LensStyle } from '@/types';
+import { useMemo } from 'react';
+
+import { Lens, LensCoating, LensMaterial, LensStyle, LensColor } from '@/types';
 import {
   Box,
   Button,
@@ -18,11 +20,16 @@ interface Props {
   materials: LensMaterial[];
   coatings: LensCoating[];
   form: ReturnType<typeof useBaseForm<Lens>>;
+  lensColors: LensColor[];
 }
-
-export default function LensForm({ styles, materials, coatings, form }: Props) {
+export default function LensForm({ styles, materials, coatings, form, lensColors }: Props) {
   const getFieldStyles = useGetFieldStyles();
   const { getFieldProps, data, setData } = form;
+
+  const lensColorOptions = useMemo(
+    () => lensColors.map((color) => color.lc_color),
+    [lensColors],
+  );
 
   return (
     <>
@@ -43,7 +50,7 @@ export default function LensForm({ styles, materials, coatings, form }: Props) {
           <Select
             label="Color"
             w={240}
-            data={['Green', 'Blue', 'Red']}
+            data={lensColorOptions}
             {...getFieldProps('le_lens_col')}
           />
           <Switch

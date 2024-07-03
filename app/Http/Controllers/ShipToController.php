@@ -39,7 +39,9 @@ class ShipToController extends Controller
             'st_account' => 'required',
             'st_name' => 'required',
             'st_order_by' => 'nullable',
+            'st_order_by_name' => 'nullable',
             'st_bill_to' => 'nullable',
+            'st_bill_to_name' => 'nullable',
         ]);
 
         $shipto = $user->shiptos()->create($validated);
@@ -80,7 +82,9 @@ class ShipToController extends Controller
             'st_account' => 'required',
             'st_name' => 'required',
             'st_order_by' => 'nullable',
+            'st_order_by_name' => 'nullable',
             'st_bill_to' => 'nullable',
+            'st_bill_to_name' => 'nullable',
         ]);
         //ShipTo::where('id', $id)->update($validated);
         $shipTo->update($validated);

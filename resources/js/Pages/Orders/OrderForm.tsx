@@ -11,6 +11,7 @@ import {
   Tint,
   User,
   ShipTo,
+  DropDown,
 } from '@/types';
 import { router, usePage } from '@inertiajs/react';
 import {
@@ -86,7 +87,7 @@ export default function OrderForm({
   const [filteredLensMirrors, setFilteredLensMirrors] = useState(['']);
   const [filteredSS, setFilteredSS] = useState(['']);
   const [filteredSSColor, setFilteredSSColor] = useState(['']);
-  const [filteredOrderBy, setFilteredOrderBy] = useState(['']);
+  const [filteredOrderBy, setFilteredOrderBy] = useState<DropDown[]>([]);
   const [frameAddons, setFrameAddons] = useState<FrameAddon[]>([]);
   const [lOcht, setLOcht] = useState(true);
   const [lUpperAdd, setLUpperAdd] = useState(true);
@@ -143,10 +144,14 @@ export default function OrderForm({
 
     var shipToOrderBy = [];
     shipToOrderBy = shipToFinal.map(
-      (shipTo) => shipTo.st_order_by ?? '',
+      (shipTo) => ({ value: shipTo.st_order_by, label: shipTo.st_order_by + ' ' + shipTo.st_order_by_name })
     );
-    var OrderbyFiltered = [...new Set(shipToOrderBy)];
+    // shipTos.map((shipTo) => ({ value: shipTo.st_order_by, label: shipTo.st_order_by + ' ' + shipTo.st_order_by_name }));
+    var OrderbyFiltered = uniqBy(shipToOrderBy, 'value');
+    //var OrderbyFiltered = [...new Set(shipToOrderBy)];
     setFilteredOrderBy(OrderbyFiltered);
+    //setData('or_ordby_billto_dash', '');
+    data.or_ordby_billto_dash = '';
     //console.log(shipToFinal, shipTos, data.or_ship_to);
 
   }, [data.or_ship_to]);

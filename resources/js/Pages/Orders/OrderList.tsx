@@ -57,7 +57,7 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
       },
       //{ accessor: 'or_portal_order_number', title: 'or_portal_order_number' },
       { accessor: 'or_ordby_billto_dash', title: 'Order By', sortable: true },
-      { accessor: 'user.name', title: 'Order By Name', sortable: true },
+      { accessor: 'or_ordby_name', title: 'Order By Name', sortable: true },
       {
         accessor: 'Employee Name',
         render: ({ or_emp_name_first, or_emp_name_last }) =>

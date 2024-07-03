@@ -1,6 +1,6 @@
 import PageTitle from '@/Components/PageTitle';
 import useBaseForm from '@/Hooks/useBaseForm';
-import { Lens, LensCoating, LensMaterial, LensStyle } from '@/types';
+import { Lens, LensCoating, LensMaterial, LensStyle, LensColor } from '@/types';
 import { Stack } from '@mantine/core';
 
 import LensForm from './LensForm';
@@ -11,6 +11,7 @@ interface Props {
   coatings: LensCoating[];
   lens: Lens;
   selectCoatings: string[];
+  lensColors: LensColor[];
 }
 
 export default function LensEdit({
@@ -19,6 +20,7 @@ export default function LensEdit({
   coatings,
   lens,
   selectCoatings,
+  lensColors,
 }: Props) {
   lens.le_coatings = selectCoatings;
   const form = useBaseForm(lens);
@@ -38,6 +40,7 @@ export default function LensEdit({
         materials={materials}
         coatings={coatings}
         form={form}
+        lensColors={lensColors}
       />
     </Stack>
   );
