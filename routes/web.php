@@ -99,7 +99,9 @@ Route::middleware('auth')->group(function () {
 
         Route::middleware('user')->group(function () {
             Route::get('/', function () {
-                return Inertia::render('Home');
+                //return Inertia::render('Home');
+                return redirect()->route('orders.index');
+                //return Inertia::render('orders');
             });
 
             Route::resource('orders', OrderController::class);

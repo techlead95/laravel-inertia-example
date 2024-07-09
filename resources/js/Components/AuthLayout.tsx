@@ -27,12 +27,6 @@ export default function AuthLayout({ children }: PropsWithChildren<{}>) {
         style={{ flex: 1 }}
       >
         <Group justify="flex-end" pt="sm" pr="lg">
-          <ActionIcon variant="subtle" size="xl">
-            <Phone />
-          </ActionIcon>
-          <ActionIcon variant="subtle" size="xl">
-            <Help />
-          </ActionIcon>
         </Group>
       </BackgroundImage>
     </Flex>

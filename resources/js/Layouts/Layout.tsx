@@ -30,17 +30,6 @@ export default function Layout({
               {user.approved && (
                 <>
                   {headerButtons}
-                  <HeaderIconButton
-                    icon={<Notifications />}
-                    label="Alerts"
-                    href="/alerts"
-                  />
-                  <HeaderIconButton icon={<Help />} label="Help" href="/help" />
-                  <HeaderIconButton
-                    icon={<Person />}
-                    label="My Account"
-                    href="/my-account"
-                  />
                 </>
               )}
               <HeaderIconButton

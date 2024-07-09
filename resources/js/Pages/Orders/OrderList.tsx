@@ -122,7 +122,7 @@ export default function Orders({ search, startDate, endDate, orders }: Props) {
       <PageTitle title="Orders" />
       <Group mt="xl" justify="space-between">
         <SegmentedControl
-          value={status}
+          value={ostatus}
           onChange={(newStatus) => setOStatus(newStatus as OrderStatus)}
           data={Object.values(OrderStatus)}
         />

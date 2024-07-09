@@ -10,7 +10,7 @@ export default function Login() {
             location.href = '/salesforce/redirect';
           }}
         >
-          Login with Salesforce
+          Login
         </Button>
       </Flex>
     </AuthLayout>

@@ -543,7 +543,7 @@ export default function OrderForm({
             <Group gap="xl">
               <TextInput
                 {...getFieldProps('or_cc_emp_copay_token')}
-                label="Employee Copay Secure Token"
+                label="Employee Secure Credit Card ID"
                 styles={getFieldStyles({ blueLabel: true })}
                 flex={1}
                 maxLength={16}
@@ -553,7 +553,7 @@ export default function OrderForm({
                 href="https://us.hoyasafety.com/GetToken/"
                 target="_blank"
               >
-                <Button mt={25}>Get a Token</Button>
+                <Button mt={25}>Get Secure Credit Card ID</Button>
               </a>
             </Group>
             <Group gap="xl">
@@ -610,7 +610,7 @@ export default function OrderForm({
             <Group gap="xl">
               <TextInput
                 {...getFieldProps('or_cc_company_card_token')}
-                label="Company Card Secure Token"
+                label="Company Secure Credit Card ID"
                 styles={getFieldStyles({ blueLabel: true })}
                 flex={1}
                 maxLength={16}
