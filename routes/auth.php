@@ -33,7 +33,8 @@ Route::middleware('guest')->group(function () {
         $user = Socialite::driver('salesforce')->user();
 
         $user = User::updateOrCreate([
-            'salesforce_id' => $user->id,
+            //'salesforce_id' => $user->id,
+            'salesforce_id' => $user->user["preferred_username"],
         ], [
             'email' => $user->email,
             'name' => $user->name,

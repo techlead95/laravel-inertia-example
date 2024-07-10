@@ -36,6 +36,9 @@ export default function ShipToEdit({ shipTo, user }: Props) {
         >
           <Group ml={166}>
             <Button miw={120} type="submit">Update</Button>
+            <Button variant="outline" onClick={() => history.back()}>
+              Cancel
+            </Button>
           </Group>
           <TextInput
             label="Ship to Account"

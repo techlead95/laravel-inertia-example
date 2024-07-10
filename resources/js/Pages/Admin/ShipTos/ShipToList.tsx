@@ -8,7 +8,7 @@ import { DataTable } from 'mantine-datatable';
 import { useState } from 'react';
 import useBaseForm from '@/Hooks/useBaseForm';
 import EditDeleteActions from '@/Components/EditDeleteActions';
-import { router } from '@inertiajs/react';
+import { router, Link } from '@inertiajs/react';
 
 
 
@@ -46,6 +46,7 @@ export default function ShipToAccountMaintenance({ shiptos, user }: Props) {
               { accessor: 'st_account', title: 'Ship To #' },
               { accessor: 'st_name', title: 'Ship To Name' },
               { accessor: 'st_order_by', title: 'Order By Account' },
+              { accessor: 'st_order_by_name', title: 'Order By Name' },
               { accessor: 'st_bill_to', title: 'Bill To Account' },
               {
                 accessor: 'actions',
@@ -55,7 +56,7 @@ export default function ShipToAccountMaintenance({ shiptos, user }: Props) {
                   return (
                     <EditDeleteActions
                       editUrl={route('admin.users.shiptos.edit', [user.id, { id: shipto.id }])}
-                      deleteConfirmMessage="Are you sure to delete this misc?"
+                      deleteConfirmMessage="Are you sure to delete this record?"
                       onDelete={() =>
                         router.delete(route('admin.users.shiptos.destroy', [user.id, { id: shipto.id }]))
                       }
@@ -77,6 +78,9 @@ export default function ShipToAccountMaintenance({ shiptos, user }: Props) {
         >
           <Group ml={166}>
             <Button miw={120} type="submit">Add</Button>
+            <Link href={route('admin.users.edit', { id: user.id })}>
+              <Button>Cancel</Button>
+            </Link>
           </Group>
           <TextInput
             label="Ship To Account"
