@@ -1,7 +1,10 @@
 <?php
 
+use Inertia\Inertia;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\NewPasswordController;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +24,7 @@ Route::middleware('guest')->group(function () {
         return inertia()->render('Auth/Login');
     })->name('login');
 
+
     Route::get('admin-login', function () {
         return inertia()->render('Auth/AdminLogin');
     })->name('admin-login');
@@ -31,7 +35,7 @@ Route::middleware('guest')->group(function () {
 
     Route::get('salesforce/callback', function () {
         $user = Socialite::driver('salesforce')->user();
-
+        dd($user);
         $user = User::updateOrCreate([
             //'salesforce_id' => $user->id,
             'salesforce_id' => $user->user["preferred_username"],
@@ -68,17 +72,29 @@ Route::middleware('guest')->group(function () {
 
     Route::post('email-login', [AuthenticatedSessionController::class, 'store']);
 
-    // Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
-    //     ->name('password.request');
 
-    // Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
-    //     ->name('password.email');
+    //Route::get('forgotpassword', function () {
+    //    return inertia()->render('Auth/ForgotPassword');
+    //});
 
-    // Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
-    //     ->name('password.reset');
+    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
+        ->name('password.request');
 
-    // Route::post('reset-password', [NewPasswordController::class, 'store'])
-    //     ->name('password.store');
+    Route::get('forgot-password2', [PasswordResetLinkController::class, 'continue'])
+        ->name('password.continue');
+    Route::get('password-email-sent', function () {
+        return Inertia::render('Auth/ForgotPasswordLinkSent');
+    })->name('password.email.sent');
+
+
+    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+        ->name('password.username');
+
+    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
+        ->name('password.reset');
+
+    Route::post('reset-password', [NewPasswordController::class, 'store'])
+        ->name('password.store');
 });
 
 Route::middleware('auth')->group(function () {

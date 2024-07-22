@@ -26,8 +26,6 @@ export default function AuthLayout({ children }: PropsWithChildren<{}>) {
         src="https://placehold.co/800x960?text=Login+Background"
         style={{ flex: 1 }}
       >
-        <Group justify="flex-end" pt="sm" pr="lg">
-        </Group>
       </BackgroundImage>
     </Flex>
   );

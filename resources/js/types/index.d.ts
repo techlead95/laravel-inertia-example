@@ -242,6 +242,9 @@ export interface DropDown {
   value: string;
   label: string;
 }
+export interface PasswordForgot {
+  username: string;
+}
 
 export interface Tint extends Timestamps {
   id: number;
