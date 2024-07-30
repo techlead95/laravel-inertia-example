@@ -88,6 +88,31 @@ class PasswordResetLinkController extends Controller
         $data = json_decode($response->body());
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $data->access_token
+        ])->post("https://hoya--waeg.sandbox.my.salesforce.com/services/apexrest/CheckUsername", [
+            'username' => $request->input('username'),
+        ]);
+
+        if ("1" == $response->body()) {
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $data->access_token
+            ])->post("https://hoya--waeg.sandbox.my.salesforce.com/services/apexrest/GenerateResetToken", [
+                'username' => $request->input('username'),
+            ]);
+        } else {
+            $status = "Username not found";
+
+            //Session::flash('success', $status);
+            //return back()->with('status', $status);
+            throw ValidationException::withMessages([
+                'username' => [$status],
+            ]);
+        }
+
+
+
+
+        /*$response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $data->access_token
             //])->get("https://hoya--waeg.sandbox.my.salesforce.com/services/data/v47.0/query/?q=SELECT name FROM Account WHERE preferred_username=opticintegrationuser@test.com.waeg");
 
         ])->get("https://hoya--waeg.sandbox.my.salesforce.com/services/data/v47.0/query/?q=SELECT+id+FROM+User+WHERE+Username='" . $request->input('username') . "'");
@@ -115,7 +140,7 @@ class PasswordResetLinkController extends Controller
 
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $data->access_token
-            //])->get("https://hoya--waeg.sandbox.my.salesforce.com/services/data/v47.0/sobjects/User/005Fg000005eJ2fIAE");*/
+            //])->get("https://hoya--waeg.sandbox.my.salesforce.com/services/data/v47.0/sobjects/User/005Fg000005eJ2fIAE");
         ])->delete("https://hoya--waeg.sandbox.my.salesforce.com/services/data/v47.0/sobjects/User/" . $userid . "/password");
 
 
@@ -139,14 +164,14 @@ class PasswordResetLinkController extends Controller
         // We will send the password reset link to this user. Once we have attempted
         // to send the link, we will examine the response then see the message we
         // need to show to the user. Finally, we'll send out a proper response.
-        dd($response, $response->body(), $data->access_token,);
+        //dd($response, $response->body(), $data->access_token,);
         /*$response = Http::delete('https://hoya--waeg.sandbox.my.salesforce.com/services/data/v47.0/sobjects/User/userId/password');
         dd($response);
         $status = Password::sendResetLink(
             $request->only('email')
         );*/
         if ($response->successful()) {
-            return to_route('password-email-sent');
+            return to_route('password.email.sent');
         } else {
             throw ValidationException::withMessages([
                 'username' => ["Password Reset Failed"],
