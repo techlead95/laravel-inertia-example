@@ -5,7 +5,6 @@ import useBaseForm from '@/Hooks/useBaseForm';
 import { Session } from 'inspector';
 import { get } from 'lodash';
 import { PasswordForgot } from '@/types';
-import { Link } from '@inertiajs/react';
 
 
 export default function ForgotPassword() {
@@ -37,7 +36,7 @@ export default function ForgotPassword() {
 
                             <Stack>
                                 <Text size="md">
-                                    Your password has been reset.  You will receive an email indicating it has been reset. Return to <Link href={route('login')}>login </Link>
+                                    Registration Succeeded.  You will receive an email with your username.
                                 </Text>
                             </Stack>
                         </Center>

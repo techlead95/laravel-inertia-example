@@ -26,26 +26,28 @@ class NewPasswordController extends Controller
         $token = $request->input('h');
 
 
-        $response = Http::asForm()->post("https://hoya--waeg.sandbox.my.salesforce.com/services/oauth2/token?grant_type=password&client_id=" . env('SALESFORCE_CLIENT_ID') . "&client_secret=" . env('SALESFORCE_CLIENT_SECRET') . "&username=" . env('SALESFORCE_USERNAME') . "&password=" . env('SALESFORCE_PASSWORD'));
+        $response = Http::asForm()->post(env('SALESFORCE_INSTANCE_URL') . "/services/oauth2/token?grant_type=password&client_id=" . env('SALESFORCE_CLIENT_ID') . "&client_secret=" . env('SALESFORCE_CLIENT_SECRET') . "&username=" . env('SALESFORCE_USERNAME') . "&password=" . env('SALESFORCE_PASSWORD'));
         $data = json_decode($response->body());
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $data->access_token
-        ])->post("https://hoya--waeg.sandbox.my.salesforce.com/services/apexrest/CheckUsername", [
+        ])->post(env('SALESFORCE_INSTANCE_URL') . "/services/apexrest/VerifyToken", [
             'token' => $token,
-            'checkType' => 'Registration',
+            'checkType' => 'ResetPassword',
         ]);
 
+        if ("0" == $response->body()) {
+            return Inertia::render('Auth/PasswordResetExpired');
+        }
 
 
-
-        //dd($response, $response->body());
+        dd($response, $response->body());
 
 
 
         //dd($request, $request->email, $request->route('token'));
 
 
-        return Inertia::render('Auth/SetPassword', [
+        return Inertia::render('Auth/ResetPassword', [
             //'email' => $request->email,
             'token' => $token,
         ]);
@@ -68,12 +70,12 @@ class NewPasswordController extends Controller
             ]
         ]);
 
-        $response = Http::asForm()->post("https://hoya--waeg.sandbox.my.salesforce.com/services/oauth2/token?grant_type=password&client_id=" . env('SALESFORCE_CLIENT_ID') . "&client_secret=" . env('SALESFORCE_CLIENT_SECRET') . "&username=" . env('SALESFORCE_USERNAME') . "&password=" . env('SALESFORCE_PASSWORD'));
+        $response = Http::asForm()->post(env('SALESFORCE_INSTANCE_URL') . "/services/oauth2/token?grant_type=password&client_id=" . env('SALESFORCE_CLIENT_ID') . "&client_secret=" . env('SALESFORCE_CLIENT_SECRET') . "&username=" . env('SALESFORCE_USERNAME') . "&password=" . env('SALESFORCE_PASSWORD'));
         $data = json_decode($response->body());
 
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $data->access_token
-        ])->post("https://hoya--waeg.sandbox.my.salesforce.com/services/apexrest/ResetUserPassword", [
+        ])->post(env('SALESFORCE_INSTANCE_URL') . "/services/apexrest/ResetUserPassword", [
             'token' => $request->input('token'),
             'password' => $request->input('password'),
             'context' => 'PasswordReset',

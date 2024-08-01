@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 use Illuminate\Validation\ValidationException;
 use Inertia\Response;
+//use Laravel\Socialite\Facades\Socialite;
 
 class PasswordController extends Controller
 {
@@ -19,22 +20,46 @@ class PasswordController extends Controller
      */
     public function create(Request $request): Response
     {
+
+        //dd(Socialite::driver('saml2')->getServiceProviderEntityId(), 
+        //Socialite::driver('saml2')->getServiceProviderAssertionConsumerUrl()
+        //);
         $token = $request->input('h');
 
 
-        $response = Http::asForm()->post("https://hoya--waeg.sandbox.my.salesforce.com/services/oauth2/token?grant_type=password&client_id=" . env('SALESFORCE_CLIENT_ID') . "&client_secret=" . env('SALESFORCE_CLIENT_SECRET') . "&username=" . env('SALESFORCE_USERNAME') . "&password=" . env('SALESFORCE_PASSWORD'));
+        $response = Http::asForm()->post(env('SALESFORCE_INSTANCE_URL') . "/services/oauth2/token?grant_type=password&client_id=" . env('SALESFORCE_CLIENT_ID') . "&client_secret=" . env('SALESFORCE_CLIENT_SECRET') . "&username=" . env('SALESFORCE_USERNAME') . "&password=" . env('SALESFORCE_PASSWORD'));
         $data = json_decode($response->body());
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $data->access_token
-        ])->post("https://hoya--waeg.sandbox.my.salesforce.com/services/apexrest/CheckUsername", [
+        ])->post(env('SALESFORCE_INSTANCE_URL') . "/services/apexrest/VerifyToken", [
             'token' => $token,
-            'checkType' => 'ResetPassword',
+            'checkType' => 'Registration',
         ]);
+        $contactID = $response->body();
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $data->access_token
+            //])->get("https://hoya--waeg.sandbox.my.salesforce.com/services/data/v47.0/query/?q=SELECT+*+FROM+Contact+WHERE+Id='" . $contactID . "'");
+        ])->get(env('SALESFORCE_INSTANCE_URL') . "/services/data/v47.0/query/?q=SELECT+FirstName,+LastName+FROM+Contact+WHERE+Id='" . $contactID . "'");
+        if ($response->failed()) {
+            return Inertia::render('Auth/InvalidRegistration');
+        }
 
-
-
+        $contact = json_decode($response->body());
 
         //dd($response, $response->body());
+
+        if (0 == $contact->totalSize) {
+            return Inertia::render('Auth/InvalidRegistration');
+        }
+
+        $firstName = $contact->records[0]->FirstName;
+        $lastName = $contact->records[0]->LastName;
+
+        $firstName = str_replace(' ', '.', $firstName);
+        $lastName = str_replace(' ', '.', $lastName);
+
+
+        //dd($response, $response->body(), $firstName, $lastName);
 
 
 
@@ -44,6 +69,9 @@ class PasswordController extends Controller
         return Inertia::render('Auth/SetPassword', [
             //'email' => $request->email,
             'token' => $token,
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+            'contactID' => $contactID,
         ]);
     }
 
@@ -61,18 +89,45 @@ class PasswordController extends Controller
                 'required',
                 'confirmed',
                 Password::min(8)->mixedCase()->numbers()->symbols(),
-            ]
+            ],
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'contactid' => 'required',
+            'confirm' => 'accepted',
+            'terms' => 'accepted'
         ]);
 
-        $response = Http::asForm()->post("https://hoya--waeg.sandbox.my.salesforce.com/services/oauth2/token?grant_type=password&client_id=" . env('SALESFORCE_CLIENT_ID') . "&client_secret=" . env('SALESFORCE_CLIENT_SECRET') . "&username=" . env('SALESFORCE_USERNAME') . "&password=" . env('SALESFORCE_PASSWORD'));
+        $response = Http::asForm()->post(env('SALESFORCE_INSTANCE_URL') . "/services/oauth2/token?grant_type=password&client_id=" . env('SALESFORCE_CLIENT_ID') . "&client_secret=" . env('SALESFORCE_CLIENT_SECRET') . "&username=" . env('SALESFORCE_USERNAME') . "&password=" . env('SALESFORCE_PASSWORD'));
         $data = json_decode($response->body());
+
+        $username = $request->input('first_name') . '.' . $request->input('last_name');
 
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $data->access_token
-        ])->post("https://hoya--waeg.sandbox.my.salesforce.com/services/apexrest/CreateuserFromPortal", [
-            'token' => $request->input('token'),
+        ])->post(env('SALESFORCE_INSTANCE_URL') . "/services/apexrest/CheckUsername", [
+            'username' => $username,
+        ]);
+
+        if ("1" == $response->body()) {
+            $i = 1;
+            while ("1" == $response->body()) {
+                $username = $request->input('first_name') . '.' . $request->input('last_name') . $i;
+                $response = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . $data->access_token
+                ])->post(env('SALESFORCE_INSTANCE_URL') . "/services/apexrest/CheckUsername", [
+                    'username' => $username,
+                ]);
+                $i++;
+            }
+        }
+
+        //dd($username, $request->input('contactid'));
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $data->access_token
+        ])->post(env('SALESFORCE_INSTANCE_URL') . "/services/apexrest/CreateUserFromPortal", [
+            'contactid' => $request->input('contactid'),
+            'username' => $username,
             'password' => $request->input('password'),
-            'context' => 'PasswordReset',
         ]);
 
         //dd($response, $response->body());
@@ -98,11 +153,10 @@ class PasswordController extends Controller
         //if ($status == Password::PASSWORD_RESET) {
         //return redirect()->route('login')->with('status', __($status));
         if ($response->successful()) {
-            return to_route('password.done');
+            return to_route('registration.succeeded');
         } else {
-            throw ValidationException::withMessages([
-                'password' => ["Unable to Set Password"],
-            ]);
+            dd($response, $response->body());
+            return to_route('registration.failed');
         }
         return redirect()->route('login');
         //}

@@ -80,23 +80,24 @@ class PasswordResetLinkController extends Controller
         //$response = Http::post("https://test.salesforce.com/services/oauth2/token?grant_type=password&client_id=" . env('SALESFORCE_CLIENT_ID') . "&client_secret=" . env('SALESFORCE_CLIENT_SECRET') . "&username=" . env('SALESFORCE_USERNAME') . "&password=" . env('SALESFORCE_PASSWORD'));
 
         //$response = Http::withBasicAuth(env('SALESFORCE_USERNAME') , env('SALESFORCE_PASSWORD'))->withUrlParameters($req)->post("https://test.salesforce.com/services/oauth2/token");
-
+        //env('SALESFORCE_INSTANCE_URL')
         //$response = Http::withUrlParameters($req)->post("https://hoya--waeg.sandbox.my.salesforce.com/services/oauth2/token");
         //$response = Http::post("https://hoya--waeg.sandbox.my.salesforce.com/services/oauth2/authorize?client_id=" . env('SALESFORCE_CLIENT_ID') . "&redirect_uri=https://optic-2-master.azurewebsites.net/salesforce/callback&response_type=code");
         //return redirect()->away("https://hoya--waeg.sandbox.my.salesforce.com/services/oauth2/authorize?client_id=" . env('SALESFORCE_CLIENT_ID') . "&redirect_uri=https://optic-2-master.azurewebsites.net/salesforce/callback&response_type=code");
-        $response = Http::asForm()->post("https://hoya--waeg.sandbox.my.salesforce.com/services/oauth2/token?grant_type=password&client_id=" . env('SALESFORCE_CLIENT_ID') . "&client_secret=" . env('SALESFORCE_CLIENT_SECRET') . "&username=" . env('SALESFORCE_USERNAME') . "&password=" . env('SALESFORCE_PASSWORD'));
+        $response = Http::asForm()->post(env('SALESFORCE_INSTANCE_URL') . "/services/oauth2/token?grant_type=password&client_id=" . env('SALESFORCE_CLIENT_ID') . "&client_secret=" . env('SALESFORCE_CLIENT_SECRET') . "&username=" . env('SALESFORCE_USERNAME') . "&password=" . env('SALESFORCE_PASSWORD'));
         $data = json_decode($response->body());
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $data->access_token
-        ])->post("https://hoya--waeg.sandbox.my.salesforce.com/services/apexrest/CheckUsername", [
+        ])->post(env('SALESFORCE_INSTANCE_URL') . "/services/apexrest/CheckUsername", [
             'username' => $request->input('username'),
         ]);
 
         if ("1" == $response->body()) {
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $data->access_token
-            ])->post("https://hoya--waeg.sandbox.my.salesforce.com/services/apexrest/GenerateResetToken", [
+            ])->post(env('SALESFORCE_INSTANCE_URL') . "/services/apexrest/GenerateResetToken", [
                 'username' => $request->input('username'),
+                'systemInvitationEmail' => 'SafeVision',
             ]);
         } else {
             $status = "Username not found";

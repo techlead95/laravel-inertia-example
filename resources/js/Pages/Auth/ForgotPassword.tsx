@@ -58,7 +58,7 @@ export default function ForgotPassword() {
                                 <Text size="xl" fw={700}>Forgotten username?</Text>
 
                                 <Text size="md">
-                                    If you've forgotten your username, please get in touch with your SafeVision sales representative. After a few quick security checks they will be able to provide you with a reminder.
+                                    If you've forgotten your username, please get in touch with via email at <a href="mailto:safevision@hoya.com">safevision@hoya.com</a>. Please include account number, name and contact information within your requests to expedite the reset process.
                                 </Text>
                             </Stack>
                         </Center>

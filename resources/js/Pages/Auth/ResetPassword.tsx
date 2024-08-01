@@ -50,22 +50,28 @@ export default function ForgotPassword({ token }: Props) {
                                     e.preventDefault();
                                     post(route('password.store'));
                                 }}
+
                             >
-                                <Text size="xl" fw={700}>Safevision Password Reset</Text>
+                                <Text size="xl" fw={700}>Set your password</Text>
 
                                 <Text size="md">
-                                    Enter a new password:
+                                    Please enter your password below.
+                                </Text>
+
+                                <Text size="md">
+                                    Your password must be at least 8 characters in length, including one lowercase letter, one uppercase letter, one digit and one special character.
                                 </Text>
                                 <PasswordInput
                                     {...getFieldProps('password')}
-                                    label="New Password"
+                                    label="Create a new password for your account:"
                                     value={data.password}
                                     onChange={(event) => setData('password', event.currentTarget.value)}
+
                                 />
 
                                 <PasswordInput
                                     {...getFieldProps('password_confirmation')}
-                                    label="Confirm Password"
+                                    label="Confirm your chosen password:"
                                     value={data.password_confirmation}
                                     onChange={(event) => setData('password_confirmation', event.currentTarget.value)}
                                 />

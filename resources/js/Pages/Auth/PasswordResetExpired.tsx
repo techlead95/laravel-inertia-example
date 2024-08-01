@@ -2,10 +2,11 @@
 import { Box, Container, Flex, Group, Center, Text, Stack, TextInput, Button } from '@mantine/core';
 import safeVisionImage from '../../../images/safe-vision.png';
 import useBaseForm from '@/Hooks/useBaseForm';
+
+import { Link } from '@inertiajs/react';
 import { Session } from 'inspector';
 import { get } from 'lodash';
 import { PasswordForgot } from '@/types';
-import { Link } from '@inertiajs/react';
 
 
 export default function ForgotPassword() {
@@ -37,7 +38,7 @@ export default function ForgotPassword() {
 
                             <Stack>
                                 <Text size="md">
-                                    Your password has been reset.  You will receive an email indicating it has been reset. Return to <Link href={route('login')}>login </Link>
+                                    The Password Reset Link has expired.  Please go to <Link href={route('password.request')}>Reset Password </Link>
                                 </Text>
                             </Stack>
                         </Center>

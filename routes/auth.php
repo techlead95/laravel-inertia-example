@@ -35,10 +35,13 @@ Route::middleware('guest')->group(function () {
         return Socialite::driver('saml2')->redirect();
     })->name('salesforce');
 
-    Route::get('salesforce/callback', function () {
+
+    Route::post('salesforce/callback', function () {
+
+        //Route::get('salesforce/callback', function () {
         //$user = Socialite::driver('salesforce')->user();
-        $user = Socialite::driver('saml2')->user();
-        dd($user);
+        $user = Socialite::driver('saml2')->stateless()->user();
+        dd($user, $user->getRaw(), $user->getAssertion());
         $user = User::updateOrCreate([
             //'salesforce_id' => $user->id,
             'salesforce_id' => $user->user["preferred_username"],
@@ -53,6 +56,10 @@ Route::middleware('guest')->group(function () {
 
         return redirect()->intended(RouteServiceProvider::HOME);
     });
+    /*Route::get('saleforce/metadata', function () {
+        return Socialite::driver('saml2')->getServiceProviderMetadata();
+    });*/
+
 
     Route::get('azure/redirect', function () {
         return Socialite::driver('azure')->redirect();
@@ -82,6 +89,15 @@ Route::middleware('guest')->group(function () {
 
     Route::get('initial-password', [PasswordController::class, 'create'])
         ->name('password.initial');
+    Route::get('invalid-registration', function () {
+        return Inertia::render('Auth/InvalidRegistration');
+    })->name('invalid.registration');
+    Route::get('registration-succeeded', function () {
+        return Inertia::render('Auth/RegistrationSucceeded');
+    })->name('registration.succeeded');
+    Route::get('registration-failed', function () {
+        return Inertia::render('Auth/RegistrationFailed');
+    })->name('registration.failed');
     Route::post('initial-password', [PasswordController::class, 'store'])
         ->name('password.initialized');
 
@@ -101,6 +117,9 @@ Route::middleware('guest')->group(function () {
     //Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
     Route::get('reset-password', [NewPasswordController::class, 'create'])
         ->name('password.reset');
+    Route::get('password-reset-expired', function () {
+        return Inertia::render('Auth/PasswordResetExpired');
+    })->name('password.reset.expired');
     Route::get('password-done', function () {
         return Inertia::render('Auth/PasswordSet');
     })->name('password.done');
