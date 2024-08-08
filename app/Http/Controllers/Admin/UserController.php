@@ -30,7 +30,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+
+        return inertia()->render('Admin/Users/CreateUser');
     }
 
     /**
@@ -38,7 +39,31 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->merge(['name' => $request->input('first_name') . ' ' . $request->input('last_name')]);
+
+        $validated = $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'salesforce_id' => 'nullable',
+            'business_name' => 'nullable',
+            'address1' => 'nullable',
+            'address2' => 'nullable',
+            'po_box' => 'nullable',
+            'city' => 'nullable',
+            'state' => 'nullable',
+            'zip' => 'nullable',
+            'country' => 'nullable',
+            'nick_name' => 'nullable',
+            'is_admin' => 'nullable',
+        ]);
+
+        $user = User::Create(array_merge($validated));
+        //dd($user);
+
+        return to_route('admin.users.index');
     }
 
     /**

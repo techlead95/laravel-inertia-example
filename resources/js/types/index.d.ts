@@ -47,6 +47,8 @@ export interface User {
   first_name: string | null;
   last_name: string | null;
   approved: boolean | null;
+  salesforce_id: string | null;
+  salesforce_username: string | null;
   deleted_at: string | null;
   ship_to_id: number | null;
 }

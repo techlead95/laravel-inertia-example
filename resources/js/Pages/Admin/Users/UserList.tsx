@@ -24,17 +24,22 @@ export default function AdminHome({ search, ...props }: Props) {
       <Head title="Admin Home" />
       <Group style={{ flex: 1 }} gap="xl" align="flex-start">
         <Stack style={{ flex: 3 }} h="100%" gap={0}>
-          <MultiSearchForm
-            initialValues={{ search }}
-            onSearch={(newValues) => {
-              router.get(route('admin.users.index', newValues ?? {}));
-            }}
-            mb="lg"
-          >
-            {({ getFieldProps }) => (
-              <TextInput placeholder="Search" {...getFieldProps('search')} />
-            )}
-          </MultiSearchForm>
+          <Group justify="space-between" mb="lg">
+            <MultiSearchForm
+              initialValues={{ search }}
+              onSearch={(newValues) => {
+                router.get(route('admin.users.index', newValues ?? {}));
+              }}
+              mb="lg"
+            >
+              {({ getFieldProps }) => (
+                <TextInput placeholder="Search" {...getFieldProps('search')} />
+              )}
+            </MultiSearchForm>
+            <Link href={route('admin.users.create')}>
+              <Button>New User</Button>
+            </Link>
+          </Group>
           <BaseDataTable
             style={{ flex: 1 }}
             striped

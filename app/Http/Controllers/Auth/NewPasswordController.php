@@ -40,7 +40,7 @@ class NewPasswordController extends Controller
         }
 
 
-        dd($response, $response->body());
+        //dd($response, $response->body());
 
 
 

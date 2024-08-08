@@ -6,19 +6,14 @@ import { Button, Grid, Group, TextInput, Stack, Switch, Select } from '@mantine/
 import { Head, Link, router } from '@inertiajs/react';
 import { uniqBy } from "lodash";
 
-interface Props {
-  user: User;
-  shipTos: ShipTo[];
-}
-
-export default function UserEdit({ user, shipTos }: Props) {
+export default function CreateUser() {
   const getFieldStyles = useGetFieldStyles();
-  const { getFieldProps, put } = useBaseForm(user);
+  const { getFieldProps, post } = useBaseForm<User>();
 
 
-  var shipToList = shipTos.map((shipTo) => ({ value: shipTo.st_account, label: shipTo.st_account + ' ' + shipTo.st_name }));
+  //var shipToList = shipTos.map((shipTo) => ({ value: shipTo.st_account, label: shipTo.st_account + ' ' + shipTo.st_name }));
 
-  var filteredShipTo = uniqBy(shipToList, 'value');
+  //var filteredShipTo = uniqBy(shipToList, 'value');
 
   //var filteredShipTo = [];
 
@@ -26,11 +21,11 @@ export default function UserEdit({ user, shipTos }: Props) {
   var shipToList = shipTos.map((shipTo) => (shipTo.st_account));
   var filteredShipTo = [...new Set(shipToList)];
   */
-  console.log(filteredShipTo);
+  //console.log(filteredShipTo);
 
   return (
     <>
-      <PageTitle title="Edit User" showBackButton />
+      <PageTitle title="Create User" showBackButton />
       {/*</><form
         onSubmit={(e) => {
           e.preventDefault();
@@ -44,7 +39,7 @@ export default function UserEdit({ user, shipTos }: Props) {
         gap="xl"
         onSubmit={(e) => {
           e.preventDefault();
-          put(route('admin.users.update', { id: user.id }));
+          post(route('admin.users.store'));
         }}
       >
         <Group>
@@ -55,24 +50,8 @@ export default function UserEdit({ user, shipTos }: Props) {
               styles={getFieldStyles({ horizontal: true })} />
             <TextInput label="Last Name" {...getFieldProps('last_name')}
               styles={getFieldStyles({ horizontal: true })} />
-            <Select
-              label="Default Ship To Account"
-              //data={shipTos.map((shipTo) => "value: '" + shipTo.id + "', label: '" + shipTo.st_account + " " + shipTo.st_name + "'")}
-              //data={shipTos.map((shipTo) => ({ value: shipTo.id.toString(), label: shipTo.st_account + ' ' + shipTo.st_name }))}
-              //data={shipTos.map((shipTo) => ({ value: shipTo.st_account, label: shipTo.st_account + ' ' + shipTo.st_name }))}
-              data={filteredShipTo}
-              //data={shipToList}
-              {...getFieldProps('ship_to_account')}
-              styles={getFieldStyles({ horizontal: true })}
-            />
             <TextInput label="Salesforce Contact ID" {...getFieldProps('salesforce_id')}
-              styles={getFieldStyles({ horizontal: true })}
-              disabled
-            />
-            <TextInput label="Salesforce Username" {...getFieldProps('salesforce_username')}
-              styles={getFieldStyles({ horizontal: true })}
-              disabled
-            />
+              styles={getFieldStyles({ horizontal: true })} />
             <TextInput
               label="Business Name"
               {...getFieldProps('business_name')}
@@ -94,22 +73,6 @@ export default function UserEdit({ user, shipTos }: Props) {
               styles={getFieldStyles({ horizontal: true })} />
           </Stack>
 
-          <Stack>
-            <Switch defaultChecked label="Portal Active" disabled />
-            <Link href={route('admin.users.shiptos.index', user.id)}>
-              <Button variant="outline" w="100%">
-                Ship to Account Maintenance
-              </Button>
-            </Link>
-            <Link href="/admin/modules">
-              <Button variant="outline" w="100%">
-                Modules
-              </Button>
-            </Link>
-            <Button variant="outline" disabled>
-              Default Settings
-            </Button>
-          </Stack>
         </Group >
         <Group mt="xl">
           <Button miw={120} type="submit">

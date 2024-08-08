@@ -42,6 +42,7 @@ class User extends Authenticatable
         'approved',
         'first_name',
         'last_name',
+        'salesforce_username',
     ];
 
     /**

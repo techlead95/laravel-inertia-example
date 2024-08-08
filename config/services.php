@@ -46,16 +46,16 @@ return [
     ],
 
     'saml2' => [
-        'metadata' => file_get_contents('../SAMLIdP-0spFg00000006LZ.xml'),
-        //'sp_acs' => env('SALESFORCE_REDIRECT_URI'),
-        'sp_acs' => 'salesforce/callback',
-        'sp_entityid' => 'https://optic-2-master.azurewebsites.net/salesforce/entityid',
+        'metadata' => file_get_contents(env('SALESFORCE_METADATA')),
+        'sp_acs' => env('SALESFORCE_REDIRECT_URI'),
+        //'sp_acs' => 'salesforce/callback',
+        'sp_entityid' => env('SALESFORCE_REDIRECT_URI') . '/salesforce/entityid',
         /*'attribute_map' => [
             'username' => [
                 \LightSaml\Model\Assertion\Attribute::class,
             ],
 
-        ],*?
+        ],*/
         //'acs' => env('SALESFORCE_REDIRECT_URI'),
         //'acs' => 'https://hoya--waeg.sandbox.my.site.com/idp/endpoint/HttpRedirect',
         //'entityid' => 'https://hoya--waeg.my.salesforce.com',

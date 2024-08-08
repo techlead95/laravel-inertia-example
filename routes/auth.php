@@ -32,7 +32,11 @@ Route::middleware('guest')->group(function () {
 
     Route::get('salesforce/redirect', function () {
         //return Socialite::driver('salesforce')->redirect();
-        return Socialite::driver('saml2')->redirect();
+        return Socialite::driver('saml2')
+            //->with(['state' => env('SALESFORCE_REDIRECT_URI')])
+            //->with(['pageDesign' => 'SafetyRx'])
+            //->redirectURL(env('SALESFORCE_REDIRECT_URI'))
+            ->redirect();
     })->name('salesforce');
 
 
@@ -41,15 +45,32 @@ Route::middleware('guest')->group(function () {
         //Route::get('salesforce/callback', function () {
         //$user = Socialite::driver('salesforce')->user();
         $user = Socialite::driver('saml2')->stateless()->user();
-        dd($user, $user->getRaw(), $user->getAssertion());
+
+        $attributes = $user->getRaw();
+
+        //dd($attributes[0]->getName(), $attributes[0]->getAllAttributeValues());
+        for ($i = 0; $i < count($attributes); $i++) {
+            switch ($attributes[$i]->getName()) {
+                case 'username':
+                    $username = $attributes[$i]->getAllAttributeValues()[0];
+                case 'email':
+                    $email = $attributes[$i]->getAllAttributeValues()[0];
+                case 'contact_id':
+                    $contact_id = $attributes[$i]->getAllAttributeValues()[0];
+            }
+        }
+        //dd($user, $user->getRaw(), $username, $email, $contact_id);
         $user = User::updateOrCreate([
             //'salesforce_id' => $user->id,
-            'salesforce_id' => $user->user["preferred_username"],
+            //'salesforce_id' => $user->user["preferred_username"],
+            'salesforce_id' => $contact_id,
         ], [
-            'email' => $user->email,
-            'name' => $user->name,
-            'first_name' => $user->user["given_name"],
-            'last_name' => $user->user["family_name"],
+            //'email' => $user->email,
+            'email' => $email,
+            'salesforce_username' => $username,
+            //'name' => $user->name,
+            //'first_name' => $user->user["given_name"],
+            //'last_name' => $user->user["family_name"],
         ]);
 
         Auth::login($user);
