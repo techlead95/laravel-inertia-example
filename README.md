@@ -1,13 +1,3 @@
-## Local Environment Setup
-
-- Install Node.js, WSL, and Docker.
-- Spin up containers. `docker-compose up`
-- Generate an encryption key for Laravel. `docker-compose exec php-fpm php artisan key:generate`
-- Run migrations and seeds for the database. `docker-compose exec php-fpm php artisan migrate:refresh --seed`
-- Install Frontend dependencies. `npm install`
-
-## Run Project Locally
-
-- Spin up containers if you haven't. `docker-compose up`
-- Run vite development server. `npm run dev`
-test
+![image](https://github.com/user-attachments/assets/099db726-0ccb-44eb-b8d6-57362f1c2573)
+![image](https://github.com/user-attachments/assets/cabe99ca-3137-406d-b8e3-ea0fce8731d6)
+![image](https://github.com/user-attachments/assets/5ed7179a-c7ce-4d21-8ce4-1f506a745551)
